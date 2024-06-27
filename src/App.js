@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Analysis from './pages/Analysis';
+import ChatBot from './pages/ChatBot';
+import './css/App.css';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> 깃액션 적용버전입니다!!!!!!!!!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router basename="/otoo_react">
+          <Header />
+          <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/analysis" element={<Analysis />} />
+              <Route path="/chatbot" element={<ChatBot />} />
+          </Routes>
+      </Router>
   );
-}
+};
 
 export default App;
