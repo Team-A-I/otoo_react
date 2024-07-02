@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Container, TextField, Typography, Box } from '@mui/material';
+import { Button, Container, TextField, Typography, Box, Grid } from '@mui/material';
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -31,9 +31,6 @@ const FileUpload = () => {
   };
 
   const parseKakaoTalkText = (text) => {
-    // 카카오톡 텍스트 파일을 JSON으로 변환하는 로직을 구현합니다.
-    // 이 부분은 카카오톡 텍스트 파일 형식에 따라 다릅니다.
-    // 예시로 간단히 텍스트를 라인별로 나누어 JSON 객체로 변환하는 코드를 작성합니다.
     const lines = text.split('\n');
     const json = lines.map((line, index) => ({ id: index, text: line }));
     return json;
@@ -50,28 +47,39 @@ const FileUpload = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
-        <Typography variant="h4" component="h1" gutterBottom>
-          File Upload Example
-        </Typography>
-        <input
-          accept=".txt"
-          style={{ display: 'none' }}
-          id="raised-button-file"
-          type="file"
-          onChange={handleFileChange}
-        />
-        <label htmlFor="raised-button-file">
-          <Button variant="contained" component="span">
-            Upload
-          </Button>
-        </label>
-        <Button variant="contained" color="primary" onClick={handleFileUpload} disabled={!file}>
-          Process File
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h2" component="h1" color="primary" sx={{ fontWeight: 'bold', whiteSpace: 'pre-line' }}>
+              익숙하고{'\n'}편리한{'\n'}기능{'\n'}그대로
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <img src="/mnt/data/연애_소개.png" alt="소개 이미지" style={{ width: '100%', height: 'auto' }} />
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center" mt={4}>
+              <input
+                accept=".txt"
+                style={{ display: 'none' }}
+                id="raised-button-file"
+                type="file"
+                onChange={handleFileChange}
+              />
+              <label htmlFor="raised-button-file">
+                <Button variant="contained" component="span" sx={{ mr: 2 }}>
+                  Upload
+                </Button>
+              </label>
+              <Button variant="contained" color="primary" onClick={handleFileUpload} disabled={!file}>
+                카카오톡 데이터 입력하기
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         {jsonContent && (
-          <Box mt={2} width="100%">
+          <Box mt={4} width="100%">
             <Typography variant="h6">JSON Output:</Typography>
             <TextField
               fullWidth
