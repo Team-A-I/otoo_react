@@ -1,12 +1,12 @@
 import React from 'react';
-import FileUpload from '../components/FileUpload';
+import FileUploadConflict from '../../components/conflict/FileUploadConflict';
 import { Container,  Box } from '@mui/material';
 
 const ConflictUpload = () => {
   return (
     <Container maxWidth="md">
       <Box>
-        <FileUpload />
+        <FileUploadConflict />
       </Box>
     </Container>
   );
