@@ -34,7 +34,7 @@ const FileUpload = () => {
     // 카카오톡 텍스트 파일을 JSON으로 변환하는 로직을 구현합니다.
     // 이 부분은 카카오톡 텍스트 파일 형식에 따라 다릅니다.
     // 예시로 간단히 텍스트를 라인별로 나누어 JSON 객체로 변환하는 코드를 작성합니다.
-    const lines = text.split('\n');
+    const lines = text.split('\n'); //여기 없애고 쓰라!
     const json = lines.map((line, index) => ({ id: index, text: line }));
     return json;
   };
