@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, TextField, Typography, Box } from '@mui/material';
+import { Button, Container, TextField, Typography, Box, ThemeProvider} from '@mui/material';
 import LoadingLove from '../../pages/love/LoadingLove';
 import '../../css/uploadlove.css';
+import theme from '../../theme';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
@@ -53,6 +54,7 @@ const FileUploadLove = () => {
 
   return (
       <div>
+        <ThemeProvider theme={theme}>
         <Box className="button-container">
           <input
               type="file"
@@ -64,10 +66,10 @@ const FileUploadLove = () => {
             component="span" 
             sx={{ 
               mr: 2, 
-              backgroundColor: '#0350B7', 
+              backgroundColor: theme.palette.lightpurple, 
               color: '#FFFFFF',
               '&:hover': {
-                backgroundColor: '#033080', // 호버 시 배경색 변경
+                backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
               }
             }}
             onClick={handleButtonClick}>
@@ -79,16 +81,17 @@ const FileUploadLove = () => {
             disabled={!file}
             sx={{ 
               mr: 2, 
-              backgroundColor: '#0350B7', 
+              backgroundColor: theme.palette.peach,
               color: '#FFFFFF',
               '&:hover': {
-                backgroundColor: '#033080', // 호버 시 배경색 변경
+                backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
               }
               }}
               onClick={handleSubmit}>
               업로드
           </Button>
         </Box>
+        </ThemeProvider>
       </div>
   );
 };

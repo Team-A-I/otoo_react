@@ -1,20 +1,22 @@
 import React from 'react';
 import FileUploadLove from '../../components/love/FileUploadLove';
-import { Button, Container, TextField, Typography, Box, Grid } from '@mui/material';
+import { Button, Container, TextField, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardHeader from '@mui/material/CardHeader';
 import lovemain from "../../image/lovemain.jpg";
 import '../../css/uploadlove.css';
+import theme from '../../theme';
 
 const UploadLove = () => {
     return (
     <Container maxWidth="md">
+      <ThemeProvider theme={theme}>
       <Box className="container">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h2" component="h1" color="primary" className="header-text">
+            <Typography variant="ha_bold" color="lightpurple" className='header-text'>
               누가 더{'\n'}좋아해?{'\n'}묻지{'\n'}마세요
             </Typography>
           </Grid>
@@ -43,6 +45,7 @@ const UploadLove = () => {
         </Grid>
         <FileUploadLove></FileUploadLove>
       </Box>
+      </ThemeProvider>
     </Container>
     );
 };
