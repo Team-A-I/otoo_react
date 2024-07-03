@@ -1,0 +1,109 @@
+.chatList {
+    display: contents;
+    justify-content: center;
+
+}
+.chatList_Box{
+    height: 100%;
+    min-height: 400px;
+    max-height: 850px;
+    overflow-y: scroll;
+}
+.userDiv {
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: right;
+}
+.user{
+    padding: 10px;
+    margin: 10px;
+    background-color: #B4CBEA;
+    border-radius: 15px;
+    max-width: 500px;
+}
+
+.jangguDiv{
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: left;
+}
+.janggu{
+    padding: 10px;
+    margin: 10px;
+    background-color: #FFDEC4;
+    border-radius: 15px;
+    max-width: 500px;
+}
+.grid{
+    display: flex;
+    justify-content: center;   
+    height: 100%;
+    max-height: 600px; 
+}
+.content{
+    width: 60%;
+}
+.chatInput{
+    display: flex;
+}
+.chatList_Box::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chatList_Box::-webkit-scrollbar-thumb { 
+    background-color: rgb(240, 240, 240);
+}
+.chatList_Box::-webkit-scrollbar-button {
+    display: none;
+}
+.emotionButton{
+    margin-left: 10px !important;
+    background-color: #3573C5;
+    border-radius: 12px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+}
+.jangguIMG_Box{
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    margin-bottom: 20px;
+}
+.jangguIMG{
+    height: 100%;
+    opacity: 0.5;
+}
+.startBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.nomaltype{
+    margin-right: 70px!important;
+    background-color: white!important;
+    color: black!important;
+    font-weight: bold!important;
+    border-radius: 15px!important;
+}
+.janggutype{
+    background-color: white!important;
+    color: black!important;
+    font-weight: bold!important;
+    border-radius: 15px!important;
+}
+.modeExplain{
+   text-align: center;
+    justify-content: center;
+    opacity: 0.5;
+}
+
+
+
+/* 코너에 라운드 효과 */
+.chatList_Box::-webkit-scrollbar-track,
+.chatList_Box::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
