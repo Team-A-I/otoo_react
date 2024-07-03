@@ -367,18 +367,18 @@ const renderWrongPercentage = () => {
   return (
     <Container maxWidth="lg">
       <ThemeProvider theme={theme}>
-      <div style={{ fontFamily: theme.typography.fontFamily }}>
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
-        <Grid container spacing={3} mt={3}>
-          {data.wrong_percentage && titlesection()}
-          {data.wrong_percentage && renderWrongPercentage()}
-          {Object.keys(data.wrong_percentage || {}).map((name) => renderPersonData(name))}
-          {data.priority_keywords && renderPriorityKeywords()}
-          {data.conflict_cause_percentage && renderConflictCausePercentage()}
-          {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
-        </Grid>
-      </Box>
-      </div>
+        <div style={{ fontFamily: theme.typography.fontFamily }}>
+          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
+            <Grid container spacing={3} mt={3}>
+              {data.wrong_percentage && titlesection()}
+              {data.wrong_percentage && renderWrongPercentage()}
+              {Object.keys(data.wrong_percentage || {}).map((name) => renderPersonData(name))}
+              {data.priority_keywords && renderPriorityKeywords()}
+              {data.conflict_cause_percentage && renderConflictCausePercentage()}
+              {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
+            </Grid>
+          </Box>
+        </div>
       </ThemeProvider>
     </Container>
   );
