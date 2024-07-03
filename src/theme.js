@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material';
 // 사용방법
 // 사용할 페이지에 import theme from "../../theme"
 // <ThemeProvider theme={theme}> </ThemeProvider> Container 아래 적용
-// <div style={{ fontFamily: theme.typography.fontFamily }}></div>
+// <div style={{ fontFamily: theme.typography.fontFamily }}></div>  ThemeProvider 아래적용
 // <Typography variant="nav_bold" color="gray900"></Typography>
 // <Button variant="contained" sx={{backgroundColor:theme.palette.원하는 색상}}></Button>
 
