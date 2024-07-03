@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
 import { Button, Container, TextField, Typography, Box, Grid ,ThemeProvider} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
@@ -11,6 +10,7 @@ import theme from "../../theme"
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
+  // eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
   const inputRef = useRef(null);
@@ -26,7 +26,7 @@ const FileUpload = () => {
       const json = parseKakaoTalkText(content);
       setJsonContent(json);
       console.log("JSON Content:", json);
-      sendJsonToBackend(json);
+      navigate('/loading-conflict', { state: { jsonContent: json } });
     } catch (error) {
       console.error("Error parsing file:", error);
     }
@@ -34,7 +34,6 @@ const FileUpload = () => {
 
   const handleFileUpload = () => {
     if (file) {
-      navigate('/loading');
       const reader = new FileReader();
       reader.onload = handleFileRead;
       reader.readAsText(file);
@@ -47,17 +46,6 @@ const FileUpload = () => {
     return json;
   };
 
-  const sendJsonToBackend = (json) => {
-    axios.post('http://localhost:8080/api/conflict/upload', json)
-      .then(response => {
-        console.log("Response from backend:", response.data);
-        navigate('/result', { state: { jsonData: response.data } });
-      })
-      .catch(error => {
-        console.error("Error sending JSON to backend:", error);
-      });
-  };
-
   const handleToggleInput = () => {
     setShowInput(prevShowInput => !prevShowInput);
     if (!showInput) {
@@ -66,7 +54,6 @@ const FileUpload = () => {
       }, 100);
     }
   };
-
   return (
     <Container maxWidth="lg">
       <ThemeProvider theme={theme}>

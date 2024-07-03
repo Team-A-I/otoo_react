@@ -23,9 +23,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/chatbot" element={<ChatBot />} />
-          <Route path="/conflict-upload" element={<ConflictUpload />} />
-          <Route path="/loading" element={<LoadingPage />} />
-          <Route path="/result" element={<ResultPage />} />
+          <Route path="/upload-conflict" element={<ConflictUpload />} />
+          <Route path="/loading-conflict" element={<LoadingPage />} />
+          <Route path="/result-conflict" element={<ResultPage />} />
           <Route path="/loading-love" element={<LoadingLove />} />
           <Route path="/result-love" element={<ResultLove />} />
           <Route path="/upload-love" element={<UploadLove />} />
