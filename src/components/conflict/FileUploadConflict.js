@@ -48,7 +48,7 @@ const FileUpload = () => {
   };
 
   const sendJsonToBackend = (json) => {
-    axios.post('http://localhost:8080/upload', json)
+    axios.post('http://localhost:8080/api/conflict/upload', json)
       .then(response => {
         console.log("Response from backend:", response.data);
         navigate('/result', { state: { jsonData: response.data } });
