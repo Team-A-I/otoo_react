@@ -7,33 +7,56 @@ const Home = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [scale, setScale] = useState(1);
-    const [backgroundImage, setBackgroundImage] = useState('/otoo_react/images/main10.png');
+    const [backgroundIndex, setBackgroundIndex] = useState(0);
     const [animateOutClass, setAnimateOutClass] = useState('');
     const [animateInClass, setAnimateInClass] = useState('');
+
+    const backgroundImages = [
+        '/otoo_react/images/main.png',
+        '/otoo_react/images/love-main.png',
+        '/otoo_react/images/friendship.png'
+    ];
 
     const handleWheel = (event) => {
         event.preventDefault();
 
         setScale(prevScale => {
-            const newScale = event.deltaY > 0 ? Math.min(prevScale + 0.1, 1.5) : Math.max(prevScale - 0.1, 1);
+            let newScale = prevScale;
+            let newBackgroundIndex = backgroundIndex;
 
-            if (newScale === 1.5 && prevScale < 1.5) {
-                setAnimateOutClass('slide-up-fade-out');
-                setTimeout(() => {
-                    setBackgroundImage('/otoo_react/images/love-main5.png');
-                    setAnimateOutClass('');
-                    setAnimateInClass('slide-up-fade-in');
-                }, 500); // 0.5s 이후 이미지 변경
-                setTimeout(() => setAnimateInClass(''), 1600); // 새로운 이미지 애니메이션 끝
-
-            } else if (newScale < 1.5 && prevScale === 1.5) {
-                setAnimateOutClass('slide-down-fade-out');
-                setTimeout(() => {
-                    setBackgroundImage('/otoo_react/images/main10.png');
-                    setAnimateOutClass('');
-                    setAnimateInClass('slide-down-fade-in');
-                }, 500); // 0.5s 이후 이미지 변경
-                setTimeout(() => setAnimateInClass(''), 1600); // 새로운 이미지 애니메이션 끝
+            if (event.deltaY > 0) { // 스크롤 In
+                if (prevScale < 1.5) {
+                    newScale = Math.min(prevScale + 0.1, 1.5);
+                    if (newScale === 1.5 && backgroundIndex === 0) {
+                        setAnimateOutClass('slide-up-fade-out');
+                        setTimeout(() => {
+                            setBackgroundIndex(1);
+                            setAnimateOutClass('');
+                            setAnimateInClass('slide-up-fade-in');
+                        }, 500);
+                        setTimeout(() => setAnimateInClass(''), 1600);
+                    }
+                } else if (backgroundIndex < backgroundImages.length - 1) {
+                    setAnimateOutClass('slide-up-fade-out');
+                    setTimeout(() => {
+                        setBackgroundIndex(backgroundIndex + 1);
+                        setAnimateOutClass('');
+                        setAnimateInClass('slide-up-fade-in');
+                    }, 500);
+                    setTimeout(() => setAnimateInClass(''), 1600);
+                }
+            } else { // 스크롤 Out
+                if (backgroundIndex > 0) {
+                    setAnimateOutClass('slide-down-fade-out');
+                    setTimeout(() => {
+                        setBackgroundIndex(backgroundIndex - 1);
+                        setAnimateOutClass('');
+                        setAnimateInClass('slide-down-fade-in');
+                    }, 500);
+                    setTimeout(() => setAnimateInClass(''), 1600);
+                } else {
+                    newScale = Math.max(prevScale - 0.1, 1);
+                }
             }
 
             return newScale;
@@ -43,14 +66,14 @@ const Home = () => {
     useEffect(() => {
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => window.removeEventListener('wheel', handleWheel);
-    }, []);
+    }, [backgroundIndex]);
 
     return (
         <ThemeProvider theme={theme1}>
             <div style={{ fontFamily: theme.typography.fontFamily, overflow: 'hidden', position: 'relative' }}>
                 <Box
                     sx={{
-                        backgroundImage: 'url(/otoo_react/images/main-back2.png)',
+                        backgroundImage: 'url(/otoo_react/images/main-back.png)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
@@ -140,7 +163,7 @@ const Home = () => {
                         </Box>
                         <Box
                             component="img"
-                            src={backgroundImage}
+                            src={backgroundImages[backgroundIndex]}
                             alt="Your Image Description"
                             className={`${animateInClass} ${animateOutClass}`}
                             sx={{
