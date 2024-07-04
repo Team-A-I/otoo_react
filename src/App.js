@@ -4,7 +4,9 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
 import ChatBot from './pages/ChatBot';
-import ConflictUpload from './pages/ConflictUpload';
+import ConflictUpload from './pages/conflict/UploadConflict';
+import LoadingPage from './components/conflict/LoadingPage';
+import ResultPage from './components/conflict/ResultPage';
 import './css/App.css';
 import { Box } from '@mui/material';
 import LoadingLove from './pages/love/LoadingLove';
@@ -21,12 +23,12 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/chatbot" element={<ChatBot />} />
-          <Route path="/conflict-upload" element={<ConflictUpload />} />
-
+          <Route path="/upload-conflict" element={<ConflictUpload />} />
+          <Route path="/loading-conflict" element={<LoadingPage />} />
+          <Route path="/result-conflict" element={<ResultPage />} />
           <Route path="/loading-love" element={<LoadingLove />} />
           <Route path="/result-love" element={<ResultLove />} />
           <Route path="/upload-love" element={<UploadLove />} />
-
         </Routes>
       </Box>
     </Router>

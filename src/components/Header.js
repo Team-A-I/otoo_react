@@ -12,7 +12,7 @@ const Header = () => {
         <Button style={{ color: 'black' }} component={Link} to="/">Home</Button>
         <Button style={{ color: 'black' }} component={Link} to="/analysis">Analysis</Button>
         <Button style={{ color: 'black' }} component={Link} to="/chatbot">ChatBot</Button>
-        <Button style={{ color: 'black' }} component={Link} to="/conflict-upload">Conflict Upload</Button>
+        <Button style={{ color: 'black' }} component={Link} to="/upload-conflict">Conflict Upload</Button>
         <Button style={{ color: 'black' }} component={Link} to="/upload-love">UploadLove</Button>
 
       </Toolbar>
