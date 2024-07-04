@@ -1,181 +1,335 @@
-import { Card, CardContent, Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Typography, Grid, Paper, Container, Card, CardContent, Tooltip, Button, Table, TableBody, TableCell, TableHead, TableRow, Tabs, Tab, useMediaQuery, useTheme, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import CloudIcon from '@mui/icons-material/Cloud';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
+import theme from '../../theme';
 
-const weatherData = [
-  {
-    name: '김현석',
-    temperature: '40°',
-    details: [
-      { icon: <CloudIcon />, score: '50점', text: '어느정도는 너를 먼저 생각할 수 있어' },
-      { icon: <ThunderstormIcon />, score: '10점', text: '마라탕은 안돼!' },
-      { icon: <WbSunnyIcon />, score: '70점', text: '우쭐할까? 너를 볼때?' },
-    ],
-  },
-  {
-    name: '배정현',
-    temperature: '60°',
-    details: [
-      { icon: <CloudIcon />, score: '50점', text: '어느정도는 너를 먼저 생각할 수 있어' },
-      { icon: <WbSunnyIcon />, score: '10점', text: '마라탕은 안돼!' },
-      { icon: <ThunderstormIcon />, score: '70점', text: '우쭐할까? 너를 볼때?' },
-    ],
-  },
+const getLoveMessage = (total_score) => {
+    const keys = Object.keys(total_score);
+    if (keys.length !== 2) {
+        return '';
+    }
+    const [firstKey, secondKey] = keys;
+    const firstScore = total_score[firstKey];
+    const secondScore = total_score[secondKey];
+    if (firstScore > secondScore) {
+        return (
+        <>
+            {firstKey}님이<br />
+            {secondKey}님을 더<br />
+            좋아합니다.
+        </>
+        );
+    } else if (firstScore < secondScore) {
+        return (
+        <>
+            {secondKey}님이<br />
+            {firstKey}님을 더<br />
+            좋아합니다.
+        </>
+        );
+    } else {
+        return (
+        <>
+            {firstKey}님과<br />
+            {secondKey}님은 서로<br />
+            좋아합니다.
+        </>
+        );
+    }
+};
+
+const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
+    return (
+      <Grid item xs={4} style={{ display: 'flex', flexDirection: 'column' }}>
+        <Paper
+          elevation={3}
+          style={{
+            padding: '16px',
+            textAlign: 'center',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'stretch',
+          }}
+        >
+          <Typography variant="h3_bold" gutterBottom>
+            {title}
+          </Typography>
+          <img
+            src={imageSrc}
+            alt={`${title} 이미지`}
+            style={{
+              width: '100%',
+              height: 'auto',
+              maxHeight: '150px',
+              objectFit: 'cover',
+              marginBottom: '16px',
+              flexGrow: 1,
+            }}
+          />
+          <Typography variant="h1_bold">{percentage}%</Typography>
+          <Tooltip title={tooltipTitle} arrow>
+            <Button
+              variant="outlined"
+              sx={{
+                marginTop: '8px',
+                borderColor: '0495D2',
+                color: '0495D2',
+                '&:hover': {
+                  borderColor: '0350B7',
+                  color: '0350B7',
+                },
+              }}
+            >
+              설명보기
+            </Button>
+          </Tooltip>
+        </Paper>
+      </Grid>
+    );
+};
+
+const createUserData = (user, data) => {
+return [
+    {
+    title: "너를 생각하는 내마음",
+    percentage: data.support[user].score,
+    tooltipTitle: "누가 더 서로를 위하는지 비교한 비율입니다.",
+    },
+    {
+    title: "바람기",
+    percentage: data.cheat[user].score,
+    tooltipTitle: "누가 더 바람필 확률이 높은지 비교한 비율입니다.",
+    },
+    {
+    title: "19금력",
+    percentage: data.sexual[user].score,
+    tooltipTitle: "누가 더 성적호감도를 크게 느끼는지 비교한 비율입니다.",
+    },
+];
+};
+
+const getImageByPercentage = (percentage) => {
+    if (percentage >= 0 && percentage <= 10) {
+      return '/otoo_react/images/낙뢰.png';
+    } else if (percentage >= 11 && percentage <= 20) {
+      return '/otoo_react/images/비.png';
+    } else if (percentage >= 21 && percentage <= 30) {
+      return '/otoo_react/images/구름.png';
+    } else if (percentage >= 31 && percentage <= 45) {
+      return '/otoo_react/images/약간흐림.png';
+    } else if (percentage >= 46 && percentage <= 59) {
+      return '/otoo_react/images/맑음.png';
+    } else if (percentage >= 60 && percentage <= 80) {
+      return '/otoo_react/images/무지개.png';
+    } else {
+      return '';
+    }
+};
+
+const renderTable = (name, keywords, color) => (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell align="center" colSpan={2}>
+            <Typography variant='h3_mid'>{name}</Typography></TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell align="center">
+          <Typography variant='body1'>
+            순위
+            </Typography>
+            </TableCell>
+          <TableCell align="center">
+          <Typography variant='body1'>
+            키워드
+            </Typography>
+            </TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {keywords.map((keyword, index) => (
+          <TableRow key={index}>
+            <TableCell align="center">{index + 1}위</TableCell>
+            <TableCell align="center" style={{ backgroundColor: color }}>{keyword}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+
+const images = [
+    { src: "/otoo_react/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
+    { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
 ];
 
 const ResultLove = ({data}) => {
     const location = useLocation();
     const result = location.state?.result;
     console.log("result", result);
-
+    const theme1 = useTheme();
+    const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
     if (!result) {
         return <div>No result data</div>;
     }
+    const loveMessage = getLoveMessage(result.total_score);
 
-    return (
-        <Container maxWidth="lg">
-            <Typography variant="h1" gutterBottom>Result Page</Typography>
-            <Grid container spacing={2} direction="column">
-            <Box p={3}>
-      <Typography variant="h4" gutterBottom>철수님과 영희님의 판결 결과입니다.</Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper variant="outlined">
-            <Box p={2}>
-              <Typography variant="h6" gutterBottom>우리들의 애정 전선은 이래해요</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Paper variant="outlined">
-                    <Box p={2}>
-                      <Typography variant="h6">김현석</Typography>
-                      <Typography variant="body2">애정: 40%</Typography>
-                    </Box>
-                  </Paper>
+    const names = Object.keys(result.total_score|| {});
+
+return (
+<Container maxWidth="lg">
+<ThemeProvider theme={theme}>
+<div style={{ fontFamily: theme.typography.fontFamily }}>
+
+ {/* total_score    */}
+<Grid item xs={12}>
+    <Paper elevation={4} style={{ marginBottom: '24px' , borderRadius: '35px', minHeight: '320px' }}>
+        <Box p={5}>
+        <Grid container alignItems="flex-start">
+            <Grid item xs={12} sm={4}>
+                <Grid container  
+                alignItems="center" 
+                style={{ height: '100%', minHeight: '220px' }}>
+                    {loveMessage && (
+                        <Typography variant="hc_bold">{loveMessage}
+                        </Typography>
+                    )}
                 </Grid>
-                <Grid item xs={6}>
-                  <Paper variant="outlined">
-                    <Box p={2}>
-                      <Typography variant="h6">김현석</Typography>
-                      <Typography variant="body2">애정: 60%</Typography>
-                    </Box>
-                  </Paper>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+                <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
+                    <img src='/otoo_react/images/main_love.png'
+                    alt="Love"
+                    style={{ maxwidth: '100%', maxHeight: '220px' }}
+                    /> 
                 </Grid>
+            </Grid>
+        </Grid>
+        </Box>
+    </Paper>
+</Grid>
+
+{/* weather_total_score */}
+<Grid item xs={12}>
+    <Paper elevation={4} style={{ marginBottom: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
+    <Box p={5}>
+    <Grid container alignItems="flex-start">
+        <Grid item xs={12} sm={4}>
+        <Grid container 
+        alignItems="center" 
+        style={{ height: '100%', minHeight: '220px'}}>
+            <Typography variant="hc_bold" color="dyellow" gutterBottom >
+            우리들의 <br /> 애정 전선 입니다. <br />누가 더 좋아하는지 <br /> 알아 보겠습니다.
+            </Typography>
+        </Grid>
+        </Grid>
+        <Grid item xs={12} sm={8}>
+        <Grid container spacing={2} justifyContent={isSmallScreen ? 'center' : 'flex-end'}>
+        {names.map(name => (
+            <Grid item xs={12} sm={5} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
+            <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="title_bold" gutterBottom mt={3}>{name}</Typography>
+                <img src={getImageByPercentage(result.total_score[name])} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
+                <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{result.total_score[name]}%</Typography>
+            </CardContent>
+            </Card>
+        </Grid>
+        ))}
+        </Grid>
+        </Grid>
+    </Grid>
+    </Box>
+    <img src="/otoo_react/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
+    </Paper>
+</Grid>
+
+{/* compare_score */}
+<Grid item xs={12} mt={2}>
+    {names.map((name) => (
+        <Paper elevation={3} style={{ marginBottom: '24px', borderRadius: '35px', minHeight: '320px' }}>
+        <Box p={5}>
+            <Grid container spacing={3} alignItems="center">
+                <Grid item xs={12} sm={4} textAlign="center">
+                    <Paper
+                        elevation={3}
+                        style={{
+                        padding: '16px',
+                        backgroundImage: 'url(/otoo_react/images/맑은하늘사진3.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        height: '100%',
+                        minHeight: '260px',
+                        borderRadius: '15px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        }}
+                    >
+                        <Typography variant="h1_bold" color='gray200' mb={5} gutterBottom>
+                        {name}님의 <br /> 애정도
+                        </Typography>
+                        <Typography variant="h1_bold" color='gray200' gutterBottom >
+                        {result.total_score[name]}%
+                        </Typography>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} sm={8}>
+                <Grid container spacing={2}>
+                    {createUserData(name, result).map((item, index) => (
+                    <InfoCard
+                        key={index}
+                        title={item.title}
+                        imageSrc={getImageByPercentage(item.percentage)}
+                        percentage={item.percentage}
+                        tooltipTitle={item.tooltipTitle}
+                    />
+                    ))}
+                </Grid>
+                </Grid>
+            </Grid>
+        </Box>
+        </Paper>
+    ))}
+</Grid>
+
+{/* interest_score */}
+    <Grid item xs={12}>
+        <Paper elevation={4} style={{ position: 'relative' ,borderRadius:'35px'}}>
+        <Box p={5}>
+          <Typography variant="title_bold" gutterBottom>
+            우선 순위 키워드
+          </Typography>
+          <Grid container spacing={3}>
+            {names.map((name, index) => (
+              <Grid item xs={12} sm={6} key={name} style={{ position: 'relative' }}>
+                {renderTable(name, result.interest[name], index === 0 ? '#ECD3D8' : '#0495D290')}
+                <img
+                  src={images[index].src}
+                  alt="일러스트"
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: index === 1 ? '10px' : 'auto',
+                    right: index === 0 ? '10px' : 'auto',
+                    width: images[index].width,
+                    height: images[index].height,
+                    zIndex: 1
+                  }}
+                />
               </Grid>
-            </Box>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Paper variant="outlined">
-            <Box p={2}>
-              <Typography variant="h2" gutterBottom>Total Score</Typography>
-              {Object.keys(result.total_score).map((key, index) => (
-                <div key={index}>
-                  <strong>{key}: </strong> {result.total_score[key]}
-                </div>
-              ))}
-            </Box>
-          </Paper>
-        </Grid>
-        
+            ))}
+          </Grid>
+        </Box>
+        </Paper>
       </Grid>
-    </Box>
-
-    <Box sx={{ padding: 2 }}>
-      {weatherData.map((data, index) => (
-        <Card variant="outlined" sx={{ marginBottom: 2 }} key={index}>
-          <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="h4">{data.name}</Typography>
-                <Typography variant="h2" sx={{ marginTop: 1 }}>
-                  {data.temperature}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={8}>
-                {data.details.map((detail, detailIndex) => (
-                  <Box key={detailIndex} sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                    {detail.icon}
-                    <Typography variant="body1" sx={{ marginLeft: 1, fontWeight: 'bold' }}>
-                      {detail.score}
-                    </Typography>
-                    <Typography variant="body2" sx={{ marginLeft: 1 }}>
-                      {detail.text}
-                    </Typography>
-                  </Box>
-                ))}
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      ))}
-    </Box>
-
-                <Grid item>
-                    <Paper variant="outlined">
-                        <Box p={2}>
-                            <Typography variant="h2" gutterBottom>Support</Typography>
-                            {Object.keys(result.support).map((key, index) => (
-                                <div key={index}>
-                                    <Typography variant="h3">{key}</Typography>
-                                    <div>Score: {result.support[key].score}</div>
-                                    <div>Reason: {result.support[key].reason}</div>
-                                </div>
-                            ))}
-                        </Box>
-                    </Paper>
-                </Grid>
-                <Grid item>
-                    <Paper variant="outlined">
-                        <Box p={2}>
-                            <Typography variant="h2" gutterBottom>Cheat</Typography>
-                            {Object.keys(result.cheat).map((key, index) => (
-                                <div key={index}>
-                                    <Typography variant="h3">{key}</Typography>
-                                    <div>Score: {result.cheat[key].score}</div>
-                                    <div>Reason: {result.cheat[key].reason}</div>
-                                </div>
-                            ))}
-                        </Box>
-                    </Paper>
-                </Grid>
-                <Grid item>
-                    <Paper variant="outlined">
-                        <Box p={2}>
-                            <Typography variant="h2" gutterBottom>Sexual</Typography>
-                            {Object.keys(result.sexual).map((key, index) => (
-                                <div key={index}>
-                                    <Typography variant="h3">{key}</Typography>
-                                    <div>Score: {result.sexual[key].score}</div>
-                                    <div>Reason: {result.sexual[key].reason}</div>
-                                </div>
-                            ))}
-                        </Box>
-                    </Paper>
-                </Grid>
-                <Grid item>
-                    <Paper variant="outlined">
-                        <Box p={2}>
-                            <Typography variant="h2" gutterBottom>Interest</Typography>
-                            {Object.keys(result.interest).map((key, index) => (
-                                <div key={index}>
-                                    <Typography variant="h3">{key}</Typography>
-                                    {Object.keys(result.interest[key]).map((subKey, subIndex) => (
-                                        <div key={subIndex}>
-                                            <strong>{subKey}: </strong> {result.interest[key][subKey]}
-                                        </div>
-                                    ))}
-                                </div>
-                            ))}
-                        </Box>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Container>
-    );
+      <br></br>
+    </div>
+    </ThemeProvider>
+</Container>
+);
 };
 
 export default ResultLove;

@@ -26,9 +26,9 @@ const App = () => {
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />
+          <Route path="/upload-love" element={<UploadLove />} />
           <Route path="/loading-love" element={<LoadingLove />} />
           <Route path="/result-love" element={<ResultLove />} />
-          <Route path="/upload-love" element={<UploadLove />} />
         </Routes>
       </Box>
     </Router>
