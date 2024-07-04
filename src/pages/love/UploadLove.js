@@ -5,7 +5,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardHeader from '@mui/material/CardHeader';
-import lovemain from "../../image/lovemain.jpg";
 import '../../css/uploadlove.css';
 import theme from '../../theme';
 
@@ -13,6 +12,7 @@ const UploadLove = () => {
     return (
     <Container maxWidth="md">
       <ThemeProvider theme={theme}>
+      <div style={{ fontFamily: theme.typography.fontFamily }}>
       <Box className="container">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -26,7 +26,7 @@ const UploadLove = () => {
                 <CardMedia
                     component="img"
                     height="300"
-                    image={lovemain}
+                    image='/otoo_react/images/lovemain.jpg'
                     alt="Paella dish"
                 />
                 <CardContent>
@@ -45,6 +45,7 @@ const UploadLove = () => {
         </Grid>
         <FileUploadLove></FileUploadLove>
       </Box>
+      </div>
       </ThemeProvider>
     </Container>
     );

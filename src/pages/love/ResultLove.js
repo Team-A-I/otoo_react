@@ -1,30 +1,44 @@
-import { Card, CardContent, Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Card, CardContent, Box, Container, Grid, Paper, Typography, ThemeProvider} from '@mui/material';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import CloudIcon from '@mui/icons-material/Cloud';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
+import theme from '../../theme';
 
-const weatherData = [
-  {
-    name: '김현석',
-    temperature: '40°',
-    details: [
-      { icon: <CloudIcon />, score: '50점', text: '어느정도는 너를 먼저 생각할 수 있어' },
-      { icon: <ThunderstormIcon />, score: '10점', text: '마라탕은 안돼!' },
-      { icon: <WbSunnyIcon />, score: '70점', text: '우쭐할까? 너를 볼때?' },
-    ],
-  },
-  {
-    name: '배정현',
-    temperature: '60°',
-    details: [
-      { icon: <CloudIcon />, score: '50점', text: '어느정도는 너를 먼저 생각할 수 있어' },
-      { icon: <WbSunnyIcon />, score: '10점', text: '마라탕은 안돼!' },
-      { icon: <ThunderstormIcon />, score: '70점', text: '우쭐할까? 너를 볼때?' },
-    ],
-  },
-];
+const getLoveMessage = (total_score) => {
+    const keys = Object.keys(total_score);
+    if (keys.length !== 2) {
+        return '';
+    }
+
+    const [firstKey, secondKey] = keys;
+    const firstScore = total_score[firstKey];
+    const secondScore = total_score[secondKey];
+
+    if (firstScore > secondScore) {
+        return (
+        <>
+            {firstKey}님이<br />
+            {secondKey}님을 더<br />
+            좋아합니다.
+        </>
+        );
+    } else if (firstScore < secondScore) {
+        return (
+        <>
+            {secondKey}님이<br />
+            {firstKey}님을 더<br />
+            좋아합니다.
+        </>
+        );
+    } else {
+        return (
+        <>
+            {firstKey}님과<br />
+            {secondKey}님은 서로<br />
+            좋아합니다.
+        </>
+        );
+    }
+};
 
 const ResultLove = ({data}) => {
     const location = useLocation();
@@ -35,16 +49,100 @@ const ResultLove = ({data}) => {
         return <div>No result data</div>;
     }
 
+    const loveMessage = getLoveMessage(result.total_score);
+
     return (
         <Container maxWidth="lg">
-            <Typography variant="h1" gutterBottom>Result Page</Typography>
-            <Grid container spacing={2} direction="column">
-            <Box p={3}>
-      <Typography variant="h4" gutterBottom>철수님과 영희님의 판결 결과입니다.</Typography>
+        <ThemeProvider theme={theme}>
+        <div style={{ fontFamily: theme.typography.fontFamily }}>
+            <Grid container spacing={2} direction="column" mt={3} xs={12}>
+                <Box p={5}>
+                    <Box>
+                        <Paper elevation={4} style={{ borderRadius: '35px' }}>
+                            <Grid container spacing={2} alignItems="flex-start">
+                                <Grid item xs={12} sm={7}>
+                                    <Box p={5}>
+                                        <Grid 
+                                        container
+                                        direction="column"
+                                        justifyContent="space-between"
+                                        style={{ minHeight:"300px" }}>
+                                            <Grid item>
+                                                {loveMessage && (
+                                                    <Typography variant="hb_bold">{loveMessage}</Typography>
+                                                )}
+                                            </Grid>
+                                            <Grid item> 
+                                                <img src='/otoo_react/images/loveline.png'
+                                                alt="Loveline"
+                                                style={{ width: '50%', height: 'auto', opacity: 0.2 }}/>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                </Grid>
+                                <Grid item sm={5}>
+                                    <Box p={3}>
+                                        <img src='/otoo_react/images/main_love.png'
+                                        alt="Love"
+                                        style={{ width: '100%', height: 'auto' }}
+                                        /> 
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Box>
+                    <Box mt={5}>
+                        <Paper elevation={5} 
+                            style={{ borderRadius: '35px',
+                                backgroundImage: 'url(/otoo_react/images/lovecloud.png)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'
+                             }}>
+                            <Grid container spacing={2} alignItems="flex-start">
+                                <Grid item xs={5} mt={2}>
+                                    <Box p={5}>
+                                        <Grid 
+                                        container
+                                        direction="column"
+                                        justifyContent="space-between"
+                                        style={{ minHeight:"300px" }}>
+                                            <Grid item>
+                                            <Typography variant="hb_bold"
+                                            color="dyellow">
+                                                우리들의<br/>애정<br/>전선은<br/>이러해요
+                                            </Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={3.5}>
+                                    <Box p={3}>
+                                        <Paper elevation={5} style={{ borderRadius: '35px', minHeight:"320px"}}>
+                                            <img src='/otoo_react/images/main_love.png'
+                                            alt="Love"
+                                            style={{ width: '100%', height: 'auto' }}
+                                            /> 
+                                        </Paper>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={3.5}>
+                                    <Box p={3}>
+                                        <Paper elevation={5} style={{ borderRadius: '35px', minHeight:"320px"}}>
+                                            <img src='/otoo_react/images/main_love.png'
+                                            alt="Love"
+                                            style={{ width: '100%', height: 'auto' }}
+                                            /> 
+                                        </Paper>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Box>
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper variant="outlined">
-            <Box p={2}>
+          <Paper elevation={2}>
+            <Box p={3}>
               <Typography variant="h6" gutterBottom>우리들의 애정 전선은 이래해요</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -84,7 +182,7 @@ const ResultLove = ({data}) => {
       </Grid>
     </Box>
 
-    <Box sx={{ padding: 2 }}>
+    {/* <Box sx={{ padding: 2 }}>
       {weatherData.map((data, index) => (
         <Card variant="outlined" sx={{ marginBottom: 2 }} key={index}>
           <CardContent>
@@ -112,7 +210,7 @@ const ResultLove = ({data}) => {
           </CardContent>
         </Card>
       ))}
-    </Box>
+    </Box> */}
 
                 <Grid item>
                     <Paper variant="outlined">
@@ -174,6 +272,8 @@ const ResultLove = ({data}) => {
                     </Paper>
                 </Grid>
             </Grid>
+            </div>
+            </ThemeProvider>
         </Container>
     );
 };

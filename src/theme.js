@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material';
 // 사용방법
 // 사용할 페이지에 import theme from "../../theme"
 // <ThemeProvider theme={theme}></ThemeProvider> Container 아래 적용
+// <div style={{ fontFamily: theme.typography.fontFamily }}></div>
 // <Typography variant="typography style" color="palette color"></Typography>
 // <Button variant="contained" sx={{backgroundColor:theme.palette.원하는 색상}}></Button>
 
@@ -14,6 +15,7 @@ const theme = createTheme({
       deepblue: '#0350B7',
       lightpurple: '#ECD3D8',
       peach: '#FFCFAA',
+      dyellow: '#EECA42',
       //text_title
         gray900: '#1B1F23',
         gray800: '#252525',
