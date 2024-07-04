@@ -44,17 +44,17 @@
 }
 
 .slide-up-fade-out {
-  animation: slideUpFadeOut 1.2s ease-in-out forwards;
+  animation: slideUpFadeOut 0.8s ease forwards;
 }
 
 .slide-up-fade-in {
-  animation: slideUpFadeIn 1.2s ease-in-out forwards;
+  animation: slideUpFadeIn 0.8s ease forwards;
 }
 
 .slide-down-fade-out {
-  animation: slideDownFadeOut 1.2s ease-in-out forwards;
+  animation: slideDownFadeOut 0.8s ease forwards;
 }
 
 .slide-down-fade-in {
-  animation: slideDownFadeIn 1.2s ease-in-out forwards;
+  animation: slideDownFadeIn 0.8s ease forwards;
 }
