@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
-import ChatBot from './pages/ChatBot';
+import ChatBot from './pages/chatbot/ChatBot';
 import ConflictUpload from './pages/conflict/UploadConflict';
 import LoadingPage from './components/conflict/LoadingPage';
 import ResultPage from './components/conflict/ResultPage';
@@ -13,11 +13,12 @@ import LoadingLove from './pages/love/LoadingLove';
 import ResultLove from './pages/love/ResultLove';
 import UploadLove from './pages/love/UploadLove';
 
+const MainApp = () => {
+  const location = useLocation();
 
-const App = () => {
   return (
-    <Router basename="/otoo_react">
-      <Header />
+    <>
+      {location.pathname !== "/" && <Header />}
       <Box mt={2}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -31,6 +32,14 @@ const App = () => {
           <Route path="/upload-love" element={<UploadLove />} />
         </Routes>
       </Box>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router basename="/otoo_react">
+      <MainApp />
     </Router>
   );
 };

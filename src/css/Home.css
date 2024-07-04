@@ -1,0 +1,60 @@
+/* Home.css */
+@keyframes slideUpFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideDownFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes slideDownFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up-fade-out {
+  animation: slideUpFadeOut 1.2s ease-in-out forwards;
+}
+
+.slide-up-fade-in {
+  animation: slideUpFadeIn 1.2s ease-in-out forwards;
+}
+
+.slide-down-fade-out {
+  animation: slideDownFadeOut 1.2s ease-in-out forwards;
+}
+
+.slide-down-fade-in {
+  animation: slideDownFadeIn 1.2s ease-in-out forwards;
+}
