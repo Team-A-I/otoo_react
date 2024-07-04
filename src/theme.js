@@ -44,6 +44,11 @@ const theme = createTheme({
         fontWeight: 500,
         color: '#1B1F23'
       },
+      hbig: {
+        fontSize: '80px',
+        fontWeight: 700,
+        color: '#1B1F23'
+      },
       ha_bold: {
         fontSize: '50px',
         fontWeight: 700,
