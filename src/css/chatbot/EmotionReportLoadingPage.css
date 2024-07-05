@@ -1,0 +1,47 @@
+.emotionPaper {
+    width: 100%;
+    padding: 20px;
+}
+
+.emotionGrid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.letterPaper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.letterBox {
+    padding: 15px;
+}
+
+.letterIMG {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.reportPaper {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.reportBox {
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+
+
