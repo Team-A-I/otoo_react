@@ -59,30 +59,30 @@ const FileUpload = () => {
       <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box className="container">
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h2" component="h1" color="primary" className="header-text">
-                  계속되는{'\n'}언쟁에{'\n'}고민{'\n'}마세요
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardHeader/>
-                  <CardMedia
-                    component="img"
-                    height="300"
-                    image="/otoo_react/images/conflict4.jpg"
-                    alt="Paella dish"
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      This impressive paella is a perfect party dish and a fun meal to cook
-                      together with your guests. Add 1 cup of frozen peas along with the mussels,
-                      if you like.
+            <Grid container>
+                <Grid item xs={12} sm={6}container
+                  alignItems="center">
+                    <Typography variant="hbig"
+                    color="green" className="lovemain-text">
+                      계속되는{'\n'}언쟁에{'\n'}고민{'\n'}마세요.
                     </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+                  </Grid>
+                <Grid item xs={12} sm={6} pl={1}>
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardHeader/>
+                    <CardMedia
+                      component="img"
+                      height="300"
+                      image="/otoo_react/images/problems.jpg"
+                      alt="Paella dish"
+                    />
+                    <CardContent>
+                      <Typography variant="h3_mid" color="text.secondary">
+                        상대방과 나눈 간지러운 대화를 넣어주세요.<br/> 누가 더 좋아하는지 저희가 판단해드릴게요.<br/> 판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요. 지금 무슨 생각을 하고 있을까요?
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
               <Grid item xs={12}>
                 <Box className="button-container">
                   <input
@@ -98,10 +98,10 @@ const FileUpload = () => {
                       component="span" 
                       sx={{ 
                         mr: 2, 
-                        backgroundColor: '#0350B7', 
+                        backgroundColor: '#346F79', 
                         color: '#FFFFFF',
                         '&:hover': {
-                          backgroundColor: '#033080', // 호버 시 배경색 변경
+                          backgroundColor: '#346F79', // 호버 시 배경색 변경
                         }
                       }}
                     >
@@ -114,10 +114,10 @@ const FileUpload = () => {
                     onClick={handleFileUpload} 
                     disabled={!file}
                     sx={{ 
-                      backgroundColor: '#0350B7', 
+                      backgroundColor: '#346F79', 
                       color: '#FFFFFF',
                       '&:hover': {
-                        backgroundColor: '#033080', // 호버 시 배경색 변경
+                        backgroundColor: '#346F79', // 호버 시 배경색 변경
                       }
                     }}
                   >
@@ -129,10 +129,10 @@ const FileUpload = () => {
                     onClick={handleToggleInput}
                     sx={{ 
                       ml: 2,
-                      backgroundColor: '#0350B7', 
+                      backgroundColor: '#346F79', 
                       color: '#FFFFFF',
                       '&:hover': {
-                        backgroundColor: '#033080', // 호버 시 배경색 변경
+                        backgroundColor: '#346F79', // 호버 시 배경색 변경
                       }
                     }}
                   >

@@ -46,10 +46,10 @@ const ResultPage = () => {
     return (
       <Grid item xs={12}>
         <Paper elevation={4} sx={{borderRadius:'35px'}}>
-          <Box p={5}>
+          <Box>
           <Grid container alignItems="flex-start">
             <Grid item xs={12} sm={4}>
-              <Grid container justifyContent="center" alignItems="center" style={{ height: '100%', minHeight: '220px' }}>
+              <Grid container justifyContent="center" alignItems="center" style={{ height: '100%', minHeight: '220px' , marginLeft: 0}}>
                 <Typography 
                   variant="hc_bold" color="gray900" 
                   gutterBottom 

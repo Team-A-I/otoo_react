@@ -16,6 +16,7 @@ const theme = createTheme({
       lightpurple: '#ECD3D8',
       peach: '#FFCFAA',
       dyellow: '#EECA42',
+      green: '#346F79',
       //text_title
         gray900: '#1B1F23',
         gray800: '#252525',
