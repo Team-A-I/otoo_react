@@ -1,0 +1,99 @@
+/* Home.css */
+@keyframes slideUpFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideDownFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes slideDownFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up-fade-out {
+  animation: slideUpFadeOut 0.8s ease forwards;
+}
+
+.slide-up-fade-in {
+  animation: slideUpFadeIn 0.8s ease forwards;
+}
+
+.slide-down-fade-out {
+  animation: slideDownFadeOut 0.8s ease forwards;
+}
+
+.slide-down-fade-in {
+  animation: slideDownFadeIn 0.8s ease forwards;
+}
+
+
+.scroll-hint {
+  position: absolute;
+  bottom: 20px; /* 기본 하단 여백 */
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  animation: fadeInOut 2s infinite;
+}
+
+@media (max-width: 600px) {
+  .scroll-hint {
+    bottom: 5px; /* 작은 화면 하단 여백 */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .scroll-hint {
+    bottom: 10px; /* 중간 화면 하단 여백 */
+  }
+}
+
+@media (min-width: 961px) {
+  .scroll-hint {
+    bottom: 20px; /* 큰 화면 하단 여백 */
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
