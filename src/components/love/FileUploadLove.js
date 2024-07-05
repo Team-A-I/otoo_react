@@ -56,37 +56,37 @@ const FileUploadLove = () => {
   };
 
   return (
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
         <Box className="container">
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid item xs={12} sm={6}container
           alignItems="center">
-            <Typography variant="hbig"
-            color="lightpurple" className="lovemain-text">
-              누가 더{'\n'}좋아해?{'\n'}묻지{'\n'}마세요.
+            <Typography variant="hhue"
+            color="peach" className="lovemain-text">
+              누가 더 좋아해?{'\n'}무슨 생각해?{'\n'}이제는{'\n'}묻지 마세요.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 700 }}>
             <CardHeader/>
             <CardMedia
               component="img"
-              height="300"
+              height="400"
               image="/otoo_react/images/lovemain.jpg"
               alt="Paella dish"
             />
             <CardContent>
               <Typography variant="h3_mid" color="text.secondary">
-                상대방과 나눈 간지러운 대화를 넣어주세요.<br/> 누가 더 좋아하는지 저희가 판단해드릴게요.<br/> 판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요. 지금 무슨 생각을 하고 있을까요?
+                상대방과 나눈 간지러운 대화를 넣어주세요.<br/> 누가 더 좋아하는지 저희가 판단해드릴게요.<br/> 판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.<br/> 지금 무슨 생각을 하고 있을까요?
               </Typography>
             </CardContent>
           </Card>
         </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Box className="button-container">
+          <Box className="button-container" mt={12}>
             <input
                 type="file"
                 ref={fileInputRef}
@@ -95,10 +95,12 @@ const FileUploadLove = () => {
             />
             <Button variant="contained"
               component="span" 
-              size="medium"
+              size="large"
               sx={{ 
+                width: '200px', 
+                height: '50px',
                 mr: 2, 
-                backgroundColor: theme.palette.lightpurple, 
+                backgroundColor: theme.palette.peach, 
                 color: theme.palette.gray700,
                 '&:hover': {
                   backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
@@ -110,7 +112,7 @@ const FileUploadLove = () => {
             <Button variant="contained"
               type="submit"
               component="span"
-              size="medium" 
+              size="large" 
               disabled={!file}
               sx={{ 
                 mr: 2, 

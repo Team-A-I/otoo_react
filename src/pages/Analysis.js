@@ -1,10 +1,23 @@
 import React from 'react';
+import AnalysisMain from '../components/AnalysisMain';
+import { Container, Box } from '@mui/material';
 
 const Analysis = () => {
     return (
-        <div>
-            <h1>Analysis Page</h1>
-        </div>
+        <Box 
+            sx={{ 
+                backgroundColor: '#F1F0EB90', 
+                minHeight: '100vh', 
+                width: '100vw', 
+                display: 'flex', 
+                justifyContent: 'center', 
+            }}
+        >
+            <Container 
+                maxWidth="xl">
+                <AnalysisMain />
+            </Container>
+        </Box>
     );
 };
 
