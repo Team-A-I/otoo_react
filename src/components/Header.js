@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 const Header = () => {
   return (
-    <AppBar position="static" style={{ background: 'white' }}>
+    <AppBar position="static" style={{ background: 'white'}}>
       <Toolbar>
         <Typography style={{ color: 'black' }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
           OTOO

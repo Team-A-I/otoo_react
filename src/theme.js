@@ -11,7 +11,6 @@ const theme = createTheme({
     palette: {
       lightblue: '#0495D2',
       creamgray: '#F1F0EB',
-      vyellow: '#FAE300',
       deepblue: '#0350B7',
       lightpurple: '#ECD3D8',
       peach: '#FFCFAA',
@@ -43,6 +42,11 @@ const theme = createTheme({
       nav_mid: {
         fontSize: '16px',
         fontWeight: 500,
+        color: '#1B1F23'
+      },
+      hhue: {
+        fontSize: '105px',
+        fontWeight: 700,
         color: '#1B1F23'
       },
       hbig: {
