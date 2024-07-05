@@ -25,10 +25,10 @@ const LoadingPage = () => {
   return (
     <Container maxWidth="lg">
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
-        <Grid container spacing={3} mt={3}>
-          <Grid item xs={12}>
+        <Grid container spacing={2} mt={0.2}>
+          <Grid item xs={12} mb={1}>
             <Paper elevation={4} sx={{ borderRadius: '35px' }}>
-              <Box p={5}>
+              <Box>
                 <Grid container alignItems="flex-start">
                   <Grid item xs={12} sm={4}>
                     <Grid container justifyContent="center" alignItems="center" direction="column" style={{ height: '100%', minHeight: '220px' }}>

@@ -19,10 +19,10 @@ const Home = () => {
 
     const backgroundImages = [
         '/otoo_react/images/main.png',
-        '/otoo_react/images/love-main.png',
-        '/otoo_react/images/friendship.png',
         '/otoo_react/images/main-conflict.png',
-        '/otoo_react/images/main-janggu.png'
+        '/otoo_react/images/friendship.png',
+        '/otoo_react/images/love-main.png',
+        '/otoo_react/images/main-janggu2.png'
     ];
 
     const navigate = useNavigate(); // useNavigate 훅 사용
