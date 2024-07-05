@@ -24,7 +24,7 @@ const MainApp = () => {
   return (
     <>
       {location.pathname !== "/" && <Header />}
-      <Box mt={2}>
+      <Box>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
