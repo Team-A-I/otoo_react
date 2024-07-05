@@ -22,6 +22,7 @@ const Home = () => {
         '/otoo_react/images/love-main.png',
         '/otoo_react/images/friendship.png',
         '/otoo_react/images/main-conflict.png',
+        '/otoo_react/images/main-janggu.png'
     ];
 
     const navigate = useNavigate(); // useNavigate 훅 사용
