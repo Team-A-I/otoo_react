@@ -5,11 +5,8 @@
     justify-content: center;
     margin-top: 12vh;
   }
-  .header-text {
-    /* font-weight: 900 !important; */
+  .lovemain-text {
     white-space: pre-line!important;
-    /* font-size: 95px!important; */
-    /* color: #0350B7!important; */
   }
   .image-box {
     width: 300px;
@@ -32,12 +29,10 @@
   .image-text{
     font-weight: 800 !important;
   }
-  .button-container {
+  .lovebutton-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     margin-top: 4vh;
   }
-
-  .dohyeon {
-    font-family: 'BMDoHyeon', sans-serif !important;
-}

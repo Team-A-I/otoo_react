@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -18,11 +18,12 @@ import UploadFriendship from './pages/friendship/UploadFriendship';
 import LoadingFriendship from './pages/friendship/LoadingFriendship';
 import ResultFriendship from './pages/friendship/ResultFriendship';
 
+const MainApp = () => {
+  const location = useLocation();
 
-const App = () => {
   return (
-    <Router basename="/otoo_react">
-      <Header />
+    <>
+      {location.pathname !== "/" && <Header />}
       <Box mt={2}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />
+          <Route path="/upload-love" element={<UploadLove />} />
           <Route path="/loading-love" element={<LoadingLove />} />
           <Route path="/result-love" element={<ResultLove />} />
           <Route path="/upload-love" element={<UploadLove />} />
@@ -41,6 +43,14 @@ const App = () => {
           <Route path="/ResultFriendship" element={<ResultFriendship />} />
         </Routes>
       </Box>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router basename="/otoo_react">
+      <MainApp />
     </Router>
   );
 };
