@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, useTheme, useMediaQuery, ThemeProvider } from '@mui/material';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import theme1 from "../theme";
 import '../css/Home.css'; // CSS 파일 추가
 
@@ -10,63 +11,83 @@ const Home = () => {
     const [backgroundIndex, setBackgroundIndex] = useState(0);
     const [animateOutClass, setAnimateOutClass] = useState('');
     const [animateInClass, setAnimateInClass] = useState('');
+    // eslint-disable-next-line
+    const [scrollAmount, setScrollAmount] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const scrollThreshold = 100; // 더 느리게 변경되도록 임계치 증가
 
     const backgroundImages = [
         '/otoo_react/images/main.png',
         '/otoo_react/images/love-main.png',
-        '/otoo_react/images/friendship.png'
+        '/otoo_react/images/friendship.png',
+        '/otoo_react/images/main-conflict.png',
     ];
 
     const handleWheel = (event) => {
         event.preventDefault();
-
-        setScale(prevScale => {
-            let newScale = prevScale;
-            let newBackgroundIndex = backgroundIndex;
-
-            if (event.deltaY > 0) { // 스크롤 In
-                if (prevScale < 1.5) {
-                    newScale = Math.min(prevScale + 0.1, 1.5);
-                    if (newScale === 1.5 && backgroundIndex === 0) {
-                        setAnimateOutClass('slide-up-fade-out');
-                        setTimeout(() => {
-                            setBackgroundIndex(1);
-                            setAnimateOutClass('');
-                            setAnimateInClass('slide-up-fade-in');
-                        }, 500);
-                        setTimeout(() => setAnimateInClass(''), 1600);
+        if (isAnimating) return; // 애니메이션 중일 때는 새로운 스크롤 이벤트 무시
+    
+        setScrollAmount(prevScrollAmount => {
+            const newScrollAmount = prevScrollAmount + event.deltaY;
+            if (Math.abs(newScrollAmount) >= scrollThreshold) {
+                setScrollAmount(0); // 임계치를 초과한 후 스크롤 양을 초기화합니다.
+                setScale(prevScale => {
+                    let newScale = prevScale;
+                    // eslint-disable-next-line
+                    let newBackgroundIndex = backgroundIndex;
+    
+                    if (newScrollAmount > 0) { // 스크롤 In
+                        if (prevScale < 1.5) {
+                            newScale = Math.min(prevScale + 0.1, 1.5);
+                            if (newScale === 1.5 && backgroundIndex === 0) {
+                                setAnimateOutClass('slide-up-fade-out');
+                                setIsAnimating(true); // 애니메이션 시작
+                                setTimeout(() => {
+                                    setBackgroundIndex(1);
+                                    setAnimateOutClass('');
+                                    setAnimateInClass('slide-up-fade-in');
+                                    setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
+                                }, 500);
+                                setTimeout(() => setAnimateInClass(''), 1600);
+                            }
+                        } else if (backgroundIndex < backgroundImages.length - 1) {
+                            setAnimateOutClass('slide-up-fade-out');
+                            setIsAnimating(true); // 애니메이션 시작
+                            setTimeout(() => {
+                                setBackgroundIndex(backgroundIndex + 1);
+                                setAnimateOutClass('');
+                                setAnimateInClass('slide-up-fade-in');
+                                setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
+                            }, 500);
+                            setTimeout(() => setAnimateInClass(''), 1600);
+                        }
+                    } else { // 스크롤 Out
+                        if (backgroundIndex > 0) {
+                            setAnimateOutClass('slide-down-fade-out');
+                            setIsAnimating(true); // 애니메이션 시작
+                            setTimeout(() => {
+                                setBackgroundIndex(backgroundIndex - 1);
+                                setAnimateOutClass('');
+                                setAnimateInClass('slide-down-fade-in');
+                                setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
+                            }, 500);
+                            setTimeout(() => setAnimateInClass(''), 1600);
+                        } else {
+                            newScale = Math.max(prevScale - 0.1, 1);
+                            setIsAnimating(false); // 애니메이션 완료
+                        }
                     }
-                } else if (backgroundIndex < backgroundImages.length - 1) {
-                    setAnimateOutClass('slide-up-fade-out');
-                    setTimeout(() => {
-                        setBackgroundIndex(backgroundIndex + 1);
-                        setAnimateOutClass('');
-                        setAnimateInClass('slide-up-fade-in');
-                    }, 500);
-                    setTimeout(() => setAnimateInClass(''), 1600);
-                }
-            } else { // 스크롤 Out
-                if (backgroundIndex > 0) {
-                    setAnimateOutClass('slide-down-fade-out');
-                    setTimeout(() => {
-                        setBackgroundIndex(backgroundIndex - 1);
-                        setAnimateOutClass('');
-                        setAnimateInClass('slide-down-fade-in');
-                    }, 500);
-                    setTimeout(() => setAnimateInClass(''), 1600);
-                } else {
-                    newScale = Math.max(prevScale - 0.1, 1);
-                }
+    
+                    return newScale;
+                });
             }
-
-            return newScale;
+            return newScrollAmount;
         });
     };
-
     useEffect(() => {
         window.addEventListener('wheel', handleWheel, { passive: false });
-        return () => window.removeEventListener('wheel', handleWheel);
-    }, [backgroundIndex]);
+        return () => window.removeEventListener('wheel', handleWheel);// eslint-disable-next-line
+    }, [backgroundIndex, isAnimating]);
 
     return (
         <ThemeProvider theme={theme1}>
@@ -86,6 +107,7 @@ const Home = () => {
                         transition: 'transform 0.5s ease',
                         transform: `scale(${scale})`,
                         transformOrigin: 'center',
+                        marginTop: 0
                     }}
                 >
                     <Box
@@ -111,8 +133,8 @@ const Home = () => {
                                 variant="outlined"
                                 color="primary"
                                 sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '14px' },
-                                    padding: { xs: '2px 4px', sm: '4px 6px', md: '6px 12px' },
+                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
+                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                 }}
                             >
@@ -122,8 +144,8 @@ const Home = () => {
                                 variant="outlined"
                                 color="primary"
                                 sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '14px' },
-                                    padding: { xs: '2px 4px', sm: '4px 6px', md: '6px 12px' },
+                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
+                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                 }}
                             >
@@ -144,8 +166,8 @@ const Home = () => {
                                 variant="text"
                                 color="primary"
                                 sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '14px' },
-                                    padding: { xs: '2px 4px', sm: '4px 6px', md: '6px 12px' },
+                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
+                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                 }}
                             >
                                 wow
@@ -154,8 +176,8 @@ const Home = () => {
                                 variant="text"
                                 color="primary"
                                 sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '14px' },
-                                    padding: { xs: '2px 4px', sm: '4px 6px', md: '6px 12px' },
+                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
+                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                 }}
                             >
                                 Q&A
@@ -224,6 +246,13 @@ const Home = () => {
                                 Thank you for visiting us.
                             </Typography>
                         </Box>
+                        {/* 스크롤 힌트 추가 */}
+                        {backgroundIndex !== backgroundImages.length - 1 && (
+                            <Typography className="scroll-hint" sx={{ fontSize: { xs: 8, sm: 12, md: 15 }}}>
+                                Scroll Down <br/> 
+                                <KeyboardDoubleArrowDownIcon sx={{ fontSize: { xs: 10, sm: 15, md: 20 }, color: '1B1F23' }} />
+                            </Typography>
+                        )}
                     </Box>
                 </Box>
             </div>
