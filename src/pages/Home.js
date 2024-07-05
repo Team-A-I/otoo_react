@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, useTheme, useMediaQuery, ThemeProvider } from '@mui/material';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { useNavigate } from 'react-router-dom';
 import theme1 from "../theme";
 import '../css/Home.css'; // CSS 파일 추가
 
@@ -22,6 +23,8 @@ const Home = () => {
         '/otoo_react/images/friendship.png',
         '/otoo_react/images/main-conflict.png',
     ];
+
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     const handleWheel = (event) => {
         event.preventDefault();
@@ -89,6 +92,11 @@ const Home = () => {
         return () => window.removeEventListener('wheel', handleWheel);// eslint-disable-next-line
     }, [backgroundIndex, isAnimating]);
 
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
+
+
     return (
         <ThemeProvider theme={theme1}>
             <div style={{ fontFamily: theme.typography.fontFamily, overflow: 'hidden', position: 'relative' }}>
@@ -137,6 +145,7 @@ const Home = () => {
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                 }}
+                                onClick={() => handleNavigation('/upload-conflict')}
                             >
                                 Judgment
                             </Button>
@@ -148,6 +157,7 @@ const Home = () => {
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                 }}
+                                onClick={() => handleNavigation('/chatbot')}
                             >
                                 Janggu
                             </Button>
