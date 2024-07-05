@@ -5,7 +5,7 @@
 }
 .chatList_Box{
     height: 100%;
-    min-height: 400px;
+    min-height: 500px;
     max-height: 850px;
     overflow-y: scroll;
 }
@@ -21,6 +21,7 @@
     background-color: #B4CBEA;
     border-radius: 15px;
     max-width: 500px;
+    font-family: 'Pretendard'
 }
 
 .jangguDiv{
@@ -35,14 +36,17 @@
     background-color: #FFDEC4;
     border-radius: 15px;
     max-width: 500px;
+    color:#404040;
+    font-family: 'Pretendard';
 }
 .grid{
     display: flex;
     justify-content: center;   
     height: 100%;
-    max-height: 600px; 
+    max-height: 650px; 
 }
 .content{
+    margin-top: 15px;
     width: 60%;
 }
 .chatInput{
@@ -64,6 +68,8 @@
     border-radius: 12px !important;
     width: 150px !important;
     min-width: 150px !important;
+    min-height: 48px !important;
+    
 }
 .jangguIMG_Box{
     display: flex;
@@ -82,15 +88,16 @@
     height: 100%;
 }
 .nomaltype{
-    margin-right: 70px!important;
+    margin-right: 35px!important;
     background-color: white!important;
-    color: black!important;
+    color: #6E6E6E!important;
     font-weight: bold!important;
     border-radius: 15px!important;
 }
 .janggutype{
+    margin-left: 35px!important;
     background-color: white!important;
-    color: black!important;
+    color: #6E6E6E!important;
     font-weight: bold!important;
     border-radius: 15px!important;
 }
@@ -99,8 +106,17 @@
     justify-content: center;
     opacity: 0.5;
 }
+.tooltipable{
+    margin: 0px;
+    padding: 0px;
+}
 
-
+.chat_subtitle{
+    margin-top:15px
+}
+.modeSelect{
+    margin-top: 15px;
+}
 
 /* 코너에 라운드 효과 */
 .chatList_Box::-webkit-scrollbar-track,
