@@ -6,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import { Button, Container, TextField, Typography, Box, Grid, ThemeProvider} from '@mui/material';
-import '../../css/uploadlove.css';
+import '../../css/love/uploadlove.css';
 import theme from '../../theme';
 
 const FileUploadLove = () => {
@@ -40,7 +40,7 @@ const FileUploadLove = () => {
 
           try {
               navigate('/loading-love');
-              const response = await axios.post('http://localhost:8080/upload', data, {
+              const response = await axios.post('http://localhost:8080/api/love/upload', data, {
                   headers: {
                       'Content-Type': 'application/json',
                   },

@@ -95,17 +95,17 @@ return [
     {
     title: "너를 생각하는 내마음",
     percentage: data.support[user].score,
-    tooltipTitle: "누가 더 서로를 위하는지 비교한 비율입니다.",
+    tooltipTitle: data.support[user].reason,
     },
     {
     title: "바람기",
     percentage: data.cheat[user].score,
-    tooltipTitle: "누가 더 바람필 확률이 높은지 비교한 비율입니다.",
+    tooltipTitle: data.cheat[user].reason,
     },
     {
     title: "19금력",
     percentage: data.sexual[user].score,
-    tooltipTitle: "누가 더 성적호감도를 크게 느끼는지 비교한 비율입니다.",
+    tooltipTitle: data.sexual[user].reason,
     },
 ];
 };
@@ -126,6 +126,35 @@ const getImageByPercentage = (percentage) => {
     } else {
       return '';
     }
+};
+
+const getStyleByTotalscore = (percentage) => {
+  if (percentage >= 0 && percentage <= 10) {
+    return {
+      imageUrl: '/otoo_react/images/낙뢰하늘사진.jpg',
+      color: theme.palette.gray200
+    };
+  } else if (percentage >= 11 && percentage <= 20) {
+    return {
+      imageUrl: '/otoo_react/images/비하늘사진.jpg',
+      color: theme.palette.gray900
+    };
+  } else if (percentage >= 21 && percentage <= 45) {
+    return {
+      imageUrl: '/otoo_react/images/흐린하늘사진.png',
+      color: theme.palette.gray900
+    };
+  } else if (percentage >= 46 && percentage <= 100) {
+    return {
+      imageUrl: '/otoo_react/images/맑은하늘사진.jpg',
+      color: theme.palette.gray200
+    };
+  } else {
+    return {
+      imageUrl: '',
+      color: '#000000' // 기본 색상 (검정색)
+    };
+  }
 };
 
 const renderTable = (name, keywords, color) => (
@@ -176,6 +205,7 @@ const ResultLove = ({data}) => {
     const loveMessage = getLoveMessage(result.total_score);
 
     const names = Object.keys(result.total_score|| {});
+    const { imageUrl, color } = getStyleByTotalscore(result.total_score);
 
 return (
 <Container maxWidth="lg">
@@ -247,53 +277,57 @@ return (
 
 {/* compare_score */}
 <Grid item xs={12} mt={2}>
-    {names.map((name) => (
-        <Paper elevation={3} style={{ marginBottom: '24px', borderRadius: '35px', minHeight: '320px' }}>
-        <Box p={5}>
-            <Grid container spacing={3} alignItems="center">
+      {names.map((name) => {
+        const { imageUrl, color } = getStyleByTotalscore(result.total_score[name]);
+
+        return (
+          <Paper elevation={3} style={{ marginBottom: '24px', borderRadius: '35px', minHeight: '320px' }} key={name}>
+            <Box p={5}>
+              <Grid container spacing={3} alignItems="center">
                 <Grid item xs={12} sm={4} textAlign="center">
-                    <Paper
-                        elevation={3}
-                        style={{
-                        padding: '16px',
-                        backgroundImage: 'url(/otoo_react/images/맑은하늘사진3.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        height: '100%',
-                        minHeight: '260px',
-                        borderRadius: '15px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        }}
-                    >
-                        <Typography variant="h1_bold" color='gray200' mb={5} gutterBottom>
-                        {name}님의 <br /> 애정도
-                        </Typography>
-                        <Typography variant="h1_bold" color='gray200' gutterBottom >
-                        {result.total_score[name]}%
-                        </Typography>
-                    </Paper>
+                  <Paper
+                    elevation={3}
+                    style={{
+                      padding: '16px',
+                      backgroundImage: `url(${imageUrl})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      height: '100%',
+                      minHeight: '260px',
+                      borderRadius: '15px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Typography variant="h1_bold" style={{ color }} mb={5} gutterBottom>
+                      {name}님의 <br /> 애정도
+                    </Typography>
+                    <Typography variant="h1_bold" style={{ color }}gutterBottom>
+                      {result.total_score[name]}%
+                    </Typography>
+                  </Paper>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                <Grid container spacing={2}>
+                  <Grid container spacing={2}>
                     {createUserData(name, result).map((item, index) => (
-                    <InfoCard
+                      <InfoCard
                         key={index}
                         title={item.title}
                         imageSrc={getImageByPercentage(item.percentage)}
                         percentage={item.percentage}
                         tooltipTitle={item.tooltipTitle}
-                    />
+                      />
                     ))}
+                  </Grid>
                 </Grid>
-                </Grid>
-            </Grid>
-        </Box>
-        </Paper>
-    ))}
-</Grid>
+              </Grid>
+            </Box>
+          </Paper>
+        );
+      })}
+    </Grid>
 
 {/* interest_score */}
     <Grid item xs={12}>
