@@ -9,8 +9,8 @@ import ConflictButton from './ConflictButton'; // 새로 만든 버튼 컴포넌
 import theme from "../../theme";
 
 // 변수 정의
-const cardMaxWidth = 345;
-const imageHeight = 300;
+const cardMaxWidth = 700;
+const imageHeight = 400;
 const imageSrc = "/otoo_react/images/problems.jpg";
 const imageAlt = "Paella dish";
 const lovemainText = "계속되는\n언쟁에\n고민\n마세요.";
@@ -25,7 +25,7 @@ const textFieldVariant = "outlined";
 
 
 const FileUpload = () => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
   const inputRef = useRef(null);
@@ -75,7 +75,7 @@ const FileUpload = () => {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
@@ -93,7 +93,7 @@ const FileUpload = () => {
                   {lovemainText}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6} pl={1}>
+              <Grid item xs={12} sm={6}>
                 <Card sx={{ maxWidth: cardMaxWidth }}>
                   <CardHeader />
                   <CardMedia
