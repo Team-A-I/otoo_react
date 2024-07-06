@@ -45,4 +45,53 @@
     
   }
   
-  
+  /* FileUploadConflict.css */
+
+.btn-upload {
+  margin-right: 8px !important;
+  background-color: #346F79 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-upload:hover {
+  background-color: #295961 !important;
+}
+
+.btn-result {
+  background-color: #346F79 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-result:hover {
+  background-color: #295961 !important;
+}
+
+.btn-result:disabled {
+  background-color: #B0B0B0 !important;  /* 회색 */
+  color: #FFFFFF !important;
+}
+
+.btn-toggle-input {
+  margin-left: 8px !important;
+  background-color: #346F79 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-toggle-input:hover {
+  background-color: #295961 !important;
+}
+
+.btn-textfield {
+  margin-top: 16px !important;
+  background-color: #346F79 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-textfield:hover {
+  background-color: #295961 !important;
+}
+
+.btn-textfield:disabled {
+  background-color: #B0B0B0 !important;  /* 회색 */
+  color: #FFFFFF !important;
+}
