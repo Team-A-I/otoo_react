@@ -78,10 +78,10 @@ const FileUpload = () => {
     <Container maxWidth="lg">
       <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
-          <Box className="container">
+          <Box className="conflict-container">
             <Grid container>
               <Grid item xs={12} sm={6} container alignItems="center">
-                <Typography variant="hbig" color="green" className="lovemain-text">
+                <Typography variant="hbig" color="green" className="conflict-header-text">
                   {lovemainText}
                 </Typography>
               </Grid>
@@ -102,7 +102,7 @@ const FileUpload = () => {
                 </Card>
               </Grid>
               <Grid item xs={12}>
-                <Box className="button-container">
+                <Box className="conflict-button-container">
                   <input
                     accept=".txt"
                     style={{ display: 'none' }}
@@ -114,7 +114,7 @@ const FileUpload = () => {
                     <Button
                       variant="contained"
                       component="span"
-                      className="btn-upload"
+                      className="conflict-btn-upload"
                     >
                       {btnUploadLabel}
                     </Button>
@@ -124,7 +124,7 @@ const FileUpload = () => {
                     color="primary"
                     onClick={handleFileUpload}
                     disabled={!file}
-                    className="btn-result"
+                    className="conflict-btn-result"
                   >
                     {btnResultLabel}
                   </Button>
@@ -132,7 +132,7 @@ const FileUpload = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleToggleInput}
-                    className="btn-toggle-input"
+                    className="conflict-btn-toggle-input"
                   >
                     {showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
                   </Button>
@@ -152,7 +152,7 @@ const FileUpload = () => {
                   variant="contained"
                   color="primary"
                   onClick={handleFileUpload}
-                  className="btn-textfield"
+                  className="conflict-btn-textfield"
                 >
                   {btnResultLabel}
                 </Button>
