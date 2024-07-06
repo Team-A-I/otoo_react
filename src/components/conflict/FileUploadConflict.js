@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { Button, Container, TextField, Typography, Box, Grid, ThemeProvider } from '@mui/material';
+import React, { useState, useRef, useCallback } from 'react';
+import { Container, TextField, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import '../../css/conflict/FileUploadConflict.css';
+import ConflictButton from './ConflictButton'; // 새로 만든 버튼 컴포넌트
 import theme from "../../theme";
 
 // 변수 정의
@@ -23,6 +23,7 @@ const btnToggleInputLabelHide = "입력창 닫기";
 const textFieldRows = 10;
 const textFieldVariant = "outlined";
 
+
 const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [jsonContent, setJsonContent] = useState(null);
@@ -30,12 +31,12 @@ const FileUpload = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleFileChange = (event) => {
+  const handleFileChange = useCallback((event) => {
     setFile(event.target.files[0]);
     console.log("File selected:", event.target.files[0]);
-  };
+  }, []);
 
-  const handleFileRead = (event) => {
+  const handleFileRead = useCallback((event) => {
     const content = event.target.result;
     try {
       const json = parseKakaoTalkText(content);
@@ -45,24 +46,23 @@ const FileUpload = () => {
     } catch (error) {
       console.error("Error parsing file:", error);
     }
-  };
+  }, [navigate]);
 
   const handleFileUpload = () => {
-    console.log("handleFileUpload called");
-    if (file) {
-      console.log("File exists:", file);
-      const reader = new FileReader();
-      reader.onload = handleFileRead;
-      reader.readAsText(file);
-    } else {
+    if (!file) {
       console.log("No file selected");
+      return;
     }
+    console.log("handleFileUpload called");
+    console.log("File exists:", file);
+    const reader = new FileReader();
+    reader.onload = handleFileRead;
+    reader.readAsText(file);
   };
 
   const parseKakaoTalkText = (text) => {
     const lines = text.split('\n');
-    const json = lines.map((line, index) => ({ id: index, text: line }));
-    return json;
+    return lines.map((line, index) => ({ id: index, text: line }));
   };
 
   const handleToggleInput = () => {
@@ -78,10 +78,18 @@ const FileUpload = () => {
     <Container maxWidth="lg">
       <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
-          <Box className="conflict-container">
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
             <Grid container>
               <Grid item xs={12} sm={6} container alignItems="center">
-                <Typography variant="hbig" color="green" className="conflict-header-text">
+                <Typography
+                  variant="hbig"
+                  sx={{
+                    fontWeight: 900,
+                    whiteSpace: 'pre-line',
+                    fontSize: '95px',
+                    color: '#346F79'
+                  }}
+                >
                   {lovemainText}
                 </Typography>
               </Grid>
@@ -102,7 +110,7 @@ const FileUpload = () => {
                 </Card>
               </Grid>
               <Grid item xs={12}>
-                <Box className="conflict-button-container">
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                   <input
                     accept=".txt"
                     style={{ display: 'none' }}
@@ -111,31 +119,24 @@ const FileUpload = () => {
                     onChange={handleFileChange}
                   />
                   <label htmlFor="raised-button-file">
-                    <Button
-                      variant="contained"
-                      component="span"
+                    <ConflictButton
+                      label={btnUploadLabel}
+                      onClick={() => {}}
+                      disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
                       className="conflict-btn-upload"
-                    >
-                      {btnUploadLabel}
-                    </Button>
+                    />
                   </label>
-                  <Button
-                    variant="contained"
-                    color="primary"
+                  <ConflictButton
+                    label={btnResultLabel}
                     onClick={handleFileUpload}
                     disabled={!file}
                     className="conflict-btn-result"
-                  >
-                    {btnResultLabel}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
+                  />
+                  <ConflictButton
+                    label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
                     onClick={handleToggleInput}
                     className="conflict-btn-toggle-input"
-                  >
-                    {showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
-                  </Button>
+                  />
                 </Box>
               </Grid>
             </Grid>
@@ -148,14 +149,12 @@ const FileUpload = () => {
                   rows={textFieldRows}
                   variant={textFieldVariant}
                 />
-                <Button
-                  variant="contained"
-                  color="primary"
+                <ConflictButton
+                  label={btnResultLabel}
                   onClick={handleFileUpload}
+                  disabled={!file}
                   className="conflict-btn-textfield"
-                >
-                  {btnResultLabel}
-                </Button>
+                />
               </Box>
             )}
           </Box>
