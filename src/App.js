@@ -14,6 +14,7 @@ import { Box } from '@mui/material';
 import LoadingLove from './pages/love/LoadingLove';
 import ResultLove from './pages/love/ResultLove';
 import UploadLove from './pages/love/UploadLove';
+
 // import UploadFriendship from './pages/friendship/UploadFriendship';
 // import LoadingFriendship from './pages/friendship/LoadingFriendship';
 // import ResultFriendship from './pages/friendship/ResultFriendship';
@@ -39,12 +40,12 @@ const MainApp = () => {
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />
-          <Route path="/upload-love" element={<UploadLove />} />
           <Route path="/loading-love" element={<LoadingLove />} />
           <Route path="/result-love" element={<ResultLove />} />
           <Route path="/upload-love" element={<UploadLove />} />
           <Route path="/emotionReportPage" element={<EmotionReportPage />} />
           <Route path="/emotionReportLoadingPage" element={<EmotionReportLoadingPage />} />
+
           {/* <Route path="/UploadFriendship" element={<UploadFriendship />} />
           <Route path="/LoadingFriendship" element={<LoadingFriendship />} />
           <Route path="/ResultFriendship" element={<ResultFriendship />} /> */}
