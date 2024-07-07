@@ -11,7 +11,7 @@ const LoadingPage = () => {
 
   useEffect(() => {
     if (jsonContent) {
-      axios.post('http://localhost:8080/api/conflict/upload', jsonContent)
+      axios.post('http://localhost:8080/api/conflict/analysis', jsonContent)
         .then(response => {
           console.log("Response from backend:", response.data);
           navigate('/result-conflict', { state: { jsonData: response.data } });

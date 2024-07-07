@@ -39,7 +39,7 @@ const FileUpload = () => {
   const handleFileRead = useCallback((event) => {
     const content = event.target.result;
     try {
-      const json = parseKakaoTalkText(content);
+      const json = { text: content }; // 전체 텍스트를 하나의 'text' 필드에 저장
       setJsonContent(json);
       console.log("JSON Content:", json);
       navigate('/loading-conflict', { state: { jsonContent: json } });
@@ -58,11 +58,6 @@ const FileUpload = () => {
     const reader = new FileReader();
     reader.onload = handleFileRead;
     reader.readAsText(file);
-  };
-
-  const parseKakaoTalkText = (text) => {
-    const lines = text.split('\n');
-    return lines.map((line, index) => ({ id: index, text: line }));
   };
 
   const handleToggleInput = () => {
