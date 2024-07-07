@@ -14,9 +14,16 @@ import { Box } from '@mui/material';
 import LoadingLove from './pages/love/LoadingLove';
 import ResultLove from './pages/love/ResultLove';
 import UploadLove from './pages/love/UploadLove';
-import UploadFriendship from './pages/friendship/UploadFriendship';
-import LoadingFriendship from './pages/friendship/LoadingFriendship';
-import ResultFriendship from './pages/friendship/ResultFriendship';
+// import UploadFriendship from './pages/friendship/UploadFriendship';
+// import LoadingFriendship from './pages/friendship/LoadingFriendship';
+// import ResultFriendship from './pages/friendship/ResultFriendship';
+import UserLoginPage from './pages/users/UserLoginPage';
+import SignUpPage from './pages/users/SignUpPage';
+import GoogleLogin from './pages/users/GoogleLogin';
+import NaverLogin from './pages/users/NaverLogin';
+import ForgetPassword from './pages/users/ForgetPassword';
+import ResetPassword from './pages/users/ResetPassword';
+
 
 const MainApp = () => {
   const location = useLocation();
@@ -38,9 +45,15 @@ const MainApp = () => {
           <Route path="/upload-love" element={<UploadLove />} />
           <Route path="/emotionReportPage" element={<EmotionReportPage />} />
           <Route path="/emotionReportLoadingPage" element={<EmotionReportLoadingPage />} />
-          <Route path="/UploadFriendship" element={<UploadFriendship />} />
+          {/* <Route path="/UploadFriendship" element={<UploadFriendship />} />
           <Route path="/LoadingFriendship" element={<LoadingFriendship />} />
-          <Route path="/ResultFriendship" element={<ResultFriendship />} />
+          <Route path="/ResultFriendship" element={<ResultFriendship />} /> */}
+          <Route path="/user-login" element={<UserLoginPage />} />
+          <Route path="/user-signup" element={<SignUpPage />} />
+          <Route path="/googleLogin" element={<GoogleLogin />} />
+          <Route path="/naverLogin" element={<NaverLogin />} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </Box>
     </>

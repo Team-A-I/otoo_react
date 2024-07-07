@@ -16,6 +16,8 @@ const Home = () => {
     const [scrollAmount, setScrollAmount] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const scrollThreshold = 100; // 더 느리게 변경되도록 임계치 증가
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     const backgroundImages = [
         '/otoo_react/images/main.png',
@@ -88,6 +90,15 @@ const Home = () => {
             return newScrollAmount;
         });
     };
+    const handleLogout = () => {
+        sessionStorage.removeItem('usersCode');
+        setIsLoggedIn(false);
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("userName");
+        sessionStorage.removeItem("userEmail");
+        sessionStorage.removeItem("userRole");
+}
     useEffect(() => {
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => window.removeEventListener('wheel', handleWheel);// eslint-disable-next-line
@@ -96,7 +107,16 @@ const Home = () => {
     const handleNavigation = (path) => {
         navigate(path);
     };
-
+    useEffect(() => {
+        console.log(sessionStorage.getItem('userName'));
+    
+      }, []);
+    useEffect(() => {
+    const usersCode = sessionStorage.getItem('usersCode');
+    if (usersCode !== null) {
+        setIsLoggedIn(true);
+    }
+    }, [sessionStorage.getItem('usersCode')]);
 
     return (
         <ThemeProvider theme={theme1}>
@@ -180,8 +200,9 @@ const Home = () => {
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                 }}
+                                onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
                             >
-                                wow
+                                 {isLoggedIn ? 'Logout' : 'Login'}
                             </Button>
                             <Button
                                 variant="text"
