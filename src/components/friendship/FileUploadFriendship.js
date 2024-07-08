@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -11,6 +10,7 @@ import theme from '../../theme';
 
 const FileUploadFriendship = () => {
   const [file, setFile] = useState(null);
+  // eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();

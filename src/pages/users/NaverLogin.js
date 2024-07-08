@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const NaverLogin = () => {
-  const [code, setCode] = useState("");
+const NaverLogin = () => {// eslint-disable-next-line
+  const [code, setCode] = useState("");// eslint-disable-next-line
   const [state, setState] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +40,7 @@ const NaverLogin = () => {
       })
       .catch((err) => {
         console.error(err);
-      });
+      });// eslint-disable-next-line
   }, []);
 
   return (
