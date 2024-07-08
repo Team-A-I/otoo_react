@@ -40,35 +40,42 @@ let theme = createTheme({
     },
     //48px
     h3: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //34px
     h4: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //24px
     h5: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //20px
     h6: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //16px
     subtitle1: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //14px
     subtitle2: {
-  
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //16px
     body1: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //14px
     body2: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //14px
@@ -77,10 +84,12 @@ let theme = createTheme({
     },
     //12px
     caption: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
     //10px
     overline: {
+      fontWeight: 700,
       color: '#1B1F23'
     },
   },
