@@ -6,8 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import theme from '../theme';
-import Carousel from 'react-material-ui-carousel';
-import SwipeableTextMobileStepper from './Stepper';
+import ExplainAnalysis from './ExplainAnalysis';
 
 const AnalysisMain = () => {
     const theme1 = useTheme();
@@ -17,11 +16,6 @@ const AnalysisMain = () => {
         { text: 'ㄱㅏㄹㄷㅡㅇ', link: '/upload-conflict' },
         { text: 'ㅇㅜㅈㅓㅇ', link: '/upload-friendship' },
         { text: 'ㅅㅏㄹㅏㅇ', link: '/upload-love' }
-    ];
-
-    const cardData = [
-        { image: "/otoo_react/images/톡설명1.png", alt: "talk1", description: "1:1 대화를 추출해주세요." },
-        { image: "/otoo_react/images/톡설명2.png", alt: "talk2", description: "원하는 분야를 고르고 카톡txt 파일을 업로드 해주세요." }
     ];
 
     return (
@@ -34,7 +28,7 @@ const AnalysisMain = () => {
                             {buttonData.map((button, index) => (
                                 <Grid item key={index}>
                                     <Typography
-                                        variant='hhue'
+                                        variant='h1'
                                         sx={{
                                             mr: 2,
                                             color: theme.palette.peach,
@@ -77,7 +71,7 @@ const AnalysisMain = () => {
                     <Grid item xs={12} sm={6}>
                         <Grid container spacing={2} direction="column" alignItems="center">
                             <Grid>
-                                <SwipeableTextMobileStepper/>
+                                <ExplainAnalysis/>
                             </Grid>
                         </Grid>
                     </Grid>

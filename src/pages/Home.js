@@ -146,7 +146,7 @@ const Home = () => {
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                 }}
-                                onClick={() => handleNavigation('/upload-conflict')}
+                                onClick={() => handleNavigation('/analysis')}
                             >
                                 Judgment
                             </Button>
