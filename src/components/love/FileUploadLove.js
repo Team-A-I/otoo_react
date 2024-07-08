@@ -11,6 +11,7 @@ import theme from '../../theme';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
+  const [jsonContent, setJsonContent] = useState(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -31,38 +32,19 @@ const FileUploadLove = () => {
       const reader = new FileReader();
       reader.onload = async (e) => {
           const content = e.target.result;
-          const userId = "example_user_id"; // 실제 사용자 ID를 여기에 넣어야 합니다.
-          const data = {
-              user_id: userId,
-              content: content
-          };
-          console.log("data",data)
-
           try {
-              navigate('/loading-love');
-              const response = await axios.post('http://localhost:8080/api/love/upload', data, {
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-              });
-              console.log("response", response)
-              console.log("response.data", response.data)
-              navigate('/result-love', { state: { result: response.data } });
+            const json = {text:content};
+            setJsonContent(json);
+            navigate('/loading-love', { state: { jsonContent: json } });
           } catch (error) {
-              console.error('Error uploading file:', error);
+            console.error('Error uploading file:', error);
           }
       };
       reader.readAsText(file);
   };
 
-  const lovecopy = `누가 더 좋아해?\n무슨 생각해?\n이제는\n묻지 마세요.`;
-
-  const loveintrocopy = `
-    상대방과 나눈 간지러운 대화를 넣어주세요.<br/>
-    누가 더 좋아하는지 저희가 판단해드릴게요.<br/>
-    판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.<br/>
-    지금 무슨 생각을 하고 있을까요?
-  `;
+  const lovecopy = "누가 더 좋아해?\n무슨 생각해?\n이제는\n묻지 마세요.";
+  const loveintrocopy = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.\n지금 무슨 생각을 하고 있을까요?";
 
   return (
       <Container maxWidth="xl">
@@ -74,12 +56,7 @@ const FileUploadLove = () => {
           alignItems="center">
             <Typography variant="h1"
             color="peach" className="lovemain-text">
-              {loveintrocopy.split('<br/>').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  <br />
-                </React.Fragment>
-              ))}
+              {lovecopy}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>

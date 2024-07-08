@@ -62,7 +62,7 @@ function UserLoginPage() {
             "http://localhost:8080/kakaoLogin/" + accessToken
           );
 
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log(response);
 
             sessionStorage.setItem("accessToken", response.headers.access);
