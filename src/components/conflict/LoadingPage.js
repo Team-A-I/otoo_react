@@ -10,17 +10,20 @@ const LoadingPage = () => {
   const { jsonContent } = location.state || {};
 
   useEffect(() => {
-    if (jsonContent) {
-      axios.post('http://localhost:8080/api/conflict/analysis', jsonContent)
-        .then(response => {
+    const fetchData = async () => {
+      if (jsonContent) {
+        try {
+          const response = await axios.post('http://localhost:8080/api/conflict/analysis', { text: jsonContent.text });
           console.log("Response from backend:", response.data);
           navigate('/result-conflict', { state: { jsonData: response.data } });
-        })
-        .catch(error => {
+        } catch (error) {
           console.error("Error sending JSON to backend:", error);
-        });
-    }
-  }, [jsonContent, navigate]);
+        }
+      }
+    };
+
+    fetchData();
+  }, []); // 빈 의존성 배열을 사용하여 한 번만 실행되도록 설정
 
   return (
     <Container maxWidth="lg">
