@@ -36,7 +36,7 @@ const GoogleLogin = () => {
       })
       .catch((err) => {
         console.error(err);
-      });
+      });// eslint-disable-next-line
   }, []);
 
   return (

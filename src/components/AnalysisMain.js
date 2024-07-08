@@ -1,16 +1,10 @@
-import { Container, ThemeProvider, Typography, Box, Button, useTheme, useMediaQuery, Grid } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
+import { ThemeProvider, Typography, Box, Grid } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import theme from '../theme';
 import ExplainAnalysis from './ExplainAnalysis';
 
 const AnalysisMain = () => {
-    const theme1 = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const buttonData = [
         { text: 'ㄱㅏㄹㄷㅡㅇ', link: '/upload-conflict' },

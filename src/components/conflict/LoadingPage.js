@@ -22,8 +22,8 @@ const LoadingPage = () => {
       }
     };
     fetchData();
-  }, []); // 빈 의존성 배열을 사용하여 한 번만 실행되도록 설정
-
+  }, [jsonContent, navigate]);
+  
   return (
     <Container maxWidth="lg">
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="93vh">

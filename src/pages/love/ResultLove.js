@@ -263,7 +263,7 @@ const ResultLove = () => {
                                                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                                                         <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                                             <Typography variant="h5" gutterBottom mt={3}>{name}</Typography>
-                                                            <img src={getImageByPercentage(result.total_score[name])} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
+                                                            <img src={getImageByPercentage(result.total_score[name])} alt="" style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
                                                             <Typography variant="h2" color="gray600" style={{ fontSize: '2vw' }}>{result.total_score[name]}%</Typography>
                                                         </CardContent>
                                                     </Card>
