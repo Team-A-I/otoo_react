@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useRef} from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -8,21 +8,22 @@ const LoadingLove = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { jsonContent } = location.state || {};
+  const hasSubmitted = useRef(false)
 
   useEffect(() => {
-    if (jsonContent) {
-      // jsonContent를 올바른 JSON 문자열로 변환
-      const jsonString = JSON.stringify(jsonContent);
-      axios.post('http://localhost:8080/api/love/analysis', { text: jsonString })
-        .then(response => {
+    const fetchData = async () => {
+      if (jsonContent) {
+        try {
+          const response = await axios.post('http://localhost:8080/api/love/analysis', { text: jsonContent.text });
           console.log("Response from backend:", response.data);
           navigate('/result-love', { state: { jsonData: response.data } });
-        })
-        .catch(error => {
+        } catch (error) {
           console.error("Error sending JSON to backend:", error);
-        });
-    }
-  }, [jsonContent, navigate]);
+        }
+      }
+    };
+    fetchData();
+  }, []); // 빈 의존성 배열을 사용하여 한 번만 실행되도록 설정
 
   return (
     <Container maxWidth="lg">

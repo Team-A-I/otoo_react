@@ -19,8 +19,8 @@ import ResultLove from './pages/love/ResultLove';
 import UploadLove from './pages/love/UploadLove';
 
 import UploadFriendship from './pages/friendship/UploadFriendship';
-import LoadingFriendship from './pages/friendship/LoadingFriendship';
-import ResultFriendship from './pages/friendship/ResultFriendship';
+// import LoadingFriendship from './pages/friendship/LoadingFriendship';
+// import ResultFriendship from './pages/friendship/ResultFriendship';
 
 import UserLoginPage from './pages/users/UserLoginPage';
 import SignUpPage from './pages/users/SignUpPage';
@@ -50,8 +50,8 @@ const MainApp = () => {
           <Route path="/result-love" element={<ResultLove />} />
           <Route path="/upload-love" element={<UploadLove />} />
 
-          <Route path="/loading-friendship" element={<LoadingFriendship />} />
-          <Route path="/result-friendship" element={<ResultFriendship />} />
+          {/* <Route path="/loading-friendship" element={<LoadingFriendship />} />
+          <Route path="/result-friendship" element={<ResultFriendship />} /> */}
           <Route path="/upload-friendship" element={<UploadFriendship />} />
 
           <Route path="/emotionReportPage" element={<EmotionReportPage />} />
