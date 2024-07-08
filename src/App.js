@@ -45,8 +45,7 @@ const MainApp = () => {
           <Route path="/upload-love" element={<UploadLove />} />
           <Route path="/emotionReportPage" element={<EmotionReportPage />} />
           <Route path="/emotionReportLoadingPage" element={<EmotionReportLoadingPage />} />
-
-          {/* <Route path="/UploadFriendship" element={<UploadFriendship />} />
+          {/* <Route path="/upload-friendship" element={<UploadFriendship />} />
           <Route path="/LoadingFriendship" element={<LoadingFriendship />} />
           <Route path="/ResultFriendship" element={<ResultFriendship />} /> */}
           <Route path="/user-login" element={<UserLoginPage />} />
