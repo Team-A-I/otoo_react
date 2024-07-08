@@ -24,6 +24,7 @@ const LoadingPage = () => {
     fetchData();
   }, [jsonContent, navigate]);
   
+
   return (
     <Container maxWidth="lg">
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="93vh">

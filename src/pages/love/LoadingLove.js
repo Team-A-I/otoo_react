@@ -1,3 +1,4 @@
+// LoadingLove.js
 import React, { useEffect } from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -23,6 +24,7 @@ const LoadingLove = () => {
     };
     fetchData();
   }, [jsonContent, navigate]);
+
 
   return (
     <Container maxWidth="lg">
