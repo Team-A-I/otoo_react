@@ -115,8 +115,23 @@ const Home = () => {
     const usersCode = sessionStorage.getItem('usersCode');
     if (usersCode !== null) {
         setIsLoggedIn(true);
-    }
+    }// eslint-disable-next-line
     }, [sessionStorage.getItem('usersCode')]);
+
+    // useEffect(() => {
+    //     const checkLoginStatus = () => {
+    //       const usersCode = sessionStorage.getItem('usersCode');
+    //       setIsLoggedIn(usersCode !== null);
+    //     };
+      
+    //     checkLoginStatus();
+      
+    //     window.addEventListener('storage', checkLoginStatus);
+      
+    //     return () => {
+    //       window.removeEventListener('storage', checkLoginStatus);
+    //     };
+    //   }, []);
 
     return (
         <ThemeProvider theme={theme1}>
