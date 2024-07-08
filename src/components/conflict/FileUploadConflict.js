@@ -1,49 +1,63 @@
-import React, { useState, useRef } from 'react';
-import { Button, Container, TextField, Typography, Box, Grid ,ThemeProvider} from '@mui/material';
+import React, { useState, useRef, useCallback } from 'react';
+import { Container, TextField, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import '../../css/conflict/FileUploadConflict.css';
-import theme from "../../theme"
+import ConflictButton from './ConflictButton'; // 새로 만든 버튼 컴포넌트
+import theme from "../../theme";
+
+// 변수 정의
+const cardMaxWidth = 700;
+const imageHeight = 400;
+const imageSrc = "/otoo_react/images/problems.jpg";
+const imageAlt = "Paella dish";
+const lovemainText = "계속되는\n언쟁에\n고민\n마세요.";
+const cardContentText = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요. 지금 무슨 생각을 하고 있을까요?";
+const inputPromptText = "무슨 일이 있었는지 적어주세요:";
+const btnUploadLabel = "카카오톡 파일 업로드";
+const btnResultLabel = "결과 보러가기";
+const btnToggleInputLabelShow = "직접 입력하기";
+const btnToggleInputLabelHide = "입력창 닫기";
+const textFieldRows = 10;
+const textFieldVariant = "outlined";
+
 
 const FileUpload = () => {
-  const [file, setFile] = useState(null);
-  // eslint-disable-next-line
+  const [file, setFile] = useState(null);// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleFileChange = (event) => {
+  const handleFileChange = useCallback((event) => {
     setFile(event.target.files[0]);
-  };
+    console.log("File selected:", event.target.files[0]);
+  }, []);
 
-  const handleFileRead = (event) => {
+  const handleFileRead = useCallback((event) => {
     const content = event.target.result;
     try {
-      const json = parseKakaoTalkText(content);
+      const json = { text: content }; // 전체 텍스트를 하나의 'text' 필드에 저장
       setJsonContent(json);
       console.log("JSON Content:", json);
       navigate('/loading-conflict', { state: { jsonContent: json } });
     } catch (error) {
       console.error("Error parsing file:", error);
     }
-  };
+  }, [navigate]);
 
   const handleFileUpload = () => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = handleFileRead;
-      reader.readAsText(file);
+    if (!file) {
+      console.log("No file selected");
+      return;
     }
-  };
-
-  const parseKakaoTalkText = (text) => {
-    const lines = text.split('\n');
-    const json = lines.map((line, index) => ({ id: index, text: line }));
-    return json;
+    console.log("handleFileUpload called");
+    console.log("File exists:", file);
+    const reader = new FileReader();
+    reader.onload = handleFileRead;
+    reader.readAsText(file);
   };
 
   const handleToggleInput = () => {
@@ -54,37 +68,44 @@ const FileUpload = () => {
       }, 100);
     }
   };
+
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
-          <Box className="container">
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
             <Grid container>
-                <Grid item xs={12} sm={6}container
-                  alignItems="center">
-                    <Typography variant="hbig"
-                    color="green" className="lovemain-text">
-                      계속되는{'\n'}언쟁에{'\n'}고민{'\n'}마세요.
+              <Grid item xs={12} sm={6} container alignItems="center">
+                <Typography
+                  variant="hbig"
+                  sx={{
+                    fontWeight: 900,
+                    whiteSpace: 'pre-line',
+                    fontSize: '95px',
+                    color: '#346F79'
+                  }}
+                >
+                  {lovemainText}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Card sx={{ maxWidth: cardMaxWidth }}>
+                  <CardHeader />
+                  <CardMedia
+                    component="img"
+                    height={imageHeight}
+                    image={imageSrc}
+                    alt={imageAlt}
+                  />
+                  <CardContent>
+                    <Typography variant="h3_mid" color="text.secondary">
+                      {cardContentText}
                     </Typography>
-                  </Grid>
-                <Grid item xs={12} sm={6} pl={1}>
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardHeader/>
-                    <CardMedia
-                      component="img"
-                      height="300"
-                      image="/otoo_react/images/problems.jpg"
-                      alt="Paella dish"
-                    />
-                    <CardContent>
-                      <Typography variant="h3_mid" color="text.secondary">
-                        상대방과 나눈 간지러운 대화를 넣어주세요.<br/> 누가 더 좋아하는지 저희가 판단해드릴게요.<br/> 판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요. 지금 무슨 생각을 하고 있을까요?
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
               <Grid item xs={12}>
-                <Box className="button-container">
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                   <input
                     accept=".txt"
                     style={{ display: 'none' }}
@@ -93,78 +114,42 @@ const FileUpload = () => {
                     onChange={handleFileChange}
                   />
                   <label htmlFor="raised-button-file">
-                    <Button 
-                      variant="contained" 
-                      component="span" 
-                      sx={{ 
-                        mr: 2, 
-                        backgroundColor: '#346F79', 
-                        color: '#FFFFFF',
-                        '&:hover': {
-                          backgroundColor: '#346F79', // 호버 시 배경색 변경
-                        }
-                      }}
-                    >
-                      카카오톡 파일 업로드
-                    </Button>
+                    <ConflictButton
+                      label={btnUploadLabel}
+                      onClick={() => {}}
+                      disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
+                      className="conflict-btn-upload"
+                    />
                   </label>
-                  <Button 
-                    variant="contained" 
-                    color="primary" 
-                    onClick={handleFileUpload} 
+                  <ConflictButton
+                    label={btnResultLabel}
+                    onClick={handleFileUpload}
                     disabled={!file}
-                    sx={{ 
-                      backgroundColor: '#346F79', 
-                      color: '#FFFFFF',
-                      '&:hover': {
-                        backgroundColor: '#346F79', // 호버 시 배경색 변경
-                      }
-                    }}
-                  >
-                    결과 보러가기
-                  </Button>
-                  <Button 
-                    variant="contained" 
-                    color="primary" 
+                    className="conflict-btn-result"
+                  />
+                  <ConflictButton
+                    label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
                     onClick={handleToggleInput}
-                    sx={{ 
-                      ml: 2,
-                      backgroundColor: '#346F79', 
-                      color: '#FFFFFF',
-                      '&:hover': {
-                        backgroundColor: '#346F79', // 호버 시 배경색 변경
-                      }
-                    }}
-                  >
-                    {showInput ? '입력창 닫기' : '직접 입력하기'}
-                  </Button>
+                    className="conflict-btn-toggle-input"
+                  />
                 </Box>
               </Grid>
             </Grid>
             {showInput && (
               <Box mt={10} ref={inputRef}>
-                <Typography variant="h6">무슨 일이 있었는지 적어주세요:</Typography>
+                <Typography variant="h6">{inputPromptText}</Typography>
                 <TextField
                   fullWidth
                   multiline
-                  rows={10}
-                  variant="outlined"
+                  rows={textFieldRows}
+                  variant={textFieldVariant}
                 />
-                <Button 
-                  variant="contained" 
-                  color="primary" 
-                  onClick={handleFileUpload} 
-                  sx={{ 
-                    mt: 2,
-                    backgroundColor: '#0350B7', 
-                    color: '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: '#033080', // 호버 시 배경색 변경
-                    }
-                  }}
-                >
-                  결과 보러가기
-                </Button>
+                <ConflictButton
+                  label={btnResultLabel}
+                  onClick={handleFileUpload}
+                  disabled={!file}
+                  className="conflict-btn-textfield"
+                />
               </Box>
             )}
           </Box>
