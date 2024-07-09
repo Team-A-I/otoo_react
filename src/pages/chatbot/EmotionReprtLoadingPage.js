@@ -14,19 +14,21 @@ const EmotionReportLoadingPage = () => {
     const location = useLocation();
     const messages = location.state?.messages;
     const navigate = useNavigate();
+    const usersCode = sessionStorage.getItem('usersCode');
     const emotionReportHandler = useCallback(async() => {
         try {
-        const response = await axios.post('http://localhost:8080/emotionReport', {messages}, {
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        });
-        const result = response.data
-        navigate('/emotionReportPage', { state: { result: result }});
-        } catch (error) {
-        console.error('Error uploading file:', error);
+            const requestBody = usersCode ? { messages, usersCode } : { messages };
+            const response = await axios.post('http://localhost:8080/emotionReport', requestBody, {
+                headers: {
+                'Content-Type': 'application/json',
+                },
+            });
+            const result = response.data
+            navigate('/emotionReportPage', { state: { result: result }});
+            } catch (error) {
+            console.error('Error uploading file:', error);
         }
-    }, [messages, navigate])
+    }, [messages, navigate, usersCode])
     useEffect(() => {
         emotionReportHandler();
       }, [emotionReportHandler]);
