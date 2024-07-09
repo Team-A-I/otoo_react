@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState,useEffect } from 'react';
 import { Container, ThemeProvider, Grid, Typography, Paper, Button, TextField, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ function UserLoginPage() {
   const navigate = useNavigate(); 
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);// eslint-disable-next-line
   const [userName, setUserName] = useState('');
   const handleNavigation = (path) => {
     navigate(path);
@@ -45,7 +46,7 @@ function UserLoginPage() {
       }
     }
   };
-
+// eslint-disable-next-line
   const handleSocialLogin = (url) => {
     window.location.href = url;
   };

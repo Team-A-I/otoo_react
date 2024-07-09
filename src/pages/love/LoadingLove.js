@@ -1,4 +1,5 @@
-import React, { useEffect , useRef} from 'react';
+// LoadingLove.js
+import React, { useEffect } from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -8,7 +9,6 @@ const LoadingLove = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { jsonContent } = location.state || {};
-  const hasSubmitted = useRef(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,8 @@ const LoadingLove = () => {
       }
     };
     fetchData();
-  }, []); // 빈 의존성 배열을 사용하여 한 번만 실행되도록 설정
+  }, [jsonContent, navigate]);
+
 
   return (
     <Container maxWidth="lg">
