@@ -8,12 +8,18 @@ const LoadingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { jsonContent } = location.state || {};
+  const usercode = sessionStorage.getItem('usersCode');
 
   useEffect(() => {
     const fetchData = async () => {
       if (jsonContent) {
         try {
-          const response = await axios.post('http://localhost:8080/api/conflict/analysis', { text: jsonContent.text });
+          const requestData = { text: jsonContent.text };
+          if (usercode) {
+            requestData.usercode = usercode;
+          }
+          console.log("requestData", requestData)
+          const response = await axios.post('http://localhost:8080/api/conflict/analysis', requestData);
           console.log("Response from backend:", response.data);
           navigate('/result-conflict', { state: { jsonData: response.data } });
         } catch (error) {
