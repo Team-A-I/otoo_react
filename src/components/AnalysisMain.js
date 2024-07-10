@@ -22,7 +22,7 @@ const AnalysisMain = () => {
                             {buttonData.map((button, index) => (
                                 <Grid item key={index}>
                                     <Typography
-                                        variant='h1'
+                                        variant='ha_bold'
                                         sx={{
                                             mr: 2,
                                             color: theme.palette.peach,

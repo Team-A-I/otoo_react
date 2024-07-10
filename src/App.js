@@ -19,8 +19,8 @@ import ResultLove from './pages/love/ResultLove';
 import UploadLove from './pages/love/UploadLove';
 
 import UploadFriendship from './pages/friendship/UploadFriendship';
-import LoadingFriendship from './pages/friendship/LoadingFriendship';
-import ResultFriendship from './pages/friendship/ResultFriendship';
+import LoadingFriendship from './components/friendship/LoadingFriendship';
+import ResultFriendship from './components/friendship/ResultFriendship';
 import ResultFriendshipToLove from './components/friendship/ResultFriendshiptolove';
 
 import UserLoginPage from './pages/users/UserLoginPage';
