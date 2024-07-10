@@ -1,57 +1,14 @@
-.letterPaper, .reportPaper {
-    height: 350px; /* 고정 높이 지정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* 필요 시 숨김 처리 */
-}
-
-.letterIMG {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.letterBox, .reportBox {
-    width: 100%;
-    height: 100%;
-    padding: 15px;
-}
-
-.emotionGrid {
-    width: 100%;
-}
-
-.chat_subtitle {
-    margin-top: 15px;
-}
-
-.emotionTitle {
-    margin-top: 15px;
-}
-
-.moreContent {
-    margin-top: 15px;
-}
-
-.reportBox {
-    overflow-y: auto; /* 내용이 많을 경우 스크롤 */
-}
-
-.reportBox::-webkit-scrollbar-track,
-.reportBox::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-}
-
-.reportBox::-webkit-scrollbar {
+.reportTextBox::-webkit-scrollbar {
     width: 10px;
 }
 
-.reportBox::-webkit-scrollbar-thumb {
+.reportTextBox::-webkit-scrollbar-thumb { 
     background-color: rgb(240, 240, 240);
 }
-
-.reportBox::-webkit-scrollbar-button {
+.reportTextBox::-webkit-scrollbar-button {
     display: none;
+}
+.reportTextBox::-webkit-scrollbar-track,
+.reportTextBox::-webkit-scrollbar-thumb {
+    border-radius: 5px;
 }
