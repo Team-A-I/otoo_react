@@ -1,51 +1,57 @@
-.letterPaper {
-    width: 100%; /* Paper의 너비를 최대로 설정 */
-    height: 100%; /* Paper의 높이를 최대로 설정 */
-    overflow: hidden; /* 이미지가 Paper를 넘어가면 숨김 처리 */
+.letterPaper, .reportPaper {
+    height: 350px; /* 고정 높이 지정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* 필요 시 숨김 처리 */
 }
 
 .letterIMG {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지가 비율을 유지하면서 컨테이너를 꽉 채우도록 설정 */
+    object-fit: cover;
     border-radius: 5px;
 }
-.letterBox{
-    padding:15px;
-    
-}
-.letterPaper, .reportPaper {
-    max-height: 350px;
+
+.letterBox, .reportBox {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
 }
 
-.reportBox{
-    padding-left: 30px!important;
-    padding-right: 30px!important;
-    overflow-y: scroll!important;
-}
-.emotionGrid{
+.emotionGrid {
     width: 100%;
 }
-.chat_subtitle{
-    margin-top:15px
-}
-.emotionTitle{
+
+.chat_subtitle {
     margin-top: 15px;
 }
-.moreContent{
+
+.emotionTitle {
     margin-top: 15px;
 }
+
+.moreContent {
+    margin-top: 15px;
+}
+
+.reportBox {
+    overflow-y: auto; /* 내용이 많을 경우 스크롤 */
+}
+
 .reportBox::-webkit-scrollbar-track,
 .reportBox::-webkit-scrollbar-thumb {
     border-radius: 5px;
 }
+
 .reportBox::-webkit-scrollbar {
     width: 10px;
 }
 
-.reportBox::-webkit-scrollbar-thumb { 
+.reportBox::-webkit-scrollbar-thumb {
     background-color: rgb(240, 240, 240);
 }
+
 .reportBox::-webkit-scrollbar-button {
     display: none;
 }

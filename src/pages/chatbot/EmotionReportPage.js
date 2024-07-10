@@ -44,8 +44,8 @@ const EmotionReportPage = () => {
                                 </Box>                            
                             </Paper>
                         </Grid>
-                        <Grid item xs={8} >
-                            <Paper className="reportPaper" sx={{alignItems:'center', display:'flex', position: 'relative',maxHeight:'310px', maxWidth:'700px'}} elevation={3}>
+                        <Grid item xs={8}>
+                            <Paper className="reportPaper" sx={{alignItems:'center', display:'flex', position: 'relative'}} elevation={3}>
                                 <Box className="reportBox">
                                     <Typography variant="title_bold" color="gray500" fontSize={'1vw'}>{result}</Typography>
                                 </Box>
