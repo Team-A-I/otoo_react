@@ -10,17 +10,20 @@ const LoadingPage = () => {
   const { jsonContent } = location.state || {};
 
   useEffect(() => {
-    if (jsonContent) {
-      axios.post('http://localhost:8080/api/conflict/analysis', jsonContent)
-        .then(response => {
+    const fetchData = async () => {
+      if (jsonContent) {
+        try {
+          const response = await axios.post('http://localhost:8080/api/conflict/analysis', { text: jsonContent.text });
           console.log("Response from backend:", response.data);
           navigate('/result-conflict', { state: { jsonData: response.data } });
-        })
-        .catch(error => {
+        } catch (error) {
           console.error("Error sending JSON to backend:", error);
-        });
-    }
+        }
+      }
+    };
+    fetchData();
   }, [jsonContent, navigate]);
+  
 
   return (
     <Container maxWidth="lg">

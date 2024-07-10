@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -18,9 +19,7 @@ const cardContentText = "#찐친테스트\n#우정파괴\n#테스트는 테스�
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
 
-
-
-const FileUpload = () => {
+const FileUploadFriendship = () => {
   const [file, setFile] = useState(null);// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const navigate = useNavigate();
@@ -123,4 +122,4 @@ const FileUpload = () => {
   );
 };
 
-export default FileUpload;
+export default FileUploadFriendship;

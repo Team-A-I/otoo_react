@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState,useEffect } from 'react';
 import { Container, ThemeProvider, Grid, Typography, Paper, Button, TextField, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ function UserLoginPage() {
   const navigate = useNavigate(); 
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);// eslint-disable-next-line
   const [userName, setUserName] = useState('');
   const handleNavigation = (path) => {
     navigate(path);
@@ -45,7 +46,7 @@ function UserLoginPage() {
       }
     }
   };
-
+// eslint-disable-next-line
   const handleSocialLogin = (url) => {
     window.location.href = url;
   };
@@ -62,7 +63,7 @@ function UserLoginPage() {
             "http://localhost:8080/kakaoLogin/" + accessToken
           );
 
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log(response);
 
             sessionStorage.setItem("accessToken", response.headers.access);
@@ -86,7 +87,7 @@ function UserLoginPage() {
   const googleClick = async() => {
     try {
 
-      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=http://localhost:3000/otoo_react/googleLogin&response_type=code&scope=email profile";
+      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://team-a-i.github.io/otoo_react/googleLogin&response_type=code&scope=email profile";
       
     } catch (error) {
       console.error("Error google login click", error);
