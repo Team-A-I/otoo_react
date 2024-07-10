@@ -3,7 +3,7 @@ import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, Ta
 import { useLocation } from 'react-router-dom';
 import theme from "../../theme";
 import 'chart.js/auto'; 
-import { CustomPaper, AttributeCard, TitleSection } from '../conflict/CommonComponentsConflict';
+import { CustomPaper, TitleSection } from '../conflict/CommonComponentsConflict';
 
 const ResultFriendshiptolove = () => {
   const location = useLocation();
@@ -12,44 +12,8 @@ const ResultFriendshiptolove = () => {
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 
-  console.log("페이지 이동됨")
-  console.log(data)
-  //console.log(jsonData)
-  // console.log(jsonData)
-  // console.log("=================================")
-  // console.log(data)
-  // console.log("=================================")
-  // console.log(data.total_score)
-  // console.log(data.total_score["지영"])
-  // console.log("=================================")
-  // console.log(data.sacrifice)
-  // console.log(data.sacrifice["지영"].score)
-  // console.log(data.sacrifice["지영"].reason)
-  // console.log("=================================")
-  // console.log(data.comfortable)
-  // console.log(data.comfortable["하영"].score)
-  // console.log(data.comfortable["하영"].reason)
-  // console.log("=================================")
-  // console.log(data.betrayer)
-  // console.log(data.betrayer["지영"].score)
-  // console.log(data.betrayer["지영"].reason)
-  // console.log("=================================")
-  // console.log(data.Biggest_Sentimental)
-  // console.log(data.Biggest_Sentimental["지영"])
-  // console.log(data.Biggest_Sentimental["지영"][0])
-  // console.log("=================================")
-  // console.log(Object.keys(data))
-  // console.log(Object.keys(data).length)
-  // console.log("=================================")
-
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
-    // if (percentage >= 0 && percentage <= 20) return '/otoo_react/images/무지개.png';
-    // if (percentage >= 21 && percentage <= 40) return '/otoo_react/images/맑음.png';
-    // if (percentage >= 41 && percentage <= 50) return '/otoo_react/images/약간흐림.png';
-    // if (percentage >= 51 && percentage <= 60) return '/otoo_react/images/구름.png';
-    // if (percentage >= 61 && percentage <= 80) return '/otoo_react/images/비.png';
-    // if (percentage >= 81 && percentage <= 100) return '/otoo_react/images/낙뢰.png';
     if (percentage >= 0 && percentage <= 20) return '/otoo_react/images/낙뢰.png';
     if (percentage >= 21 && percentage <= 40) return '/otoo_react/images/비.png';
     if (percentage >= 41 && percentage <= 50) return '/otoo_react/images/구름.png';
@@ -57,36 +21,6 @@ const ResultFriendshiptolove = () => {
     if (percentage >= 61 && percentage <= 80) return '/otoo_react/images/맑음.png';
     if (percentage >= 81 && percentage <= 100) return '/otoo_react/images/무지개.png';
     return '';
-  };
-
-  //비율별 배경이미지&텍스트
-  const getStyleByTotalscore = (percentage) => {
-    if (percentage >= 0 && percentage <= 10) {
-      return {
-        imageUrl: '/otoo_react/images/낙뢰하늘사진.jpg',
-        color: theme.palette.gray200
-      };
-    } else if (percentage >= 11 && percentage <= 20) {
-      return {
-        imageUrl: '/otoo_react/images/비하늘사진.jpg',
-        color: theme.palette.gray900
-      };
-    } else if (percentage >= 21 && percentage <= 45) {
-      return {
-        imageUrl: '/otoo_react/images/흐린하늘사진.png',
-        color: theme.palette.gray900
-      };
-    } else if (percentage >= 46 && percentage <= 100) {
-      return {
-        imageUrl: '/otoo_react/images/맑은하늘사진.jpg',
-        color: theme.palette.gray200
-      };
-    } else {
-      return {
-        imageUrl: '',
-        color: '#000000' // 기본 색상 (검정색)
-      };
-    }
   };
 
   // 결과페이지 타이틀
@@ -99,7 +33,7 @@ const ResultFriendshiptolove = () => {
   };
 
   // 전체 통계 
-  const renderWrongPercentage = () => {
+  const renderLikeability = () => {
     const names = Object.keys(data.friendship_likeability || {});
     return (
       <Grid item xs={12}>
@@ -134,90 +68,9 @@ const ResultFriendshiptolove = () => {
     );
   };
 
-
-  // 세부분석
-  const renderPersonData = (name) => {
-    const sacrificeScore = data.sacrifice[name].score;
-    const sacrificeReason = data.sacrifice[name].reason;
-    const comfortableScore = data.comfortable[name].score;
-    const comfortableReason = data.comfortable[name].reason;
-    const betrayerScore = data.betrayer[name].score;
-    const betrayerReason = data.betrayer[name].reason;
-    const totalScore = data.total_score[name];
-    const style = getStyleByTotalscore(totalScore);
-
-  
-    const attributes = [
-      {
-        title: '누가 총을 대신 맞아줄것인가?',
-        percentage: sacrificeScore,
-        tooltip: sacrificeReason,
-      },
-      {
-        title: '흔들리지 않는 편안한 침대같은 사람',
-        percentage: comfortableScore,
-        tooltip: comfortableReason,
-      },
-      {
-        title: '뒷 통수 칠 사람',
-        percentage: betrayerScore,
-        tooltip: betrayerReason,
-      },
-    ];
-  
-    return (
-      <Grid item xs={12} key={name}>
-        <CustomPaper>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} sm={4} textAlign="center">
-              <Paper
-                elevation={3}
-                style={{
-                  padding: '16px',
-                  backgroundImage: `url(${style.imageUrl})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  height: '100%',
-                  minHeight: '260px',
-                  borderRadius: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {name}님의 <br /> 우정도
-                </Typography>
-                <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {totalScore}%
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <Grid container spacing={3} alignItems="stretch">
-                {attributes.map((attr, index) => (
-                  <Grid item xs={4} key={index}>
-                    <AttributeCard
-                      title={attr.title}
-                      percentage={attr.percentage}
-                      tooltip={attr.tooltip}
-                      imageSrc={getImageByPercentage(attr.percentage)}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          </Grid>
-        </CustomPaper>
-      </Grid>
-    );
-  };
-
-  
-  // Top5 키워드
-  const renderPriorityKeywords = () => {
-    const names = Object.keys(data.Biggest_Sentimental || {});
+  // 사랑이라는 감정이 가장 크게 드러나는 문장 Top5
+  const renderLikeabilityScript = () => {
+    const names = Object.keys(data.friendship_likeability_script || {});
     const renderTable = (name, keywords, color) => (
       <Table>
         <TableHead>
@@ -226,7 +79,7 @@ const ResultFriendshiptolove = () => {
           </TableRow>
           <TableRow>
             <TableCell align="center">순위</TableCell>
-            <TableCell align="center">감정</TableCell>
+            <TableCell align="center">문장</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -248,11 +101,11 @@ const ResultFriendshiptolove = () => {
     return (
       <Grid item xs={12}>
         <CustomPaper style={{ position: 'relative' }}>
-          <Typography variant="title_bold" gutterBottom>감정 순위 키워드</Typography>
+          <Typography variant="title_bold" gutterBottom>사랑이 가득 담긴 문장 순위</Typography>
           <Grid container spacing={3}>
             {names.map((name, index) => (
               <Grid item xs={12} sm={6} key={name} style={{ position: 'relative' }}>
-                {renderTable(name, data.Biggest_Sentimental[name], index === 0 ? '#ECD3D8' : '#0495D2')}
+                {renderTable(name, data.friendship_likeability_script[name], index === 0 ? '#ECD3D8' : '#0495D2')}
                 <img
                   src={images[index].src}
                   alt="일러스트"
@@ -282,10 +135,9 @@ const ResultFriendshiptolove = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.friendship_likeability && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-5.jpg" imgAlt="결과 이미지" />}
-              {data.friendship_likeability && renderWrongPercentage()}
-              {Object.keys(data.total_score || {}).map((name) => renderPersonData(name))}
-              {data.Biggest_Sentimental && renderPriorityKeywords()}
+              {data.friendship_likeability && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/lovemain.jpg" imgAlt="결과 이미지" />}
+              {data.friendship_likeability && renderLikeability()}
+              {data.friendship_likeability_script && renderLikeabilityScript()}
             </Grid>
           </Box>
         </div>

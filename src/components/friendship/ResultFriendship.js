@@ -13,61 +13,12 @@ const ResultFriendship = () => {
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 
-  // console.log("jsonData = "+jsonData)
-  // console.log("==================")
-  // console.log(jsonData)
-  // console.log("==================")
-  // console.log(location.state)
-  // console.log("==================")
-  // console.log(location.state.friendship_likeability)
-  // console.log("==================")
-  // console.log(jsonData.friendship_likeability)
-  // console.log("==================")
-  // console.log(data.friendship_likeability)
-  // console.log("==================")
-  // const test = Object.keys(data.friendship_likeability || {});
-  // console.log(test)
-  // console.log(test[0])
-  // console.log(test[1])
-  // console.log("==================")
-  // console.log(data.friendship_likeability[test])
-  // console.log("==================")
-  // console.log(data.friendship_likeability[test[0]])
-  // console.log(data.friendship_likeability[test[0]].score)
-  // console.log(data.friendship_likeability[test[0]].reason)
-
   const test = Object.keys(data.friendship_likeability || {});
 
   if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
   {
      navigate('/result-friendship-to-love', { state: { data } });
   }
-
-  // console.log("=================================")
-  // console.log(data)
-  // console.log("=================================")
-  // console.log(data.total_score)
-  // console.log(data.total_score["지영"])
-  // console.log("=================================")
-  // console.log(data.sacrifice)
-  // console.log(data.sacrifice["지영"].score)
-  // console.log(data.sacrifice["지영"].reason)
-  // console.log("=================================")
-  // console.log(data.comfortable)
-  // console.log(data.comfortable["하영"].score)
-  // console.log(data.comfortable["하영"].reason)
-  // console.log("=================================")
-  // console.log(data.betrayer)
-  // console.log(data.betrayer["지영"].score)
-  // console.log(data.betrayer["지영"].reason)
-  // console.log("=================================")
-  // console.log(data.Biggest_Sentimental)
-  // console.log(data.Biggest_Sentimental["지영"])
-  // console.log(data.Biggest_Sentimental["지영"][0])
-  // console.log("=================================")
-  // console.log(Object.keys(data))
-  // console.log(Object.keys(data).length)
-  // console.log("=================================")
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
@@ -120,7 +71,7 @@ const ResultFriendship = () => {
   };
 
   // 전체 통계 
-  const renderWrongPercentage = () => {
+  const renderTotalScorePercentage = () => {
     const names = Object.keys(data.friendship_total_score || {});
     return (
       <Grid item xs={12}>
@@ -237,7 +188,7 @@ const ResultFriendship = () => {
 
   
   // Top5 키워드
-  const renderPriorityKeywords = () => {
+  const renderBiggestSentimental = () => {
     const names = Object.keys(data.friendship_Biggest_Sentimental || {});
     const renderTable = (name, keywords, color) => (
       <Table>
@@ -303,10 +254,10 @@ const ResultFriendship = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.friendship_total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-5.jpg" imgAlt="결과 이미지" />}
-              {data.friendship_total_score && renderWrongPercentage()}
+              {data.friendship_total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-6.jpg" imgAlt="결과 이미지" />}
+              {data.friendship_total_score && renderTotalScorePercentage()}
               {Object.keys(data.friendship_total_score || {}).map((name) => renderPersonData(name))}
-              {data.friendship_Biggest_Sentimental && renderPriorityKeywords()}
+              {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
         </div>
