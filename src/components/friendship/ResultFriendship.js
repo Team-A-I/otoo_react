@@ -63,7 +63,7 @@ const ResultFriendship = () => {
 
   // 결과페이지 타이틀
   const titleText = () => {
-    const names = Object.keys(data.friendship_total_score || {});
+    const names = Object.keys(data.total_score || {});
     
     return names.length === 2 
       ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
@@ -72,7 +72,7 @@ const ResultFriendship = () => {
 
   // 전체 통계 
   const renderTotalScorePercentage = () => {
-    const names = Object.keys(data.friendship_total_score || {});
+    const names = Object.keys(data.total_score || {});
     return (
       <Grid item xs={12}>
         <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
@@ -91,8 +91,8 @@ const ResultFriendship = () => {
                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography variant="title_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
-                        <img src={getImageByPercentage(data.friendship_total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.friendship_total_score[name]}%</Typography>
+                        <img src={getImageByPercentage(data.total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
+                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.total_score[name]}%</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -115,7 +115,7 @@ const ResultFriendship = () => {
     const comfortableReason = data.friendship_comfortable[name].reason;
     const betrayerScore = data.friendship_betrayer[name].score;
     const betrayerReason = data.friendship_betrayer[name].reason;
-    const totalScore = data.friendship_total_score[name];
+    const totalScore = data.total_score[name];
     const style = getStyleByTotalscore(totalScore);
 
   
@@ -254,9 +254,9 @@ const ResultFriendship = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.friendship_total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-6.jpg" imgAlt="결과 이미지" />}
-              {data.friendship_total_score && renderTotalScorePercentage()}
-              {Object.keys(data.friendship_total_score || {}).map((name) => renderPersonData(name))}
+              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-2.png" imgAlt="결과 이미지" />}
+              {data.total_score && renderTotalScorePercentage()}
+              {Object.keys(data.total_score || {}).map((name) => renderPersonData(name))}
               {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
