@@ -28,7 +28,6 @@ const FileUploadLove = () => {
       if (!file) {
           return;
       }
-
       const reader = new FileReader();
       reader.onload = async (e) => {
           const content = e.target.result;
