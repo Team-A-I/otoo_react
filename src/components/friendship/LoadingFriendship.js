@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import '../../css/conflict/LoadingPage.css'; // 커스텀 CSS 파일을 임포트합니다.
+import '../../css/friendship/LoadingFriendship.css'; // 커스텀 CSS 파일을 임포트합니다.
 
-const LoadingPage = () => {
+const LoadingFriendship = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { jsonContent } = location.state || {};
@@ -19,9 +19,9 @@ const LoadingPage = () => {
             requestData.usercode = usercode;
           }
           console.log("requestData", requestData)
-          const response = await axios.post('http://localhost:8080/api/conflict/analysis', requestData);
+          const response = await axios.post('http://localhost:8080/api/friendship/analysis', requestData);
           console.log("Response from backend:", response.data);
-          navigate('/result-conflict', { state: { jsonData: response.data } });
+          navigate('/result-friendship', { state: { jsonData: response.data } });
         } catch (error) {
           console.error("Error sending JSON to backend:", error);
         }
@@ -85,4 +85,4 @@ const LoadingPage = () => {
   );
 };
 
-export default LoadingPage;
+export default LoadingFriendship;

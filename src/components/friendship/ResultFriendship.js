@@ -1,24 +1,24 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, Tabs, Tab, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
 import theme from "../../theme";
-import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; 
-import { CustomPaper, AttributeCard, TitleSection } from './CommonComponentsConflict';
+import { CustomPaper, AttributeCard, TitleSection } from '../conflict/CommonComponentsConflict';
 
-const ResultPage = () => {
+const ResultFriendship = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { jsonData } = location.state || {};
   const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 
-  //성격별 캐릭터
-  const personalityMap = {
-    'positive_personality': '맑음이',
-    'straightforward_personality': '천둥이',
-    'timid_personality': '흐림이'
-  };
+  const test = Object.keys(data.friendship_likeability || {});
+
+  if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
+  {
+     navigate('/result-friendship-to-love', { state: { data } });
+  }
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
@@ -64,14 +64,14 @@ const ResultPage = () => {
   // 결과페이지 타이틀
   const titleText = () => {
     const names = Object.keys(data.total_score || {});
+    
     return names.length === 2 
       ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
       : '판결 결과입니다';
   };
 
-
   // 전체 통계 
-  const renderWrongPercentage = () => {
+  const renderTotalScorePercentage = () => {
     const names = Object.keys(data.total_score || {});
     return (
       <Grid item xs={12}>
@@ -80,7 +80,7 @@ const ResultPage = () => {
             <Grid item xs={12} sm={4}>
               <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
                 <Typography variant="hc_bold" color="dyellow" gutterBottom >
-                  오늘의 <br /> 갈등 일기예보 입니다. <br />누가 더 잘 못했는지 <br /> 알아 보겠습니다.
+                  오늘의 <br /> 우정 일기예보 입니다. <br />누가 더 우정하는지 <br /> 알아 보겠습니다.
                 </Typography>
               </Grid>
             </Grid>
@@ -109,27 +109,31 @@ const ResultPage = () => {
 
   // 세부분석
   const renderPersonData = (name) => {
-    const mbtiPercentage = data.mbti_tendency_percentage[name];
-    const offendedPercentage = data.offended_percentage[name];
-    const tactlessPercentage = data.tactless_percentage[name];
-    const wrongPercentage = data.total_score[name];
-    const style = getStyleByTotalscore(wrongPercentage);
+    const sacrificeScore = data.friendship_sacrifice[name].score;
+    const sacrificeReason = data.friendship_sacrifice[name].reason;
+    const comfortableScore = data.friendship_comfortable[name].score;
+    const comfortableReason = data.friendship_comfortable[name].reason;
+    const betrayerScore = data.friendship_betrayer[name].score;
+    const betrayerReason = data.friendship_betrayer[name].reason;
+    const totalScore = data.total_score[name];
+    const style = getStyleByTotalscore(totalScore);
+
   
     const attributes = [
       {
-        title: 'T라 미숙해',
-        percentage: mbtiPercentage,
-        tooltip: 'T 성향에 대한 상대방과 비교한 비율입니다.',
+        title: '누가 총을 대신 맞아줄것인가?',
+        percentage: sacrificeScore,
+        tooltip: sacrificeReason,
       },
       {
-        title: '서운함',
-        percentage: offendedPercentage,
-        tooltip: '누가 더 서운한지 상대방과 비교한 비율입니다.',
+        title: '흔들리지 않는 편안한 침대같은 사람',
+        percentage: comfortableScore,
+        tooltip: comfortableReason,
       },
       {
-        title: '눈치없음',
-        percentage: tactlessPercentage,
-        tooltip: '누가 더 눈치없는지 상대방과 비교한 비율입니다.',
+        title: '뒷 통수 칠 사람',
+        percentage: betrayerScore,
+        tooltip: betrayerReason,
       },
     ];
   
@@ -155,10 +159,10 @@ const ResultPage = () => {
                 }}
               >
                 <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {name}님의 <br /> 잘못한 비율
+                  {name}님의 <br /> 우정도
                 </Typography>
                 <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {wrongPercentage}%
+                  {totalScore}%
                 </Typography>
               </Paper>
             </Grid>
@@ -184,8 +188,8 @@ const ResultPage = () => {
 
   
   // Top5 키워드
-  const renderPriorityKeywords = () => {
-    const names = Object.keys(data.priority_keywords || {});
+  const renderBiggestSentimental = () => {
+    const names = Object.keys(data.friendship_Biggest_Sentimental || {});
     const renderTable = (name, keywords, color) => (
       <Table>
         <TableHead>
@@ -194,7 +198,7 @@ const ResultPage = () => {
           </TableRow>
           <TableRow>
             <TableCell align="center">순위</TableCell>
-            <TableCell align="center">키워드</TableCell>
+            <TableCell align="center">감정</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -216,11 +220,11 @@ const ResultPage = () => {
     return (
       <Grid item xs={12}>
         <CustomPaper style={{ position: 'relative' }}>
-          <Typography variant="title_bold" gutterBottom>우선 순위 키워드</Typography>
+          <Typography variant="title_bold" gutterBottom>감정 순위 키워드</Typography>
           <Grid container spacing={3}>
             {names.map((name, index) => (
               <Grid item xs={12} sm={6} key={name} style={{ position: 'relative' }}>
-                {renderTable(name, data.priority_keywords[name], index === 0 ? '#ECD3D8' : '#0495D2')}
+                {renderTable(name, data.friendship_Biggest_Sentimental[name], index === 0 ? '#ECD3D8' : '#0495D2')}
                 <img
                   src={images[index].src}
                   alt="일러스트"
@@ -241,100 +245,6 @@ const ResultPage = () => {
       </Grid>
     );
   };
- 
-
-  //갈등 원인
-  const renderConflictCausePercentage = () => {
-    if (!data || !data.conflict_cause_percentage) {
-      return null;
-    }
-  
-    const labels = Object.keys(data.conflict_cause_percentage);
-    const values = Object.values(data.conflict_cause_percentage);
-  
-    const getColor = (index) => {
-      const colors = [
-        'rgba(236, 211, 216, 1)',
-        'rgba(255, 207, 170, 1)',
-        'rgba(238, 202, 66, 1)',
-        'rgba(4, 149, 210, 1)',
-        'rgba(3, 80, 183, 1)',
-        'rgba(250, 227, 0, 1)',
-      ];
-      return colors[index % colors.length];
-    };
-  
-    const chartData = {
-      labels: ['갈등 원인'],
-      datasets: labels.map((label, index) => ({
-        label,
-        data: [values[index]],
-        backgroundColor: getColor(index),
-      })),
-    };
-  
-    const chartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      indexAxis: 'y',
-      scales: {
-        x: {
-          stacked: true,
-          beginAtZero: true,
-          max: 100,
-        },
-        y: {
-          stacked: true,
-        },
-      },
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-      },
-    };
-  
-    return (
-      <Grid item xs={12}>
-        <CustomPaper>
-          <Typography variant="title_bold" gutterBottom>갈등 원인 비율</Typography>
-          <div style={{ height: '100px' }}> 
-            <Bar data={chartData} options={chartOptions} />
-          </div>
-        </CustomPaper>
-      </Grid>
-    );
-  };
-
-
-  
-  //갈등 해결조언
-
-  
-  const [selectedTab, setSelectedTab] = React.useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
-
-  const renderConflictResolutionAdvice = () => (
-    <Grid item xs={12} mb={5}>
-      <CustomPaper>
-        <Typography variant="title_bold" gutterBottom>갈등 해결 조언</Typography>
-        <Tabs value={selectedTab} onChange={handleTabChange} indicatorColor="primary" textColor="primary" centered>
-          {Object.keys(data.conflict_resolution_advice || {}).map((personality, index) => (
-            <Tab key={personality} label={personalityMap[personality]} />
-          ))}
-        </Tabs>
-        {Object.entries(data.conflict_resolution_advice || {}).map(([personality, advice], index) => (
-          <Box key={personality} mb={1} mt={3} hidden={selectedTab !== index}>
-            <Typography variant="sub_bold">{personalityMap[personality]}가 알려드립니다! <br /><br /></Typography>
-            <Typography sx={{ marginBottom: '16px' }}>{advice}</Typography>
-          </Box>
-        ))}
-      </CustomPaper>
-    </Grid>
-  );
 
 
   //전체 리턴
@@ -344,12 +254,10 @@ const ResultPage = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/갈등AI.png" imgAlt="결과 이미지" />}
-              {data.total_score && renderWrongPercentage()}
+              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-2.png" imgAlt="결과 이미지" />}
+              {data.total_score && renderTotalScorePercentage()}
               {Object.keys(data.total_score || {}).map((name) => renderPersonData(name))}
-              {data.priority_keywords && renderPriorityKeywords()}
-              {data.conflict_cause_percentage && renderConflictCausePercentage()}
-              {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
+              {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
         </div>
@@ -358,4 +266,4 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+export default ResultFriendship;

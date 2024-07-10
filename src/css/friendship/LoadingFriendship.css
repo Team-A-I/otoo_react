@@ -1,0 +1,15 @@
+@keyframes customWave {
+    0% {
+      background-position: -200px -200px ;
+    }
+    100% {
+      background-position: 200px 200px !important;
+    }
+  }
+  
+  .custom-wave-skeleton {
+    animation: customWave 2s linear infinite !important; /* 속도를 느리게 설정 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 65%) ;
+    background-size: 200% 200% !important;
+  }
+  
