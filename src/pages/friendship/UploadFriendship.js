@@ -4,7 +4,7 @@ import {Container, Box} from '@mui/material';
 
 const UploadFriendship = () => {
     return (
-    <Container maxWidth="xl">
+    <Container maxWidth="md">
       <Box>
         <FileUploadFriendship />
       </Box>

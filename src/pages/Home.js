@@ -4,6 +4,7 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { useNavigate } from 'react-router-dom';
 import theme1 from "../theme";
 import '../css/Home.css'; // CSS 파일 추가
+import AgreeModal from '../components/AgreeModal';
 
 const Home = () => {
     const theme = useTheme();
@@ -302,6 +303,7 @@ const Home = () => {
                         )}
                     </Box>
                 </Box>
+                <AgreeModal/>
             </div>
         </ThemeProvider>
     );
