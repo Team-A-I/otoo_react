@@ -42,19 +42,25 @@ const FileUploadLove = () => {
       reader.readAsText(file);
   };
 
-  const lovecopy = "누가 더 좋아해?\n무슨 생각해?\n이제는\n묻지 마세요.";
+  const lovecopy = "네가 좋아\n너는?\n솔직하게\n말해줘.";
   const loveintrocopy = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.\n지금 무슨 생각을 하고 있을까요?";
 
   return (
       <Container maxWidth="xl">
         <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
-        <Box className="container">
-        <Grid container spacing={1}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
+        <Grid container>
           <Grid item xs={12} sm={6}container
           alignItems="center">
-            <Typography variant="h1"
-            color="peach" className="lovemain-text">
+          <Typography 
+            variant="hbig"
+            color="peach"
+            sx={{
+              fontWeight: 900,
+              whiteSpace: 'pre-line',
+              fontSize: '95px',
+            }}>
               {lovecopy}
             </Typography>
           </Grid>
@@ -65,10 +71,10 @@ const FileUploadLove = () => {
               component="img"
               height="400"
               image="/otoo_react/images/lovemain.jpg"
-              alt="Paella dish"
+              alt="lovemain"
             />
             <CardContent>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="h3_mid" color="text.secondary">
                 <span dangerouslySetInnerHTML={{ __html: loveintrocopy }} />
               </Typography>
             </CardContent>
@@ -76,7 +82,7 @@ const FileUploadLove = () => {
         </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Box className="button-container" mt={12}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
             <input
                 type="file"
                 ref={fileInputRef}
@@ -87,8 +93,6 @@ const FileUploadLove = () => {
               component="span" 
               size="large"
               sx={{ 
-                width: '200px', 
-                height: '50px',
                 mr: 2, 
                 backgroundColor: theme.palette.peach, 
                 color: theme.palette.gray700,

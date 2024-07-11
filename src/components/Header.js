@@ -10,7 +10,7 @@ const Header = () => {
       <AppBar position="static" style={{ background: 'white'}}>
         <Toolbar>
           <Typography style={{ color: 'black' }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            OTOO
+            몇대몇
           </Typography>
           <Button style={{ color: 'black' }} component={Link} to="/">Home</Button>
           <Button style={{ color: 'black' }} component={Link} to="/analysis">Analysis</Button>

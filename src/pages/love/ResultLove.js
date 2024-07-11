@@ -213,19 +213,22 @@ const ResultLove = () => {
         <Container maxWidth="lg">
             <ThemeProvider theme={theme}>
                 <div style={{ fontFamily: theme.typography.fontFamily }}>
-
                     {/* total_score */}
-                    <Grid item xs={12}>
-                        <Paper elevation={4} style={{ marginBottom: '24px', borderRadius: '35px', minHeight: '320px' }}>
-                            <Box p={5}>
+                    <Grid item xs={12}  mt={8}>
+                        <Paper elevation={4}  style={{ marginBottom: '24px', borderRadius: '35px', maxHeight: '220px' }}>
+                            <Box>
                                 <Grid container alignItems="flex-start">
                                     <Grid item xs={12} sm={4}>
-                                        <Grid container
-                                            alignItems="center"
-                                            style={{ height: '100%', minHeight: '220px' }}>
+                                        <Grid container 
+                                        justifyContent="center" 
+                                        alignItems="start" 
+                                        direction="column" 
+                                        style={{ height: '100%', minHeight: '220px' }}>
                                             {loveMessage && (
-                                                <Typography variant="h4">{loveMessage}
-                                                </Typography>
+                                                <Box ml={5}>
+                                                    <Typography variant="hc_bold">{loveMessage}
+                                                    </Typography>
+                                                </Box>
                                             )}
                                         </Grid>
                                     </Grid>
@@ -251,7 +254,7 @@ const ResultLove = () => {
                                         <Grid container
                                             alignItems="center"
                                             style={{ height: '100%', minHeight: '220px' }}>
-                                            <Typography variant="h4" color="dyellow" gutterBottom >
+                                            <Typography variant="hc_bold" color="dyellow" gutterBottom >
                                                 우리들의 <br /> 애정 전선 입니다. <br />누가 더 좋아하는지 <br /> 알아 보겠습니다.
                                             </Typography>
                                         </Grid>

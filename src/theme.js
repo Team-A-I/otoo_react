@@ -40,11 +40,14 @@ let theme = createTheme({
     },
     hbig_bold:{
       fontSize: '95px',
+      [createTheme().breakpoints.down('lg')]: {
+        fontSize: '68px',
+      },
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '75px',
+        fontSize: '50px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '56px',
+        fontSize: '40px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -107,10 +110,10 @@ let theme = createTheme({
     hc_bold: {
       fontSize: '32px',
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '29px',
+        fontSize: '20px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '25px',
+        fontSize: '20px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -194,11 +197,14 @@ let theme = createTheme({
     },
     title_bold: {
       fontSize: '18px',
+      [createTheme().breakpoints.down('lg')]: {
+        fontSize: '16px',
+      },
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '17px',
+        fontSize: '15px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '16px',
+        fontSize: '14px',
       },
       fontWeight: 700,
       color: '#1B1F23'

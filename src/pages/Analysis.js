@@ -4,19 +4,13 @@ import { Container, Box } from '@mui/material';
 
 const Analysis = () => {
     return (
-        <Box 
-            sx={{ 
-                backgroundColor: '#F1F0EB90', 
-                minHeight: '100vh', 
-                width: '100vw', 
-                display: 'flex', 
-                justifyContent: 'center', 
-            }}
+        <Box sx={{backgroundColor:"#F1F0EB90",
+            minHeight: 'calc(100vh - 64px)',
+            display: 'flex',
+            flexDirection: 'column'
+        }}
         >
-            <Container 
-                maxWidth="xl">
-                <AnalysisMain />
-            </Container>
+            <AnalysisMain />
         </Box>
     );
 };

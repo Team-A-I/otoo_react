@@ -40,8 +40,10 @@ export const TitleSection = ({ titleText, imgSrc, imgAlt }) => (
       <Box>
         <Grid container alignItems="flex-start">
           <Grid item xs={12} sm={4}>
-            <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', minHeight: '220px', marginLeft: 60 }}>
+            <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', minHeight: '220px'}}> 
+              <Box ml={5}>
               <Typography variant="hc_bold" color="gray900" gutterBottom dangerouslySetInnerHTML={{ __html: titleText }} />
+              </Box>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={8}>
