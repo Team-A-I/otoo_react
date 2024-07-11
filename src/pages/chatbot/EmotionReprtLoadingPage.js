@@ -1,103 +1,99 @@
 import React, { useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Grid, Paper, Box, ThemeProvider, Skeleton  } from '@mui/material';
+import { Container, ThemeProvider, Box, Grid, Card, CardHeader, CardMedia, CardContent, Typography, CardActions, Paper, IconButton, Skeleton } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import '../../css/chatbot/EmotionReportLoadingPage.css';
 import theme from "../../theme"
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
+
 
 
 const EmotionReportLoadingPage = () => {
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const location = useLocation();
     const messages = location.state?.messages;
     const navigate = useNavigate();
+    const usersCode = sessionStorage.getItem('usersCode');
     const emotionReportHandler = useCallback(async() => {
         try {
-        const response = await axios.post('http://localhost:8080/emotionReport', {messages}, {
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        });
-        const result = response.data
-        navigate('/emotionReportPage', { state: { result: result }});
-        } catch (error) {
-        console.error('Error uploading file:', error);
+            const requestBody = usersCode ? { messages, usersCode } : { messages };
+            const response = await axios.post('http://localhost:8080/emotionReport', requestBody, {
+                headers: {
+                'Content-Type': 'application/json',
+                },
+            });
+            const result = response.data
+            navigate('/emotionReportPage', { state: { result: result }});
+            } catch (error) {
+            console.error('Error uploading file:', error);
         }
-    }, [messages, navigate])
+    }, [messages, navigate, usersCode])
     useEffect(() => {
         emotionReportHandler();
       }, [emotionReportHandler]);
   return (
-    <Container sx={{ display: 'flex', justifyContent: 'center' }}>
-    <ThemeProvider theme={theme}>
-        <Box sx={{ height: '90vh', display: 'flex', justifyContent: 'center' }}>
-            <Box className="emotionPaper" sx={{ alignItems: 'center', display: 'flex', marginTop: '15px', justifyContent: 'center' }}>
-                <Grid className='emotionGrid' container spacing={2} alignItems="stretch">
-                    <Grid item xs={4}>
-                        <Paper className="letterPaper" elevation={3} maxWidth={350} maxHeight={350}>
-                            <Box className="letterBox" >
-                                <Skeleton variant="rectangular" className="letterIMG" animation="wave" width={400} height={400}/>
-                            </Box>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <Paper className="reportPaper" sx={{ alignItems: 'center', display: 'flex', position: 'relative', overflow: 'auto', maxHeight:'310px', maxWidth:'700px' }} elevation={3}>
-                            <Box className="reportBox" sx={{width:'90%'}}>
-                                <Skeleton variant="text" width="80%" height="3rem" animation="wave"/>
-                                <Skeleton variant="text" width="60%" height="3rem" animation="wave"/>
-                                <Skeleton variant="text" width="90%" height="3rem" animation="wave"/>
-                            </Box>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={4} className='moreContent'>
-                        <Card>
-                            <CardHeader />
-                            <Skeleton variant="rectangular" className="moreIMG" height={140} width={365} animation="wave"/>
-                            <CardContent>
-                                <Skeleton variant="text" width="60%" height="2rem" animation="wave"/>
-                                <Skeleton variant="text" width="80%" height="1rem" animation="wave"/>
-                            </CardContent>
-                            <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-                                <Skeleton variant="rectangular" width="40%" height="2rem" animation="wave"/>
-                            </CardActions>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={4} className='moreContent'>
-                        <Card>
-                            <CardHeader />
-                            <Skeleton variant="rectangular" className="moreIMG" height={140} width={365} animation="wave"/>
-                            <CardContent>
-                                <Skeleton variant="text" width="60%" height="2rem" animation="wave"/>
-                                <Skeleton variant="text" width="80%" height="1rem" animation="wave"/>
-                            </CardContent>
-                            <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-                                <Skeleton variant="rectangular" width="40%" height="2rem" animation="wave"/>
-                            </CardActions>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={4} className='moreContent'>
-                        <Card>
-                            <CardHeader />
-                            <Skeleton variant="rectangular" className="moreIMG" height={140} width={365} animation="wave" />
-                            <CardContent>
-                                <Skeleton variant="text" width="60%" height="2rem" animation="wave"/>
-                                <Skeleton variant="text" width="80%" height="1rem" animation="wave"/>
-                            </CardContent>
-                            <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-                                <Skeleton variant="rectangular" width="40%" height="2rem" animation="wave"/>
-                            </CardActions>
-                        </Card>
-                    </Grid>
+    <Container sx={{ display: 'flex', marginTop:"35px", justifyContent:'center'}}>
+      <ThemeProvider theme={theme}>
+        <div style={{ fontFamily: theme.typography.fontFamily }}>
+          <Box className="reportLoading_emotionPaper">
+            <Paper className="reportLoading_letterPaper" elevation={3} sx={{ maxHeight: '35vh', marginBottom: '50px', position: 'relative', minWidth:'125vh'}}>
+              <Grid className='reportLoading_emotionGrid' container spacing={2}>
+                <Grid item xs={4} className='reportLoading_emotionGridItem' sx={{ display: isSmallScreen ? 'none' : 'flex' }}>
+                  <Box className="reportLoading_letterBox" sx={{ maxHeight: '30vh', overflow:"hidden" }}>
+                    <Skeleton variant="rectangular" width="800px" height="800px" />
+                  </Box>
                 </Grid>
-            </Box>
-        </Box>
-    </ThemeProvider>
-</Container>
-);
+                <Grid item xs={7} className='reportLoading_emotionGridItem'>
+                  <Box className="reportLoading_reportTextBox" sx={{ height: '30vh' }}>
+                    <Typography variant="title_bold" color="gray500" fontSize={'1vw'}>
+                      <Skeleton />
+                    </Typography>
+                    <Typography variant="title_bold" color="gray500" fontSize={'1vw'}>
+                      <Skeleton />
+                    </Typography>
+                    <Typography variant="title_bold" color="gray500" fontSize={'1vw'}>
+                      <Skeleton />
+                    </Typography>
+                  </Box>
+                  <IconButton type="button" aria-label="ContentCopy" sx={{ position: 'absolute', right: 0, bottom: 0 }}>
+                    <ContentCopyIcon sx={{ fontSize: '2vh' }} />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Paper>
+            <Grid container spacing={2} alignItems="stretch" sx={{ display: 'flex', marginTop:'40px' }}>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <Grid item xs={4} className='reportLoading_moreContent' key={index}>
+                  <Card sx={{ maxWidth: 400 }}>
+                    <CardHeader />
+                    <CardMedia
+                      className="reportLoading_moreIMG"
+                      sx={{ height: 140, opacity: 0.7 }}
+                      children={<Skeleton variant="rectangular" width="100%" height="100%" />}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h2_bold" color="gray500" fontSize={'1vw'} component="div">
+                        <Skeleton />
+                      </Typography>
+                      <Typography variant="body2" fontSize={'0.7vw'} color="gray500">
+                        <Skeleton />
+                      </Typography>
+                    </CardContent>
+                    <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
+                      <Skeleton variant="rectangular" width={80} height={30} />
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </div>
+      </ThemeProvider>
+    </Container>
+  );
 };
+
  
 
 export default EmotionReportLoadingPage;

@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import FriendshipButton from './FriendshipButton'; // 새로 만든 버튼 컴포넌트
+import FriendshipButton from './FriendshipButton';
 import theme from "../../theme";
 
 // 변수 정의
