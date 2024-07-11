@@ -100,8 +100,8 @@ const ResultFriendshiptolove = () => {
     );
   
     const images = [
-      { src: "/otoo_react/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
-      { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
+      { src: "/otoo_react/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
+      { src: "/otoo_react/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
     ];
   
     return (
