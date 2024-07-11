@@ -14,7 +14,7 @@ const imageHeight = 400;
 const imageSrc = "/otoo_react/images/problems.jpg";
 const imageAlt = "Paella dish";
 const lovemainText = "계속되는\n언쟁에\n고민\n마세요.";
-const cardContentText = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요. 지금 무슨 생각을 하고 있을까요?";
+const cardContentText = "내가 맞다니까? 오늘도 답답함을 느끼고 계시다면 시원하게 대화를 넣어주세요. 누가 맞았는지 저희가 판단해드릴게요. 무엇이 우리를 싸우게 만들었는지, 어떻게 하면 이 문제를 해결할 수 있을지  알려드릴게요.";
 const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
@@ -25,9 +25,10 @@ const textFieldVariant = "outlined";
 
 
 const FileUpload = () => {
-  const [file, setFile] = useState(null);// eslint-disable-next-line
+  const [file, setFile] = useState(null);
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
+  const [textInput, setTextInput] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -49,15 +50,20 @@ const FileUpload = () => {
   }, [navigate]);
 
   const handleFileUpload = () => {
-    if (!file) {
-      console.log("No file selected");
-      return;
+    if (file) {
+      console.log("handleFileUpload called");
+      console.log("File exists:", file);
+      const reader = new FileReader();
+      reader.onload = handleFileRead;
+      reader.readAsText(file);
+    } else if (textInput.trim()) {
+      const json = { text: textInput };
+      setJsonContent(json);
+      console.log("JSON Content from text input:", json);
+      navigate('/loading-conflict', { state: { jsonContent: json } });
+    } else {
+      console.log("No file selected and text input is empty");
     }
-    console.log("handleFileUpload called");
-    console.log("File exists:", file);
-    const reader = new FileReader();
-    reader.onload = handleFileRead;
-    reader.readAsText(file);
   };
 
   const handleToggleInput = () => {
@@ -67,6 +73,10 @@ const FileUpload = () => {
         inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
+  };
+
+  const handleTextInputChange = (event) => {
+    setTextInput(event.target.value);
   };
 
   return (
@@ -124,7 +134,7 @@ const FileUpload = () => {
                   <ConflictButton
                     label={btnResultLabel}
                     onClick={handleFileUpload}
-                    disabled={!file}
+                    disabled={!file && !textInput.trim()}
                     className="conflict-btn-result"
                   />
                   <ConflictButton
@@ -143,11 +153,13 @@ const FileUpload = () => {
                   multiline
                   rows={textFieldRows}
                   variant={textFieldVariant}
+                  value={textInput}
+                  onChange={handleTextInputChange}
                 />
                 <ConflictButton
                   label={btnResultLabel}
                   onClick={handleFileUpload}
-                  disabled={!file}
+                  disabled={!textInput.trim()}
                   className="conflict-btn-textfield"
                 />
               </Box>

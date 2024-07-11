@@ -47,7 +47,7 @@ const AnalysisMain = () => {
     return (
 <ThemeProvider theme={theme}>
     <div style={{ fontFamily: theme.typography.fontFamily }}>
-        <Box mt={3} sx={{padding:{ xs: 5, sm: 5, md: 10, xl: 15 }}}>
+        <Box mt={5} sx={{padding:{ xs: 1, sm: 5, md: 10, xl: 15 }}}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} 
                 sx={{minHeight:"30vh"}} 

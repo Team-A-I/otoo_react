@@ -176,10 +176,10 @@ let theme = createTheme({
     h3_bold: {
       fontSize: '17px',
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '16px',
+        fontSize: '15px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '15px',
+        fontSize: '14px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -201,10 +201,10 @@ let theme = createTheme({
         fontSize: '16px',
       },
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '15px',
+        fontSize: '12px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '14px',
+        fontSize: '13px',
       },
       fontWeight: 700,
       color: '#1B1F23'

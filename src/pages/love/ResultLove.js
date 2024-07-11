@@ -213,24 +213,23 @@ const ResultLove = () => {
         <Container maxWidth="lg">
             <ThemeProvider theme={theme}>
                 <div style={{ fontFamily: theme.typography.fontFamily }}>
+
                     {/* total_score */}
-                    <Grid item xs={12}  mt={8}>
-                        <Paper elevation={4}  style={{ marginBottom: '24px', borderRadius: '35px', maxHeight: '220px' }}>
-                            <Box>
+                    <Grid item xs={12}>
+                        <Paper elevation={4} style={{ marginBottom: '24px', borderRadius: '35px' }}>
+                            <Box mt={8}>
                                 <Grid container alignItems="flex-start">
                                     <Grid item xs={12} sm={4}>
-                                        <Grid container 
-                                        justifyContent="center" 
-                                        alignItems="start" 
-                                        direction="column" 
-                                        style={{ height: '100%', minHeight: '220px' }}>
-                                            {loveMessage && (
-                                                <Box ml={5}>
+                                        <Box ml={5}>
+                                            <Grid container
+                                                alignItems="center"
+                                                style={{ height: '100%', minHeight: '220px' }}>
+                                                {loveMessage && (
                                                     <Typography variant="hc_bold">{loveMessage}
                                                     </Typography>
-                                                </Box>
-                                            )}
-                                        </Grid>
+                                                )}
+                                            </Grid>
+                                        </Box>
                                     </Grid>
                                     <Grid item xs={12} sm={8}>
                                         <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
@@ -265,9 +264,9 @@ const ResultLove = () => {
                                                 <Grid item xs={12} sm={5} key={name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                                                         <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                                            <Typography variant="h5" gutterBottom mt={3}>{name}</Typography>
+                                                            <Typography variant="title_bold" gutterBottom mt={3}>{name}</Typography>
                                                             <img src={getImageByPercentage(result.total_score[name])} alt="" style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                                                            <Typography variant="h2" color="gray600" style={{ fontSize: '2vw' }}>{result.total_score[name]}%</Typography>
+                                                            <Typography variant="title_bold" color="gray600" >{result.total_score[name]}%</Typography>
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
@@ -306,10 +305,10 @@ const ResultLove = () => {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <Typography variant="h4" style={{ color }} mb={5} gutterBottom>
+                                                    <Typography variant="h1_bold" style={{ color }} mb={5} gutterBottom>
                                                         {name}님의 <br /> 애정도
                                                     </Typography>
-                                                    <Typography variant="h4" style={{ color }} gutterBottom>
+                                                    <Typography variant="h1_bold" style={{ color }} gutterBottom>
                                                         {result.total_score[name]}%
                                                     </Typography>
                                                 </Paper>
@@ -338,7 +337,7 @@ const ResultLove = () => {
                     <Grid item xs={12}>
                         <Paper elevation={4} style={{ position: 'relative', borderRadius: '35px' }}>
                             <Box p={5}>
-                                <Typography variant="h5" gutterBottom>
+                                <Typography variant="title_bold" gutterBottom>
                                     우선 순위 키워드
                                 </Typography>
                                 <Grid container spacing={3}>

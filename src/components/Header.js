@@ -9,14 +9,12 @@ const Header = () => {
     <div style={{ fontFamily: theme.typography.fontFamily }}>
       <AppBar position="static" style={{ background: 'white'}}>
         <Toolbar>
-          <Typography style={{ color: 'black' }} variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            몇대몇
-          </Typography>
+            <Typography style={{ color: 'black' }} variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none' }} >
+              몇대몇
+            </Typography>
           <Button style={{ color: 'black' }} component={Link} to="/">Home</Button>
           <Button style={{ color: 'black' }} component={Link} to="/analysis">Analysis</Button>
           <Button style={{ color: 'black' }} component={Link} to="/chatbot">ChatBot</Button>
-          {/* <Button style={{ color: 'black' }} component={Link} to="/upload-conflict">Conflict Upload</Button>
-          <Button style={{ color: 'black' }} component={Link} to="/upload-love">UploadLove</Button> */}
 
         </Toolbar>
       </AppBar>
