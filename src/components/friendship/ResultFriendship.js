@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import theme from "../../theme";
@@ -13,12 +13,17 @@ const ResultFriendship = () => {
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 
-  const test = Object.keys(data.friendship_likeability || {});
+  useEffect(() => {
+    const movePage = async () => {
+      navigate('/result-friendship-to-love', { state: { data } });
+    }
 
-  if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
-  {
-     navigate('/result-friendship-to-love', { state: { data } });
-  }
+    const test = Object.keys(data.friendship_likeability || {});
+    if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
+    {
+         movePage();
+    }
+  });
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
