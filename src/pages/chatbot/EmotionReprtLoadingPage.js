@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 import { Container, ThemeProvider, Box, Grid, Card, CardHeader, CardMedia, CardContent, Typography, CardActions, Paper, IconButton, Skeleton } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -18,7 +18,7 @@ const EmotionReportLoadingPage = () => {
     const emotionReportHandler = useCallback(async() => {
         try {
             const requestBody = usersCode ? { messages, usersCode } : { messages };
-            const response = await axios.post('http://localhost:8080/emotionReport', requestBody, {
+            const response = await axiosIns.post('http://localhost:8080/emotionReport', requestBody, {
                 headers: {
                 'Content-Type': 'application/json',
                 },
