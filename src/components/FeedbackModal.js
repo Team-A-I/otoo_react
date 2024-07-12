@@ -65,7 +65,6 @@ const FeedbackModal = () => {
       });
       setOpen(false);
     } catch (e) {
-      console.log(e);
     }
   };
 

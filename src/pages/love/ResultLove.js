@@ -201,9 +201,7 @@ const images = [
 const ResultLove = () => {
   const location = useLocation();
   const jsonData = location.state?.jsonData || null;
-  console.log("jsonData", jsonData);
   const result = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
-  console.log("result!!!", result);
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 

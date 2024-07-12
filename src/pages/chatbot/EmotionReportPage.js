@@ -36,7 +36,6 @@ const EmotionReportPage = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(result).then(() => {
-      console.log(TEXTS.clipboardSuccess, result);
     }).catch(err => {
       console.error(TEXTS.clipboardFailure, err);
     });

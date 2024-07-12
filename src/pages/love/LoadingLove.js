@@ -21,13 +21,11 @@ const LoadingLove = () => {
             if (usercode) {
               requestData.usercode = usercode;
             }
-            console.log("requestData", requestData);
             const response = await axios.post('http://localhost:8080/api/love/analysis', requestData, {
               headers: {
                 'Content-Type': 'application/json',
               },
             });
-            console.log("Response from backend:", response.data);
             navigate('/result-love', { state: { jsonData: response.data } });
           } else {
             // Handle image file upload
@@ -37,13 +35,11 @@ const LoadingLove = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            console.log("formData", formData);
             const response = await axios.post('http://localhost:8080/api/love/ocr', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
             });
-            console.log("Response from backend:", response.data);
             navigate('/result-love', { state: { jsonData: response.data } });
           }
         } catch (error) {

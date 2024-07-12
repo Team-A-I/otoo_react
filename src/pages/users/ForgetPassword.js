@@ -46,11 +46,8 @@ const ForgetPassword = () => {
 
   
   const checkEmailCode = async () => {
-    console.log(checkEmail.toString());
-    console.log(verificationCode);
     if (checkEmail.toString() === verificationCode) {
       alert("이메일 인증 성공");
-      console.log(usersEmail);
       navigate('/resetPassword', {state: { usersEmail: usersEmail }} );
     } else {
       alert("이메일 인증 실패");
