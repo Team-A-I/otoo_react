@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useCallback } from 'react';
 import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +6,9 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import FriendshipButton from './FriendshipButton';
+import FriendshipButtonResult from './FriendshipButtonResult';
 import theme from "../../theme";
+
 
 // 변수 정의
 const cardMaxWidth = 700;
@@ -27,9 +28,20 @@ const FileUploadFriendship = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
+  {/*파일 업로드 시 이미지 파일 or txt파일만 올리도록 설정 */}
   const handleFileChange = useCallback((event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    const file = event.target.files[0];
+    if(file)
+    {
+      const fileType = file.type;
+      if(fileType === 'text/plain' || fileType.startsWith('image/'))
+      {
+        setFile(event.target.files[0]);
+        console.log("File selected:", event.target.files[0]);
+      } else {
+        alert('이미지 파일이나 텍스트 파일만 올려주세요!');
+      }
+    }
   }, []);
 
   const handleFileRead = useCallback((event) => {
@@ -98,6 +110,7 @@ const FileUploadFriendship = () => {
                 </Card>
               </Grid>
               <Grid item xs={12}>
+              {modalOpen && <ResultModal setModalOpen={setModalOpen} />}
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                   <input
                     accept=".txt"
@@ -107,20 +120,21 @@ const FileUploadFriendship = () => {
                     onChange={handleFileChange}
                   />
                   <label htmlFor="raised-button-file">
-                    <FriendshipButton
-                      label={btnUploadLabel}
-                      onClick={() => {}}
-                      disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
-                      className="conflict-btn-upload"
-                    />
+                      <FriendshipButton
+                        label={btnUploadLabel}
+                        onClick={() => {}}
+                        disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
+                        className="conflict-btn-upload"
+                      />
                   </label>
-                  <FriendshipButton
+                  <FriendshipButtonResult
                     label={btnResultLabel}
                     onClick={handleFileUpload}
                     disabled={!file}
                     className="conflict-btn-result"
                   />
                 </Box>
+                
               </Grid>
             </Grid>
           </Box>
