@@ -191,7 +191,6 @@ const modal = {
   width: '75vw',
   maxWidth: 480,
   bgcolor: 'background.paper',
-  // border: '1px solid #000',
   borderRadius: '15px',
   boxShadow: 24,
   p: 4,

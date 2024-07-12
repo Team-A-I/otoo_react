@@ -30,7 +30,6 @@ const FileUploadFriendship = () => {
   const handleFileChange = useCallback((event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
-    console.log("File selected:", selectedFile);
   }, []);
 
   const handleFileRead = useCallback((event) => {
@@ -38,7 +37,6 @@ const FileUploadFriendship = () => {
     try {
       const json = { text: content, file }; // 전체 텍스트를 하나의 'text' 필드에 저장하고 파일 추가
       setJsonContent(json);
-      console.log("JSON Content:", json);
       navigate('/loading-friendship', { state: { jsonContent: json } });
     } catch (error) {
       console.error("Error parsing file:", error);
@@ -47,7 +45,6 @@ const FileUploadFriendship = () => {
 
   const handleFileUpload = () => {
     if (file) {
-      console.log("handleFileUpload called");
       const fileExtension = file.name.split('.').pop().toLowerCase();
       const reader = new FileReader();
       if (fileExtension === 'txt') {
@@ -56,16 +53,13 @@ const FileUploadFriendship = () => {
       } else {
         const json = { text: textInput, file };
         setJsonContent(json);
-        console.log("JSON Content:", json);
         navigate('/loading-friendship', { state: { jsonContent: json } });
       }
     } else if (textInput.trim()) {
       const json = { text: textInput };
       setJsonContent(json);
-      console.log("JSON Content from text input:", json);
       navigate('/loading-friendship', { state: { jsonContent: json } });
     } else {
-      console.log("No file selected and text input is empty");
     }
   };
 

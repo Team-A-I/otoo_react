@@ -19,7 +19,6 @@ const LoadingFriendship = () => {
           if (usercode) {
             requestData.usercode = usercode;
           }
-          console.log("requestData", requestData);
 
           let response;
           if (fileExtension === 'txt') {
@@ -33,7 +32,6 @@ const LoadingFriendship = () => {
             response = await axios.post('http://localhost:8080/api/friendship/ocr', formData);
           }
 
-          console.log("Response from backend:", response.data);
           navigate('/result-friendship', { state: { jsonData: response.data } });
         } catch (error) {
           console.error("Error sending data to backend:", error);

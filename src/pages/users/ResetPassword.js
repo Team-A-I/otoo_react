@@ -40,7 +40,6 @@ const ResetPassword = () => {
     try {
       // URLSearchParams를 사용하여 URL에서 usersEmail 파라미터를 추출합니다.
       const usersEmail = location.state?.usersEmail;
-      console.log(usersEmail);
 
       if (password === confirmPassword) {
         const response = await axios.post('http://localhost:8080/changePwd', {
