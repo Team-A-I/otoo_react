@@ -108,7 +108,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     hc_bold: {
-      fontSize: '32px',
+      fontSize: '30px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '20px',
       },

@@ -12,9 +12,9 @@ const Header = () => {
             <Typography style={{ color: 'black' }} variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none' }} >
               몇대몇
             </Typography>
-          <Button style={{ color: 'black' }} component={Link} to="/">Home</Button>
-          <Button style={{ color: 'black' }} component={Link} to="/analysis">Analysis</Button>
-          <Button style={{ color: 'black' }} component={Link} to="/chatbot">ChatBot</Button>
+          {/* <Button style={{ color: 'black' }} component={Link} to="/">Home</Button> */}
+          <Button style={{ color: 'black' }} component={Link} to="/analysis">카톡분석</Button>
+          <Button style={{ color: 'black' }} component={Link} to="/chatbot">맞장구봇</Button>
 
         </Toolbar>
       </AppBar>

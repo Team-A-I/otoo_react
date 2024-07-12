@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import theme from "../../theme";
 import 'chart.js/auto'; 
 import { CustomPaper, AttributeCard, TitleSection } from '../conflict/CommonComponentsConflict';
+import FeedbackModal from '../FeedbackModal';
 
 const ResultFriendship = () => {
   const navigate = useNavigate();
@@ -71,8 +72,8 @@ const ResultFriendship = () => {
     const names = Object.keys(data.total_score || {});
     
     return names.length === 2 
-      ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
-      : '판결 결과입니다';
+      ? `${names[0]}님과<br />${names[1]}님의<br />친구 관계입니다` 
+      : '친구 관계입니다';
   };
 
   // 전체 통계 
@@ -85,7 +86,7 @@ const ResultFriendship = () => {
             <Grid item xs={12} sm={4}>
               <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
                 <Typography variant="hc_bold" color="dyellow" gutterBottom >
-                  오늘의 <br /> 우정 일기예보 입니다. <br />누가 더 우정하는지 <br /> 알아 보겠습니다.
+                우리의 친밀도를<br />알려드립니다.<br />누가 더 친한지<br />알아 보겠습니다.
                 </Typography>
               </Grid>
             </Grid>
@@ -265,6 +266,7 @@ const ResultFriendship = () => {
               {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
+          <FeedbackModal/>
         </div>
       </ThemeProvider>
     </Container>

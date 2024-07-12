@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Paper, Container, Card, CardContent, Tooltip, Button, Table, TableBody, TableCell, TableHead, TableRow, useMediaQuery, useTheme, ThemeProvider } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import theme from '../../theme';
+import FeedbackModal from '../../components/FeedbackModal';
 
 const getLoveMessage = (total_score) => {
     const keys = Object.keys(total_score);
@@ -39,6 +40,7 @@ const getLoveMessage = (total_score) => {
 };
 
 const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     return (
         <Grid item xs={4} style={{ display: 'flex', flexDirection: 'column' }}>
             <Paper
@@ -50,7 +52,7 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    alignItems: 'stretch',
+                    alignItems: 'center',
                 }}
             >
                 <Typography variant="h3_bold" gutterBottom>
@@ -68,10 +70,11 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
                         flexGrow: 1,
                     }}
                 />
-                <Typography variant="h1_bold">{percentage}%</Typography>
+                <Typography variant="h2_bold">{percentage}%</Typography>
                 <Tooltip title={tooltipTitle} arrow>
                     <Button
                         variant="outlined"
+                        fullWidth
                         sx={{
                             marginTop: '8px',
                             borderColor: '0495D2',
@@ -80,6 +83,8 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
                                 borderColor: '0350B7',
                                 color: '0350B7',
                             },
+                            fontSize: isSmallScreen ? '8px' : '16px',
+                            padding: isSmallScreen ? '5px' : '10px',
                         }}
                     >
                         설명보기
@@ -189,7 +194,7 @@ const renderTable = (name, keywords, color) => (
 );
 
 const images = [
-    { src: "/otoo_react/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
+    { src: "/otoo_react/images/yumi2.png", width: '90px', height: 'auto' }, // 첫 번째 이미지 크기
     { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
 ];
 
@@ -352,7 +357,7 @@ const ResultLove = () => {
                                                     bottom: 0,
                                                     left: index === 1 ? '10px' : 'auto',
                                                     right: index === 0 ? '10px' : 'auto',
-                                                    width: images[index].width,
+                                                    width: isSmallScreen ? '50px' : images[index].width,
                                                     height: images[index].height,
                                                     zIndex: 1
                                                 }}
@@ -363,6 +368,7 @@ const ResultLove = () => {
                             </Box>
                         </Paper>
                     </Grid>
+                    <FeedbackModal/>
                     <br></br>
                 </div>
             </ThemeProvider>
