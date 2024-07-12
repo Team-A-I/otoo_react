@@ -1,13 +1,15 @@
 import { Grid, Button, Typography, Box, Tooltip, ThemeProvider } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import '../../css/chatbot/ChatbotPage.css';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import theme from "../../theme"
+import axiosIns from '../../components/axios';
+
+
 
 const ChatBot = () => {
   // 채팅창에 입력한 문자열
@@ -58,7 +60,7 @@ const ChatBot = () => {
     setChat('');
 
     try {
-      const response = await axios.post('http://localhost:8080/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('http://localhost:8080/chatbot', { RecentMessages, mode }, {
         headers: {
           'Content-Type': 'application/json',
         },
