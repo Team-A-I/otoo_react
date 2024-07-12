@@ -93,7 +93,7 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
 const createUserData = (user, data) => {
     return [
         {
-            title: "너를 생각하는 내마음",
+            title: "너만을 생각해",
             percentage: data.support[user].score,
             tooltipTitle: data.support[user].reason,
         },

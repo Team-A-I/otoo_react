@@ -1,4 +1,3 @@
-// LoadingLove.js
 import React, { useEffect } from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -6,31 +5,48 @@ import axios from 'axios';
 import '../../css/conflict/LoadingPage.css'; // 커스텀 CSS 파일을 임포트합니다.
 
 const LoadingLove = () => {
-const navigate = useNavigate();
-const location = useLocation();
-const { jsonContent } = location.state || {};
-const usercode = sessionStorage.getItem('usersCode');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { jsonContent } = location.state || {};
+  const usercode = sessionStorage.getItem('usersCode');
 
-useEffect(() => {
-  const fetchData = async () => {
-    if (jsonContent) {
-      try {
-        const requestData = { text: jsonContent.text };
-        if (usercode) {
-          requestData.usercode = usercode;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (jsonContent) {
+        try {
+          if (jsonContent.text) {
+            // Handle text file upload
+            const requestData = { text: jsonContent.text };
+            if (usercode) {
+              requestData.usercode = usercode;
+            }
+            console.log("requestData", requestData);
+            const response = await axios.post('http://localhost:8080/api/love/analysis', requestData);
+            console.log("Response from backend:", response.data);
+            navigate('/result-love', { state: { jsonData: response.data } });
+          } else if (jsonContent.image) {
+            // Handle image file upload
+            const formData = new FormData();
+            formData.append('image', jsonContent.image);
+            if (usercode) {
+              formData.append('usercode', usercode);
+            }
+            console.log("formData", formData);
+            const response = await axios.post('http://localhost:8080/api/love/image-analysis', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            });
+            console.log("Response from backend:", response.data);
+            navigate('/result-love', { state: { jsonData: response.data } });
+          }
+        } catch (error) {
+          console.error("Error sending JSON to backend:", error);
         }
-        console.log("requestData", requestData)
-        const response = await axios.post('http://localhost:8080/api/love/analysis', requestData);
-        console.log("Response from backend:", response.data);
-        navigate('/result-love', { state: { jsonData: response.data } });
-      } catch (error) {
-        console.error("Error sending JSON to backend:", error);
       }
-    }
-  };
-  fetchData();
-}, [jsonContent, navigate]);
-
+    };
+    fetchData();
+  }, [jsonContent, navigate, usercode]);
 
   return (
     <Container maxWidth="lg">

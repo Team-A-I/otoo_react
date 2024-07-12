@@ -10,46 +10,42 @@ import theme from '../../theme';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
-  const [image, setImage] = useState(null); // Added state for image
-  // eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const fileInputRef = useRef(null);
-  const imageInputRef = useRef(null); // Added ref for image input
   const navigate = useNavigate();
 
   const handleFileChange = (event) => {
-      setFile(event.target.files[0]);
-  };
-
-  const handleImageChange = (event) => { // Handler for image change
-      setImage(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
   };
 
   const handleButtonClick = () => {
       fileInputRef.current.click();
   };
 
-  const handleImageClick = () => { // Handler for image button click
-      imageInputRef.current.click();
-  };
-
   const handleSubmit = async (event) => {
       event.preventDefault();
-      if (!file || !image) { // Check if both file and image are selected
+      if (!file) {
           return;
       }
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-          const content = e.target.result;
-          try {
-            const json = { text: content, image }; // Include image in JSON
-            setJsonContent(json);
-            navigate('/loading-love', { state: { jsonContent: json } });
-          } catch (error) {
-            console.error('Error uploading file:', error);
-          }
-      };
-      reader.readAsText(file);
+      if (file.type === 'text/plain') {
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+              const content = e.target.result;
+              try {
+                  const json = { text: content };
+                  setJsonContent(json);
+                  navigate('/loading-love', { state: { jsonContent: json } });
+              } catch (error) {
+                  console.error('Error uploading file:', error);
+              }
+          };
+          reader.readAsText(file);
+      } else if (file.type.startsWith('image/')) {
+          const json = { image: file };
+          setJsonContent(json);
+          navigate('/loading-love', { state: { jsonContent: json } });
+      }
   };
 
   const lovecopy = "네가 좋아\n너는?\n솔직하게\n말해줘.";
@@ -97,13 +93,7 @@ const FileUploadLove = () => {
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
-            />
-            <input
-                type="file"
-                ref={imageInputRef} // Added image input
-                style={{ display: 'none' }}
-                accept="image/*"
-                onChange={handleImageChange}
+                accept=".txt,image/*" // Accept both text and image files
             />
             <Button variant="contained"
               component="span" 
@@ -120,24 +110,10 @@ const FileUploadLove = () => {
                 카카오톡 데이터 입력하기
             </Button>
             <Button variant="contained"
-              component="span" 
-              size="large"
-              sx={{ 
-                mr: 2, 
-                backgroundColor: theme.palette.peach, 
-                color: theme.palette.gray700,
-                '&:hover': {
-                  backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
-                }
-              }}
-              onClick={handleImageClick}> // Button for image upload
-                이미지 업로드
-            </Button>
-            <Button variant="contained"
               type="submit"
               component="span"
               size="large" 
-              disabled={!file || !image} // Disable if either file or image is not selected
+              disabled={!file} // Enable if either file is selected
               sx={{ 
                 mr: 2, 
                 backgroundColor: theme.palette.peach,
