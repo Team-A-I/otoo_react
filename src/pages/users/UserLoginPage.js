@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react';
 import { Container, ThemeProvider, Grid, Typography, Paper, Button, TextField, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 import theme from '../../theme';
 import GoogleIcon from '@mui/icons-material/Google';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/login', {
+      const response = await axiosIns.post('http://localhost:8080/login', {
         userEmail,
         userPassword,
       });
@@ -58,7 +58,7 @@ function UserLoginPage() {
         success: async (authObj) => {
           const accessToken = authObj.access_token;
 
-          const response = await axios.get(
+          const response = await axiosIns.get(
             "http://localhost:8080/kakaoLogin/" + accessToken
           );
 
@@ -91,7 +91,7 @@ function UserLoginPage() {
     }
   } 
   const naverClick = async() => {
-    axios.get("http://localhost:8080/naverLogin")
+    axiosIns.get("http://localhost:8080/naverLogin")
     .then((res) => {
       const requrl = res.data;
       window.location.href = requrl;

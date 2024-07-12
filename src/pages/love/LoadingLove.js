@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 import '../../css/conflict/LoadingPage.css'; // 커스텀 CSS 파일을 임포트합니다.
 
 const LoadingLove = () => {
@@ -21,7 +21,7 @@ const LoadingLove = () => {
             if (usercode) {
               requestData.usercode = usercode;
             }
-            const response = await axios.post('http://localhost:8080/api/love/analysis', requestData, {
+            const response = await axiosIns.post('http://localhost:8080/api/love/analysis', requestData, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -35,7 +35,7 @@ const LoadingLove = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            const response = await axios.post('http://localhost:8080/api/love/ocr', formData, {
+            const response = await axiosIns.post('http://localhost:8080/api/love/ocr', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
