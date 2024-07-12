@@ -4,6 +4,9 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { useNavigate } from 'react-router-dom';
 import theme1 from "../theme";
 import '../css/Home.css'; // CSS 파일 추가
+import axiosIns from '../components/axios';
+
+
 
 const Home = () => {
     const theme = useTheme();
@@ -17,7 +20,7 @@ const Home = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const scrollThreshold = 100; // 더 느리게 변경되도록 임계치 증가
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    
 
     const backgroundImages = [
         '/otoo_react/images/main.png',
@@ -90,15 +93,34 @@ const Home = () => {
             return newScrollAmount;
         });
     };
-    const handleLogout = () => {
-        sessionStorage.removeItem('usersCode');
-        setIsLoggedIn(false);
-        sessionStorage.removeItem("accessToken");
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("userName");
-        sessionStorage.removeItem("userEmail");
-        sessionStorage.removeItem("userRole");
-}
+   
+    const handleLogout = async () => {
+        try {
+            const response = await axiosIns.post('http://localhost:8080/logoutUser',sessionStorage.getItem('userEmail'), {
+                headers: {
+                    'Authorization': sessionStorage.getItem('userEmail'),
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if ((response).status === 200) {
+                sessionStorage.removeItem('accessToken');
+                sessionStorage.removeItem('refreshToken');
+                sessionStorage.removeItem('userName');
+                sessionStorage.removeItem('userEmail');
+                sessionStorage.removeItem('userRole');
+                setIsLoggedIn(false);
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Logout failed', error);
+        }            
+    };
+        
+    
+    
+        
+
     useEffect(() => {
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => window.removeEventListener('wheel', handleWheel);// eslint-disable-next-line
@@ -109,14 +131,16 @@ const Home = () => {
     };
     useEffect(() => {
         console.log(sessionStorage.getItem('userName'));
+        console.log(sessionStorage.getItem('Token'));
     
       }, []);
     useEffect(() => {
-    const usersCode = sessionStorage.getItem('usersCode');
+    const usersCode = sessionStorage.getItem('accessToken');
     if (usersCode !== null) {
         setIsLoggedIn(true);
+        console.log(usersCode);
     }// eslint-disable-next-line
-    }, [sessionStorage.getItem('usersCode')]);
+    }, [sessionStorage.getItem('accessToken')]);
 
     // useEffect(() => {
     //     const checkLoginStatus = () => {
