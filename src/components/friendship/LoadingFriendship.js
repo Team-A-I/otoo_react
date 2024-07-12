@@ -14,21 +14,32 @@ const LoadingFriendship = () => {
     const fetchData = async () => {
       if (jsonContent) {
         try {
+          const fileExtension = jsonContent.file.name.split('.').pop().toLowerCase();
           const requestData = { text: jsonContent.text };
           if (usercode) {
             requestData.usercode = usercode;
           }
-          console.log("requestData", requestData)
-          const response = await axios.post('http://localhost:8080/api/friendship/analysis', requestData);
-          console.log("Response from backend:", response.data);
+
+          let response;
+          if (fileExtension === 'txt') {
+            response = await axios.post('http://localhost:8080/api/friendship/analysis', requestData);
+          } else {
+            const formData = new FormData();
+            formData.append('file', jsonContent.file);
+            if (usercode) {
+              formData.append('usercode', usercode);
+            }
+            response = await axios.post('http://localhost:8080/api/friendship/ocr', formData);
+          }
+
           navigate('/result-friendship', { state: { jsonData: response.data } });
         } catch (error) {
-          console.error("Error sending JSON to backend:", error);
+          console.error("Error sending data to backend:", error);
         }
       }
     };
     fetchData();
-  }, [jsonContent, navigate]);
+  }, [jsonContent, navigate, usercode]);
   
 
   return (

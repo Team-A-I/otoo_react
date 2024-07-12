@@ -14,7 +14,7 @@ const imageHeight = 400;
 const imageSrc = "/otoo_react/images/problems.jpg";
 const imageAlt = "Paella dish";
 const lovemainText = "계속되는\n언쟁에\n고민\n마세요.";
-const cardContentText = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요. 지금 무슨 생각을 하고 있을까요?";
+const cardContentText = "내가 맞다니까? 오늘도 답답함을 느끼고 계시다면 시원하게 대화를 넣어주세요. 누가 맞았는지 저희가 판단해드릴게요. 무엇이 우리를 싸우게 만들었는지, 어떻게 하면 이 문제를 해결할 수 있을지 알려드릴게요.";
 const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
@@ -23,50 +23,65 @@ const btnToggleInputLabelHide = "입력창 닫기";
 const textFieldRows = 10;
 const textFieldVariant = "outlined";
 
-
 const FileUpload = () => {
-  const [file, setFile] = useState(null);// eslint-disable-next-line
+  const [file, setFile] = useState(null);
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
-  const inputRef = useRef(null);
+  const [textInput, setTextInput] = useState("");
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   const handleFileChange = useCallback((event) => {
-    setFile(event.target.files[0]);
-    console.log("File selected:", event.target.files[0]);
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
   }, []);
 
   const handleFileRead = useCallback((event) => {
     const content = event.target.result;
     try {
-      const json = { text: content }; // 전체 텍스트를 하나의 'text' 필드에 저장
+      const json = { text: content, file }; // 전체 텍스트를 하나의 'text' 필드에 저장하고 파일 추가
       setJsonContent(json);
-      console.log("JSON Content:", json);
       navigate('/loading-conflict', { state: { jsonContent: json } });
     } catch (error) {
       console.error("Error parsing file:", error);
     }
-  }, [navigate]);
+  }, [file, navigate]);
 
   const handleFileUpload = () => {
-    if (!file) {
-      console.log("No file selected");
-      return;
+    if (file) {
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const reader = new FileReader();
+      if (fileExtension === 'txt') {
+        reader.onload = handleFileRead;
+        reader.readAsText(file);
+      } else {
+        const json = { text: textInput, file };
+        setJsonContent(json);
+        navigate('/loading-conflict', { state: { jsonContent: json } });
+      }
+    } else if (textInput.trim()) {
+      const json = { text: textInput };
+      setJsonContent(json);
+      navigate('/loading-conflict', { state: { jsonContent: json } });
+    } else {
     }
-    console.log("handleFileUpload called");
-    console.log("File exists:", file);
-    const reader = new FileReader();
-    reader.onload = handleFileRead;
-    reader.readAsText(file);
   };
 
   const handleToggleInput = () => {
     setShowInput(prevShowInput => !prevShowInput);
     if (!showInput) {
       setTimeout(() => {
-        inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        fileInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
+  };
+
+  const handleTextInputChange = (event) => {
+    setTextInput(event.target.value);
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -77,11 +92,9 @@ const FileUpload = () => {
             <Grid container>
               <Grid item xs={12} sm={6} container alignItems="center">
                 <Typography
-                  variant="hbig"
+                  variant="hbig_bold"
                   sx={{
-                    fontWeight: 900,
                     whiteSpace: 'pre-line',
-                    fontSize: '95px',
                     color: '#346F79'
                   }}
                 >
@@ -107,24 +120,22 @@ const FileUpload = () => {
               <Grid item xs={12}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                   <input
-                    accept=".txt"
+                    accept=".txt,image/*"
                     style={{ display: 'none' }}
-                    id="raised-button-file"
+                    ref={fileInputRef}
                     type="file"
                     onChange={handleFileChange}
                   />
-                  <label htmlFor="raised-button-file">
-                    <ConflictButton
-                      label={btnUploadLabel}
-                      onClick={() => {}}
-                      disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
-                      className="conflict-btn-upload"
-                    />
-                  </label>
+                  <ConflictButton
+                    label={btnUploadLabel}
+                    onClick={handleButtonClick}
+                    disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
+                    className="conflict-btn-upload"
+                  />
                   <ConflictButton
                     label={btnResultLabel}
                     onClick={handleFileUpload}
-                    disabled={!file}
+                    disabled={!file && !textInput.trim()}
                     className="conflict-btn-result"
                   />
                   <ConflictButton
@@ -136,18 +147,20 @@ const FileUpload = () => {
               </Grid>
             </Grid>
             {showInput && (
-              <Box mt={10} ref={inputRef}>
+              <Box mt={10} ref={fileInputRef}>
                 <Typography variant="h6">{inputPromptText}</Typography>
                 <TextField
                   fullWidth
                   multiline
                   rows={textFieldRows}
                   variant={textFieldVariant}
+                  value={textInput}
+                  onChange={handleTextInputChange}
                 />
                 <ConflictButton
                   label={btnResultLabel}
                   onClick={handleFileUpload}
-                  disabled={!file}
+                  disabled={!textInput.trim()}
                   className="conflict-btn-textfield"
                 />
               </Box>

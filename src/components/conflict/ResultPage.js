@@ -5,6 +5,7 @@ import theme from "../../theme";
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; 
 import { CustomPaper, AttributeCard, TitleSection } from './CommonComponentsConflict';
+import FeedbackModal from '../FeedbackModal';
 
 const ResultPage = () => {
   const location = useLocation();
@@ -352,6 +353,7 @@ const ResultPage = () => {
               {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
             </Grid>
           </Box>
+          <FeedbackModal/>
         </div>
       </ThemeProvider>
     </Container>

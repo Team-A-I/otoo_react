@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import theme from "../../theme";
 import 'chart.js/auto'; 
 import { CustomPaper, AttributeCard, TitleSection } from '../conflict/CommonComponentsConflict';
+import FeedbackModal from '../FeedbackModal';
 
 const ResultFriendship = () => {
   const navigate = useNavigate();
@@ -13,12 +14,17 @@ const ResultFriendship = () => {
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 
-  const test = Object.keys(data.friendship_likeability || {});
+  useEffect(() => {
+    const movePage = async () => {
+      navigate('/result-friendship-to-love', { state: { data } });
+    }
 
-  if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
-  {
-     navigate('/result-friendship-to-love', { state: { data } });
-  }
+    const test = Object.keys(data.friendship_likeability || {});
+    if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
+    {
+         movePage();
+    }
+  });
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
@@ -66,8 +72,8 @@ const ResultFriendship = () => {
     const names = Object.keys(data.total_score || {});
     
     return names.length === 2 
-      ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
-      : '판결 결과입니다';
+      ? `${names[0]}님과<br />${names[1]}님의<br />친구 관계입니다` 
+      : '친구 관계입니다';
   };
 
   // 전체 통계 
@@ -80,7 +86,7 @@ const ResultFriendship = () => {
             <Grid item xs={12} sm={4}>
               <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
                 <Typography variant="hc_bold" color="dyellow" gutterBottom >
-                  오늘의 <br /> 우정 일기예보 입니다. <br />누가 더 우정하는지 <br /> 알아 보겠습니다.
+                우리의 친밀도를<br />알려드립니다.<br />누가 더 친한지<br />알아 보겠습니다.
                 </Typography>
               </Grid>
             </Grid>
@@ -90,9 +96,9 @@ const ResultFriendship = () => {
                   <Grid item xs={12} sm={5} key={name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography variant="title_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
+                        <Typography variant="h3_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
                         <img src={getImageByPercentage(data.total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.total_score[name]}%</Typography>
+                        <Typography variant="h3_bold" color="gray600">{data.total_score[name]}%</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -121,17 +127,17 @@ const ResultFriendship = () => {
   
     const attributes = [
       {
-        title: '누가 총을 대신 맞아줄것인가?',
+        title: '배려심',
         percentage: sacrificeScore,
         tooltip: sacrificeReason,
       },
       {
-        title: '흔들리지 않는 편안한 침대같은 사람',
+        title: '편한 느낌',
         percentage: comfortableScore,
         tooltip: comfortableReason,
       },
       {
-        title: '뒷 통수 칠 사람',
+        title: '배신 가능성',
         percentage: betrayerScore,
         tooltip: betrayerReason,
       },
@@ -213,8 +219,8 @@ const ResultFriendship = () => {
     );
   
     const images = [
-      { src: "/otoo_react/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
-      { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
+      { src: "/otoo_react/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
+      { src: "/otoo_react/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
     ];
   
     return (
@@ -260,6 +266,7 @@ const ResultFriendship = () => {
               {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
+          <FeedbackModal/>
         </div>
       </ThemeProvider>
     </Container>

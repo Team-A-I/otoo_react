@@ -33,7 +33,6 @@ function UserLoginPage() {
         sessionStorage.setItem('userName', response.data.userName);
         sessionStorage.setItem('userEmail', response.data.userEmail);
         sessionStorage.setItem('userRole', response.data.role);
-        console.log(response.data);
         navigate('/');
       }
     } catch (error) {
@@ -64,7 +63,6 @@ function UserLoginPage() {
           );
 
           if (response.status === 200) {
-            console.log(response);
 
             sessionStorage.setItem("accessToken", response.headers.access);
             sessionStorage.setItem("refreshToken", response.headers.refresh);
@@ -72,7 +70,6 @@ function UserLoginPage() {
             sessionStorage.setItem("userName", response.data.userName);
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
-            console.log(response.data);
             navigate("/");
           }
         },
@@ -96,7 +93,6 @@ function UserLoginPage() {
   const naverClick = async() => {
     axios.get("http://localhost:8080/naverLogin")
     .then((res) => {
-      console.log('response data : ' + res.data);
       const requrl = res.data;
       window.location.href = requrl;
 

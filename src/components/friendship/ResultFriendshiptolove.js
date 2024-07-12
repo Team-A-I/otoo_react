@@ -1,16 +1,23 @@
 import React from 'react';
 import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import theme from "../../theme";
 import 'chart.js/auto'; 
+import FriendshipButton from './FriendshipButton';
 import { CustomPaper, TitleSection } from '../conflict/CommonComponentsConflict';
+
+const btnloveLabel = "사랑테스트 하러 가기";
 
 const ResultFriendshiptolove = () => {
   const location = useLocation();
   const { data } = location.state || {};
-  //const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
+  const navigate = useNavigate();
+
+  const moveToLove = () => {
+    navigate('/upload-love')
+  };
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
@@ -26,8 +33,7 @@ const ResultFriendshiptolove = () => {
   // 결과페이지 타이틀
   const titleText = () => {
     const names = Object.keys(data.friendship_likeability || {});
-    console.log(names)
-    return names.length === 2 
+    return names.length === 2
       ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
       : '판결 결과입니다';
   };
@@ -54,7 +60,7 @@ const ResultFriendshiptolove = () => {
                       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography variant="title_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
                         <img src={getImageByPercentage(data.friendship_likeability[name].score)} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.friendship_likeability[name].score}%</Typography>
+                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.friendship_likeability[name].score}점</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -94,8 +100,8 @@ const ResultFriendshiptolove = () => {
     );
   
     const images = [
-      { src: "/otoo_react/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
-      { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
+      { src: "/otoo_react/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
+      { src: "/otoo_react/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
     ];
   
     return (
@@ -135,12 +141,23 @@ const ResultFriendshiptolove = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.friendship_likeability && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/lovemain.jpg" imgAlt="결과 이미지" />}
+              {data.friendship_likeability && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/main_love.png" imgAlt="결과 이미지" />}
               {data.friendship_likeability && renderLikeability()}
               {data.friendship_likeability_script && renderLikeabilityScript()}
             </Grid>
           </Box>
+          <br /> <br />
+          <div htmlFor="raised-button-file" align = 'center'>
+              <FriendshipButton
+                style={{align : 'center', position : 'center'}}
+                label={btnloveLabel}
+                onClick={moveToLove}
+                disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
+                className="conflict-btn-upload"
+              />
+          </div>
         </div>
+        <br /> <br />
       </ThemeProvider>
     </Container>
   );
