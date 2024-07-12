@@ -43,7 +43,7 @@ const ResetPassword = () => {
       console.log(usersEmail);
 
       if (password === confirmPassword) {
-        const response = await axios.post('http://localhost:8080/changePwd', {
+        const response = await axios.post('http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/changePwd', {
           usersEmail: usersEmail,
           usersPw: password,
           pwd1: confirmPassword,

@@ -15,7 +15,7 @@ const GoogleLogin = () => {
     setCode(codeParam);
 
     axios
-      .get("http://localhost:8080/googleLogin/callbacks", {
+      .get("http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/googleLogin/callbacks", {
         params: {
           code: codeParam,
         },

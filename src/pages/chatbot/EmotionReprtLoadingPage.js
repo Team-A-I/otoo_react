@@ -16,7 +16,7 @@ const EmotionReportLoadingPage = () => {
     const navigate = useNavigate();
     const emotionReportHandler = useCallback(async() => {
         try {
-        const response = await axios.post('http://localhost:8080/emotionReport', {messages}, {
+        const response = await axios.post('http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/emotionReport', {messages}, {
             headers: {
             'Content-Type': 'application/json',
             },

@@ -48,7 +48,7 @@ const ChatBot = () => {
     setChat('')
     
     try {
-      const response = await axios.post('http://localhost:8080/chatbot', {RecentMessages, mode}, {
+      const response = await axios.post('http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/chatbot', {RecentMessages, mode}, {
         headers: {
           'Content-Type': 'application/json',
         },

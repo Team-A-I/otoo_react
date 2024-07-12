@@ -14,7 +14,7 @@ const LoadingLove = () => {
     const fetchData = async () => {
       if (jsonContent) {
         try {
-          const response = await axios.post('http://localhost:8080/api/love/analysis', { text: jsonContent.text });
+          const response = await axios.post('http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/api/love/analysis', { text: jsonContent.text });
           console.log("Response from backend:", response.data);
           navigate('/result-love', { state: { jsonData: response.data } });
         } catch (error) {
