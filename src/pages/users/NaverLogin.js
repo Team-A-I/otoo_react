@@ -12,8 +12,6 @@ const NaverLogin = () => {// eslint-disable-next-line
     const queryParams = new URLSearchParams(location.search);
     const codeParam = queryParams.get("code");
     const stateParam = queryParams.get("state");
-    console.log("code = " + codeParam);
-    console.log("state = " + stateParam);
     setCode(codeParam);
     setState(stateParam);
 
@@ -25,7 +23,6 @@ const NaverLogin = () => {// eslint-disable-next-line
         },
       })
       .then((response) => {
-        console.log("callback " + response.status);
 
         if (response.status === 200) {
           sessionStorage.setItem("accessToken", response.headers.access);
@@ -34,7 +31,6 @@ const NaverLogin = () => {// eslint-disable-next-line
           sessionStorage.setItem("userName", response.data.userName);
           sessionStorage.setItem("userEmail", response.data.userEmail);
           sessionStorage.setItem("userRole", response.data.role);
-          console.log(response.data);
           navigate("/");
         }
       })

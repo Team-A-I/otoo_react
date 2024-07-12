@@ -109,7 +109,6 @@ const Home = () => {
         navigate(path);
     };
     useEffect(() => {
-        console.log(sessionStorage.getItem('userName'));
     
       }, []);
     useEffect(() => {
@@ -184,7 +183,7 @@ const Home = () => {
                                 }}
                                 onClick={() => handleNavigation('/analysis')}
                             >
-                                Judgment
+                                카톡 판결
                             </Button>
                             <Button
                                 variant="outlined"
@@ -196,7 +195,7 @@ const Home = () => {
                                 }}
                                 onClick={() => handleNavigation('/chatbot')}
                             >
-                                Janggu
+                                맞장구 봇
                             </Button>
                         </Box>
                         <Box
@@ -218,7 +217,7 @@ const Home = () => {
                                 }}
                                 onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
                             >
-                                 {isLoggedIn ? 'Logout' : 'Login'}
+                                 {isLoggedIn ? '로그아웃' : '로그인'}
                             </Button>
                             <Button
                                 variant="text"

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Typography, Modal, Accordion, AccordionActions , AccordionSummary , AccordionDetails, ThemeProvider, Paper, Container } from '@mui/material';
+import { Box, Button, Typography, Modal, Accordion, AccordionSummary , AccordionDetails, ThemeProvider, Paper, Container } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import theme from '../theme';
 import Cookies from 'js-cookie'; 
@@ -176,7 +176,7 @@ const sections = [
   },
   {
     title: "몇대몇은 아직 성장중이에요",
-    content: "서비스에서 규정한 데이터에 한해서만 작동합니다. 에러에 취약할 수 있으니, 설명서를 잘 보고 사용 부탁드립니다."
+    content: "서비스에서 규정한 데이터에 한해서만 작동합니다. 에러에 취약할 수 있으니, 설명서를 잘 보고 짧은 대화로 사용 부탁드립니다."
   },
 ];
 
@@ -191,7 +191,6 @@ const modal = {
   width: '75vw',
   maxWidth: 480,
   bgcolor: 'background.paper',
-  // border: '1px solid #000',
   borderRadius: '15px',
   boxShadow: 24,
   p: 4,
@@ -201,7 +200,6 @@ const AgreeModal = () => {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
-      // 컴포넌트가 마운트될 때 쿠키를 확인합니다.
       const isAgreed = Cookies.get('userAgreed');
       if (!isAgreed) {
           setOpen(true);
@@ -209,8 +207,7 @@ const AgreeModal = () => {
   }, []);
 
   const handleClose = () => {
-      // 쿠키를 설정하고 모달을 닫습니다.
-      Cookies.set('userAgreed', 'true', { expires: 365 }); // 쿠키를 1년간 유효하게 설정
+      Cookies.set('userAgreed', 'true', { expires: 30 });
       setOpen(false);
   };
 
