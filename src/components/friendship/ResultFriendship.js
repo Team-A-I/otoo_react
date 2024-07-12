@@ -95,9 +95,9 @@ const ResultFriendship = () => {
                   <Grid item xs={12} sm={5} key={name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography variant="title_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
+                        <Typography variant="h3_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
                         <img src={getImageByPercentage(data.total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.total_score[name]}%</Typography>
+                        <Typography variant="h3_bold" color="gray600">{data.total_score[name]}%</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -126,17 +126,17 @@ const ResultFriendship = () => {
   
     const attributes = [
       {
-        title: '누가 총을 대신 맞아줄것인가?',
+        title: '배려심',
         percentage: sacrificeScore,
         tooltip: sacrificeReason,
       },
       {
-        title: '흔들리지 않는 편안한 침대같은 사람',
+        title: '편한 느낌',
         percentage: comfortableScore,
         tooltip: comfortableReason,
       },
       {
-        title: '뒷 통수 칠 사람',
+        title: '배신 가능성',
         percentage: betrayerScore,
         tooltip: betrayerReason,
       },

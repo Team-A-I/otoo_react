@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, Button, Typography, Modal, Accordion, AccordionActions , AccordionSummary , AccordionDetails, ThemeProvider, Paper, Container } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import theme from '../theme';
+import Cookies from 'js-cookie'; 
 
 const TermsOfService = () => {
     return (
@@ -190,65 +191,77 @@ const modal = {
   width: '75vw',
   maxWidth: 480,
   bgcolor: 'background.paper',
-  border: '1px solid #000',
+  // border: '1px solid #000',
   borderRadius: '15px',
   boxShadow: 24,
   p: 4,
 };
 
 const AgreeModal = () => {
-  const [open, setOpen] = React.useState(true);
-  // const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+      // 컴포넌트가 마운트될 때 쿠키를 확인합니다.
+      const isAgreed = Cookies.get('userAgreed');
+      if (!isAgreed) {
+          setOpen(true);
+      }
+  }, []);
+
+  const handleClose = () => {
+      // 쿠키를 설정하고 모달을 닫습니다.
+      Cookies.set('userAgreed', 'true', { expires: 365 }); // 쿠키를 1년간 유효하게 설정
+      setOpen(false);
+  };
 
   return (
-<Container>
-      <ThemeProvider theme={theme}>
-        <div style={{ fontFamily: theme.typography.fontFamily }}>
-          <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={modal}>
-            <ThemeProvider theme={theme}>
-            <div style={{ fontFamily: theme.typography.fontFamily }}>
-              <Typography variant="h2_bold">
-                반가워요!<br /> 몇대몇 서비스 이용을 위해 아래의 내용에 동의해주세요.
-              </Typography>
-              {sections.map((section, index) => (
-                <Paper variant="outlined" sx={{ mt: index === 0 ? 4 : 1, p: 2 }} key={index}>
-                  <Typography variant="sub_bold">{section.title}</Typography>
-                  <Typography variant="body1" mt={2}>{section.content}</Typography>
-                </Paper>
-              ))}
-              <Box mt={5}>
-                <Typography variant="body1">{agreeText}</Typography>
-                <Accordion variant="outlined">
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1-content"
-                    id="panel1-header"
+      <Container>
+          <ThemeProvider theme={theme}>
+              <div style={{ fontFamily: theme.typography.fontFamily }}>
+                  <Modal
+                      open={open}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
                   >
-                    <Typography color="deepblue">개인정보 처리방침 상세보기</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails style={{ maxHeight: '400px', overflow: 'auto' }}>
-                    {TermsOfService()}
-                  </AccordionDetails>
-                </Accordion>
-              </Box>
-              <Button variant="contained" fullWidth sx={{ mt: 5 }}
-              onClick={handleClose}>
-                {agreeButtonText}
-              </Button>
+                      <Box sx={modal}>
+                          <ThemeProvider theme={theme}>
+                              <div style={{ fontFamily: theme.typography.fontFamily }}>
+                                  <Typography variant="h2_bold">
+                                      반가워요!<br /> 몇대몇 서비스 이용을 위해 아래의 내용에 동의해주세요.
+                                  </Typography>
+                                  {sections.map((section, index) => (
+                                      <Paper variant="outlined" sx={{ mt: index === 0 ? 4 : 1, p: 2 }} key={index}>
+                                          <Typography variant="sub_bold">{section.title}</Typography>
+                                          <Typography variant="body1" mt={2}>{section.content}</Typography>
+                                      </Paper>
+                                  ))}
+                                  <Box mt={5}>
+                                      <Typography variant="body1">{agreeText}</Typography>
+                                      <Accordion variant="outlined">
+                                          <AccordionSummary
+                                              expandIcon={<ExpandMoreIcon />}
+                                              aria-controls="panel1-content"
+                                              id="panel1-header"
+                                          >
+                                              <Typography color="deepblue">개인정보 처리방침 상세보기</Typography>
+                                          </AccordionSummary>
+                                          <AccordionDetails style={{ maxHeight: '400px', overflow: 'auto' }}>
+                                              {TermsOfService()}
+                                          </AccordionDetails>
+                                      </Accordion>
+                                  </Box>
+                                  <Button variant="contained" fullWidth sx={{ mt: 5 }}
+                                      onClick={handleClose}>
+                                      {agreeButtonText}
+                                  </Button>
+                              </div>
+                          </ThemeProvider>
+                      </Box>
+                  </Modal>
               </div>
-              </ThemeProvider>
-            </Box>
-          </Modal>
-        </div>
-      </ThemeProvider>
-    </Container>
+          </ThemeProvider>
+      </Container>
   );
-}
+};
 
 export default AgreeModal;

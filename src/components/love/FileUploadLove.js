@@ -4,19 +4,19 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import { Button, Container, Typography, Box, Grid, ThemeProvider} from '@mui/material';
+import { Button, Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import '../../css/love/uploadlove.css';
 import theme from '../../theme';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
-  // eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   const handleFileChange = (event) => {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
   };
 
   const handleButtonClick = () => {
@@ -28,18 +28,24 @@ const FileUploadLove = () => {
       if (!file) {
           return;
       }
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-          const content = e.target.result;
-          try {
-            const json = {text:content};
-            setJsonContent(json);
-            navigate('/loading-love', { state: { jsonContent: json } });
-          } catch (error) {
-            console.error('Error uploading file:', error);
-          }
-      };
-      reader.readAsText(file);
+      if (file.type === 'text/plain') {
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+              const content = e.target.result;
+              try {
+                  const json = { text: content };
+                  setJsonContent(json);
+                  navigate('/loading-love', { state: { jsonContent: json } });
+              } catch (error) {
+                  console.error('Error uploading file:', error);
+              }
+          };
+          reader.readAsText(file);
+      } else if (file.type.startsWith('image/')) {
+          const json = { image: file };
+          setJsonContent(json);
+          navigate('/loading-love', { state: { jsonContent: json } });
+      }
   };
 
   const lovecopy = "네가 좋아\n너는?\n솔직하게\n말해줘.";
@@ -51,8 +57,7 @@ const FileUploadLove = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
         <Grid container>
-          <Grid item xs={12} sm={6}container
-          alignItems="center">
+          <Grid item xs={12} sm={6} container alignItems="center">
           <Typography 
             variant="hbig"
             color="peach"
@@ -88,6 +93,7 @@ const FileUploadLove = () => {
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
+                accept=".txt,image/*" // Accept both text and image files
             />
             <Button variant="contained"
               component="span" 
@@ -107,7 +113,7 @@ const FileUploadLove = () => {
               type="submit"
               component="span"
               size="large" 
-              disabled={!file}
+              disabled={!file} // Enable if either file is selected
               sx={{ 
                 mr: 2, 
                 backgroundColor: theme.palette.peach,
