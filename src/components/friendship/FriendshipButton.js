@@ -1,5 +1,18 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Tooltip, Button, tooltipClasses } from '@mui/material';
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}));
+
 
 const FriendshipButton = ({ onClick, disabled, label, className }) => {
   const sxStyles = {
@@ -14,15 +27,17 @@ const FriendshipButton = ({ onClick, disabled, label, className }) => {
   };
 
   return (
-    <Button
-      variant="contained"
-      onClick={onClick}
-      disabled={disabled}
-      component="span"
-      sx={sxStyles}
-    >
-      {label}
-    </Button>
+    <LightTooltip title="이미지 또는 txt파일만 올려주세요" arrow>
+      <Button
+        variant="contained"
+        onClick={onClick}
+        disabled={disabled}
+        component="span"
+        sx={sxStyles}
+      >
+        {label}
+      </Button>
+    </LightTooltip>
   );
 };
 
