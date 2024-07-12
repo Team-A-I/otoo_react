@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
@@ -20,37 +20,53 @@ const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
 
 const FileUploadFriendship = () => {
-  const [file, setFile] = useState(null);// eslint-disable-next-line
+  const [file, setFile] = useState(null);
   const [jsonContent, setJsonContent] = useState(null);
+  const [showInput, setShowInput] = useState(false);
+  const [textInput, setTextInput] = useState("");
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   const handleFileChange = useCallback((event) => {
-    setFile(event.target.files[0]);
-    console.log("File selected:", event.target.files[0]);
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    console.log("File selected:", selectedFile);
   }, []);
 
   const handleFileRead = useCallback((event) => {
     const content = event.target.result;
     try {
-      const json = { text: content }; // 전체 텍스트를 하나의 'text' 필드에 저장
+      const json = { text: content, file }; // 전체 텍스트를 하나의 'text' 필드에 저장하고 파일 추가
       setJsonContent(json);
       console.log("JSON Content:", json);
       navigate('/loading-friendship', { state: { jsonContent: json } });
     } catch (error) {
       console.error("Error parsing file:", error);
     }
-  }, [navigate]);
+  }, [file, navigate]);
 
   const handleFileUpload = () => {
-    if (!file) {
-      console.log("No file selected");
-      return;
+    if (file) {
+      console.log("handleFileUpload called");
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const reader = new FileReader();
+      if (fileExtension === 'txt') {
+        reader.onload = handleFileRead;
+        reader.readAsText(file);
+      } else {
+        const json = { text: textInput, file };
+        setJsonContent(json);
+        console.log("JSON Content:", json);
+        navigate('/loading-friendship', { state: { jsonContent: json } });
+      }
+    } else if (textInput.trim()) {
+      const json = { text: textInput };
+      setJsonContent(json);
+      console.log("JSON Content from text input:", json);
+      navigate('/loading-friendship', { state: { jsonContent: json } });
+    } else {
+      console.log("No file selected and text input is empty");
     }
-    console.log("handleFileUpload called");
-    console.log("File exists:", file);
-    const reader = new FileReader();
-    reader.onload = handleFileRead;
-    reader.readAsText(file);
   };
 
 
@@ -62,11 +78,9 @@ const FileUploadFriendship = () => {
             <Grid container>
               <Grid item xs={12} sm={6} container alignItems="center">
                 <Typography
-                  variant="hbig"
+                  variant="hbig_bold"
                   sx={{
-                    fontWeight: 900,
                     whiteSpace: 'pre-line',
-                    fontSize: '95px',
                     color: '#0495D2'
                   }}
                 >

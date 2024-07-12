@@ -23,6 +23,7 @@ export const AttributeCard = ({ title, percentage, tooltip, imageSrc }) => (
       <Tooltip title={tooltip} arrow>
         <Button
           variant="outlined"
+          fullWidth
           sx={{
             fontSize: { xs: 8, sm: 8, md: 10, xl: 15 },
             marginTop: '8px',
