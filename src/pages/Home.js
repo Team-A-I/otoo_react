@@ -194,25 +194,25 @@ const Home = () => {
                             }}
                         >
                             <Button
-                                variant="outlined"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                     color:"#FFFFFF",
-                                    borderColor:"#FFFFFF"
+                                    border: "1px solid #FFFFFF",
+                                    borderColor:"#FFFFFF",
                                 }}
                                 onClick={() => handleNavigation('/analysis')}
                             >
                                 카톡 판결
                             </Button>
                             <Button
-                                variant="outlined"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
                                     color:"#FFFFFF",
+                                    border: "1px solid #FFFFFF",
                                     borderColor:"#FFFFFF"
                                 }}
                                 onClick={() => handleNavigation('/chatbot')}
