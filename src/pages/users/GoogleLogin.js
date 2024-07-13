@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 
 const GoogleLogin = () => {
   const [code, setCode] = useState("");
@@ -13,7 +13,7 @@ const GoogleLogin = () => {
     if (code && code === codeParam) return;
     setCode(codeParam);
 
-    axios
+    axiosIns
       .get("http://localhost:8080/googleLogin/callbacks", {
         params: {
           code: codeParam,

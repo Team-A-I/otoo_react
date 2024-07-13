@@ -5,7 +5,7 @@ import theme from "../theme";
 import Button from '@mui/material/Button';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-import axios from 'axios';
+import axiosIns from '../components/axios';
 
 const TEXTS = {
   modalTitle: '결과가 만족스러우신가요?',
@@ -58,7 +58,7 @@ const FeedbackModal = () => {
   const handleFeedback = async () => {
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
-      await axios.post('http://localhost:8080/feedback', feedback, {
+      await axiosIns.post('http://localhost:8080/feedback', feedback, {
         headers: {
           'Content-Type': 'application/json',
         },

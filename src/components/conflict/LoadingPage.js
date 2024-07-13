@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Paper, Grid, Skeleton, Container } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../axios';
 import '../../css/conflict/LoadingPage.css'; // 커스텀 CSS 파일을 임포트합니다.
 
 const LoadingPage = () => {
@@ -22,14 +22,14 @@ const LoadingPage = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axios.post('http://localhost:8080/api/conflict/analysis', requestData);
+            response = await axiosIns.post('http://localhost:8080/api/conflict/analysis', requestData);
           } else {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axios.post('http://localhost:8080/api/conflict/ocr', formData);
+            response = await axiosIns.post('http://localhost:8080/api/conflict/ocr', formData);
           }
 
           navigate('/result-conflict', { state: { jsonData: response.data } });
