@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
-import axiosIns from '../../components/axios';
+import axios from 'axios';
 
 const NaverLogin = () => {// eslint-disable-next-line
   const [code, setCode] = useState("");// eslint-disable-next-line

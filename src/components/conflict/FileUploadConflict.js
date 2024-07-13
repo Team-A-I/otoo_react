@@ -26,7 +26,7 @@ const textFieldVariant = "outlined";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName] = useState('');// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
