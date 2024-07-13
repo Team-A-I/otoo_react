@@ -138,7 +138,7 @@ const FileUpload = () => {
                     onClick={handleButtonClick}
                     disabled={false}
                     className="conflict-btn-upload"
-                    title_str="이미지 또는 txt파일만 올려주세요"
+                    title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
                     defaultColor = '#346F79'
                     hoverColor = '#295961'
                     disabledColor = '#B0B0B0'
