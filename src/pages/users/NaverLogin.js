@@ -16,7 +16,7 @@ const NaverLogin = () => {// eslint-disable-next-line
     setState(stateParam);
 
     axiosIns
-      .get("http://localhost:8080/naverLogin/callbacks", {
+      .get("https://restapi.otoo.kr/naverLogin/callbacks", {
         params: {
           code: codeParam,
           state: stateParam,

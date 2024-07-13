@@ -18,7 +18,7 @@ const EmotionReportLoadingPage = () => {
     const emotionReportHandler = useCallback(async() => {
         try {
             const requestBody = usersCode ? { messages, usersCode } : { messages };
-            const response = await axiosIns.post('http://localhost:8080/emotionReport', requestBody, {
+            const response = await axiosIns.post('https://restapi.otoo.kr/emotionReport', requestBody, {
                 headers: {
                 'Content-Type': 'application/json',
                 },

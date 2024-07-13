@@ -14,7 +14,7 @@ const GoogleLogin = () => {
     setCode(codeParam);
 
     axiosIns
-      .get("http://localhost:8080/googleLogin/callbacks", {
+      .get("https://restapi.otoo.kr/googleLogin/callbacks", {
         params: {
           code: codeParam,
         },
