@@ -58,7 +58,7 @@ const FeedbackModal = () => {
   const handleFeedback = async () => {
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
-      await axiosIns.post('http://localhost:8080/feedback', feedback, {
+      await axiosIns.post('https://restapi.otoo.kr/feedback', feedback, {
         headers: {
           'Content-Type': 'application/json',
         },
