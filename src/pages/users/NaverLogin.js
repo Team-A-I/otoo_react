@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 
 const NaverLogin = () => {// eslint-disable-next-line
   const [code, setCode] = useState("");// eslint-disable-next-line
@@ -12,10 +12,9 @@ const NaverLogin = () => {// eslint-disable-next-line
     const queryParams = new URLSearchParams(location.search);
     const codeParam = queryParams.get("code");
     const stateParam = queryParams.get("state");
-    console.log("code = " + codeParam);
-    console.log("state = " + stateParam);
     setCode(codeParam);
     setState(stateParam);
+
 
     axios
       .get("https://restapi.otoo.kr/naverLogin/callbacks", {
@@ -25,7 +24,6 @@ const NaverLogin = () => {// eslint-disable-next-line
         },
       })
       .then((response) => {
-        console.log("callback " + response.status);
 
         if (response.status === 200) {
           sessionStorage.setItem("accessToken", response.headers.access);
@@ -34,7 +32,6 @@ const NaverLogin = () => {// eslint-disable-next-line
           sessionStorage.setItem("userName", response.data.userName);
           sessionStorage.setItem("userEmail", response.data.userEmail);
           sessionStorage.setItem("userRole", response.data.role);
-          console.log(response.data);
           navigate("/");
         }
       })

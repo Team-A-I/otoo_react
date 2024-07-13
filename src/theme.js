@@ -28,68 +28,262 @@ let theme = createTheme({
       'Pretendard',
       'BMDoHyeon'
     ].join(','),
-    // 96px
-    h1: {
+    nav_bold: {
+      fontSize: '16px',
       fontWeight: 700,
       color: '#1B1F23'
     },
-    // 60px
-    h2: {
+    nav_mid: {
+      fontSize: '16px',
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    hbig_bold:{
+      fontSize: '95px',
+      [createTheme().breakpoints.down('lg')]: {
+        fontSize: '68px',
+      },
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '50px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '40px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //48px
-    h3: {
+    hbig_mid:{
+      fontSize: '95px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '75px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '56px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    ha_bold: {
+      fontSize: '60px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '50px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '38px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //34px
-    h4: {
+    ha_mid: {
+      fontSize: '60px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '50px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '38px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    hb_bold: {
+      fontSize: '47px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '41px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '32px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //24px
-    h5: {
+    hb_mid: {
+      fontSize: '47px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '41px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '32px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    hc_bold: {
+      fontSize: '30px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '20px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '20px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //20px
-    h6: {
+    hc_mid: {
+      fontSize: '32px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '29px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '25px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    h1_bold: {
+      fontSize: '24px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '21px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '20px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //16px
-    subtitle1: {
+    h1_mid: {
+      fontSize: '24px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '21px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '20px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    h2_bold: {
+      fontSize: '22px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '19px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '18px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //14px
-    subtitle2: {
+    h2_mid: {
+      fontSize: '22px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '19px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '18px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    h3_bold: {
+      fontSize: '17px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '15px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '14px',
+      },
       fontWeight: 700,
       color: '#1B1F23'
     },
-    //16px
+    h3_mid: {
+      fontSize: '17px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '16px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '15px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    title_bold: {
+      fontSize: '18px',
+      [createTheme().breakpoints.down('lg')]: {
+        fontSize: '16px',
+      },
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '12px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '13px',
+      },
+      fontWeight: 700,
+      color: '#1B1F23'
+    },
+    title_mid: {
+      fontSize: '18px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '17px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '16px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
+    sub_bold: {
+      fontSize: '16px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '15px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '14px',
+      },
+      fontWeight: 700,
+      color: '#1B1F23'
+    },
+    sub_mid: {
+      fontSize: '16px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '15px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '14px',
+      },
+      fontWeight: 500,
+      color: '#1B1F23'
+    },
     body1: {
-      fontWeight: 700,
+      fontSize: '14px', 
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '13px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '12px',
+      },
+      fontWeight: 500,
       color: '#1B1F23'
     },
-    //14px
     body2: {
-      fontWeight: 700,
+      fontSize: '13px', 
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '12px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '11px',
+      },
+      fontWeight: 500,
       color: '#1B1F23'
     },
-    //14px
-    button: {
+    body3: {
+      fontSize: '12px', 
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '11px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '10px',
+      },
+      fontWeight: 500,
       color: '#1B1F23'
     },
-    //12px
-    caption: {
-      fontWeight: 700,
-      color: '#1B1F23'
-    },
-    //10px
-    overline: {
-      fontWeight: 700,
+    body4: {
+      fontSize: '11px', 
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '10px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '9px',
+      },
+      fontWeight: 500,
       color: '#1B1F23'
     },
   },

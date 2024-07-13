@@ -9,6 +9,25 @@
     max-height: 850px;
     overflow-y: scroll;
 }
+
+@media (max-width: 600px) {
+.content {
+    width: 100%!important; /* Remove padding on smaller screens to ensure no extra space */
+}
+.emotionButton{
+    width: 100%!important;    
+}
+.chatInputBase{
+    width: 100%!important;
+}
+.chatInput{
+    width: 100%!important;
+}
+.chat_subtitle{
+    display: none!important;
+}
+
+}
 .userDiv {
     padding: 10px;
     margin: 10px;

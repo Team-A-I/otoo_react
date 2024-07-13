@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 
 const GoogleLogin = () => {
   const [code, setCode] = useState("");
@@ -10,7 +10,6 @@ const GoogleLogin = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const codeParam = queryParams.get("code");
-    console.log("code = " + codeParam);
     if (code && code === codeParam) return;
     setCode(codeParam);
 
@@ -21,7 +20,6 @@ const GoogleLogin = () => {
         },
       })
       .then((response) => {
-        console.log("callback " + response.status);
 
         if (response.status === 200) {
           sessionStorage.setItem("accessToken", response.headers.access);
@@ -30,7 +28,6 @@ const GoogleLogin = () => {
           sessionStorage.setItem("userName", response.data.userName);
           sessionStorage.setItem("userEmail", response.data.userEmail);
           sessionStorage.setItem("userRole", response.data.role);
-          console.log(response.data);
         }
         navigate("/");
       })

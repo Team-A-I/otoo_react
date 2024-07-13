@@ -1,127 +1,137 @@
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef, useCallback } from 'react';
+import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import { Button, Container, Typography, Box, Grid, ThemeProvider} from '@mui/material';
-import '../../css/love/uploadlove.css';
-import theme from '../../theme';
+import FriendshipButton from './FriendshipButton';
+import theme from "../../theme";
+import SendModal from '../SendModal';
+
+// 변수 정의
+const cardMaxWidth = 700;
+const imageHeight = 400;
+const imageSrc = "/otoo_react/images/friendship-1.jpg";
+const imageAlt = "friendship-1";
+const friendshipmainText = "Best\nFriend\nForever\n";
+const cardContentText = "#찐친테스트\n#우정파괴\n#테스트는 테스트일 뿐^^";
+const btnUploadLabel = "카카오톡 파일 업로드";
+const btnResultLabel = "결과 보러가기";
 
 const FileUploadFriendship = () => {
   const [file, setFile] = useState(null);
-  // eslint-disable-next-line
+  const [fileName, setFileName] = useState('');
   const [jsonContent, setJsonContent] = useState(null);
-  const fileInputRef = useRef(null);
+  const [textInput, setTextInput] = useState("");
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = React.useState(false);
 
-  const handleFileChange = (event) => {
-      setFile(event.target.files[0]);
-  };
+  const handleCloseModal = () => setOpenModal(false);
 
-  const handleButtonClick = () => {
-      fileInputRef.current.click();
-  };
+  const handleFileChange = useCallback((event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    setFileName(selectedFile.name);
+    setOpenModal(true);
+  }, []);
 
-  const handleSubmit = async (event) => {
-      event.preventDefault();
-      if (!file) {
-          return;
-      }
+  const handleFileRead = useCallback((event) => {
+    const content = event.target.result;
+    try {
+      const json = { text: content, file }; // 전체 텍스트를 하나의 'text' 필드에 저장하고 파일 추가
+      setJsonContent(json);
+      navigate('/loading-friendship', { state: { jsonContent: json } });
+    } catch (error) {
+      console.error("Error parsing file:", error);
+    }
+  }, [file, navigate]);
 
+  const handleFileUpload = () => {
+    if (file) {
+      const fileExtension = file.name.split('.').pop().toLowerCase();
       const reader = new FileReader();
-      reader.onload = async (e) => {
-          const content = e.target.result;
-          try {
-            const json = {text:content};
-            setJsonContent(json);
-            navigate('/loading-friendship', { state: { jsonContent: json } });
-          } catch (error) {
-            console.error('Error uploading file:', error);
-          }
-      };
-      reader.readAsText(file);
+      if (fileExtension === 'txt') {
+        reader.onload = handleFileRead;
+        reader.readAsText(file);
+      } else {
+        const json = { text: textInput, file };
+        setJsonContent(json);
+        navigate('/loading-friendship', { state: { jsonContent: json } });
+      }
+    } else if (textInput.trim()) {
+      const json = { text: textInput };
+      setJsonContent(json);
+      navigate('/loading-friendship', { state: { jsonContent: json } });
+    } else {
+    }
   };
 
-  const lovecopy = "Best\nFriend\nForever";
-  const loveintrocopy = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.\n지금 무슨 생각을 하고 있을까요?";
 
   return (
-      <Container maxWidth="xl">
-        <ThemeProvider theme={theme}>
+    <Container maxWidth="xl">
+      <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
-        <Box className="container">
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6}container
-          alignItems="center">
-            <Typography variant="h1"
-            color="dyellow" className="lovemain-text">
-              {lovecopy}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-          <Card sx={{ maxWidth: 700 }}>
-            <CardHeader/>
-            <CardMedia
-              component="img"
-              height="400"
-              image="/otoo_react/images/lovemain.jpg"
-              alt="Paella dish"
-            />
-            <CardContent>
-              <Typography variant="body1" color="text.secondary">
-                <span dangerouslySetInnerHTML={{ __html: loveintrocopy }} />
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Box className="button-container" mt={12}>
-            <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-            />
-            <Button variant="contained"
-              component="span" 
-              size="large"
-              sx={{ 
-                width: '200px', 
-                height: '50px',
-                mr: 2, 
-                backgroundColor: theme.palette.peach, 
-                color: theme.palette.gray700,
-                '&:hover': {
-                  backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
-                }
-              }}
-              onClick={handleButtonClick}>
-                카카오톡 데이터 입력하기
-            </Button>
-            <Button variant="contained"
-              type="submit"
-              component="span"
-              size="large" 
-              disabled={!file}
-              sx={{ 
-                mr: 2, 
-                backgroundColor: theme.palette.peach,
-                color: theme.palette.gray700,
-                '&:hover': {
-                  backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
-                }
-                }}
-                onClick={handleSubmit}>
-                결과 보러가기
-            </Button>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
+            <Grid container>
+              <Grid item xs={12} sm={6} container alignItems="center">
+                <Typography
+                  variant="hbig_bold"
+                  sx={{
+                    whiteSpace: 'pre-line',
+                    color: '#0495D2'
+                  }}
+                >
+                  {friendshipmainText}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Card sx={{ maxWidth: cardMaxWidth }}>
+                  <CardHeader />
+                  <CardMedia
+                    component="img"
+                    height={imageHeight}
+                    image={imageSrc}
+                    alt={imageAlt}
+                  />
+                  <CardContent>
+                    <Typography variant="h3_mid" color="text.secondary">
+                      {cardContentText}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
+                  <input
+                    accept=".txt,image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={handleFileChange}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <FriendshipButton
+                      label={btnUploadLabel}
+                      onClick={() => {}}
+                      disabled={false}
+                      className="conflict-btn-upload"
+                    />
+                  </label>
+                </Box>
+                <SendModal
+                  open={openModal}
+                  handleClose={handleCloseModal}
+                  handlefile={handleFileUpload}
+                  filetitle={fileName}
+                />
+              </Grid>
+            </Grid>
           </Box>
-        </Grid>
-        </Box>
         </div>
-        </ThemeProvider>
-      </Container>
+      </ThemeProvider>
+    </Container>
   );
 };
 

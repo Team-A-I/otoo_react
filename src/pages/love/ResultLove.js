@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Paper, Container, Card, CardContent, Tooltip, Button, Table, TableBody, TableCell, TableHead, TableRow, useMediaQuery, useTheme, ThemeProvider } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import theme from '../../theme';
+import FeedbackModal from '../../components/FeedbackModal';
 
 const getLoveMessage = (total_score) => {
     const keys = Object.keys(total_score);
@@ -39,6 +40,7 @@ const getLoveMessage = (total_score) => {
 };
 
 const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     return (
         <Grid item xs={4} style={{ display: 'flex', flexDirection: 'column' }}>
             <Paper
@@ -50,7 +52,7 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    alignItems: 'stretch',
+                    alignItems: 'center',
                 }}
             >
                 <Typography variant="h3_bold" gutterBottom>
@@ -68,10 +70,11 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
                         flexGrow: 1,
                     }}
                 />
-                <Typography variant="h1_bold">{percentage}%</Typography>
+                <Typography variant="h2_bold">{percentage}%</Typography>
                 <Tooltip title={tooltipTitle} arrow>
                     <Button
                         variant="outlined"
+                        fullWidth
                         sx={{
                             marginTop: '8px',
                             borderColor: '0495D2',
@@ -80,6 +83,8 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
                                 borderColor: '0350B7',
                                 color: '0350B7',
                             },
+                            fontSize: isSmallScreen ? '8px' : '16px',
+                            padding: isSmallScreen ? '5px' : '10px',
                         }}
                     >
                         설명보기
@@ -93,7 +98,7 @@ const InfoCard = ({ title, imageSrc, percentage, tooltipTitle }) => {
 const createUserData = (user, data) => {
     return [
         {
-            title: "너를 생각하는 내마음",
+            title: "너만을 생각해",
             percentage: data.support[user].score,
             tooltipTitle: data.support[user].reason,
         },
@@ -189,16 +194,14 @@ const renderTable = (name, keywords, color) => (
 );
 
 const images = [
-    { src: "/otoo_react/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
+    { src: "/otoo_react/images/yumi2.png", width: '90px', height: 'auto' }, // 첫 번째 이미지 크기
     { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
 ];
 
 const ResultLove = () => {
   const location = useLocation();
   const jsonData = location.state?.jsonData || null;
-  console.log("jsonData", jsonData);
   const result = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
-  console.log("result!!!", result);
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
 
@@ -216,18 +219,20 @@ const ResultLove = () => {
 
                     {/* total_score */}
                     <Grid item xs={12}>
-                        <Paper elevation={4} style={{ marginBottom: '24px', borderRadius: '35px', minHeight: '320px' }}>
-                            <Box p={5}>
+                        <Paper elevation={4} style={{ marginBottom: '24px', borderRadius: '35px' }}>
+                            <Box mt={8}>
                                 <Grid container alignItems="flex-start">
                                     <Grid item xs={12} sm={4}>
-                                        <Grid container
-                                            alignItems="center"
-                                            style={{ height: '100%', minHeight: '220px' }}>
-                                            {loveMessage && (
-                                                <Typography variant="h4">{loveMessage}
-                                                </Typography>
-                                            )}
-                                        </Grid>
+                                        <Box ml={5}>
+                                            <Grid container
+                                                alignItems="center"
+                                                style={{ height: '100%', minHeight: '220px' }}>
+                                                {loveMessage && (
+                                                    <Typography variant="hc_bold">{loveMessage}
+                                                    </Typography>
+                                                )}
+                                            </Grid>
+                                        </Box>
                                     </Grid>
                                     <Grid item xs={12} sm={8}>
                                         <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
@@ -251,7 +256,7 @@ const ResultLove = () => {
                                         <Grid container
                                             alignItems="center"
                                             style={{ height: '100%', minHeight: '220px' }}>
-                                            <Typography variant="h4" color="dyellow" gutterBottom >
+                                            <Typography variant="hc_bold" color="dyellow" gutterBottom >
                                                 우리들의 <br /> 애정 전선 입니다. <br />누가 더 좋아하는지 <br /> 알아 보겠습니다.
                                             </Typography>
                                         </Grid>
@@ -262,9 +267,9 @@ const ResultLove = () => {
                                                 <Grid item xs={12} sm={5} key={name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                                                         <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                                            <Typography variant="h5" gutterBottom mt={3}>{name}</Typography>
+                                                            <Typography variant="title_bold" gutterBottom mt={3}>{name}</Typography>
                                                             <img src={getImageByPercentage(result.total_score[name])} alt="" style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                                                            <Typography variant="h2" color="gray600" style={{ fontSize: '2vw' }}>{result.total_score[name]}%</Typography>
+                                                            <Typography variant="title_bold" color="gray600" >{result.total_score[name]}%</Typography>
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
@@ -303,10 +308,10 @@ const ResultLove = () => {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <Typography variant="h4" style={{ color }} mb={5} gutterBottom>
+                                                    <Typography variant="h1_bold" style={{ color }} mb={5} gutterBottom>
                                                         {name}님의 <br /> 애정도
                                                     </Typography>
-                                                    <Typography variant="h4" style={{ color }} gutterBottom>
+                                                    <Typography variant="h1_bold" style={{ color }} gutterBottom>
                                                         {result.total_score[name]}%
                                                     </Typography>
                                                 </Paper>
@@ -335,7 +340,7 @@ const ResultLove = () => {
                     <Grid item xs={12}>
                         <Paper elevation={4} style={{ position: 'relative', borderRadius: '35px' }}>
                             <Box p={5}>
-                                <Typography variant="h5" gutterBottom>
+                                <Typography variant="title_bold" gutterBottom>
                                     우선 순위 키워드
                                 </Typography>
                                 <Grid container spacing={3}>
@@ -350,7 +355,7 @@ const ResultLove = () => {
                                                     bottom: 0,
                                                     left: index === 1 ? '10px' : 'auto',
                                                     right: index === 0 ? '10px' : 'auto',
-                                                    width: images[index].width,
+                                                    width: isSmallScreen ? '50px' : images[index].width,
                                                     height: images[index].height,
                                                     zIndex: 1
                                                 }}
@@ -361,6 +366,7 @@ const ResultLove = () => {
                             </Box>
                         </Paper>
                     </Grid>
+                    <FeedbackModal/>
                     <br></br>
                 </div>
             </ThemeProvider>

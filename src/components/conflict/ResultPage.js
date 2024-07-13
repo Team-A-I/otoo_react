@@ -5,6 +5,7 @@ import theme from "../../theme";
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; 
 import { CustomPaper, AttributeCard, TitleSection } from './CommonComponentsConflict';
+import FeedbackModal from '../FeedbackModal';
 
 const ResultPage = () => {
   const location = useLocation();
@@ -63,7 +64,7 @@ const ResultPage = () => {
 
   // 결과페이지 타이틀
   const titleText = () => {
-    const names = Object.keys(data.wrong_percentage || {});
+    const names = Object.keys(data.total_score || {});
     return names.length === 2 
       ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
       : '판결 결과입니다';
@@ -72,7 +73,7 @@ const ResultPage = () => {
 
   // 전체 통계 
   const renderWrongPercentage = () => {
-    const names = Object.keys(data.wrong_percentage || {});
+    const names = Object.keys(data.total_score || {});
     return (
       <Grid item xs={12}>
         <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
@@ -91,8 +92,8 @@ const ResultPage = () => {
                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography variant="title_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
-                        <img src={getImageByPercentage(data.wrong_percentage[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.wrong_percentage[name]}%</Typography>
+                        <img src={getImageByPercentage(data.total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
+                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.total_score[name]}%</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -112,7 +113,7 @@ const ResultPage = () => {
     const mbtiPercentage = data.mbti_tendency_percentage[name];
     const offendedPercentage = data.offended_percentage[name];
     const tactlessPercentage = data.tactless_percentage[name];
-    const wrongPercentage = data.wrong_percentage[name];
+    const wrongPercentage = data.total_score[name];
     const style = getStyleByTotalscore(wrongPercentage);
   
     const attributes = [
@@ -344,14 +345,15 @@ const ResultPage = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.wrong_percentage && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/갈등AI.png" imgAlt="결과 이미지" />}
-              {data.wrong_percentage && renderWrongPercentage()}
-              {Object.keys(data.wrong_percentage || {}).map((name) => renderPersonData(name))}
+              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/갈등AI.png" imgAlt="결과 이미지" />}
+              {data.total_score && renderWrongPercentage()}
+              {Object.keys(data.total_score || {}).map((name) => renderPersonData(name))}
               {data.priority_keywords && renderPriorityKeywords()}
               {data.conflict_cause_percentage && renderConflictCausePercentage()}
               {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
             </Grid>
           </Box>
+          <FeedbackModal/>
         </div>
       </ThemeProvider>
     </Container>
