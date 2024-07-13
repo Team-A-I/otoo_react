@@ -195,7 +195,7 @@ const Home = () => {
                         >
                             <Button
                                 variant="outlined"
-                                color="primary"
+                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
@@ -207,7 +207,7 @@ const Home = () => {
                             </Button>
                             <Button
                                 variant="outlined"
-                                color="primary"
+                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
@@ -230,7 +230,7 @@ const Home = () => {
                         >
                             <Button
                                 variant="text"
-                                color="primary"
+                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
@@ -241,7 +241,7 @@ const Home = () => {
                             </Button>
                             <Button
                                 variant="text"
-                                color="primary"
+                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
@@ -260,59 +260,7 @@ const Home = () => {
                                 height: 'auto',
                             }}
                         />
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                bottom: { xs: '10px', sm: '20px', md: '30px' },
-                                right: { xs: '10px', sm: '20px', md: '40px' },
-                                textAlign: 'right',
-                            }}
-                        >
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                No more frustrating worries
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                <br />
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                On our "몇대몇" service
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                It will coolly solve your curiosity
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                Thank you for visiting us.
-                            </Typography>
-                        </Box>
+                
                         {/* 스크롤 힌트 추가 */}
                         {backgroundIndex !== backgroundImages.length - 1 && (
                             <Typography className="scroll-hint" sx={{ fontSize: { xs: 8, sm: 12, md: 15 }}}>
