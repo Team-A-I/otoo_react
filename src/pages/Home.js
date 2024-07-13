@@ -195,11 +195,11 @@ const Home = () => {
                         >
                             <Button
                                 variant="outlined"
-                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
+                                    color:"#FFFFFF"
                                 }}
                                 onClick={() => handleNavigation('/analysis')}
                             >
@@ -207,11 +207,11 @@ const Home = () => {
                             </Button>
                             <Button
                                 variant="outlined"
-                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
+                                    color:"#FFFFFF"
                                 }}
                                 onClick={() => handleNavigation('/chatbot')}
                             >
@@ -230,10 +230,10 @@ const Home = () => {
                         >
                             <Button
                                 variant="text"
-                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
+                                    color:"#FFFFFF"
                                 }}
                                 onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
                             >
@@ -241,10 +241,10 @@ const Home = () => {
                             </Button>
                             <Button
                                 variant="text"
-                                color="white"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
+                                    color:"#FFFFFF"
                                 }}
                             >
                                 Q&A
