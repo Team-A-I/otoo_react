@@ -199,7 +199,8 @@ const Home = () => {
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
-                                    color:"#FFFFFF"
+                                    color:"#FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                                 onClick={() => handleNavigation('/analysis')}
                             >
@@ -211,7 +212,8 @@ const Home = () => {
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
-                                    color:"#FFFFFF"
+                                    color:"#FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                                 onClick={() => handleNavigation('/chatbot')}
                             >
@@ -233,7 +235,8 @@ const Home = () => {
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    color:"#FFFFFF"
+                                    color:"#FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                                 onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
                             >
@@ -244,7 +247,8 @@ const Home = () => {
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    color:"#FFFFFF"
+                                    color:"#FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                             >
                                 Q&A
