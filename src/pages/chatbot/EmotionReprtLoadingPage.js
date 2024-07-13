@@ -27,6 +27,7 @@ const EmotionReportLoadingPage = () => {
             navigate('/emotionReportPage', { state: { result: result }});
             } catch (error) {
             console.error('Error uploading file:', error);
+
         }
     }, [messages, navigate, usersCode])
     useEffect(() => {

@@ -60,7 +60,9 @@ const ChatBot = () => {
     setChat('');
 
     try {
+
       const response = await axiosIns.post('https://restapi.otoo.kr/chatbot', { RecentMessages, mode }, {
+
         headers: {
           'Content-Type': 'application/json',
         },

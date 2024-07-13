@@ -173,7 +173,7 @@ const Home = () => {
                         transformOrigin: 'center',
                         marginTop: 0
                     }}
-                >
+                > 
                     <Box
                         sx={{
                             position: 'relative',
