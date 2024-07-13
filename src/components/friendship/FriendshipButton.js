@@ -27,7 +27,7 @@ const FriendshipButton = ({ onClick, disabled, label, className }) => {
   };
 
   return (
-    <LightTooltip title="이미지 또는 txt파일만 올려주세요" arrow>
+    <LightTooltip title="카톡 캡쳐이미지 또는 txt파일만 올려주세요" arrow>
       <Button
         variant="contained"
         onClick={onClick}
