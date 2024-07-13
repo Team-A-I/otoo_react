@@ -58,7 +58,7 @@ const SignUpPage = () => {
 
   const sendEmailVerification = async () => {
     try {
-      const response = await axios.post(`http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/email/${users.usersEmail}`, {});
+      const response = await axios.post(`https://restapi.otoo.kr/email/${users.usersEmail}`, {});
       setVerificationCodeSent(true);
       if (response.status === 200) {
         alert("이메일 인증 메일이 전송되었습니다.");
@@ -81,7 +81,7 @@ const SignUpPage = () => {
 
   const submitUserInfo = async () => {
     try {
-      const response = await axios.post("http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/join", users);
+      const response = await axios.post("https://restapi.otoo.kr/join", users);
       if (response.data.usersEmail) {
         alert("회원 가입 성공");
         navigate('/user-login');

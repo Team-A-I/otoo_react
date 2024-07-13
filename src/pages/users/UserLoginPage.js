@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/login', {
+      const response = await axios.post('https://restapi.otoo.kr/login', {
         userEmail,
         userPassword,
       });
@@ -60,7 +60,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/kakaoLogin/" + accessToken
+            "https://restapi.otoo.kr/kakaoLogin/" + accessToken
           );
 
           if (response.status === 200) {
@@ -94,7 +94,7 @@ function UserLoginPage() {
     }
   } 
   const naverClick = async() => {
-    axios.get("http://otoo-load-balancer-restapi-919189829.ap-northeast-2.elb.amazonaws.com:8080/naverLogin")
+    axios.get("https://restapi.otoo.kr/naverLogin")
     .then((res) => {
       console.log('response data : ' + res.data);
       const requrl = res.data;
