@@ -5,8 +5,9 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import ConflictButton from './ConflictButton'; // 새로 만든 버튼 컴포넌트
+import UploadButton from '../UploadButton'; // 새로 만든 버튼 컴포넌트
 import theme from "../../theme";
+import SendModal from '../SendModal';
 
 // 변수 정의
 const cardMaxWidth = 700;
@@ -25,15 +26,21 @@ const textFieldVariant = "outlined";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState('');
   const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleCloseModal = () => setOpenModal(false);
 
   const handleFileChange = useCallback((event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
+    setFileName(selectedFile.name);
+    setOpenModal(true);
   }, []);
 
   const handleFileRead = useCallback((event) => {
@@ -126,24 +133,31 @@ const FileUpload = () => {
                     type="file"
                     onChange={handleFileChange}
                   />
-                  <ConflictButton
+                  <UploadButton
                     label={btnUploadLabel}
                     onClick={handleButtonClick}
-                    disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
+                    disabled={false}
                     className="conflict-btn-upload"
+                    title_str="이미지 또는 txt파일만 올려주세요"
+                    defaultColor = '#346F79'
+                    hoverColor = '#295961'
+                    disabledColor = '#B0B0B0'
                   />
-                  <ConflictButton
-                    label={btnResultLabel}
-                    onClick={handleFileUpload}
-                    disabled={!file && !textInput.trim()}
-                    className="conflict-btn-result"
-                  />
-                  <ConflictButton
+                  <UploadButton
                     label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
                     onClick={handleToggleInput}
                     className="conflict-btn-toggle-input"
+                    defaultColor = '#346F79'
+                    hoverColor = '#295961'
+                    disabledColor = '#B0B0B0'
                   />
                 </Box>
+                <SendModal
+                    open={openModal}
+                    handleClose={handleCloseModal}
+                    handlefile={handleFileUpload}
+                    filetitle={fileName}
+                  />
               </Grid>
             </Grid>
             {showInput && (
@@ -157,11 +171,14 @@ const FileUpload = () => {
                   value={textInput}
                   onChange={handleTextInputChange}
                 />
-                <ConflictButton
+                <UploadButton
                   label={btnResultLabel}
                   onClick={handleFileUpload}
                   disabled={!textInput.trim()}
                   className="conflict-btn-textfield"
+                  defaultColor = '#346F79'
+                  hoverColor = '#295961'
+                  disabledColor = '#B0B0B0'
                 />
               </Box>
             )}
