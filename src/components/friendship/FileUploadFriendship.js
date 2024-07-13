@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useCallback } from 'react';
 import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -6,9 +7,8 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import FriendshipButton from './FriendshipButton';
-import FriendshipButtonResult from './FriendshipButtonResult';
 import theme from "../../theme";
-
+import SendModal from '../SendModal';
 
 // 변수 정의
 const cardMaxWidth = 700;
@@ -22,26 +22,19 @@ const btnResultLabel = "결과 보러가기";
 
 const FileUploadFriendship = () => {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState('');
   const [jsonContent, setJsonContent] = useState(null);
-  const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
-  const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = React.useState(false);
 
-  {/*파일 업로드 시 이미지 파일 or txt파일만 올리도록 설정 */}
+  const handleCloseModal = () => setOpenModal(false);
+
   const handleFileChange = useCallback((event) => {
-    const file = event.target.files[0];
-    if(file)
-    {
-      const fileType = file.type;
-      if(fileType === 'text/plain' || fileType.startsWith('image/'))
-      {
-        setFile(event.target.files[0]);
-        console.log("File selected:", event.target.files[0]);
-      } else {
-        alert('이미지 파일이나 텍스트 파일만 올려주세요!');
-      }
-    }
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    setFileName(selectedFile.name);
+    setOpenModal(true);
   }, []);
 
   const handleFileRead = useCallback((event) => {
@@ -110,31 +103,29 @@ const FileUploadFriendship = () => {
                 </Card>
               </Grid>
               <Grid item xs={12}>
-              {modalOpen && <ResultModal setModalOpen={setModalOpen} />}
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                   <input
-                    accept=".txt"
+                    accept=".txt,image/*"
                     style={{ display: 'none' }}
                     id="raised-button-file"
                     type="file"
                     onChange={handleFileChange}
                   />
                   <label htmlFor="raised-button-file">
-                      <FriendshipButton
-                        label={btnUploadLabel}
-                        onClick={() => {}}
-                        disabled={false} // 파일 선택 여부와 관계없이 기본 색상을 유지하도록
-                        className="conflict-btn-upload"
-                      />
+                    <FriendshipButton
+                      label={btnUploadLabel}
+                      onClick={() => {}}
+                      disabled={false}
+                      className="conflict-btn-upload"
+                    />
                   </label>
-                  <FriendshipButtonResult
-                    label={btnResultLabel}
-                    onClick={handleFileUpload}
-                    disabled={!file}
-                    className="conflict-btn-result"
-                  />
                 </Box>
-                
+                <SendModal
+                  open={openModal}
+                  handleClose={handleCloseModal}
+                  handlefile={handleFileUpload}
+                  filetitle={fileName}
+                />
               </Grid>
             </Grid>
           </Box>

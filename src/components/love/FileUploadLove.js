@@ -7,15 +7,23 @@ import CardContent from '@mui/material/CardContent';
 import { Button, Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import '../../css/love/uploadlove.css';
 import theme from '../../theme';
+import UploadButton from '../UploadButton';
+import SendModal from '../SendModal';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState('');
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleCloseModal = () => setOpenModal(false);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
+    setFileName(selectedFile.name);
+    setOpenModal(true);
   };
 
   const handleButtonClick = () => {
@@ -36,6 +44,7 @@ const FileUploadLove = () => {
 
   const lovecopy = "네가 좋아\n너는?\n솔직하게\n말해줘.";
   const loveintrocopy = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.\n지금 무슨 생각을 하고 있을까요?";
+  const btnUploadLabel = "카카오톡 파일 업로드"
 
   return (
     <Container maxWidth="xl">
@@ -79,37 +88,23 @@ const FileUploadLove = () => {
                   onChange={handleFileChange}
                   accept=".txt,image/*" // Accept both text and image files
                 />
-                <Button variant="contained"
-                  component="span"
-                  size="large"
-                  sx={{
-                    mr: 2,
-                    backgroundColor: theme.palette.peach,
-                    color: theme.palette.gray700,
-                    '&:hover': {
-                      backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
-                    }
-                  }}
-                  onClick={handleButtonClick}>
-                  카카오톡 파일 업로드
-                </Button>
-                <Button variant="contained"
-                  type="submit"
-                  component="span"
-                  size="large"
-                  disabled={!file} // Enable if either file is selected
-                  sx={{
-                    mr: 2,
-                    backgroundColor: theme.palette.peach,
-                    color: theme.palette.gray700,
-                    '&:hover': {
-                      backgroundColor: theme.palette.peach, // 호버 시 배경색 변경
-                    }
-                  }}
-                  onClick={handleSubmit}>
-                  결과 보러가기
-                </Button>
+                <UploadButton
+                  label={btnUploadLabel}
+                  onClick={handleButtonClick}
+                  disabled={false}
+                  className="conflict-btn-upload"
+                  title_str="이미지 또는 txt파일만 올려주세요"
+                  defaultColor = '#FFCFAA'
+                  hoverColor = '#FFCFAA'
+                  disabledColor = '#B0B0B0'
+                />
               </Box>
+              <SendModal
+                open={openModal}
+                handleClose={handleCloseModal}
+                handlefile={handleSubmit}
+                filetitle={fileName}
+              />
             </Grid>
           </Box>
         </div>
