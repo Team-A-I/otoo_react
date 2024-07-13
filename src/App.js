@@ -71,7 +71,7 @@ const MainApp = () => {
 
 const App = () => {
   return (
-    <Router basename="/otoo_react">
+    <Router>
       <MainApp />
     </Router>
   );
