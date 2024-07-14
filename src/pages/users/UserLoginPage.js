@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://restapi.otoo.kr/login', {
+      const response = await axios.post('https://ra.otoo.kr/login', {
         userEmail,
         userPassword,
       });
@@ -59,7 +59,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "https://restapi.otoo.kr/kakaoLogin/" + accessToken
+            "https://ra.otoo.kr/kakaoLogin/" + accessToken
           );
 
           if (response.status === 200) {
@@ -91,7 +91,7 @@ function UserLoginPage() {
     }
   } 
   const naverClick = async() => {
-    axios.get("https://restapi.otoo.kr/naverLogin")
+    axios.get("https://ra.otoo.kr/naverLogin")
     .then((res) => {
       const requrl = res.data;
       window.location.href = requrl;

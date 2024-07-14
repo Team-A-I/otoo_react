@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosIns = axios.create({
-  baseURL: 'https://restapi.otoo.kr',
+  baseURL: 'https://ra.otoo.kr',
   timeout: 1000000,
 });
 
