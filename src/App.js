@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -73,7 +73,7 @@ const MainApp = () => {
 
 const App = () => {
   return (
-    <Router basename="/otoo_react">
+    <Router>
       <MainApp />
     </Router>
   );
