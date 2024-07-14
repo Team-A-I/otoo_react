@@ -143,14 +143,6 @@ const FileUpload = () => {
                     hoverColor = '#295961'
                     disabledColor = '#B0B0B0'
                   />
-                  // <UploadButton
-                  //   label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
-                  //   onClick={handleToggleInput}
-                  //   className="conflict-btn-toggle-input"
-                  //   defaultColor = '#346F79'
-                  //   hoverColor = '#295961'
-                  //   disabledColor = '#B0B0B0'
-                  // />
                 </Box>
                 <SendModal
                     open={openModal}
@@ -160,28 +152,6 @@ const FileUpload = () => {
                   />
               </Grid>
             </Grid>
-            // {showInput && (
-            //   <Box mt={10} ref={fileInputRef}>
-            //     <Typography variant="h6">{inputPromptText}</Typography>
-            //     <TextField
-            //       fullWidth
-            //       multiline
-            //       rows={textFieldRows}
-            //       variant={textFieldVariant}
-            //       value={textInput}
-            //       onChange={handleTextInputChange}
-            //     />
-            //     <UploadButton
-            //       label={btnResultLabel}
-            //       onClick={handleFileUpload}
-            //       disabled={!textInput.trim()}
-            //       className="conflict-btn-textfield"
-            //       defaultColor = '#346F79'
-            //       hoverColor = '#295961'
-            //       disabledColor = '#B0B0B0'
-            //     />
-            //   </Box>
-            // )}
           </Box>
         </div>
       </ThemeProvider>
