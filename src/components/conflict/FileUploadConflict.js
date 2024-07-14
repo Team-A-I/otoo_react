@@ -28,8 +28,8 @@ const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
-  // const [showInput, setShowInput] = useState(false);// eslint-disable-next-line
-  const [textInput, setTextInput] = useState("");// eslint-disable-next-line
+  // const [showInput, setShowInput] = useState(false);
+  // const [textInput, setTextInput] = useState("");
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = React.useState(false);
@@ -62,15 +62,17 @@ const FileUpload = () => {
         reader.onload = handleFileRead;
         reader.readAsText(file);
       } else {
-        const json = { text: textInput, file };
+        const json = { text: file };
         setJsonContent(json);
         navigate('/loading-conflict', { state: { jsonContent: json } });
       }
-    } else if (textInput.trim()) {
-      const json = { text: textInput };
-      setJsonContent(json);
-      navigate('/loading-conflict', { state: { jsonContent: json } });
-    } else {
+    } 
+    // else if (textInput.trim()) {
+    //   const json = { text: textInput };
+    //   setJsonContent(json);
+    //   navigate('/loading-conflict', { state: { jsonContent: json } });
+    // } 
+    else {
     }
   };
 
