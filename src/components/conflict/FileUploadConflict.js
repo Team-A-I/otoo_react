@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Container, TextField, Typography, Box, Grid, ThemeProvider } from '@mui/material';
+import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -28,8 +28,8 @@ const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
-  // const [showInput, setShowInput] = useState(false);
-  const [textInput, setTextInput] = useState("");
+  // const [showInput, setShowInput] = useState(false);// eslint-disable-next-line
+  const [textInput, setTextInput] = useState("");// eslint-disable-next-line
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = React.useState(false);
