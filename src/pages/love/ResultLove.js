@@ -204,7 +204,7 @@ const ResultLove = () => {
   const result = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
-
+  const type = 'love';
   if (!result) {
     return <div>No result data</div>;
   }
@@ -366,7 +366,7 @@ const ResultLove = () => {
                             </Box>
                         </Paper>
                     </Grid>
-                    <FeedbackModal/>
+                    <FeedbackModal feedbackType={type}/>
                     <br></br>
                 </div>
             </ThemeProvider>

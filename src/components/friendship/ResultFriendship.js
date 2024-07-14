@@ -13,6 +13,7 @@ const ResultFriendship = () => {
   const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
+  const type = 'friendship';
 
   useEffect(() => {
     const movePage = async () => {
@@ -266,7 +267,7 @@ const ResultFriendship = () => {
               {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
-          <FeedbackModal/>
+          <FeedbackModal feedbackType={type}/>
         </div>
       </ThemeProvider>
     </Container>

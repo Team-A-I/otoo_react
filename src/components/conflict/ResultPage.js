@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, Tabs, Tab, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import theme from "../../theme";
@@ -13,6 +13,7 @@ const ResultPage = () => {
   const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
+ 
 
   //성격별 캐릭터
   const personalityMap = {
@@ -69,7 +70,9 @@ const ResultPage = () => {
       ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
       : '판결 결과입니다';
   };
-
+  const type = 'conflict';
+  
+ 
 
   // 전체 통계 
   const renderWrongPercentage = () => {
@@ -353,7 +356,7 @@ const ResultPage = () => {
               {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
             </Grid>
           </Box>
-          <FeedbackModal/>
+          <FeedbackModal feedbackType={type}/>  
         </div>
       </ThemeProvider>
     </Container>

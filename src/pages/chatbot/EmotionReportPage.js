@@ -42,6 +42,7 @@ const EmotionReportPage = () => {
   };
 
   const isSmallScreen = useMediaQuery('(max-width:600px)');
+  const type = 'report';
 
   return (
     <Container sx={{ display: 'flex' }}>
@@ -144,7 +145,7 @@ const EmotionReportPage = () => {
               </Grid>
             </Grid>
           </Box>
-          <FeedbackModal/>
+          <FeedbackModal feedbackType={type}/>
       </div>
       </ThemeProvider>
     </Container>
