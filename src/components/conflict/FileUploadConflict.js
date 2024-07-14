@@ -28,7 +28,7 @@ const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
-  // const [showInput, setShowInput] = useState(false);
+  const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
