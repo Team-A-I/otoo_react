@@ -19,8 +19,8 @@ const cardContentText = "내가 맞다니까? 오늘도 답답함을 느끼고 �
 const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
-const btnToggleInputLabelShow = "직접 입력하기";
-const btnToggleInputLabelHide = "입력창 닫기";
+// const btnToggleInputLabelShow = "직접 입력하기";
+// const btnToggleInputLabelHide = "입력창 닫기";
 const textFieldRows = 10;
 const textFieldVariant = "outlined";
 
@@ -28,7 +28,7 @@ const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);
-  const [showInput, setShowInput] = useState(false);
+  // const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
@@ -74,14 +74,14 @@ const FileUpload = () => {
     }
   };
 
-  const handleToggleInput = () => {
-    setShowInput(prevShowInput => !prevShowInput);
-    if (!showInput) {
-      setTimeout(() => {
-        fileInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
-  };
+  // const handleToggleInput = () => {
+  //   setShowInput(prevShowInput => !prevShowInput);
+  //   if (!showInput) {
+  //     setTimeout(() => {
+  //       fileInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  //     }, 100);
+  //   }
+  // };
 
   const handleTextInputChange = (event) => {
     setTextInput(event.target.value);
@@ -143,6 +143,14 @@ const FileUpload = () => {
                     hoverColor = '#295961'
                     disabledColor = '#B0B0B0'
                   />
+                    {/* <UploadButton
+                  label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
+                  onClick={handleToggleInput}
+                  className="conflict-btn-toggle-input"
+                  defaultColor = '#346F79'
+                  hoverColor = '#295961'
+                  disabledColor = '#B0B0B0'
+                /> */}
                 </Box>
                 <SendModal
                     open={openModal}
@@ -151,6 +159,28 @@ const FileUpload = () => {
                     filetitle={fileName}
                   />
               </Grid>
+              {showInput && (
+              <Box mt={10} ref={fileInputRef}>
+                <Typography variant="h6">{inputPromptText}</Typography>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={textFieldRows}
+                  variant={textFieldVariant}
+                  value={textInput}
+                  onChange={handleTextInputChange}
+                />
+                <UploadButton
+                  label={btnResultLabel}
+                  onClick={handleFileUpload}
+                  disabled={!textInput.trim()}
+                  className="conflict-btn-textfield"
+                  defaultColor = '#346F79'
+                  hoverColor = '#295961'
+                  disabledColor = '#B0B0B0'
+                />
+              </Box>
+            )}
             </Grid>
           </Box>
         </div>
