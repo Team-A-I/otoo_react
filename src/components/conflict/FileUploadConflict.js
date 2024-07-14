@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
+import { Container, TextField, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -16,20 +16,20 @@ const imageSrc = "/otoo_react/images/problems.jpg";
 const imageAlt = "Paella dish";
 const lovemainText = "계속되는\n언쟁에\n고민\n마세요.";
 const cardContentText = "내가 맞다니까? 오늘도 답답함을 느끼고 계시다면 시원하게 대화를 넣어주세요. 누가 맞았는지 저희가 판단해드릴게요. 무엇이 우리를 싸우게 만들었는지, 어떻게 하면 이 문제를 해결할 수 있을지 알려드릴게요.";
-// const inputPromptText = "무슨 일이 있었는지 적어주세요:";
+const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
-// const btnResultLabel = "결과 보러가기";
+const btnResultLabel = "결과 보러가기";
 // const btnToggleInputLabelShow = "직접 입력하기";
 // const btnToggleInputLabelHide = "입력창 닫기";
-// const textFieldRows = 10;
-// const textFieldVariant = "outlined";
+const textFieldRows = 10;
+const textFieldVariant = "outlined";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');// eslint-disable-next-line
-  const [jsonContent, setJsonContent] = useState(null);
-  // const [showInput, setShowInput] = useState(false);
-  // const [textInput, setTextInput] = useState("");
+  const [jsonContent, setJsonContent] = useState(null);// eslint-disable-next-line
+  const [showInput, setShowInput] = useState(false);// eslint-disable-next-line
+  const [textInput, setTextInput] = useState("");
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = React.useState(false);
@@ -62,17 +62,15 @@ const FileUpload = () => {
         reader.onload = handleFileRead;
         reader.readAsText(file);
       } else {
-        const json = { text: file };
+        const json = { text: textInput, file };
         setJsonContent(json);
         navigate('/loading-conflict', { state: { jsonContent: json } });
       }
-    } 
-    // else if (textInput.trim()) {
-    //   const json = { text: textInput };
-    //   setJsonContent(json);
-    //   navigate('/loading-conflict', { state: { jsonContent: json } });
-    // } 
-    else {
+    } else if (textInput.trim()) {
+      const json = { text: textInput };
+      setJsonContent(json);
+      navigate('/loading-conflict', { state: { jsonContent: json } });
+    } else {
     }
   };
 
@@ -85,9 +83,9 @@ const FileUpload = () => {
   //   }
   // };
 
-  // const handleTextInputChange = (event) => {
-  //   setTextInput(event.target.value);
-  // };
+  const handleTextInputChange = (event) => {
+    setTextInput(event.target.value);
+  };
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -145,14 +143,14 @@ const FileUpload = () => {
                     hoverColor = '#295961'
                     disabledColor = '#B0B0B0'
                   />
-                    {/* <UploadButton
-                  label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
-                  onClick={handleToggleInput}
-                  className="conflict-btn-toggle-input"
-                  defaultColor = '#346F79'
-                  hoverColor = '#295961'
-                  disabledColor = '#B0B0B0'
-                /> */}
+                 {/* <UploadButton
+                    label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
+                    onClick={handleToggleInput}
+                    className="conflict-btn-toggle-input"
+                    defaultColor = '#346F79'
+                    hoverColor = '#295961'
+                    disabledColor = '#B0B0B0'
+                  /> */}
                 </Box>
                 <SendModal
                     open={openModal}
@@ -161,7 +159,8 @@ const FileUpload = () => {
                     filetitle={fileName}
                   />
               </Grid>
-              {/* {showInput && (
+            </Grid>
+            {showInput && (
               <Box mt={10} ref={fileInputRef}>
                 <Typography variant="h6">{inputPromptText}</Typography>
                 <TextField
@@ -182,8 +181,7 @@ const FileUpload = () => {
                   disabledColor = '#B0B0B0'
                 />
               </Box>
-            )} */}
-            </Grid>
+            )}
           </Box>
         </div>
       </ThemeProvider>
