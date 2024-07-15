@@ -61,7 +61,7 @@ const ChatBot = () => {
 
     try {
 
-      const response = await axiosIns.post('https://ra.otoo.kr/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('http://localhost:8080/chatbot', { RecentMessages, mode }, {
 
         headers: {
           'Content-Type': 'application/json',

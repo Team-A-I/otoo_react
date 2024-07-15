@@ -25,7 +25,7 @@ const ForgetPassword = () => {
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
-        `https://ra.otoo.kr/forgotpassword/${usersEmail}`
+        `http://localhost:8080/forgotpassword/${usersEmail}`
       );
       if (response.status === 200) {
         alert('이메일 인증 메일이 전송되었습니다.');
