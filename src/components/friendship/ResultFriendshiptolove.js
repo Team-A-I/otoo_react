@@ -21,12 +21,12 @@ const ResultFriendshiptolove = () => {
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
-    if (percentage >= 0 && percentage <= 20) return '/otoo_react/images/낙뢰.png';
-    if (percentage >= 21 && percentage <= 40) return '/otoo_react/images/비.png';
-    if (percentage >= 41 && percentage <= 50) return '/otoo_react/images/구름.png';
-    if (percentage >= 51 && percentage <= 60) return '/otoo_react/images/약간흐림.png';
-    if (percentage >= 61 && percentage <= 80) return '/otoo_react/images/맑음.png';
-    if (percentage >= 81 && percentage <= 100) return '/otoo_react/images/무지개.png';
+    if (percentage >= 0 && percentage <= 20) return '/images/낙뢰.png';
+    if (percentage >= 21 && percentage <= 40) return '/images/비.png';
+    if (percentage >= 41 && percentage <= 50) return '/images/구름.png';
+    if (percentage >= 51 && percentage <= 60) return '/images/약간흐림.png';
+    if (percentage >= 61 && percentage <= 80) return '/images/맑음.png';
+    if (percentage >= 81 && percentage <= 100) return '/images/무지개.png';
     return '';
   };
 
@@ -43,7 +43,7 @@ const ResultFriendshiptolove = () => {
     const names = Object.keys(data.friendship_likeability || {});
     return (
       <Grid item xs={12}>
-        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
+        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} sm={4}>
               <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
@@ -68,7 +68,7 @@ const ResultFriendshiptolove = () => {
               </Grid>
             </Grid>
           </Grid>
-          <img src="/otoo_react/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
+          <img src="/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
         </Paper>
       </Grid>
     );
@@ -100,8 +100,8 @@ const ResultFriendshiptolove = () => {
     );
   
     const images = [
-      { src: "/otoo_react/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
-      { src: "/otoo_react/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
+      { src: "/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
+      { src: "/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
     ];
   
     return (
@@ -141,7 +141,7 @@ const ResultFriendshiptolove = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.friendship_likeability && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/main_love.png" imgAlt="결과 이미지" />}
+              {data.friendship_likeability && <TitleSection titleText={titleText()} imgSrc="/images/main_love.png" imgAlt="결과 이미지" />}
               {data.friendship_likeability && renderLikeability()}
               {data.friendship_likeability_script && renderLikeabilityScript()}
             </Grid>

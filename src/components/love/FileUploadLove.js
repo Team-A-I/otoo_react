@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import { Button, Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
+import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import '../../css/love/uploadlove.css';
 import theme from '../../theme';
 import UploadButton from '../UploadButton';
@@ -68,7 +68,7 @@ const FileUploadLove = () => {
                   <CardMedia
                     component="img"
                     height="400"
-                    image="/otoo_react/images/lovemain.jpg"
+                    image="/images/lovemain.jpg"
                     alt="lovemain"
                   />
                   <CardContent>

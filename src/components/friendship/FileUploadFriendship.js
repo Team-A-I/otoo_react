@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line
 import React, { useState, useRef, useCallback } from 'react';
 import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -13,17 +14,16 @@ import SendModal from '../SendModal';
 // 변수 정의
 const cardMaxWidth = 700;
 const imageHeight = 400;
-const imageSrc = "/otoo_react/images/friendship-1.jpg";
+const imageSrc = "/images/friendship-1.jpg";
 const imageAlt = "friendship-1";
 const friendshipmainText = "Best\nFriend\nForever\n";
 const cardContentText = "#찐친테스트\n#우정파괴\n#테스트는 테스트일 뿐^^";
 const btnUploadLabel = "카카오톡 파일 업로드";
-const btnResultLabel = "결과 보러가기";
 
 const FileUploadFriendship = () => {
   const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState('');
-  const [jsonContent, setJsonContent] = useState(null);
+  const [fileName, setFileName] = useState('');// eslint-disable-next-line
+  const [jsonContent, setJsonContent] = useState(null);// eslint-disable-next-line
   const [textInput, setTextInput] = useState("");
   const navigate = useNavigate();
   const [openModal, setOpenModal] = React.useState(false);

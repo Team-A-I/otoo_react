@@ -42,7 +42,7 @@ const ResetPassword = () => {
       const usersEmail = location.state?.usersEmail;
 
       if (password === confirmPassword) {
-        const response = await axios.post('https://restapi.otoo.kr/changePwd', {
+        const response = await axios.post('https://ra.otoo.kr/changePwd', {
           usersEmail: usersEmail,
           usersPw: password,
           pwd1: confirmPassword,
@@ -141,7 +141,7 @@ const ResetPassword = () => {
             <CardMedia
               component="img"
               alt="Forgot Password"
-              image="/otoo_react/images/otooLogo.png"
+              image="/images/otooLogo.png"
               style={{ height: '100%', objectFit: 'cover' }}
             />
           </Grid>

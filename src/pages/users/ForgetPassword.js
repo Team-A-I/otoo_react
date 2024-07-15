@@ -25,7 +25,7 @@ const ForgetPassword = () => {
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
-        `https://restapi.otoo.kr/forgotpassword/${usersEmail}`
+        `https://ra.otoo.kr/forgotpassword/${usersEmail}`
       );
       if (response.status === 200) {
         alert('이메일 인증 메일이 전송되었습니다.');
@@ -123,7 +123,7 @@ const ForgetPassword = () => {
           <Grid item md={6} style={{ display: { xs: 'none', md: 'block' } }}>
             <CardMedia
               component="img"
-              image="/otoo_react/images/otooLogo.png"
+              image="/images/otooLogo.png"
               alt="Forgot Password"
               style={{ height: '100%', objectFit: 'cover' }}
             />

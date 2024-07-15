@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
-import axiosIns from '../../components/axios';
+import axios from 'axios';
 
 const NaverLogin = () => {// eslint-disable-next-line
   const [code, setCode] = useState("");// eslint-disable-next-line
@@ -17,7 +17,7 @@ const NaverLogin = () => {// eslint-disable-next-line
 
 
     axios
-      .get("https://restapi.otoo.kr/naverLogin/callbacks", {
+      .get("https://ra.otoo.kr/naverLogin/callbacks", {
         params: {
           code: codeParam,
           state: stateParam,

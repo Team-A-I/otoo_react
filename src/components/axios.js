@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosIns = axios.create({
-  baseURL: 'https://restapi.otoo.kr',
+  baseURL: 'https://ra.otoo.kr',
   timeout: 1000000,
 });
 
@@ -42,7 +42,7 @@ axiosIns.interceptors.response.use(
             sessionStorage.removeItem('userEmail');
             sessionStorage.removeItem('userRole');
            
-            window.location.replace('/otoo_react');   
+            window.location.replace('/');   
         }
     } catch (error) {
         console.error('Logout failed', error);

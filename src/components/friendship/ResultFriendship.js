@@ -13,6 +13,7 @@ const ResultFriendship = () => {
   const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
+  const type = 'friendship';
 
   useEffect(() => {
     const movePage = async () => {
@@ -28,12 +29,12 @@ const ResultFriendship = () => {
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
-    if (percentage >= 0 && percentage <= 20) return '/otoo_react/images/무지개.png';
-    if (percentage >= 21 && percentage <= 40) return '/otoo_react/images/맑음.png';
-    if (percentage >= 41 && percentage <= 50) return '/otoo_react/images/약간흐림.png';
-    if (percentage >= 51 && percentage <= 60) return '/otoo_react/images/구름.png';
-    if (percentage >= 61 && percentage <= 80) return '/otoo_react/images/비.png';
-    if (percentage >= 81 && percentage <= 100) return '/otoo_react/images/낙뢰.png';
+    if (percentage >= 0 && percentage <= 20) return '/images/무지개.png';
+    if (percentage >= 21 && percentage <= 40) return '/images/맑음.png';
+    if (percentage >= 41 && percentage <= 50) return '/images/약간흐림.png';
+    if (percentage >= 51 && percentage <= 60) return '/images/구름.png';
+    if (percentage >= 61 && percentage <= 80) return '/images/비.png';
+    if (percentage >= 81 && percentage <= 100) return '/images/낙뢰.png';
     return '';
   };
 
@@ -41,22 +42,22 @@ const ResultFriendship = () => {
   const getStyleByTotalscore = (percentage) => {
     if (percentage >= 0 && percentage <= 10) {
       return {
-        imageUrl: '/otoo_react/images/낙뢰하늘사진.jpg',
+        imageUrl: '/images/낙뢰하늘사진.jpg',
         color: theme.palette.gray200
       };
     } else if (percentage >= 11 && percentage <= 20) {
       return {
-        imageUrl: '/otoo_react/images/비하늘사진.jpg',
+        imageUrl: '/images/비하늘사진.jpg',
         color: theme.palette.gray900
       };
     } else if (percentage >= 21 && percentage <= 45) {
       return {
-        imageUrl: '/otoo_react/images/흐린하늘사진.png',
+        imageUrl: '/images/흐린하늘사진.png',
         color: theme.palette.gray900
       };
     } else if (percentage >= 46 && percentage <= 100) {
       return {
-        imageUrl: '/otoo_react/images/맑은하늘사진.jpg',
+        imageUrl: '/images/맑은하늘사진.jpg',
         color: theme.palette.gray200
       };
     } else {
@@ -81,7 +82,7 @@ const ResultFriendship = () => {
     const names = Object.keys(data.total_score || {});
     return (
       <Grid item xs={12}>
-        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
+        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} sm={4}>
               <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
@@ -106,7 +107,7 @@ const ResultFriendship = () => {
               </Grid>
             </Grid>
           </Grid>
-          <img src="/otoo_react/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
+          <img src="/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
         </Paper>
       </Grid>
     );
@@ -219,8 +220,8 @@ const ResultFriendship = () => {
     );
   
     const images = [
-      { src: "/otoo_react/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
-      { src: "/otoo_react/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
+      { src: "/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
+      { src: "/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
     ];
   
     return (
@@ -260,13 +261,13 @@ const ResultFriendship = () => {
         <div style={{ fontFamily: theme.typography.fontFamily }}>
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
             <Grid container spacing={3} mt={5}>
-              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/otoo_react/images/friendship-2.png" imgAlt="결과 이미지" />}
+              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/images/friendship-2.png" imgAlt="결과 이미지" />}
               {data.total_score && renderTotalScorePercentage()}
               {Object.keys(data.total_score || {}).map((name) => renderPersonData(name))}
               {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
-          <FeedbackModal/>
+          <FeedbackModal feedbackType={type}/>
         </div>
       </ThemeProvider>
     </Container>

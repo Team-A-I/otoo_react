@@ -21,7 +21,7 @@ const LoadingLove = () => {
             if (usercode) {
               requestData.usercode = usercode;
             }
-            const response = await axiosIns.post('https://restapi.otoo.kr/api/love/analysis', requestData, {
+            const response = await axiosIns.post('https://ra.otoo.kr/api/love/analysis', requestData, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -35,7 +35,7 @@ const LoadingLove = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            const response = await axiosIns.post('https://restapi.otoo.kr/api/love/ocr', formData, {
+            const response = await axiosIns.post('https://ra.otoo.kr/api/love/ocr', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
@@ -75,7 +75,7 @@ const LoadingLove = () => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
+            <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
               <Grid container spacing={3} alignItems="center">
                 <Grid item xs={12} sm={4}>
                   <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', marginLeft: '40px' }}>

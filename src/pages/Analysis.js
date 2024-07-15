@@ -1,6 +1,6 @@
 import React from 'react';
 import AnalysisMain from '../components/AnalysisMain';
-import { Container, Box } from '@mui/material';
+import { Box } from '@mui/material';
 
 const Analysis = () => {
     return (

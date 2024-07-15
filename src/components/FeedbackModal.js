@@ -13,7 +13,7 @@ const TEXTS = {
   feedbackPlaceholder: '의견을 남겨주세요!',
 };
 
-const FeedbackModal = () => {
+const FeedbackModal = ({feedbackType}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -21,7 +21,6 @@ const FeedbackModal = () => {
   const [dislike, setDislike] = useState(false);
   const [feedbackLike, setFeedback_like] = useState(0);
   const [feedbackDislike, setFeedback_dislike] = useState(0);
-  const [feedbackType] = useState('report');
   const [feedbackNote, setFeedback_note] = useState('');
   const buttonRef = useRef(null);
 
@@ -58,7 +57,7 @@ const FeedbackModal = () => {
   const handleFeedback = async () => {
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
-      await axiosIns.post('https://restapi.otoo.kr/feedback', feedback, {
+      await axiosIns.post('https://ra.otoo.kr/feedback', feedback, {
         headers: {
           'Content-Type': 'application/json',
         },

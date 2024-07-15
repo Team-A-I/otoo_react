@@ -22,14 +22,14 @@ const LoadingPage = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axiosIns.post('https://restapi.otoo.kr/api/conflict/analysis', requestData);
+            response = await axiosIns.post('https://ra.otoo.kr/api/conflict/analysis', requestData);
           } else {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('https://restapi.otoo.kr/api/conflict/ocr', formData);
+            response = await axiosIns.post('https://ra.otoo.kr/api/conflict/ocr', formData);
           }
 
           navigate('/result-conflict', { state: { jsonData: response.data } });
@@ -66,7 +66,7 @@ const LoadingPage = () => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
+            <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
               <Grid container spacing={3} alignItems="center">
                 <Grid item xs={12} sm={4}>
                   <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', marginLeft: '40px' }}>

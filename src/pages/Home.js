@@ -23,11 +23,11 @@ const Home = () => {
     
 
     const backgroundImages = [
-        '/otoo_react/images/main.png',
-        '/otoo_react/images/main-conflict.png',
-        '/otoo_react/images/friendship.png',
-        '/otoo_react/images/love-main.png',
-        '/otoo_react/images/main-janggu2.png'
+        '/images/main.png',
+        '/images/main-conflict.png',
+        '/images/friendship.png',
+        '/images/love-main.png',
+        '/images/main-janggu2.png'
     ];
 
     const navigate = useNavigate(); // useNavigate 훅 사용
@@ -96,7 +96,7 @@ const Home = () => {
    
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('https://restapi.otoo.kr/logoutUser',sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://ra.otoo.kr/logoutUser',sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const Home = () => {
             <div style={{ fontFamily: theme.typography.fontFamily, overflow: 'hidden', position: 'relative' }}>
                 <Box
                     sx={{
-                        backgroundImage: 'url(/otoo_react/images/main-back.png)',
+                        backgroundImage: 'url(/images/main-back.png)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
@@ -194,24 +194,26 @@ const Home = () => {
                             }}
                         >
                             <Button
-                                variant="outlined"
-                                color="primary"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
+                                    color:"#FFFFFF",
+                                    border: "1px solid #FFFFFF",
+                                    borderColor:"#FFFFFF",
                                 }}
                                 onClick={() => handleNavigation('/analysis')}
                             >
                                 카톡 판결
                             </Button>
                             <Button
-                                variant="outlined"
-                                color="primary"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
                                     borderRadius: 15,
+                                    color:"#FFFFFF",
+                                    border: "1px solid #FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                                 onClick={() => handleNavigation('/chatbot')}
                             >
@@ -230,10 +232,11 @@ const Home = () => {
                         >
                             <Button
                                 variant="text"
-                                color="primary"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
+                                    color:"#FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                                 onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
                             >
@@ -241,10 +244,11 @@ const Home = () => {
                             </Button>
                             <Button
                                 variant="text"
-                                color="primary"
                                 sx={{
                                     fontSize: { xs: '8px', sm: '10px', md: '12px' },
                                     padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
+                                    color:"#FFFFFF",
+                                    borderColor:"#FFFFFF"
                                 }}
                             >
                                 Q&A
@@ -260,59 +264,7 @@ const Home = () => {
                                 height: 'auto',
                             }}
                         />
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                bottom: { xs: '10px', sm: '20px', md: '30px' },
-                                right: { xs: '10px', sm: '20px', md: '40px' },
-                                textAlign: 'right',
-                            }}
-                        >
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                No more frustrating worries
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                <br />
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                On our "몇대몇" service
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                It will coolly solve your curiosity
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                color="deepblue"
-                                sx={{
-                                    fontSize: { xs: '6px', sm: '11px', md: '15px' },
-                                }}
-                            >
-                                Thank you for visiting us.
-                            </Typography>
-                        </Box>
+                
                         {/* 스크롤 힌트 추가 */}
                         {backgroundIndex !== backgroundImages.length - 1 && (
                             <Typography className="scroll-hint" sx={{ fontSize: { xs: 8, sm: 12, md: 15 }}}>

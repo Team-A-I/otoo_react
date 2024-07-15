@@ -58,7 +58,7 @@ const SignUpPage = () => {
 
   const sendEmailVerification = async () => {
     try {
-      const response = await axios.post(`https://restapi.otoo.kr/email/${users.usersEmail}`, {});
+      const response = await axios.post(`https://ra.otoo.kr/email/${users.usersEmail}`, {});
       setVerificationCodeSent(true);
       if (response.status === 200) {
         alert("이메일 인증 메일이 전송되었습니다.");
@@ -81,7 +81,7 @@ const SignUpPage = () => {
 
   const submitUserInfo = async () => {
     try {
-      const response = await axios.post("https://restapi.otoo.kr/join", users);
+      const response = await axios.post("https://ra.otoo.kr/join", users);
       if (response.data.usersEmail) {
         alert("회원 가입 성공");
         navigate('/user-login');
@@ -260,11 +260,11 @@ const SignUpPage = () => {
               <Typography variant="title_bold" sx={{ padding: 2 }}>
                 이미 회원이십니까?
               </Typography>
-              <img src="/otoo_react/images/otooLogo.png" alt="logo" style={{ width: '100%' }} />
+              <img src="/images/otooLogo.png" alt="logo" style={{ width: '100%' }} />
               <Button 
                 variant="outlined" 
                 color="primary" 
-                href="/otoo_react/user-login"
+                href="/user-login"
               >
                 로그인 페이지로 이동
               </Button>
