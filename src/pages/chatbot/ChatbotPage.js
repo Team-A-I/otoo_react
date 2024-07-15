@@ -138,7 +138,7 @@ const ChatBot = () => {
                 <Box className="startBox">
                   <Box className="startBoxItem">
                     <Box className="jangguIMG_Box">
-                      <img className="jangguIMG" src="/otoo_react/images/janggu.png" alt='janggu' />
+                      <img className="jangguIMG" src="/images/janggu.png" alt='janggu' />
                     </Box>
                     <Box className="modeExplain">
                       <Box>
@@ -188,15 +188,16 @@ const ChatBot = () => {
             <Grid item xs={12} sm={3} className="tooltipable">
               {showTooltip ? (
                 <Tooltip title={chatbotTooltipText} arrow placement="top">
-                  <Button
-                    variant="contained"
-                    className='emotionButton'
-                    disabled={disabled}
-                    onClick={() => emotionReportHandler()}
-               
-                  >
-                    {chatbotEmotionReportButtonText}
-                  </Button>
+                  <span>
+                    <Button
+                      variant="contained"
+                      className='emotionButton'
+                      disabled={disabled}
+                      onClick={() => emotionReportHandler()}
+                    >
+                      {chatbotEmotionReportButtonText}
+                    </Button>
+                  </span>
                 </Tooltip>
               ) : (
                 <Button
@@ -204,7 +205,6 @@ const ChatBot = () => {
                   className='emotionButton'
                   disabled={disabled}
                   onClick={() => emotionReportHandler()}
-                 
                 >
                   {chatbotEmotionReportButtonText}
                 </Button>

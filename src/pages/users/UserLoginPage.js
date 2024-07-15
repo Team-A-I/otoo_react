@@ -150,13 +150,13 @@ function UserLoginPage() {
                 </Grid>
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                   <IconButton onClick={() => naverClick()}>
-                  <img src="/otoo_react/images/naver.png" alt="Naver Icon" style={{ width: '24px', height: '24px' }} />
+                  <img src="/images/naver.png" alt="Naver Icon" style={{ width: '24px', height: '24px' }} />
                   </IconButton>
                   <IconButton onClick={() => googleClick()}>
                   <GoogleIcon />
                   </IconButton>
                   <IconButton onClick={() => kakaoClick()}>
-                  <img src="/otoo_react/images/kakao.png" alt="Kakao Icon" style={{ width: '24px', height: '24px' }} />
+                  <img src="/images/kakao.png" alt="Kakao Icon" style={{ width: '24px', height: '24px' }} />
                   </IconButton>
                 </Grid>
               </Grid>

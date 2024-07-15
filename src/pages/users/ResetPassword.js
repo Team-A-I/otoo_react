@@ -141,7 +141,7 @@ const ResetPassword = () => {
             <CardMedia
               component="img"
               alt="Forgot Password"
-              image="/otoo_react/images/otooLogo.png"
+              image="/images/otooLogo.png"
               style={{ height: '100%', objectFit: 'cover' }}
             />
           </Grid>

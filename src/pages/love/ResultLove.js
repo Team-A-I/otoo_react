@@ -117,17 +117,17 @@ const createUserData = (user, data) => {
 
 const getImageByPercentage = (percentage) => {
     if (percentage >= 0 && percentage <= 10) {
-        return '/otoo_react/images/낙뢰.png';
+        return '/images/낙뢰.png';
     } else if (percentage >= 11 && percentage <= 20) {
-        return '/otoo_react/images/비.png';
+        return '/images/비.png';
     } else if (percentage >= 21 && percentage <= 30) {
-        return '/otoo_react/images/구름.png';
+        return '/images/구름.png';
     } else if (percentage >= 31 && percentage <= 45) {
-        return '/otoo_react/images/약간흐림.png';
+        return '/images/약간흐림.png';
     } else if (percentage >= 46 && percentage <= 59) {
-        return '/otoo_react/images/맑음.png';
+        return '/images/맑음.png';
     } else if (percentage >= 60 && percentage <= 80) {
-        return '/otoo_react/images/무지개.png';
+        return '/images/무지개.png';
     } else {
         return '';
     }
@@ -136,22 +136,22 @@ const getImageByPercentage = (percentage) => {
 const getStyleByTotalscore = (percentage) => {
     if (percentage >= 0 && percentage <= 10) {
         return {
-            imageUrl: '/otoo_react/images/낙뢰하늘사진.jpg',
+            imageUrl: '/images/낙뢰하늘사진.jpg',
             color: theme.palette.gray200
         };
     } else if (percentage >= 11 && percentage <= 20) {
         return {
-            imageUrl: '/otoo_react/images/비하늘사진.jpg',
+            imageUrl: '/images/비하늘사진.jpg',
             color: theme.palette.gray900
         };
     } else if (percentage >= 21 && percentage <= 45) {
         return {
-            imageUrl: '/otoo_react/images/흐린하늘사진.png',
+            imageUrl: '/images/흐린하늘사진.png',
             color: theme.palette.gray900
         };
     } else if (percentage >= 46 && percentage <= 100) {
         return {
-            imageUrl: '/otoo_react/images/맑은하늘사진.jpg',
+            imageUrl: '/images/맑은하늘사진.jpg',
             color: theme.palette.gray200
         };
     } else {
@@ -194,8 +194,8 @@ const renderTable = (name, keywords, color) => (
 );
 
 const images = [
-    { src: "/otoo_react/images/yumi2.png", width: '90px', height: 'auto' }, // 첫 번째 이미지 크기
-    { src: "/otoo_react/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
+    { src: "/images/yumi2.png", width: '90px', height: 'auto' }, // 첫 번째 이미지 크기
+    { src: "/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
 ];
 
 const ResultLove = () => {
@@ -236,7 +236,7 @@ const ResultLove = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={8}>
                                         <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
-                                            <img src='/otoo_react/images/main_love.png'
+                                            <img src='/images/main_love.png'
                                                 alt="Love"
                                                 style={{ maxWidth: '100%', maxHeight: '220px' }}
                                             />
@@ -249,7 +249,7 @@ const ResultLove = () => {
 
                     {/* weather_total_score */}
                     <Grid item xs={12}>
-                        <Paper elevation={4} style={{ marginBottom: '24px', backgroundImage: 'url(/otoo_react/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
+                        <Paper elevation={4} style={{ marginBottom: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
                             <Box p={5}>
                                 <Grid container alignItems="flex-start">
                                     <Grid item xs={12} sm={4}>
@@ -278,7 +278,7 @@ const ResultLove = () => {
                                     </Grid>
                                 </Grid>
                             </Box>
-                            <img src="/otoo_react/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
+                            <img src="/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
                         </Paper>
                     </Grid>
 

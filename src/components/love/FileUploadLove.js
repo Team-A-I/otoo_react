@@ -68,7 +68,7 @@ const FileUploadLove = () => {
                   <CardMedia
                     component="img"
                     height="400"
-                    image="/otoo_react/images/lovemain.jpg"
+                    image="/images/lovemain.jpg"
                     alt="lovemain"
                   />
                   <CardContent>

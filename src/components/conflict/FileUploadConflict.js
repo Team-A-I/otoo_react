@@ -12,7 +12,7 @@ import SendModal from '../SendModal';
 // 변수 정의
 const cardMaxWidth = 700;
 const imageHeight = 400;
-const imageSrc = "/otoo_react/images/problems.jpg";
+const imageSrc = "/images/problems.jpg";
 const imageAlt = "Paella dish";
 const lovemainText = "계속되는\n언쟁에\n고민\n마세요.";
 const cardContentText = "내가 맞다니까? 오늘도 답답함을 느끼고 계시다면 시원하게 대화를 넣어주세요. 누가 맞았는지 저희가 판단해드릴게요. 무엇이 우리를 싸우게 만들었는지, 어떻게 하면 이 문제를 해결할 수 있을지 알려드릴게요.";

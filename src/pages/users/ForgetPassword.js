@@ -123,7 +123,7 @@ const ForgetPassword = () => {
           <Grid item md={6} style={{ display: { xs: 'none', md: 'block' } }}>
             <CardMedia
               component="img"
-              image="/otoo_react/images/otooLogo.png"
+              image="/images/otooLogo.png"
               alt="Forgot Password"
               style={{ height: '100%', objectFit: 'cover' }}
             />

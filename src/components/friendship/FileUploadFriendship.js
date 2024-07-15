@@ -14,7 +14,7 @@ import SendModal from '../SendModal';
 // 변수 정의
 const cardMaxWidth = 700;
 const imageHeight = 400;
-const imageSrc = "/otoo_react/images/friendship-1.jpg";
+const imageSrc = "/images/friendship-1.jpg";
 const imageAlt = "friendship-1";
 const friendshipmainText = "Best\nFriend\nForever\n";
 const cardContentText = "#찐친테스트\n#우정파괴\n#테스트는 테스트일 뿐^^";

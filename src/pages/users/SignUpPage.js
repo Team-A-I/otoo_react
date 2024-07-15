@@ -260,11 +260,11 @@ const SignUpPage = () => {
               <Typography variant="title_bold" sx={{ padding: 2 }}>
                 이미 회원이십니까?
               </Typography>
-              <img src="/otoo_react/images/otooLogo.png" alt="logo" style={{ width: '100%' }} />
+              <img src="/images/otooLogo.png" alt="logo" style={{ width: '100%' }} />
               <Button 
                 variant="outlined" 
                 color="primary" 
-                href="/otoo_react/user-login"
+                href="/user-login"
               >
                 로그인 페이지로 이동
               </Button>

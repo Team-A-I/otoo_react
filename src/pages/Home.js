@@ -23,11 +23,11 @@ const Home = () => {
     
 
     const backgroundImages = [
-        '/otoo_react/images/main.png',
-        '/otoo_react/images/main-conflict.png',
-        '/otoo_react/images/friendship.png',
-        '/otoo_react/images/love-main.png',
-        '/otoo_react/images/main-janggu2.png'
+        '/images/main.png',
+        '/images/main-conflict.png',
+        '/images/friendship.png',
+        '/images/love-main.png',
+        '/images/main-janggu2.png'
     ];
 
     const navigate = useNavigate(); // useNavigate 훅 사용
@@ -158,7 +158,7 @@ const Home = () => {
             <div style={{ fontFamily: theme.typography.fontFamily, overflow: 'hidden', position: 'relative' }}>
                 <Box
                     sx={{
-                        backgroundImage: 'url(/otoo_react/images/main-back.png)',
+                        backgroundImage: 'url(/images/main-back.png)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',

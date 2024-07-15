@@ -11,15 +11,15 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const AnalysisMain = () => {
 
     const buttonData = [
-        { text: 'ㄱㅏㄹㄷㅡㅇ', link: '/upload-conflict' },
-        { text: 'ㅇㅜㅈㅓㅇ', link: '/upload-friendship' },
-        { text: 'ㅅㅏㄹㅏㅇ', link: '/upload-love' }
+        { text: '갈등 몇대몇', link: '/upload-conflict' },
+        { text: '우정 몇대몇', link: '/upload-friendship' },
+        { text: '사랑 몇대몇', link: '/upload-love' }
     ];
 
     const cardData = [
-        { image: "/otoo_react/images/톡설명1.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
-        { image: "/otoo_react/images/톡설명2.png", alt: "talk2", description: "원하는 분야를 고르고 파일을 업로드 해주세요." },
-        { image: "/otoo_react/images/톡설명3.png", alt: "talk3", description: "카톡 캡쳐 이미지도 업로드 가능합니다." }
+        { image: "/images/톡설명1.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
+        { image: "/images/톡설명2.png", alt: "talk2", description: "원하는 분야를 고르고 파일을 업로드 해주세요." },
+        { image: "/images/톡설명3.png", alt: "talk3", description: "카톡 캡쳐 이미지도 업로드 가능합니다." }
     ];
 
     const [currentSlide, setCurrentSlide] = useState(0);

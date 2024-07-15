@@ -54,7 +54,7 @@ const EmotionReportPage = () => {
             <Grid className='emotionGrid' container spacing={2} >
               <Grid item xs={4} className='emotionGridItem'sx={{display : isSmallScreen ? 'none':'flex'}}>
                   <Box className="letterBox" sx={{maxHeight:'30vh'}}>
-                    <img className="letterIMG" src="/otoo_react/images/letterIMG.jpg" alt='letterIMG' />
+                    <img className="letterIMG" src="/images/letterIMG.jpg" alt='letterIMG' />
                   </Box>
               </Grid>
               <Grid item xs={7} className='emotionGridItem' >
@@ -77,7 +77,7 @@ const EmotionReportPage = () => {
                   <CardMedia
                     className="moreIMG"
                     sx={{ height: 140, opacity: hover1 ? 1 : 0.7 }}
-                    image="/otoo_react/images/emotionfight.webp"
+                    image="/images/emotionfight.webp"
                     title="emotionfight"
                   />
                   <CardContent>
@@ -102,7 +102,7 @@ const EmotionReportPage = () => {
                   <CardMedia
                     className="moreIMG"
                     sx={{ height: 140, opacity: hover2 ? 1 : 0.7 }}
-                    image="/otoo_react/images/emotionfriendship.webp"
+                    image="/images/emotionfriendship.webp"
                     title="emotionfriendship"
                   />
                   <CardContent>
@@ -127,7 +127,7 @@ const EmotionReportPage = () => {
                   <CardMedia
                     className="moreIMG"
                     sx={{ height: 140, opacity: hover3 ? 1 : 0.7 }}
-                    image="/otoo_react/images/emotionlove.webp"
+                    image="/images/emotionlove.webp"
                     title="emotionlove"
                   />
                   <CardContent>
