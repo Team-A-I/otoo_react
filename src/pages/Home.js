@@ -96,7 +96,7 @@ const Home = () => {
    
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('https://717f-1-214-19-22.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
