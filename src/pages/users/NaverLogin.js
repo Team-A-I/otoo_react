@@ -17,7 +17,7 @@ const NaverLogin = () => {// eslint-disable-next-line
 
 
     axios
-      .get("http://localhost:8080/naverLogin/callbacks", {
+      .get("https://717f-1-214-19-22.ngrok-free.app/naverLogin/callbacks", {
         params: {
           code: codeParam,
           state: stateParam,

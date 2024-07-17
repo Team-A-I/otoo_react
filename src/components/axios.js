@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosIns = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://717f-1-214-19-22.ngrok-free.app',
   timeout: 1000000,
 });
 

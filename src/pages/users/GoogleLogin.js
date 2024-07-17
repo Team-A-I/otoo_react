@@ -14,7 +14,7 @@ const GoogleLogin = () => {
     setCode(codeParam);
     console.log(codeParam);
     axios
-      .get("http://localhost:8080/googleLogin/callbacks", {
+      .get("https://717f-1-214-19-22.ngrok-free.app/googleLogin/callbacks", {
         params: {
           code: codeParam,
         },

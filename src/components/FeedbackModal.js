@@ -57,7 +57,7 @@ const FeedbackModal = ({feedbackType}) => {
   const handleFeedback = async () => {
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
-      await axiosIns.post('http://localhost:8080/feedback', feedback, {
+      await axiosIns.post('https://717f-1-214-19-22.ngrok-free.app/feedback', feedback, {
         headers: {
           'Content-Type': 'application/json',
         },

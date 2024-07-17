@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/login', {
+      const response = await axios.post('https://717f-1-214-19-22.ngrok-free.app/login', {
         userEmail,
         userPassword,
       });
@@ -59,7 +59,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "http://localhost:8080/kakaoLogin/" + accessToken
+            "https://717f-1-214-19-22.ngrok-free.app/kakaoLogin/" + accessToken
           );
 
           if (response.status === 200) {
@@ -91,7 +91,7 @@ function UserLoginPage() {
     }
   } 
   const naverClick = async() => {
-    axios.get("http://localhost:8080/naverLogin")
+    axios.get("https://717f-1-214-19-22.ngrok-free.app/naverLogin")
     .then((res) => {
       const requrl = res.data;
       window.location.href = requrl;
