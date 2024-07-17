@@ -84,7 +84,7 @@ function UserLoginPage() {
   const googleClick = async() => {
     try {
 
-      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://ra.otoo.kr/googleLogin&response_type=code&scope=email profile";
+      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://ra.otoo.kr/googleLogin/callback&response_type=code&scope=email profile";
       
     } catch (error) {
       console.error("Error google login click", error);
