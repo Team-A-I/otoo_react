@@ -12,7 +12,7 @@ const GoogleLogin = () => {
     const codeParam = queryParams.get("code");
     if (code && code === codeParam) return;
     setCode(codeParam);
-
+    console.log(codeParam);
     axios
       .get("https://ra.otoo.kr/googleLogin/callbacks", {
         params: {
