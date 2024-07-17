@@ -30,6 +30,9 @@ import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
 
+import SttFileUpload from './components/stt/SttFileUpload';
+import SttResult from './components/conflict/SttResult';
+
 
 const MainApp = () => {
   const location = useLocation();
@@ -65,6 +68,10 @@ const MainApp = () => {
           <Route path="/naverLogin" element={<NaverLogin />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
+
+          <Route path='/stt-file-upload' element={<SttFileUpload />} />
+          <Route path='/stt-result' element={<SttResult />} />
+
         </Routes>
       </Box>
     </>
