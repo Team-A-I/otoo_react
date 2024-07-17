@@ -14,7 +14,7 @@ const GoogleLogin = () => {
     setCode(codeParam);
 
     axios
-      .get("https://mellow-profiterole-18719f.netlify.app/googleLogin/callbacks", {
+      .get("https://ra.otoo.kr/googleLogin/callbacks", {
         params: {
           code: codeParam,
         },
