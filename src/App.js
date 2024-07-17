@@ -61,7 +61,7 @@ const MainApp = () => {
 
           <Route path="/user-login" element={<UserLoginPage />} />
           <Route path="/user-signup" element={<SignUpPage />} />
-          <Route path="/googleLogin" element={<GoogleLogin />} />
+          <Route path="/googleLogin/callbacks" element={<GoogleLogin />} />
           <Route path="/naverLogin" element={<NaverLogin />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
