@@ -12,7 +12,7 @@ const GoogleLogin = () => {
     const codeParam = queryParams.get("code");
     if (code && code === codeParam) return;
     setCode(codeParam);
-
+    console.log(codeParam);
     axios
       .get("http://localhost:8080/googleLogin/callbacks", {
         params: {
