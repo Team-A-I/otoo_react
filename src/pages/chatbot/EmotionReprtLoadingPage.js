@@ -18,7 +18,7 @@ const EmotionReportLoadingPage = () => {
     const emotionReportHandler = useCallback(async() => {
         try {
             const requestBody = usersCode ? { messages, usersCode } : { messages };
-            const response = await axiosIns.post('https://ra.otoo.kr/emotionReport', requestBody, {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/emotionReport', requestBody, {
                 headers: {
                 'Content-Type': 'application/json',
                 },
