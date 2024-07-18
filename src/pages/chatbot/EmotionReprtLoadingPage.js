@@ -2,14 +2,11 @@ import React, { useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosIns from '../../components/axios';
 import { Container } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import '../../css/chatbot/EmotionReportLoadingPage.css';
-import theme from "../../theme"
 
 
 
 const EmotionReportLoadingPage = () => {
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const location = useLocation();
     const messages = location.state?.messages;
     const navigate = useNavigate();
