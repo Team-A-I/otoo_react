@@ -1,9 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosIns from '../../components/axios';
-import { Container, ThemeProvider, Box, Grid, Card, CardHeader, CardMedia, CardContent, Typography, CardActions, Paper, IconButton, Skeleton } from '@mui/material';
+import { Container } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import '../../css/chatbot/EmotionReportLoadingPage.css';
 import theme from "../../theme"
 
