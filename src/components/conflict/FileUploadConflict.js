@@ -127,7 +127,7 @@ const FileUpload = () => {
               <Grid item xs={12}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                   <input
-                    accept=".txt,image/*"
+                    accept=".txt,image/*,.wav,.mp3"
                     style={{ display: 'none' }}
                     ref={fileInputRef}
                     type="file"
