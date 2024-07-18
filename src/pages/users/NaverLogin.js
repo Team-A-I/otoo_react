@@ -17,7 +17,7 @@ const NaverLogin = () => {// eslint-disable-next-line
 
 
     axios
-      .get("https://717f-1-214-19-22.ngrok-free.app/naverLogin/callbacks", {
+      .get("https://gnat-suited-weekly.ngrok-free.app/naverLogin/callbacks", {
         params: {
           code: codeParam,
           state: stateParam,
@@ -33,6 +33,7 @@ const NaverLogin = () => {// eslint-disable-next-line
           sessionStorage.setItem("userEmail", response.data.userEmail);
           sessionStorage.setItem("userRole", response.data.role);
           navigate("/");
+          alert('로그인 성공');
         }
       })
       .catch((err) => {

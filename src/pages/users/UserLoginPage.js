@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://717f-1-214-19-22.ngrok-free.app/login', {
+      const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/login', {
         userEmail,
         userPassword,
       });
@@ -34,6 +34,7 @@ function UserLoginPage() {
         sessionStorage.setItem('userEmail', response.data.userEmail);
         sessionStorage.setItem('userRole', response.data.role);
         navigate('/');
+        alert('로그인 성공');
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -59,7 +60,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "https://717f-1-214-19-22.ngrok-free.app/kakaoLogin/" + accessToken
+            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken
           );
 
           if (response.status === 200) {
@@ -71,6 +72,7 @@ function UserLoginPage() {
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
             navigate("/");
+            alert('로그인 성공');
           }
         },
         fail: (err) => {
@@ -91,7 +93,7 @@ function UserLoginPage() {
     }
   } 
   const naverClick = async() => {
-    axios.get("https://717f-1-214-19-22.ngrok-free.app/naverLogin")
+    axios.get("https://gnat-suited-weekly.ngrok-free.app/naverLogin")
     .then((res) => {
       const requrl = res.data;
       window.location.href = requrl;
