@@ -19,16 +19,18 @@ const cardContentText = "내가 맞다니까? 오늘도 답답함을 느끼고 �
 const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
-// const btnToggleInputLabelShow = "직접 입력하기";
-// const btnToggleInputLabelHide = "입력창 닫기";
 const textFieldRows = 10;
 const textFieldVariant = "outlined";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState('');// eslint-disable-next-line
-  const [jsonContent, setJsonContent] = useState(null);// eslint-disable-next-line
-  const [showInput, setShowInput] = useState(false);// eslint-disable-next-line
+  const [files, setFiles] = useState([]);
+  const [fileName, setFileName] = useState('');
+  const [fileSize, setFileSize] = useState(0);
+  const [fileType, setFileType] = useState('');
+  const [fileCount, setFileCount] = useState(0);
+  const [jsonContent, setJsonContent] = useState(null);
+  const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
@@ -37,16 +39,32 @@ const FileUpload = () => {
   const handleCloseModal = () => setOpenModal(false);
 
   const handleFileChange = useCallback((event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    setFileName(selectedFile.name);
-    setOpenModal(true);
+    const selectedFiles = Array.from(event.target.files);
+    const selectedFile = selectedFiles[0];
+    const isImage = selectedFile.type.startsWith('image/');
+
+    if (selectedFiles.length > 0) {
+      if (isImage) {
+        setFiles(selectedFiles);
+        setFileName(selectedFiles.map(file => file.name).join(', '));
+        setFileSize(selectedFiles.reduce((acc, file) => acc + file.size, 0));
+        setFileType(selectedFiles.map(file => file.type).join(', '));
+        setFileCount(selectedFiles.length);
+      } else {
+        setFile(selectedFile);
+        setFileName(selectedFile.name);
+        setFileSize(selectedFile.size);
+        setFileType(selectedFile.type);
+        setFileCount(1);
+      }
+      setOpenModal(true);
+    }
   }, []);
 
   const handleFileRead = useCallback((event) => {
     const content = event.target.result;
     try {
-      const json = { text: content, file }; // 전체 텍스트를 하나의 'text' 필드에 저장하고 파일 추가
+      const json = { text: content, file };
       setJsonContent(json);
       navigate('/loading-conflict', { state: { jsonContent: json } });
     } catch (error) {
@@ -62,26 +80,22 @@ const FileUpload = () => {
         reader.onload = handleFileRead;
         reader.readAsText(file);
       } else {
-        const json = { text: textInput, file };
+        const json = { text: textInput, files };
         setJsonContent(json);
         navigate('/loading-conflict', { state: { jsonContent: json } });
       }
+    } else if (files.length > 0) {
+      const json = { text: textInput, files };
+      setJsonContent(json);
+      navigate('/loading-conflict', { state: { jsonContent: json } });
     } else if (textInput.trim()) {
       const json = { text: textInput };
       setJsonContent(json);
       navigate('/loading-conflict', { state: { jsonContent: json } });
     } else {
+      // 파일이나 텍스트 입력이 없을 때 처리
     }
   };
-
-  // const handleToggleInput = () => {
-  //   setShowInput(prevShowInput => !prevShowInput);
-  //   if (!showInput) {
-  //     setTimeout(() => {
-  //       fileInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  //     }, 100);
-  //   }
-  // };
 
   const handleTextInputChange = (event) => {
     setTextInput(event.target.value);
@@ -132,6 +146,7 @@ const FileUpload = () => {
                     ref={fileInputRef}
                     type="file"
                     onChange={handleFileChange}
+                    multiple
                   />
                   <UploadButton
                     label={btnUploadLabel}
@@ -139,25 +154,20 @@ const FileUpload = () => {
                     disabled={false}
                     className="conflict-btn-upload"
                     title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
-                    defaultColor = '#346F79'
-                    hoverColor = '#295961'
-                    disabledColor = '#B0B0B0'
+                    defaultColor='#346F79'
+                    hoverColor='#295961'
+                    disabledColor='#B0B0B0'
                   />
-                 {/* <UploadButton
-                    label={showInput ? btnToggleInputLabelHide : btnToggleInputLabelShow}
-                    onClick={handleToggleInput}
-                    className="conflict-btn-toggle-input"
-                    defaultColor = '#346F79'
-                    hoverColor = '#295961'
-                    disabledColor = '#B0B0B0'
-                  /> */}
                 </Box>
                 <SendModal
-                    open={openModal}
-                    handleClose={handleCloseModal}
-                    handlefile={handleFileUpload}
-                    filetitle={fileName}
-                  />
+                  open={openModal}
+                  handleClose={handleCloseModal}
+                  handlefile={handleFileUpload}
+                  filetitle={fileName}
+                  filesize={fileSize}
+                  filetype={fileType}
+                  filecount={fileCount}
+                />
               </Grid>
             </Grid>
             {showInput && (
@@ -176,9 +186,9 @@ const FileUpload = () => {
                   onClick={handleFileUpload}
                   disabled={!textInput.trim()}
                   className="conflict-btn-textfield"
-                  defaultColor = '#346F79'
-                  hoverColor = '#295961'
-                  disabledColor = '#B0B0B0'
+                  defaultColor='#346F79'
+                  hoverColor='#295961'
+                  disabledColor='#B0B0B0'
                 />
               </Box>
             )}
