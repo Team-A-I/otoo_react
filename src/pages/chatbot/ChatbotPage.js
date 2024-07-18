@@ -26,8 +26,7 @@ const ChatBot = () => {
   const inputRef = useRef(null);
   // 리포트 생성 버튼 활성화 여부
   const [disabled, setDisabled] = useState(true);
-  // Tooltip 표시 여부
-  const [showTooltip, setShowTooltip] = useState(true);
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
 
@@ -126,11 +125,7 @@ const ChatBot = () => {
     }
   }, [htmlString]);
 
-  // disabled가 변경될 때마다 Tooltip을 표시
-  useEffect(() => {
-    setShowTooltip(disabled);
-  }, [disabled]);
-
+ 
   return (
     <Box className='grid'>
       <ThemeProvider theme={theme}>
