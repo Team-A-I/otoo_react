@@ -46,6 +46,10 @@ const ResultPage = () => {
               <Typography variant="body1"><strong>화자 A:</strong> {result.faults.speaker_a.fault} ({result.faults.speaker_a.percentage}%)</Typography>
               <Typography variant="body1"><strong>화자 B:</strong> {result.faults.speaker_b.fault} ({result.faults.speaker_b.percentage}%)</Typography>
 
+              <Typography variant="h6" gutterBottom>감정 분석:</Typography>
+              <Typography variant="body1"><strong>화자 A:</strong> {result.emotion_analysis.speaker_a}</Typography>
+              <Typography variant="body1"><strong>화자 B:</strong> {result.emotion_analysis.speaker_b}</Typography>
+
               <Typography variant="h6" gutterBottom>결론:</Typography>
               <Typography variant="body1">{result.conclusion.text}</Typography>
 
@@ -57,9 +61,6 @@ const ResultPage = () => {
               <Typography variant="body1"><strong>해결책 A:</strong> {result.solutions.solutionsA}</Typography>
               <Typography variant="body1"><strong>해결책 B:</strong> {result.solutions.solutionsB}</Typography>
 
-              <Typography variant="h6" gutterBottom>감정 분석:</Typography>
-              <Typography variant="body1"><strong>화자 A:</strong> {result.emotion_analysis.speaker_a}</Typography>
-              <Typography variant="body1"><strong>화자 B:</strong> {result.emotion_analysis.speaker_b}</Typography>
             </Box>
           </Box>
         </div>

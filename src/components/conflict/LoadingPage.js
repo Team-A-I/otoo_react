@@ -31,7 +31,7 @@ const LoadingPage = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('http://localhost:8080/api/tutorial/transcribe/file', formData);
+            response = await axiosIns.post('http://localhost:8080/api/transcribe/file', formData);
             console.log('Response data for wav/mp3:', response.data); // 추가
             navigate('/stt-result', { state: { jsonData: response.data } });
           } else {

@@ -31,6 +31,7 @@ import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
 
 import SttResult from './components/conflict/SttResult';
+import WebSocketStt from './components/conflict/WebSocketStt'
 
 
 const MainApp = () => {
@@ -69,6 +70,7 @@ const MainApp = () => {
           <Route path="/resetPassword" element={<ResetPassword />} />
 
           <Route path='/stt-result' element={<SttResult />} />
+          <Route path='/stt-websocket' element={<WebSocketStt />} />
 
         </Routes>
       </Box>
