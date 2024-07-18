@@ -42,7 +42,7 @@ const ResetPassword = () => {
       const usersEmail = location.state?.usersEmail;
 
       if (password === confirmPassword) {
-        const response = await axios.post('http://localhost:8080/changePwd', {
+        const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/changePwd', {
           usersEmail: usersEmail,
           usersPw: password,
           pwd1: confirmPassword,

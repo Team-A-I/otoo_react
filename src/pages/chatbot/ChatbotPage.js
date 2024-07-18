@@ -28,22 +28,25 @@ const ChatBot = () => {
   const [disabled, setDisabled] = useState(true);
   // Tooltip 표시 여부
   const [showTooltip, setShowTooltip] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
 
   // Localized text values
   const chatbotTitle = '맞장구 챗봇';
-  const chatbotSubtitle1 = '장구에게 연인에게 받은 상처를 쏟아내세요!';
-  const chatbotSubtitle2 = '채팅을 토대로 리포트를 생성하여 연인에게 나의 감정을 쉽게 전달하세요!';
+  const chatbotSubtitle1 = '연인에게 받은 상처를 쏟아내세요.';
+  const chatbotSubtitle2 = '장구가 당신의 이야기에 맞장구를 쳐줄게요.';
   const chatbotPlaceholder = '서운했던 이야기를 들려주세요.';
-  const chatbotTooltipText = '일정 대화 진행 후에 감정 리포트 생성이 가능합니다.';
+  const chatbotTooltipText = '채팅을 바탕으로 장구가 조언을 해줍니다.';
   const chatbotEmotionReportButtonText = '감정 리포트 생성';
-  const chatbotStartText1 = '장구와 함께하는 감정 대화를 시작해보세요!';
+  const chatbotStartText1 = '장구와 함께하는 감정 대화를 시작해보세요.';
   const chatbotStartText2 = '장구 모드를 클릭시 판소리로 대답합니다.';
   const chatbotNomalModeButtonText = '일반 모드';
   const chatbotJangguModeButtonText = '장구 모드';
 
   // 챗봇 대화 로직
   const chatbotHandler = async (chat) => {
+    if(chat === '') return;
+    setIsButtonDisabled(true); 
     if (mode === '0') {
       setMode('1');
     }
@@ -61,14 +64,15 @@ const ChatBot = () => {
 
     try {
 
-      const response = await axiosIns.post('http://localhost:8080/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/chatbot', { RecentMessages, mode }, {
 
         headers: {
           'Content-Type': 'application/json',
         },
       });
       const result = response.data;
-
+      setIsButtonDisabled(false);
+    
       messages.push("assistant : " + result);
 
       if (messages.length > 6) {
@@ -80,13 +84,14 @@ const ChatBot = () => {
       }
       RecentMessages.push("assistant : " + result);
       setHtmlString(prevHtmlString => prevHtmlString + `<div class="jangguDiv"><Box class="janggu">${result}</Box></div>`);
+      inputRef.current.focus();
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
 
   const emotionReportHandler = () => {
-    navigate('/emotionReportLoadingPage', { state: { messages } });
+     navigate('/emotionReportLoadingPage', { state: { messages } });
   };
 
   // 장구 모드 선택
@@ -98,6 +103,13 @@ const ChatBot = () => {
     setMode('1');
     inputRef.current.focus();
   };
+  useEffect(() => {
+    // 2. isButtonDisabled 상태 변화 감지
+    if (!isButtonDisabled) {
+      // 3. isButtonDisabled가 false가 되면 입력 필드에 포커스 설정
+      inputRef.current.focus();
+    }
+  }, [isButtonDisabled]); 
 
   // 컴포넌트가 마운트되면 input에 포커스 설정
   useEffect(() => {
@@ -155,15 +167,30 @@ const ChatBot = () => {
                   </Box>
                 </Box>
               ) : (
-                <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
+                <Box sx={{marginBottom:'10px'}}>
+                  <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
+                    <Box sx={{position:'relative'}}>
+                    <Tooltip title={chatbotTooltipText} arrow placement="top">
+                    <Button
+                      variant="contained"
+                      className='emotionButton bounce'
+                      style={{ display: disabled ? 'none' : 'inline-block', position: 'absolute', right: 10, bottom: 10 }} // 조건부 스타일 적용
+                      onClick={() => emotionReportHandler()}
+                    >
+                      {chatbotEmotionReportButtonText}
+                    </Button>
+                    </Tooltip>
+                  </Box>
+                </Box>
               )
             }
+                 
           </Box>
           <Grid container className="chatInput" direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <Grid item xs={12} sm={9}>
+            <Grid item xs={12} >
               <Paper
                 component="form"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%', borderRadius: 2 }}
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', minWidth: '100%', borderRadius: 2 }}
               >
                 <InputBase
                   sx={{ ml: 1, flex: 1, color: "gray500" }}
@@ -171,6 +198,7 @@ const ChatBot = () => {
                   placeholder={chatbotPlaceholder}
                   value={chat}
                   className='chatInputBase'
+                  disabled={isButtonDisabled}
                   inputRef={inputRef}
                   onChange={(e) => setChat(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { chatbotHandler(chat); e.preventDefault(); } }}
@@ -179,37 +207,19 @@ const ChatBot = () => {
                   type="button"
                   sx={{ p: '10px' }}
                   aria-label="send"
-                  onClick={() => chatbotHandler(chat)}
+                  disabled={isButtonDisabled} 
+                  onClick={async () => {
+                    chatbotHandler(chat); 
+                  }}
                 >
                   <SendIcon />
                 </IconButton>
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={3} className="tooltipable">
-              {showTooltip ? (
-                <Tooltip title={chatbotTooltipText} arrow placement="top">
-                  <span>
-                    <Button
-                      variant="contained"
-                      className='emotionButton'
-                      disabled={disabled}
-                      onClick={() => emotionReportHandler()}
-                    >
-                      {chatbotEmotionReportButtonText}
-                    </Button>
-                  </span>
-                </Tooltip>
-              ) : (
-                <Button
-                  variant="contained"
-                  className='emotionButton'
-                  disabled={disabled}
-                  onClick={() => emotionReportHandler()}
-                >
-                  {chatbotEmotionReportButtonText}
-                </Button>
-              )}
-            </Grid>
+         
+            <Grid item xs={2} className="tooltipable">
+            
+            </Grid> 
           </Grid>
         </Box>
       </ThemeProvider>

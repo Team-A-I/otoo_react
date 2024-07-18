@@ -22,14 +22,14 @@ const LoadingPage = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axiosIns.post('http://localhost:8080/api/conflict/analysis', requestData);
+            response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/analysis', requestData);
           } else {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('http://localhost:8080/api/conflict/ocr', formData);
+            response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/ocr', formData);
           }
 
           navigate('/result-conflict', { state: { jsonData: response.data } });
