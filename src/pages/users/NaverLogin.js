@@ -33,6 +33,7 @@ const NaverLogin = () => {// eslint-disable-next-line
           sessionStorage.setItem("userEmail", response.data.userEmail);
           sessionStorage.setItem("userRole", response.data.role);
           navigate("/");
+          alert('로그인 성공');
         }
       })
       .catch((err) => {

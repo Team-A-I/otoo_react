@@ -111,6 +111,7 @@ const Home = () => {
                 sessionStorage.removeItem('userRole');
                 setIsLoggedIn(false);
                 navigate('/');
+                alert('로그아웃 성공');
             }
         } catch (error) {
             console.error('Logout failed', error);
@@ -134,7 +135,7 @@ const Home = () => {
     const usersCode = sessionStorage.getItem('accessToken');
     if (usersCode !== null) {
         setIsLoggedIn(true);
-        console.log(usersCode);
+        console.log(sessionStorage.getItem('refreshToken'));
     }// eslint-disable-next-line
     }, [sessionStorage.getItem('accessToken')]);
 

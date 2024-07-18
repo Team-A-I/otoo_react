@@ -34,6 +34,7 @@ function UserLoginPage() {
         sessionStorage.setItem('userEmail', response.data.userEmail);
         sessionStorage.setItem('userRole', response.data.role);
         navigate('/');
+        alert('로그인 성공');
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -71,6 +72,7 @@ function UserLoginPage() {
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
             navigate("/");
+            alert('로그인 성공');
           }
         },
         fail: (err) => {
