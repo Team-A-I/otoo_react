@@ -23,7 +23,9 @@ const LoadingPage = () => {
           let response;
           if (fileExtension === 'txt') {
 
+
             response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/analysis', requestData);
+
 
           } else {
             const formData = new FormData();
