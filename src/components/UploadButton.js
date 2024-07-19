@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tooltip } from '@mui/material';
+import { Button, Tooltip, Box } from '@mui/material';
 
 const UploadButton = ({
   onClick,
@@ -12,14 +12,19 @@ const UploadButton = ({
   disabledColor
 }) => {
   const sxStyles = {
-    marginRight: className.includes('upload') ? '8px' : '0',
-    marginLeft: className.includes('toggle-input') ? '8px' : '0',
-    marginTop: className.includes('textfield') ? '16px' : '0',
     backgroundColor: disabled ? disabledColor : defaultColor,
-    color: '#FFFFFF',
+    color: '#3A1D1D',
     '&:hover': {
       backgroundColor: disabled ? disabledColor : hoverColor
-    }
+    },
+    width: '100%',
+    height: '70px',
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    zIndex: 1300,
+    borderRadius: 0,
+    fontSize: '16px'
   };
 
   return (
