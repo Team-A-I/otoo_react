@@ -29,6 +29,7 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
+import Footer from './components/Footer';
 
 
 const MainApp = () => {
@@ -36,7 +37,8 @@ const MainApp = () => {
 
   return (
     <>
-      {location.pathname !== "/" && <Header />}
+      <Header />
+      {location.pathname !== "/upload-conflict" && <Footer />}
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
