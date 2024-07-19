@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router,Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -29,7 +29,7 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
-
+import PrivateRoute from './components/PrivateRoute';
 
 const MainApp = () => {
   const location = useLocation();
@@ -41,8 +41,12 @@ const MainApp = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
-          <Route path="/chatbot" element={<ChatBot />} />
-
+          <Route 
+            path="/chatbot" 
+            element={
+              <PrivateRoute component={ChatBot} roles={['ROLE_USER']} />
+            }
+          />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />

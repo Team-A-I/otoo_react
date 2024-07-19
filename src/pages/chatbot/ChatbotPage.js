@@ -63,7 +63,7 @@ const ChatBot = () => {
 
     try {
 
-      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('http://localhost:8080/chatbot', { RecentMessages, mode }, {
 
         headers: {
           'Content-Type': 'application/json',
@@ -162,9 +162,11 @@ const ChatBot = () => {
                   </Box>
                 </Box>
               ) : (
-                <Box sx={{marginBottom:'10px'}}>
-                  <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
-                    <Box sx={{position:'relative'}}>
+                
+                <Box sx={{marginBottom:'10px',height:'100%'}}>
+                
+                <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
+                  <Box sx={{position:'relative'}}>
                     <Tooltip title={chatbotTooltipText} arrow placement="top">
                     <Button
                       variant="contained"

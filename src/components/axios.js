@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosIns = axios.create({
-  baseURL: 'https://gnat-suited-weekly.ngrok-free.app',
+  baseURL: 'http://localhost:8080',
   timeout: 1000000,
 });
 

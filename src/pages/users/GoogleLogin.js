@@ -14,7 +14,7 @@ const GoogleLogin = () => {
     setCode(codeParam);
     console.log(codeParam);
     axios
-      .get("https://gnat-suited-weekly.ngrok-free.app/googleLogin/callbacks", {
+      .get("http://localhost:8080/googleLogin/callbacks", {
         params: {
           code: codeParam,
         },
