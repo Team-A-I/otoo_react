@@ -1,70 +1,57 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
 
 const App = () => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  let mediaRecorder;
-  let stompClient;
+  const [recording, setRecording] = useState(false);
+  const [audioURL, setAudioURL] = useState('');
 
   useEffect(() => {
-    if (isRecording) {
-      startRecording();
-    } else {
-      stopRecording();
+    let mediaRecorder;
+    let chunks = [];
+
+    if (recording) {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.ondataavailable = event => {
+            chunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/wav' });
+            const url = URL.createObjectURL(blob);
+            setAudioURL(url);
+
+            // 백엔드로 오디오 데이터 전송
+            const formData = new FormData();
+            formData.append('file', blob, 'recording.wav');
+            fetch('/api/speech-to-text', {
+              method: 'POST',
+              body: formData
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log('Transcription:', data.transcription);
+              });
+          };
+
+          mediaRecorder.start();
+        });
     }
-  }, [isRecording]);
 
-  const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-
-    // WebSocket 연결 설정
-    const socket = new SockJS('http://localhost:8080/ws');
-    stompClient = Stomp.over(socket);
-
-    stompClient.connect({}, () => {
-      console.log('WebSocket is connected.');
-      stompClient.subscribe('/topic/messages', (message) => {
-        setTranscript((prevTranscript) => prevTranscript + message.body + ' ');
-      });
-    });
-
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0 && stompClient.connected) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64data = reader.result.split(',')[1];
-          stompClient.send('/app/message', {}, base64data);
-        };
-        reader.readAsDataURL(event.data);
+    return () => {
+      if (mediaRecorder) {
+        mediaRecorder.stop();
       }
     };
-
-    mediaRecorder.start(250);  // Send audio data every 250ms
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-    }
-    if (stompClient) {
-      stompClient.send('/app/eos', {}, 'EOS');
-      stompClient.disconnect();
-    }
-  };
+  }, [recording]);
 
   return (
     <div>
-      <h1>실시간 STT</h1>
-      <button onClick={() => setIsRecording(true)}>녹음 시작</button>
-      <button onClick={() => setIsRecording(false)}>녹음 중지</button>
-      <div>
-        <h2>텍스트 출력:</h2>
-        <p>{transcript}</p>
-      </div>
+      <button onClick={() => setRecording(!recording)}>
+        {recording ? 'Stop Recording' : 'Start Recording'}
+      </button>
+      <audio src={audioURL} controls />
     </div>
   );
 };
