@@ -1,72 +1,79 @@
-// src/App.js
-import React, { useState, useEffect } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+import React, { useEffect, useRef, useState } from 'react';
 
-const App = () => {
-  const [isRecording, setIsRecording] = useState(false);
+const AudioStream = () => {
+  const webSocketRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
   const [transcript, setTranscript] = useState('');
-  let mediaRecorder;
-  let stompClient;
 
   useEffect(() => {
-    if (isRecording) {
+    // WebSocket 설정
+    webSocketRef.current = new WebSocket('ws://localhost:8080/ws/audio');
+
+    webSocketRef.current.onopen = () => {
+      console.log('WebSocket connected');
       startRecording();
-    } else {
-      stopRecording();
-    }
-  }, [isRecording]);
+    };
 
-  const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-
-    // WebSocket 연결 설정
-    const socket = new SockJS('http://localhost:8080/ws');
-    stompClient = Stomp.over(socket);
-
-    stompClient.connect({}, () => {
-      console.log('WebSocket is connected.');
-      stompClient.subscribe('/topic/messages', (message) => {
-        setTranscript((prevTranscript) => prevTranscript + message.body + ' ');
-      });
-    });
-
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0 && stompClient.connected) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64data = reader.result.split(',')[1];
-          stompClient.send('/app/message', {}, base64data);
-        };
-        reader.readAsDataURL(event.data);
+    webSocketRef.current.onmessage = (event) => {
+      console.log('Received message:', event.data);
+      try {
+        const result = JSON.parse(event.data);
+        if (result.alternatives && result.alternatives.length > 0) {
+          const text = result.alternatives[0].text;
+          setTranscript(prevTranscript => prevTranscript + '\n' + text);
+        }
+      } catch (e) {
+        console.error("Error parsing message:", e);
       }
     };
 
-    mediaRecorder.start(250);  // Send audio data every 250ms
+    webSocketRef.current.onclose = () => {
+      console.log('WebSocket disconnected');
+      stopRecording();
+    };
+
+    webSocketRef.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    return () => {
+      if (webSocketRef.current) {
+        webSocketRef.current.close();
+      }
+    };
+  }, []);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0 && webSocketRef.current.readyState === WebSocket.OPEN) {
+          webSocketRef.current.send(event.data);
+        }
+      };
+
+      mediaRecorderRef.current.start(250); // 250ms 간격으로 데이터를 전송
+    } catch (err) {
+      console.error('Error accessing microphone:', err);
+    }
   };
 
   const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-    }
-    if (stompClient) {
-      stompClient.send('/app/eos', {}, 'EOS');
-      stompClient.disconnect();
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
     }
   };
 
   return (
     <div>
-      <h1>실시간 STT</h1>
-      <button onClick={() => setIsRecording(true)}>녹음 시작</button>
-      <button onClick={() => setIsRecording(false)}>녹음 중지</button>
-      <div>
-        <h2>텍스트 출력:</h2>
-        <p>{transcript}</p>
-      </div>
+      <h1>Real-time Audio Streaming</h1>
+      <p>Start speaking into your microphone to stream audio.</p>
+      <pre>{transcript}</pre>
     </div>
   );
 };
 
-export default App;
+export default AudioStream;
