@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useState, useRef, useCallback, useEffect } from 'react';// eslint-disable-next-line
+import React, { useState, useRef, useCallback } from 'react'; // eslint-disable-next-line
 import { Container, TextField, Typography, Box, Grid, ThemeProvider, Divider, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
@@ -8,14 +8,6 @@ import SendModal from '../SendModal';
 import OnboardingCarousel from "../Onboarding";
 
 // 변수 정의
-// eslint-disable-next-line
-const cardMaxWidth = 400;// eslint-disable-next-line
-const cardMaxHeight = 300;// eslint-disable-next-line
-const imageHeight = 300;// eslint-disable-next-line
-const imageSrc = "/images/H.png";// eslint-disable-next-line
-const imageAlt = "Paella dish";// eslint-disable-next-line
-const lovemainText = "카톡 판결\n몇대몇";// eslint-disable-next-line
-const cardContentText = "";
 const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnResultLabel = "결과 보러가기";
@@ -28,8 +20,8 @@ const FileUpload = () => {
   const [fileName, setFileName] = useState('');
   const [fileSize, setFileSize] = useState(0);
   const [fileType, setFileType] = useState('');
-  const [fileCount, setFileCount] = useState(0);// eslint-disable-next-line
-  const [jsonContent, setJsonContent] = useState(null);// eslint-disable-next-line
+  const [fileCount, setFileCount] = useState(0); // eslint-disable-next-line
+  const [jsonContent, setJsonContent] = useState(null); // eslint-disable-next-line
   const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [showCarousel, setShowCarousel] = useState(true);
@@ -81,18 +73,18 @@ const FileUpload = () => {
         reader.onload = handleFileRead;
         reader.readAsText(file);
       } else {
-        const json = { text: textInput, files };
+        const json = { text: textInput, file };
         setJsonContent(json);
-        navigate('/loading-conflict', { state: { jsonContent: json } });
+        navigate('/stt-loading', { state: { jsonContent: json } });
       }
     } else if (files.length > 0) {
       const json = { text: textInput, files };
       setJsonContent(json);
-      navigate('/loading-conflict', { state: { jsonContent: json } });
+      navigate('/stt-loading', { state: { jsonContent: json } });
     } else if (textInput.trim()) {
       const json = { text: textInput };
       setJsonContent(json);
-      navigate('/loading-conflict', { state: { jsonContent: json } });
+      navigate('/stt-loading', { state: { jsonContent: json } });
     } else {
       // 파일이나 텍스트 입력이 없을 때 처리
     }
@@ -139,6 +131,27 @@ const FileUpload = () => {
             <Typography variant="h3_mid">
               누가 맞는지 결정해드리겠습니다.
             </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 2 }}>
+              <input
+                accept=".wav, .mp3"
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileChange}
+                multiple
+              />
+              <UploadButton
+                label={btnUploadLabel}
+                onClick={handleButtonClick}
+                disabled={false}
+                className="conflict-btn-upload"
+                title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
+                defaultColor='#F7E600'
+                hoverColor='#F7E60090'
+                disabledColor='#B0B0B0'
+                fontColor='#000'
+              />
+            </Box>
           </Box>
           <Box>
             <img src="/images/H.png" alt="intro" style={{ maxWidth: '100%', height: 'auto', margin: '0 auto' }} />
@@ -154,27 +167,6 @@ const FileUpload = () => {
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', position: 'fixed', bottom: 0, width: '100%', left: 0 }}>
-                <input
-                  accept=".txt,image/*"
-                  style={{ display: 'none' }}
-                  ref={fileInputRef}
-                  type="file"
-                  onChange={handleFileChange}
-                  multiple
-                />
-                <UploadButton
-                  label={btnUploadLabel}
-                  onClick={handleButtonClick}
-                  disabled={false}
-                  className="conflict-btn-upload"
-                  title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
-                  defaultColor='#F7E600'
-                  hoverColor='#F7E60090'
-                  disabledColor='#B0B0B0'
-                  fontColor='#000'
-                />
-              </Box>
               <SendModal
                 open={openModal}
                 handleClose={handleCloseModal}

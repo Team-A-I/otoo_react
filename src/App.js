@@ -31,6 +31,12 @@ import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
 import Footer from './components/Footer';
 
+import SttResult from './pages/conflict/SttResult';
+import Recorder from './components/conflict/Recorder';
+import SttLoadingPage from './components/conflict/SttLoadingPage';
+import SttUploadConflict from './components/conflict/SttUploadConflict';
+import SttUpload from './pages/conflict/SttUpload';
+
 
 const MainApp = () => {
   const location = useLocation();
@@ -67,6 +73,13 @@ const MainApp = () => {
           <Route path="/naverLogin" element={<NaverLogin />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
+
+          <Route path='/stt-result' element={<SttResult />} />
+          <Route path='/recorder' element={<Recorder />} />
+          <Route path='/stt-loading' element={<SttLoadingPage />} />
+          <Route path='/stt-upload' element={<SttUploadConflict />} />
+          <Route path='/stt' element={<SttUpload />} />
+
         </Routes>
       </Box>
     </>
