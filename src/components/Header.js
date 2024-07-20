@@ -15,7 +15,7 @@ const Header = () => {
           {/* <Button style={{ color: 'black' }} component={Link} to="/">Home</Button> */}
           <Button style={{ color: 'black' }} component={Link} to="/analysis">카톡분석</Button>
           <Button style={{ color: 'black' }} component={Link} to="/chatbot">맞장구봇</Button>
-          <Button style={{ color: 'black' }} component={Link} to="/stt-websocket">스트리밍 테스트</Button>
+          <Button style={{ color: 'black' }} component={Link} to="/recorder">스트리밍 테스트</Button>
 
         </Toolbar>
       </AppBar>
