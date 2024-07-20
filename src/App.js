@@ -36,6 +36,7 @@ import Recorder from './components/conflict/Recorder';
 import SttLoadingPage from './components/conflict/SttLoadingPage';
 import SttUploadConflict from './components/conflict/SttUploadConflict';
 import SttUpload from './pages/conflict/SttUpload';
+import Streaming from './components/streaming/Streaming';
 
 
 const MainApp = () => {
@@ -79,6 +80,7 @@ const MainApp = () => {
           <Route path='/stt-loading' element={<SttLoadingPage />} />
           <Route path='/stt-upload' element={<SttUploadConflict />} />
           <Route path='/stt' element={<SttUpload />} />
+          <Route path='/streaming' element={<Streaming />} />
 
         </Routes>
       </Box>
