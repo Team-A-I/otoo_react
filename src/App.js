@@ -29,9 +29,13 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
+import Footer from './components/Footer';
 
-import SttResult from './components/conflict/SttResult';
+import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
+import SttLoadingPage from './components/conflict/SttLoadingPage';
+import SttUploadConflict from './components/conflict/SttUploadConflict';
+import SttUpload from './pages/conflict/SttUpload';
 
 
 const MainApp = () => {
@@ -39,7 +43,8 @@ const MainApp = () => {
 
   return (
     <>
-      {location.pathname !== "/" && <Header />}
+      <Header />
+      {location.pathname !== "/upload-conflict" && <Footer />}
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -64,13 +69,16 @@ const MainApp = () => {
 
           <Route path="/user-login" element={<UserLoginPage />} />
           <Route path="/user-signup" element={<SignUpPage />} />
-          <Route path="/googleLogin" element={<GoogleLogin />} />
+          <Route path="/googlelogin" element={<GoogleLogin />} />
           <Route path="/naverLogin" element={<NaverLogin />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
 
           <Route path='/stt-result' element={<SttResult />} />
           <Route path='/recorder' element={<Recorder />} />
+          <Route path='/stt-loading' element={<SttLoadingPage />} />
+          <Route path='/stt-upload' element={<SttUploadConflict />} />
+          <Route path='/stt' element={<SttUpload />} />
 
         </Routes>
       </Box>

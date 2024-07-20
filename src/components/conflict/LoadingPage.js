@@ -12,45 +12,59 @@ const LoadingPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (jsonContent) {
+      console.log('jsonContent:', jsonContent);
+
+      if (jsonContent && jsonContent.text) {
         try {
-          const fileExtension = jsonContent.file.name.split('.').pop().toLowerCase();
-          const requestData = { text: jsonContent.text };
+          const requestData = { text: jsonContent.text || '' };
           if (usercode) {
             requestData.usercode = usercode;
           }
 
-          let response;
-          if (fileExtension === 'txt') {
-            response = await axiosIns.post('http://localhost:8080/api/conflict/analysis', requestData);
-            console.log('Response data for txt:', response.data); // 추가
-            navigate('/result-conflict', { state: { jsonData: response.data } });
-          } else if (fileExtension === 'wav' || fileExtension === 'mp3') {
-            const formData = new FormData();
-            formData.append('file', jsonContent.file);
-            if (usercode) {
-              formData.append('usercode', usercode);
-            }
-            response = await axiosIns.post('http://localhost:8080/api/transcribe/file', formData);
-            console.log('Response data for wav/mp3:', response.data); // 추가
-            navigate('/stt-result', { state: { jsonData: response.data } });
-          } else {
-            const formData = new FormData();
-            formData.append('file', jsonContent.file);
-            if (usercode) {
-              formData.append('usercode', usercode);
-            }
-            response = await axiosIns.post('http://localhost:8080/api/conflict/ocr', formData);
-            console.log('Response data for other file types:', response.data); // 추가
-            navigate('/result-conflict', { state: { jsonData: response.data } });
-          }
+          console.log('Sending text data for analysis:', requestData);
+          const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/analysis', requestData);
+          console.log('Server response:', response.data);
+          navigate('/result-conflict', { state: { jsonData: response.data } });
         } catch (error) {
+          alert('지원하지 않는 데이터 형식입니다.\n아래의 형식인지 확인부탁드려요:)\n\n 1. 카톡 형식 텍스트 파일\n 2. 카톡 기본 테마 캡쳐 이미지');
           console.error("Error sending data to backend:", error);
+          navigate('/');
         }
+      } else if (jsonContent && jsonContent.files && jsonContent.files.length > 0) {
+        try {
+          const formData = new FormData();
+          jsonContent.files.forEach((file) => {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
+              formData.append('file', file);  // 변경된 부분: 파일 배열에서 단일 파일로 처리
+            } else {
+              throw new Error('지원하지 않는 파일형식입니다.');
+            }
+          });
+          if (usercode) {
+            formData.append('usercode', usercode);
+          }
+
+          console.log('Sending image files for OCR');
+          const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/ocr', formData);
+
+          console.log('Server response:', response.data);
+          navigate('/result-conflict', { state: { jsonData: response.data } });
+        } catch (error) {
+          alert('지원하지 않는 데이터 형식입니다.\n아래의 형식인지 확인부탁드려요:)\n\n 1. 카톡 형식 텍스트 파일\n 2. 카톡 기본 테마 캡쳐 이미지');
+          console.error("Error sending data to backend:", error);
+          navigate('/');
+        }
+      } else {
+        alert('jsonContent 또는 jsonContent.files가 정의되지 않았거나 비어 있습니다.');
+        console.error("jsonContent 또는 jsonContent.files가 정의되지 않았거나 비어 있습니다.");
+        navigate('/');
       }
     };
+
     fetchData();
   }, [jsonContent, navigate, usercode]);
+
 
   return (
     <Container maxWidth="lg">

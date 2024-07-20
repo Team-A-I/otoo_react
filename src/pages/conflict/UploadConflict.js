@@ -4,11 +4,9 @@ import { Container,  Box } from '@mui/material';
 
 const ConflictUpload = () => {
   return (
-    <Container maxWidth="md">
-      <Box>
+
         <FileUploadConflict />
-      </Box>
-    </Container>
+
   );
 };
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosIns = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://gnat-suited-weekly.ngrok-free.app',
   timeout: 1000000,
 });
 
@@ -42,7 +42,7 @@ axiosIns.interceptors.response.use(
             sessionStorage.removeItem('userEmail');
             sessionStorage.removeItem('userRole');
            
-            window.location.replace('/');   
+              
         }
     } catch (error) {
         console.error('Logout failed', error);
@@ -53,6 +53,7 @@ axiosIns.interceptors.response.use(
     } else {
       return Promise.reject(error);
     }
+    window.location.replace('/'); 
   }
 );
 

@@ -1,109 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, useTheme, useMediaQuery, ThemeProvider } from '@mui/material';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { Box, ThemeProvider, Typography, Card, CardMedia, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import theme1 from "../theme";
-import '../css/Home.css'; // CSS 파일 추가
+import theme1 from '../theme';
+import '../css/Home.css';
 import axiosIns from '../components/axios';
 import AgreeModal from '../components/AgreeModal';
-
+import Footer from '../components/Footer';
 
 const Home = () => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [scale, setScale] = useState(1);
-    const [backgroundIndex, setBackgroundIndex] = useState(0);
-    const [animateOutClass, setAnimateOutClass] = useState('');
-    const [animateInClass, setAnimateInClass] = useState('');
-    // eslint-disable-next-line
-    const [scrollAmount, setScrollAmount] = useState(0);
-    const [isAnimating, setIsAnimating] = useState(false);
-    const scrollThreshold = 100; // 더 느리게 변경되도록 임계치 증가
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
+    const navigate = useNavigate();
+    const today = new Date().toLocaleDateString();
 
-    const backgroundImages = [
-        '/images/main.png',
-        '/images/main-conflict.png',
-        '/images/friendship.png',
-        '/images/love-main.png',
-        '/images/main-janggu2.png'
+    const cardMaxWidth = 360;
+    const imageHeight = 300;
+    const cardContentText = "상황 설명에 따른 과실 여부를 따져보겠습니다.";
+    const cardContentText2 = "얼쑤! 네 말이 다 맞다. 무조건 얼쑤다!";
+
+    const cards = [
+        { imageSrc: "/images/han.jpg", imageAlt: "Conflict between couple" },
+        { imageSrc: "/images/zangu.jpg", imageAlt: "Another conflict" }
     ];
 
-    const navigate = useNavigate(); // useNavigate 훅 사용
-
-    const handleWheel = (event) => {
-        event.preventDefault();
-        if (isAnimating) return; // 애니메이션 중일 때는 새로운 스크롤 이벤트 무시
-    
-        setScrollAmount(prevScrollAmount => {
-            const newScrollAmount = prevScrollAmount + event.deltaY;
-            if (Math.abs(newScrollAmount) >= scrollThreshold) {
-                setScrollAmount(0); // 임계치를 초과한 후 스크롤 양을 초기화합니다.
-                setScale(prevScale => {
-                    let newScale = prevScale;
-                    // eslint-disable-next-line
-                    let newBackgroundIndex = backgroundIndex;
-    
-                    if (newScrollAmount > 0) { // 스크롤 In
-                        if (prevScale < 1.5) {
-                            newScale = Math.min(prevScale + 0.1, 1.5);
-                            if (newScale === 1.5 && backgroundIndex === 0) {
-                                setAnimateOutClass('slide-up-fade-out');
-                                setIsAnimating(true); // 애니메이션 시작
-                                setTimeout(() => {
-                                    setBackgroundIndex(1);
-                                    setAnimateOutClass('');
-                                    setAnimateInClass('slide-up-fade-in');
-                                    setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
-                                }, 500);
-                                setTimeout(() => setAnimateInClass(''), 1600);
-                            }
-                        } else if (backgroundIndex < backgroundImages.length - 1) {
-                            setAnimateOutClass('slide-up-fade-out');
-                            setIsAnimating(true); // 애니메이션 시작
-                            setTimeout(() => {
-                                setBackgroundIndex(backgroundIndex + 1);
-                                setAnimateOutClass('');
-                                setAnimateInClass('slide-up-fade-in');
-                                setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
-                            }, 500);
-                            setTimeout(() => setAnimateInClass(''), 1600);
-                        }
-                    } else { // 스크롤 Out
-                        if (backgroundIndex > 0) {
-                            setAnimateOutClass('slide-down-fade-out');
-                            setIsAnimating(true); // 애니메이션 시작
-                            setTimeout(() => {
-                                setBackgroundIndex(backgroundIndex - 1);
-                                setAnimateOutClass('');
-                                setAnimateInClass('slide-down-fade-in');
-                                setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
-                            }, 500);
-                            setTimeout(() => setAnimateInClass(''), 1600);
-                        } else {
-                            newScale = Math.max(prevScale - 0.1, 1);
-                            setIsAnimating(false); // 애니메이션 완료
-                        }
-                    }
-    
-                    return newScale;
-                });
-            }
-            return newScrollAmount;
-        });
-    };
-   
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('http://localhost:8080/logoutUser',sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
                 },
             });
-            
-            if ((response).status === 200) {
+
+            if (response.status === 200) {
                 sessionStorage.removeItem('accessToken');
                 sessionStorage.removeItem('refreshToken');
                 sessionStorage.removeItem('userName');
@@ -111,170 +39,63 @@ const Home = () => {
                 sessionStorage.removeItem('userRole');
                 setIsLoggedIn(false);
                 navigate('/');
+                alert('로그아웃 성공');
             }
         } catch (error) {
             console.error('Logout failed', error);
-        }            
+        }
     };
-        
-    
-    
-        
 
     useEffect(() => {
-        window.addEventListener('wheel', handleWheel, { passive: false });
-        return () => window.removeEventListener('wheel', handleWheel);// eslint-disable-next-line
-    }, [backgroundIndex, isAnimating]);
-
-    const handleNavigation = (path) => {
-        navigate(path);
-    };
-    
-    useEffect(() => {
-    const usersCode = sessionStorage.getItem('accessToken');
-    if (usersCode !== null) {
-        setIsLoggedIn(true);
-        console.log(usersCode);
-    }// eslint-disable-next-line
-    }, [sessionStorage.getItem('accessToken')]);
-
-    // useEffect(() => {
-    //     const checkLoginStatus = () => {
-    //       const usersCode = sessionStorage.getItem('usersCode');
-    //       setIsLoggedIn(usersCode !== null);
-    //     };
-      
-    //     checkLoginStatus();
-      
-    //     window.addEventListener('storage', checkLoginStatus);
-      
-    //     return () => {
-    //       window.removeEventListener('storage', checkLoginStatus);
-    //     };
-    //   }, []);
+        const usersCode = sessionStorage.getItem('accessToken');
+        if (usersCode !== null) {
+            setIsLoggedIn(true);
+            console.log(sessionStorage.getItem('refreshToken'));
+        }
+    }, []);
 
     return (
         <ThemeProvider theme={theme1}>
-            <div style={{ fontFamily: theme.typography.fontFamily, overflow: 'hidden', position: 'relative' }}>
+            <div style={{ fontFamily: theme1.typography.fontFamily, position: 'relative', minHeight: '100vh' }}>
                 <Box
                     sx={{
-                        backgroundImage: 'url(/images/main-back.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
                         width: '100%',
-                        height: '100vh',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        transition: 'transform 0.5s ease',
-                        transform: `scale(${scale})`,
-                        transformOrigin: 'center',
-                        marginTop: 0
+                        padding: '0',
+                        boxSizing: 'border-box',
+                        marginTop: 5,
+                        paddingBottom: '100px', // 푸터 높이만큼 패딩 추가
                     }}
-                > 
-                    <Box
-                        sx={{
-                            position: 'relative',
-                            width: isMobile ? '90%' : '70%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: { xs: '5px', md: '20px' },
-                                left: { xs: '10px', md: '35px' },
-                                display: 'flex',
-                                flexDirection: 'row',
-                                gap: '10px',
-                            }}
-                        >
-                            <Button
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    borderRadius: 15,
-                                    color:"#FFFFFF",
-                                    border: "1px solid #FFFFFF",
-                                    borderColor:"#FFFFFF",
-                                }}
-                                onClick={() => handleNavigation('/analysis')}
-                            >
-                                카톡 판결
-                            </Button>
-                            <Button
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    borderRadius: 15,
-                                    color:"#FFFFFF",
-                                    border: "1px solid #FFFFFF",
-                                    borderColor:"#FFFFFF"
-                                }}
-                                onClick={() => handleNavigation('/chatbot')}
-                            >
-                                맞장구 봇
-                            </Button>
-                        </Box>
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: { xs: '5px', md: '20px' },
-                                right: { xs: '10px', md: '35px' },
-                                display: 'flex',
-                                flexDirection: 'row',
-                                gap: '10px',
-                            }}
-                        >
-                            <Button
-                                variant="text"
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    color:"#FFFFFF",
-                                    borderColor:"#FFFFFF"
-                                }}
-                                onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
-                            >
-                                 {isLoggedIn ? '로그아웃' : '로그인'}
-                            </Button>
-                            <Button
-                                variant="text"
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    color:"#FFFFFF",
-                                    borderColor:"#FFFFFF"
-                                }}
-                            >
-                                Q&A
-                            </Button>
-                        </Box>
-                        <Box
-                            component="img"
-                            src={backgroundImages[backgroundIndex]}
-                            alt="Your Image Description"
-                            className={`${animateInClass} ${animateOutClass}`}
-                            sx={{
-                                width: '100%',
-                                height: 'auto',
-                            }}
-                        />
-                
-                        {/* 스크롤 힌트 추가 */}
-                        {backgroundIndex !== backgroundImages.length - 1 && (
-                            <Typography className="scroll-hint" sx={{ fontSize: { xs: 8, sm: 12, md: 15 }}}>
-                                Scroll Down <br/> 
-                                <KeyboardDoubleArrowDownIcon sx={{ fontSize: { xs: 10, sm: 15, md: 20 }, color: '1B1F23' }} />
-                            </Typography>
-                        )}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'flex-start', ml: 3.3, mt: 3.5, mb:3}}>
+                        <Typography variant="h2_bold" gutterBottom>
+                            투데이
+                        </Typography>
+                        <Typography variant="h6" color="text.secondary" sx={{ ml: 2 }}>
+                            {today}
+                        </Typography>
                     </Box>
+                    {cards.map((card, index) => (
+                        <Card key={index} sx={{ maxWidth: cardMaxWidth, mt: index > 0 ? 3 : 0 }}>
+                            <CardMedia
+                                component="img"
+                                height={imageHeight}
+                                image={card.imageSrc}
+                                alt={card.imageAlt}
+                                sx={{ borderTopLeftRadius: '4px', borderTopRightRadius: '4px' }}
+                            />
+                            <CardContent sx={{ paddingTop: '16px' }}>
+                                <Typography variant="h6" color="text.secondary">
+                                    {cardContentText}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </Box>
-                <AgreeModal/>
+                <Footer />
+                <AgreeModal />
             </div>
         </ThemeProvider>
     );

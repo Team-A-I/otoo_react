@@ -49,7 +49,7 @@ const EmotionReportPage = () => {
       <ThemeProvider theme={theme}>
       <div style={{ fontFamily: theme.typography.fontFamily}}>
        
-          <Box className="emotionPaper">
+          <Box className="emotionPaper" sx={{padding:"0px", marginTop:"50px"}}>
             <Paper className="letterPaper" elevation={3} sx={{maxHeight:'35vh', marginBottom:'50px',position:'relative'}}>
             <Grid className='emotionGrid' container spacing={2} >
               <Grid item xs={4} className='emotionGridItem'sx={{display : isSmallScreen ? 'none':'flex'}}>
@@ -58,8 +58,8 @@ const EmotionReportPage = () => {
                   </Box>
               </Grid>
               <Grid item xs={7} className='emotionGridItem' >
-                <Box className="reportTextBox"sx={{overflowY: 'scroll', height:'30vh'}}>
-                <Typography variant="title_bold" color="gray500">{result}</Typography>
+                <Box className="reportTextBox"sx={{width:'100%',overflowY: 'scroll', height:'30vh'}}>
+                <Typography variant="title_bold" color="gray500" sx={{width:'100%'}}>{result}</Typography>
                 </Box>
                 <IconButton type="button" aria-label="ContentCopy" onClick={copyToClipboard} sx={{ position: 'absolute', right: 0, bottom: 0 }}>
                     <ContentCopyIcon sx={{ fontSize: '2vh' }}/>
@@ -68,7 +68,7 @@ const EmotionReportPage = () => {
             </Grid>
             </Paper>
                 <Grid container spacing={2} alignItems="stretch" sx={{display:'flex'}}>
-              <Grid item xs={4} className='moreContent'
+              <Grid item md={4}xs={12} className='moreContent'
                 onMouseEnter={() => setHover1(true)}
                 onMouseLeave={() => setHover1(false)}
               >
@@ -93,7 +93,7 @@ const EmotionReportPage = () => {
                   </CardActions>
                 </Card>
               </Grid>
-              <Grid item xs={4} className='moreContent'
+              <Grid item md={4}xs={12} className='moreContent'
                 onMouseEnter={() => setHover2(true)}
                 onMouseLeave={() => setHover2(false)}
               >
@@ -118,7 +118,7 @@ const EmotionReportPage = () => {
                   </CardActions>
                 </Card>
               </Grid>
-              <Grid item xs={4} className='moreContent'
+              <Grid item md={4} xs={12}className='moreContent'
                 onMouseEnter={() => setHover3(true)}
                 onMouseLeave={() => setHover3(false)}
               >

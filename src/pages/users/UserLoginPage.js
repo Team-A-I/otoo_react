@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/login', {
+      const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/login', {
         userEmail,
         userPassword,
       });
@@ -34,6 +34,7 @@ function UserLoginPage() {
         sessionStorage.setItem('userEmail', response.data.userEmail);
         sessionStorage.setItem('userRole', response.data.role);
         navigate('/');
+        alert('로그인 성공');
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -59,7 +60,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "http://localhost:8080/kakaoLogin/" + accessToken
+            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken
           );
 
           if (response.status === 200) {
@@ -71,6 +72,7 @@ function UserLoginPage() {
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
             navigate("/");
+            alert('로그인 성공');
           }
         },
         fail: (err) => {
@@ -84,14 +86,14 @@ function UserLoginPage() {
   const googleClick = async() => {
     try {
 
-      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://team-a-i.github.io/otoo_react/googleLogin&response_type=code&scope=email profile";
+      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://ai.otoo.kr/googlelogin&response_type=code&scope=email profile";
       
     } catch (error) {
       console.error("Error google login click", error);
     }
   } 
   const naverClick = async() => {
-    axios.get("http://localhost:8080/naverLogin")
+    axios.get("https://gnat-suited-weekly.ngrok-free.app/naverLogin")
     .then((res) => {
       const requrl = res.data;
       window.location.href = requrl;
