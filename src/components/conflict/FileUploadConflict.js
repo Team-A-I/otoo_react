@@ -1,26 +1,25 @@
-// eslint-disable-next-line
-import React, { useState, useRef, useCallback, useEffect } from 'react';// eslint-disable-next-line
-import { Container, TextField, Typography, Box, Grid, ThemeProvider, Divider, Paper } from '@mui/material';
+import React, { useState, useRef, useCallback } from 'react';
+import {
+  Container,
+  Typography,
+  Box,
+  ThemeProvider,
+  Tabs,
+  Tab,
+  Button,
+  Grid
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
 import theme1 from "../../theme";
 import SendModal from '../SendModal';
-import OnboardingCarousel from "../Onboarding";
+import TextTipModal from './TextTipModal'; // 텍스트 Tip 모달 컴포넌트 임포트
+import AudioTipModal from './AudioTipModal'; // 음성 Tip 모달 컴포넌트 임포트
+import Recorder from '../../components/conflict/Recorder';
 
 // 변수 정의
-// eslint-disable-next-line
-const cardMaxWidth = 400;// eslint-disable-next-line
-const cardMaxHeight = 300;// eslint-disable-next-line
-const imageHeight = 300;// eslint-disable-next-line
-const imageSrc = "/images/H.png";// eslint-disable-next-line
-const imageAlt = "Paella dish";// eslint-disable-next-line
-const lovemainText = "카톡 판결\n몇대몇";// eslint-disable-next-line
-const cardContentText = "";
-const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
-const btnResultLabel = "결과 보러가기";
-const textFieldRows = 10;
-const textFieldVariant = "outlined";
+const btnVoiceUploadLabel = "음성파일 업로드";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -30,14 +29,22 @@ const FileUpload = () => {
   const [fileType, setFileType] = useState('');
   const [fileCount, setFileCount] = useState(0);// eslint-disable-next-line
   const [jsonContent, setJsonContent] = useState(null);// eslint-disable-next-line
-  const [showInput, setShowInput] = useState(false);
-  const [textInput, setTextInput] = useState("");
+  const [showInput, setShowInput] = useState(false);// eslint-disable-next-line
+  const [textInput, setTextInput] = useState("");// eslint-disable-next-line
   const [showCarousel, setShowCarousel] = useState(true);
-  const fileInputRef = useRef(null);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [openTextTipModal, setOpenTextTipModal] = useState(false); // 텍스트 Tip 모달 상태
+  const [openAudioTipModal, setOpenAudioTipModal] = useState(false); // 음성 Tip 모달 상태
+  const textFileInputRef = useRef(null);
+  const audioFileInputRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
 
   const handleCloseModal = () => setOpenModal(false);
+  const handleOpenTextTipModal = () => setOpenTextTipModal(true);
+  const handleCloseTextTipModal = () => setOpenTextTipModal(false);
+  const handleOpenAudioTipModal = () => setOpenAudioTipModal(true);
+  const handleCloseAudioTipModal = () => setOpenAudioTipModal(false);
 
   const handleFileChange = useCallback((event) => {
     const selectedFiles = Array.from(event.target.files);
@@ -67,7 +74,11 @@ const FileUpload = () => {
     try {
       const json = { text: content, file };
       setJsonContent(json);
-      navigate('/loading-conflict', { state: { jsonContent: json } });
+      if (file.type.startsWith('audio/')) {
+        navigate('/stt-loading', { state: { jsonContent: json } });
+      } else {
+        navigate('/loading-conflict', { state: { jsonContent: json } });
+      }
     } catch (error) {
       console.error("Error parsing file:", error);
     }
@@ -80,6 +91,9 @@ const FileUpload = () => {
       if (fileExtension === 'txt') {
         reader.onload = handleFileRead;
         reader.readAsText(file);
+      } else if (fileExtension === 'wav' || fileExtension === 'mp3') {
+        reader.onload = handleFileRead;
+        reader.readAsDataURL(file);
       } else {
         const json = { text: textInput, files };
         setJsonContent(json);
@@ -98,28 +112,23 @@ const FileUpload = () => {
     }
   };
 
-  const handleTextInputChange = (event) => {
-    setTextInput(event.target.value);
-  };
-
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    if (selectedTab === 0) {
+      textFileInputRef.current.click();
+    } else {
+      audioFileInputRef.current.click();
+    }
   };
 
-  const handleSkip = () => {
-    setShowCarousel(false);
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
   };
-
-  if (showCarousel) {
-    return <OnboardingCarousel onSkip={handleSkip} />;
-  }
 
   return (
     <ThemeProvider theme={theme1}>
-      <div style={{ fontFamily: theme1.typography.fontFamily, position: 'relative', minHeight: '100vh' }}>
+      <Container maxWidth="lg">
         <Box
           sx={{
-            width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -129,88 +138,150 @@ const FileUpload = () => {
             paddingBottom: '100px',
           }}
         >
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', alignSelf: 'flex-start', ml: 3.3, mt: 3.5, mb: 3 }}>
-            <Typography variant="h2_bold" gutterBottom>
-              카톡판결
-            </Typography>
-            <Typography variant="h2_mid">
-              갈등 판결 몇대몇
-            </Typography>
-            <Typography variant="h3_mid">
-              누가 맞는지 결정해드리겠습니다.
-            </Typography>
+          {/* Tip 버튼을 우측 상단에 배치 */}
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+            <Button
+              variant="outlined"
+              onClick={selectedTab === 0 ? handleOpenTextTipModal : handleOpenAudioTipModal}
+              sx={{ color: '#04613E', borderColor: '#04613E' }}
+            >
+              Tip !
+            </Button>
           </Box>
-          <Box>
-            <img src="/images/H.png" alt="intro" style={{ maxWidth: '100%', height: 'auto', margin: '0 auto' }} />
+
+          {/* 탭에 따라 상단 내용 변경 */}
+          {selectedTab === 0 && (
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 1 }}>
+              <Typography variant="h2_bold" gutterBottom>
+                갈등 판결 '몇대몇'<br/>
+              </Typography>
+              <Typography variant="h2_bold">
+                누가 맞는지 판결 해드리겠습니다.<br/>
+              </Typography>
+              <Typography variant="body4" mt={1} sx={{color:'#04613E'}}>
+                ※ 카카오톡에서 내보내기 한 대화내용이나<br/>　캡쳐한 이미지만 업로드 가능합니다.
+              </Typography>
+            </Box>
+          )}
+
+          {selectedTab === 1 && (
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 1 }}>
+              <Typography variant="h2_bold" gutterBottom>
+                갈등 판결 '몇대몇'<br/>
+              </Typography>
+              <Typography variant="h2_bold">
+                누가 맞는지 판결 해드리겠습니다.<br/>
+              </Typography>
+              <Typography variant="body4" mt={1} sx={{color:'#04613E'}}>
+                ※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.<br/>
+              </Typography>
+              <Typography variant="body4" mt={1} sx={{color:'#04613E'}}>
+                ※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.
+              </Typography>
+            </Box>
+          )}
+
+          {/* 탭 추가 */}
+          <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <Tabs
+              value={selectedTab}
+              onChange={handleTabChange}
+              centered
+              TabIndicatorProps={{ style: { backgroundColor: '#04613E' } }}
+              sx={{
+                '& .MuiTab-root': {
+                  color: '#04613E',
+                  '&.Mui-selected': {
+                    color: '#04613E',
+                  },
+                },
+              }}
+            >
+              <Tab label="텍스트 업로드" />
+              <Tab label="음성 업로드" />
+            </Tabs>
           </Box>
-          <Divider sx={{ width: '90%', mb: 2, backgroundColor: '#ccc' }} />
-          <Box sx={{ display: "flex", overflowX: "auto", whiteSpace: "nowrap", width: '90%', mb: 2 }}>
-            <Paper sx={{ p: 15, minWidth: '200px', marginRight: 2 }}>
-              안녕
-            </Paper>
-            <Paper sx={{ p: 15, minWidth: '200px', marginRight: 2 }}>
-              안녕
-            </Paper>
-          </Box>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', position: 'fixed', bottom: 0, width: '100%', left: 0 }}>
-                <input
-                  accept=".txt,image/*"
-                  style={{ display: 'none' }}
-                  ref={fileInputRef}
-                  type="file"
-                  onChange={handleFileChange}
-                  multiple
-                />
-                <UploadButton
-                  label={btnUploadLabel}
-                  onClick={handleButtonClick}
-                  disabled={false}
-                  className="conflict-btn-upload"
-                  title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
-                  defaultColor='#F7E600'
-                  hoverColor='#F7E60090'
-                  disabledColor='#B0B0B0'
-                  fontColor='#000'
-                />
-              </Box>
-              <SendModal
-                open={openModal}
-                handleClose={handleCloseModal}
-                handlefile={handleFileUpload}
-                filetitle={fileName}
-                filesize={fileSize}
-                filetype={fileType}
-                filecount={fileCount}
-              />
-            </Grid>
-          </Grid>
-          {showInput && (
-            <Box mt={10} ref={fileInputRef}>
-              <Typography variant="h6">{inputPromptText}</Typography>
-              <TextField
-                fullWidth
-                multiline
-                rows={textFieldRows}
-                variant={textFieldVariant}
-                value={textInput}
-                onChange={handleTextInputChange}
-              />
-              <UploadButton
-                label={btnResultLabel}
-                onClick={handleFileUpload}
-                disabled={!textInput.trim()}
-                className="conflict-btn-textfield"
-                defaultColor='#346F79'
-                hoverColor='#295961'
-                disabledColor='#B0B0B0'
-                fontColor='#fff'
+
+          {/* 탭에 따라 내용 변경 */}
+          {selectedTab === 0 && (
+            <Box sx={{ width: '100%', mt: 10, textAlign: 'center', p: 2 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img 
+                    src="/images/말풍선.png" 
+                    alt="텍스트 업로드용 이미지 1" 
+                    style={{ maxWidth: '100%', maxHeight: '90%', margin: '0 auto' }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <img 
+                    src="/images/누가.png" 
+                    alt="텍스트 업로드용 이미지 2" 
+                    style={{ maxWidth: '100%', maxHeight: '90%', margin: '0 auto' }}
+                  />
+                </Grid>
+              </Grid>
+              <input
+                accept=".txt,image/*"
+                style={{ display: 'none' }}
+                ref={textFileInputRef}
+                type="file"
+                onChange={handleFileChange}
               />
             </Box>
           )}
+
+          {selectedTab === 1 && (
+            <Box sx={{ width: '100%', mt: 2, textAlign: 'center' }}>
+              <Recorder />
+              <input
+                accept=".wav,.mp3"
+                style={{ display: 'none' }}
+                ref={audioFileInputRef}
+                type="file"
+                onChange={handleFileChange}
+                multiple
+              />
+            </Box>
+          )}
+
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            width: '100%', 
+            mt: 2, 
+            p: 2, 
+            backgroundColor: '#fff', 
+            position: 'sticky', 
+            bottom: 0, 
+            zIndex: 1000 
+          }}>
+            <UploadButton
+              label={selectedTab === 0 ? btnUploadLabel : btnVoiceUploadLabel}
+              onClick={handleButtonClick}
+              disabled={false}
+              className="conflict-btn-upload"
+              title_str={selectedTab === 0 ? "카톡 캡쳐이미지 또는 txt파일만 올려주세요" : "음성 파일을 업로드해주세요"}
+              defaultColor='#01A762'
+              hoverColor='#04613E'
+              disabledColor='#B0B0B0'
+              fontColor='#ffffff'
+            />
+            <SendModal
+              open={openModal}
+              handleClose={handleCloseModal}
+              handlefile={handleFileUpload}
+              filetitle={fileName}
+              filesize={fileSize}
+              filetype={fileType}
+              filecount={fileCount}
+            />
+          </Box>
+
+          <TextTipModal open={openTextTipModal} handleClose={handleCloseTextTipModal} />
+          <AudioTipModal open={openAudioTipModal} handleClose={handleCloseAudioTipModal} />
         </Box>
-      </div>
+      </Container>
     </ThemeProvider>
   );
 };

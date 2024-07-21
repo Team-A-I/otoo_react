@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -29,7 +29,6 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
-import Footer from './components/Footer';
 
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
@@ -37,15 +36,14 @@ import SttLoadingPage from './components/conflict/SttLoadingPage';
 import SttUploadConflict from './components/conflict/SttUploadConflict';
 import SttUpload from './pages/conflict/SttUpload';
 import Streaming from './components/streaming/Streaming';
+import RecorderLoading from './components/conflict/RecorderLoading';
 
 
 const MainApp = () => {
-  const location = useLocation();
 
   return (
     <>
       <Header />
-      {location.pathname !== "/upload-conflict" && <Footer />}
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -81,6 +79,7 @@ const MainApp = () => {
           <Route path='/stt-upload' element={<SttUploadConflict />} />
           <Route path='/stt' element={<SttUpload />} />
           <Route path='/streaming' element={<Streaming />} />
+          <Route path='/recorder-loading' element={<RecorderLoading />} />
 
         </Routes>
       </Box>
