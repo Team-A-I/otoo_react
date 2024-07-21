@@ -13,6 +13,11 @@ const EmotionReportLoadingPage = () => {
     const usersCode = sessionStorage.getItem('usersCode');
     const emotionReportHandler = useCallback(async() => {
         try {
+            if (!messages) {
+                alert('잘못된 접근입니다.');
+                navigate('/');
+                return;
+            }
             const requestBody = usersCode ? { messages, usersCode } : { messages };
             const response = await axiosIns.post('http://localhost:8080/emotionReport', requestBody, {
                 headers: {

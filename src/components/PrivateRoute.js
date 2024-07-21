@@ -1,20 +1,22 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { getUserRole, isAuthenticated } from './auth';
 
-const PrivateRoute = ({ component: Component, roles }) => {
-  return (props) => {
-    if (!isAuthenticated()) {
-      return <Navigate to="/user-login" state={{ from: props.location }} />;
-    }
+const PrivateRoute = ({ children, roles }) => {
+  const location = useLocation();
 
-    const userRole = getUserRole();
-    if (roles && roles.indexOf(userRole) === -1) {
-      return <Navigate to="/" />;
-    }
+  if (!isAuthenticated()) {
+    alert('로그인이 필요합니다.');
+    return <Navigate to="/user-login" state={{ from: location }} />;
+  }
 
-    return <Component {...props} />;
-  };
+  const userRole = getUserRole();
+  if (roles && roles.indexOf(userRole) === -1) {
+    alert('접근 권한이 없습니다.');
+    return <Navigate to="/" />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;

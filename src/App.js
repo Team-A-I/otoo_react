@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router,Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -41,12 +41,16 @@ const MainApp = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
-          <Route 
+          {/* 페이지 권한 처리 예시 */}
+          {/* <Route 
             path="/chatbot" 
             element={
-              <PrivateRoute component={ChatBot} roles={['ROLE_USER']} />
+              <PrivateRoute roles={['ROLE_USER', 'ROLE_ADMIN']}>
+                <ChatBot />
+              </PrivateRoute>
             }
-          />
+          /> */}
+          <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />

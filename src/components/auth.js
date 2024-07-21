@@ -1,7 +1,7 @@
 import {jwtDecode} from 'jwt-decode';
 
 export const getToken = () => {
-  return localStorage.getItem('accessToken');
+  return sessionStorage.getItem('accessToken');
 };
 
 export const isAuthenticated = () => {
@@ -28,8 +28,8 @@ export const getUserRole = () => {
   }
 
   try {
-    const decoded = jwtDecode(token);
-    return decoded.role;
+    const role = sessionStorage.getItem('userRole');
+    return role;
   } catch (e) {
     return null;
   }
