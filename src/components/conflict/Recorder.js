@@ -25,7 +25,7 @@ const Recorder = () => {
       const formData = new FormData();
       formData.append('file', audioBlob, 'recording.wav');
       try {
-        const response = await axios.post('http://localhost:8080/api/transcribe/file', formData);
+        const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/api/transcribe/file', formData);
         console.log('Response data:', response.data);
         navigate('/stt-result', { state: { jsonData: response.data } }); // 결과 페이지로 이동
       } catch (error) {

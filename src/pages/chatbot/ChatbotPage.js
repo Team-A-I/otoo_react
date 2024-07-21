@@ -162,9 +162,11 @@ const ChatBot = () => {
                   </Box>
                 </Box>
               ) : (
-                <Box sx={{marginBottom:'10px'}}>
-                  <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
-                    <Box sx={{position:'relative'}}>
+                
+                <Box sx={{marginBottom:'10px',height:'100%'}}>
+                
+                <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
+                  <Box sx={{position:'relative'}}>
                     <Tooltip title={chatbotTooltipText} arrow placement="top">
                     <Button
                       variant="contained"
