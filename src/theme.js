@@ -157,7 +157,7 @@ let theme = createTheme({
         fontSize: '19px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '18px',
+        fontSize: '22px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -201,10 +201,10 @@ let theme = createTheme({
         fontSize: '16px',
       },
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '12px',
+        fontSize: '14px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '13px',
+        fontSize: '14px',
       },
       fontWeight: 700,
       color: '#1B1F23'
