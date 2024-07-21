@@ -31,6 +31,7 @@ import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
 import PrivateRoute from './components/PrivateRoute';
 import Footer from './components/Footer';
+import QnaChatbot from './pages/chatbot/QnaChatbot';
 
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
@@ -45,7 +46,7 @@ const MainApp = () => {
   return (
     <>
       <Header />
-      {location.pathname !== "/upload-conflict" && <Footer />}
+      {location.pathname !== "/upload-conflict"}
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -60,6 +61,7 @@ const MainApp = () => {
             }
           /> */}
           <Route path="/chatbot" element={<ChatBot />} />
+          <Route path="/qna-chatbot" element={<QnaChatbot />} />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />
