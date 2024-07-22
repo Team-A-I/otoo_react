@@ -21,7 +21,7 @@ const Header = () => {
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
     { text: '로그인', path: '/user-login' },
-    { text: '음성 업로드', path: '/stt'},
+    { text: 'QnA', path: '/qna-chatbot' },
     { text: '게시판', path: '/board'},
   ];
 

@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React from 'react';// eslint-disable-next-line
+import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
+
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -29,17 +30,22 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
+// eslint-disable-next-line
+import PrivateRoute from './components/PrivateRoute';
+import QnaChatbot from './pages/chatbot/QnaChatbot';
 
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
 import SttLoadingPage from './components/conflict/SttLoadingPage';
 import SttUploadConflict from './components/conflict/SttUploadConflict';
 import SttUpload from './pages/conflict/SttUpload';
+import Streaming from './components/streaming/Streaming';
+import RecorderLoading from './components/conflict/RecorderLoading';
+
 import Board from './pages/Board';
 
 
 const MainApp = () => {
-  const location = useLocation();
 
   return (
     <>
@@ -48,8 +54,17 @@ const MainApp = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
+          {/* 페이지 권한 처리 예시 */}
+          {/* <Route 
+            path="/chatbot" 
+            element={
+              <PrivateRoute roles={['ROLE_USER', 'ROLE_ADMIN']}>
+                <ChatBot />
+              </PrivateRoute>
+            }
+          /> */}
           <Route path="/chatbot" element={<ChatBot />} />
-          <Route path="/board" element={<Board />} />
+          <Route path="/qna-chatbot" element={<QnaChatbot />} />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />
@@ -78,6 +93,9 @@ const MainApp = () => {
           <Route path='/stt-loading' element={<SttLoadingPage />} />
           <Route path='/stt-upload' element={<SttUploadConflict />} />
           <Route path='/stt' element={<SttUpload />} />
+          <Route path='/streaming' element={<Streaming />} />
+          <Route path='/recorder-loading' element={<RecorderLoading />} />
+          <Route path='/board' element={<Board />} />
 
         </Routes>
       </Box>

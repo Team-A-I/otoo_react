@@ -11,9 +11,9 @@ const cardData = [
     { title: "데이터 추출방법", image: "/images/톡설명1.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
     { title: "텍스트파일 업로드방법", image: "/images/톡설명2.png", alt: "talk2", description: "70KB이하의 카톡txt 파일을 업로드 할 수 있습니다." },
     { title: "캡쳐파일 업로드방법", image: "/images/톡설명3.png", alt: "talk3", description: "5장 이하의 카톡캡쳐 파일을 업로드할 수 있습니다." }
-  ];
+];
 
-const Home = () => {
+const Home = () => {// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ const Home = () => {
         { bgColor: 'gray200', text: '카톡 분석', textColor: 'black' },
         { bgColor: 'gray200', text: '맞장구 채팅', textColor: 'black' },
     ];
-
+// eslint-disable-next-line
     const handleLogout = async () => {
         try {
             const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
@@ -71,99 +71,98 @@ const Home = () => {
     return (
         <ThemeProvider theme={theme1}>
             <div style={{ fontFamily: theme1.typography.fontFamily }}>
-            <Box p={5} sx={{ backgroundColor: 'white' }}>
-                <Container maxWidth="lg">
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={9}>
-                            <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-                                <img src={largeImageSrc} alt={largeImageAlt} style={{ width: '100%', height: '420px', borderRadius: '10px' }} />
-                                <Typography variant="h1_bold" sx={{ position: 'absolute', top: 100, left: 450, color: 'white' }}>
-                                    {largeImageText}
-                                    {largeImageTextSub}
-                                </Typography>
-                            </Box>
+                <Box p={5} sx={{ backgroundColor: 'white' }}>
+                    <Container maxWidth="lg">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={9}>
+                                <Box sx={{ position: 'relative', width: '100%', height: '100%' , textAlign:'right'}}>
+                                    <img src={largeImageSrc} alt={largeImageAlt} style={{ width: '100%', height: 'auto', borderRadius: '10px' }} />
+                                    <Typography variant="h1_bold" sx={{ position: 'absolute', top: { xs: 50, md: 150 }, left: { xs: 20, md: 450 }, color: 'white', fontSize: { xs: '1.5rem', md: '3rem' } }}>
+                                        {largeImageText}<br/>
+                                        {largeImageTextSub}
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item container xs={12} md={3} spacing={2}>
+                                {smallBoxes.map((box, index) => (
+                                    <Grid item xs={12} sm={4} md={12} key={index}>
+                                        <Box sx={{ position: 'relative', width: '100%', height: '125px', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
+                                            <Typography p={3} variant="title_bold" sx={{ color: box.textColor, fontSize: { xs: '0.8rem', md: '1rem' } }}>
+                                                {box.text}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </Grid>
-                        <Grid item container xs={12} md={3} spacing={2}>
-                            {smallBoxes.map((box, index) => (
-                                <Grid item xs={12} sm={4} md={12} key={index}>
-                                    <Box sx={{ position: 'relative', width: '100%', height: '96%', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
-                                        <Typography
-                                        p={3} variant="title_bold" sx={{ color: box.textColor }}>
-                                            {box.text}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Grid>
-                    <Box mt={7}>
-                        <Typography variant='h2_bold'>
-                            {servicetitle1}
-                        </Typography>
-                        <Box sx={{ display: 'flex', overflowX: 'auto', mt: 2 }}>
-                        <Carousel
-                        infiniteLoop={false}
-                        useKeyboardArrows
-                        showThumbs={false}
-                        showStatus={false}
-                        showArrows={true}
-                        selectedItem={currentSlide}
-                        onChange={(index) => setCurrentSlide(index)}
-                        renderIndicator={false}
-                        >
-                        {cardData.map((card, index) => (
-                            <Box key={index} sx={{ textAlign: 'center', p: 2 }}>
-                            <Box sx={{ mb: 5 }}>
-                                <Typography 
-                                variant="h2_bold" 
-                                sx={{ 
-                                    display: 'inline-block',
-                                    position: 'relative',
-                                    '&:before': {
-                                    content: '""',
-                                    position: 'absolute',
-                                    width: '100%',
-                                    height: '35%',
-                                    bottom: 0,
-                                    left: 0,
-                                    backgroundColor: 'vlightgreen',
-                                    zIndex: -1,
-                                    }
-                                }}
+                        <Box mt={7}>
+                            <Typography variant='h2_bold'>
+                                {servicetitle1}
+                            </Typography>
+                            <Box sx={{ display: 'flex', overflowX: 'auto', mt: 2 }}>
+                                <Carousel
+                                    infiniteLoop={false}
+                                    useKeyboardArrows
+                                    showThumbs={false}
+                                    showStatus={false}
+                                    showArrows={true}
+                                    selectedItem={currentSlide}
+                                    onChange={(index) => setCurrentSlide(index)}
+                                    renderIndicator={false}
                                 >
-                                {card.title}
-                                </Typography>
+                                    {cardData.map((card, index) => (
+                                        <Box key={index} sx={{ textAlign: 'center', p: 2 }}>
+                                            <Box sx={{ mb: 5 }}>
+                                                <Typography 
+                                                    variant="h2_bold" 
+                                                    sx={{ 
+                                                        display: 'inline-block',
+                                                        position: 'relative',
+                                                        '&:before': {
+                                                            content: '""',
+                                                            position: 'absolute',
+                                                            width: '100%',
+                                                            height: '35%',
+                                                            bottom: 0,
+                                                            left: 0,
+                                                            backgroundColor: 'vlightgreen',
+                                                            zIndex: -1,
+                                                        }
+                                                    }}
+                                                >
+                                                    {card.title}
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ mt: 1, mb: 5 }}>
+                                                <Typography variant="title_bold">
+                                                    {card.description}
+                                                </Typography>
+                                            </Box>
+                                            <img src={card.image} alt={card.alt} style={{ maxWidth: '60%', height: 'auto', margin: '0 auto' }} />
+                                        </Box>
+                                    ))}
+                                </Carousel>
                             </Box>
-                            <Box sx={{ mt: 1, mb: 5}}>
-                                <Typography variant="title_bold">
-                                {card.description}
-                                </Typography>
-                            </Box>
-                            <img src={card.image} alt={card.alt} style={{ maxWidth: '60%', height: 'auto', margin: '0 auto' }} />
-                            </Box>
-                        ))}
-                        </Carousel>
                         </Box>
-                    </Box>
-                    <Box mt={7}>
-                        <Typography variant='h2_bold'>
-                            {servicetitle2}
-                        </Typography>
-                        <Grid container spacing={2} mt={2}>
-                            {finalBoxes.map((box, index) => (
-                                <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-                                    <Box sx={{ position: 'relative', width: '100%', height: '90px', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
-                                        <Typography variant="title_bold" sx={{ color: box.textColor }}>
-                                            {box.text}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Box>
-                </Container>
-                <AgreeModal />
-            </Box>
+                        <Box mt={7}>
+                            <Typography variant='h2_bold'>
+                                {servicetitle2}
+                            </Typography>
+                            <Grid container spacing={2} mt={2}>
+                                {finalBoxes.map((box, index) => (
+                                    <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                                        <Box sx={{ position: 'relative', width: '100%', height: '90px', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
+                                            <Typography variant="title_bold" sx={{ color: box.textColor }}>
+                                                {box.text}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                    </Container>
+                    <AgreeModal />
+                </Box>
             </div>
         </ThemeProvider>
     );
