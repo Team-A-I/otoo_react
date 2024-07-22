@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Typography, IconButton,ThemeProvider} from '@mui/material';
+import { Box, Typography, IconButton, ThemeProvider, Snackbar, Alert } from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import theme from '../../theme';
 
-const Recorder = () => {
+const Recorder = ({ onRecordingStateChange }) => {
   const [recording, setRecording] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);// eslint-disable-next-line
   const [loading, setLoading] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false); // 경고 메시지 상태
+  const [alertMessage, setAlertMessage] = useState(""); // 경고 메시지 내용
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
@@ -75,6 +77,7 @@ const Recorder = () => {
     };
 
     draw();
+    onRecordingStateChange(true);
   };
 
   const stopRecording = async () => {
@@ -82,24 +85,33 @@ const Recorder = () => {
     cancelAnimationFrame(animationIdRef.current);
     mediaRecorderRef.current.stop();
     mediaRecorderRef.current.onstop = async () => {
+      if (elapsedTime < 5) {
+        setAlertMessage("대화내용이 부족합니다.");
+        setAlertOpen(true); // 경고 메시지 표시
+        setRecording(false);
+        onRecordingStateChange(false);
+        return;
+      }
+
       const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
       const formData = new FormData();
       formData.append('file', audioBlob, 'recording.wav');
-      setLoading(true);  // 로딩 상태 시작
-      navigate('/recorder-loading'); // 로딩 페이지로 이동
+      setLoading(true);
+      navigate('/recorder-loading');
       try {
-        const response = await axios.post('http://localhost:8080/api/transcribe/file', formData);
+        const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/api/transcribe/file', formData);
         console.log('Response data:', response.data);
-        navigate('/stt-result', { state: { jsonData: response.data } }); // 결과 페이지로 이동
+        navigate('/stt-result', { state: { jsonData: response.data } });
       } catch (error) {
         console.error('Error uploading audio file:', error);
       } finally {
-        setLoading(false);  // 로딩 상태 종료
+        setLoading(false);
       }
       audioChunksRef.current = [];
     };
     setRecording(false);
     setElapsedTime(0);
+    onRecordingStateChange(false);
   };
 
   useEffect(() => {
@@ -114,42 +126,51 @@ const Recorder = () => {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
+  const handleCloseAlert = () => {
+    setAlertOpen(false);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div style={{ fontFamily: theme.typography.fontFamily }}>
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh' }}>
-      <>
-        <Typography variant="h2_bold" gutterBottom>
-          무슨 일이 있었나요?
-        </Typography>
-        <Typography variant="sub_bold" color="textSecondary" gutterBottom>
-          "··· 누가 잘못한거야?"라고 말해보세요.
-        </Typography>
-        <IconButton 
-          onClick={recording ? stopRecording : startRecording}
-          sx={{
-            width: 100,
-            height: 100,
-            bgcolor: recording ? '#ff5252' : '#01A762',
-            color: '#fff',
-            '&:hover': {
-              bgcolor: recording ? '#ff1744' : '#04613E'
-            }
-          }}
-        >
-          {recording ? <MicOffIcon sx={{ fontSize: 60 }} /> : <MicIcon sx={{ fontSize: 60 }} />}
-        </IconButton>
-        {recording && (
-          <Typography variant="h6" color="textSecondary" sx={{ mt: 2 }}>
-            녹음 시간: {formatTime(elapsedTime)} / 1:00
-          </Typography>
-        )}
-        <Box sx={{ width: '100%', maxWidth: '600px', aspectRatio: '3 / 1', marginTop: '20px', marginBottom: '20px' }}>
-          <canvas ref={canvasRef} width="600" height="200" style={{ width: '100%', height: '100%' }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh' }}>
+          <>
+            <Typography variant="h2_bold" gutterBottom>
+              무슨 일이 있었나요?
+            </Typography>
+            <Typography variant="sub_bold" color="textSecondary" sx={{mb:2}} gutterBottom>
+              "··· 누가 잘못한거야?"라고 말해보세요.
+            </Typography>
+            <IconButton 
+              onClick={recording ? stopRecording : startRecording}
+              sx={{
+                width: 100,
+                height: 100,
+                bgcolor: recording ? '#ff5252' : '#01A762',
+                color: '#fff',
+                '&:hover': {
+                  bgcolor: recording ? '#ff1744' : '#04613E'
+                }
+              }}
+            >
+              {recording ? <MicOffIcon sx={{ fontSize: 60 }} /> : <MicIcon sx={{ fontSize: 60 }} />}
+            </IconButton>
+            {recording && (
+              <Typography variant="h6" color="textSecondary" sx={{ mt: 2 }}>
+                녹음 시간: {formatTime(elapsedTime)} / 1:00
+              </Typography>
+            )}
+            <Box sx={{ width: '100%', maxWidth: '600px', aspectRatio: '3 / 1', marginTop: '20px', marginBottom: '20px' }}>
+              <canvas ref={canvasRef} width="600" height="200" style={{ width: '100%', height: '100%' }} />
+            </Box>
+          </>
         </Box>
-      </>
-    </Box>
-    </div>
+        <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity="warning" sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      </div>
     </ThemeProvider>
   );
 };
