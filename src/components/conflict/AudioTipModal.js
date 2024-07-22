@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, IconButton } from '@mui/material';
+import { Modal, Box, Typography, IconButton , ThemeProvider } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // 캐러셀 스타일
 import CloseIcon from '@mui/icons-material/Close';
+import theme1 from "../../theme";
 
 const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -16,6 +17,8 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
   };
 
   return (
+    <ThemeProvider theme={theme1}>
+      <div style={{ fontFamily: theme1.typography.fontFamily }}>
     <Modal
       open={open}
       onClose={handleClose}
@@ -90,7 +93,7 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
             <Typography sx={{ p: { xs: 1, md: 3 } }}>
               서운하고 억울했던 일들을 말해주세요.👂
             </Typography>
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '200px', md: '350px' } }}>
+            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '250px', md: '450px' } }}>
               <img src="/images/음성.png" alt="음성" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
             </Box>
 
@@ -99,7 +102,7 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
             <Typography sx={{ p: { xs: 1, md: 3 } }}>
               이야기가 끝났으면 "누가 잘못했어?"라고 말하고 <br/>종료버튼을 눌러주세요👆
             </Typography>
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '200px', md: '350px' } }}>
+            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '250px', md: '450px' } }}>
               <img src="/images/음성2.png" alt="음성2" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
             </Box>
           </div>
@@ -107,6 +110,8 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
         </Carousel>
       </Box>
     </Modal>
+    </div>
+    </ThemeProvider>
   );
 }
 

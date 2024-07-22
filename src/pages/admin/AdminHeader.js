@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import { AppBar, Toolbar, Button, IconButton, Box } from '@mui/material';
 import { Person as PersonIcon, Assignment as AssignmentIcon, Home as HomeIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axiosIns from '/Users/user/Desktop/otoo/otoo_react/src/components/axios';
+import axios from 'axios';
 
 
 const AdminHeader = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const currentPath = location.pathname;
+    const location = useLocation();// eslint-disable-next-line
+    const currentPath = location.pathname;// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const handleMenuClick = (path) => {
@@ -17,7 +17,7 @@ const AdminHeader = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
+            const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',

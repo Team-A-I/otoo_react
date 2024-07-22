@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';// eslint-disable-next-line
 import { AppBar, Button, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, ThemeProvider, Box, Container, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -10,12 +10,12 @@ import theme from '../theme';
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();// eslint-disable-next-line
+  const [isLoggedIn, setIsLoggedIn] = useState(false);// eslint-disable-next-line
   const handleNavigation = (path) => {
     navigate(path);
   };
-
+// eslint-disable-next-line
   const handleLogout = async () => {
     try {
         const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
@@ -58,9 +58,7 @@ const Header = () => {
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
     { text: '로그인', path: '/user-login' },
-    { text: 'QnA', path: '/qna-chatbot' },
     { text: '게시판', path: '/board'},
-    { text: '관리자', path: '/admin-user'}
   ];
 
   const list = () => (

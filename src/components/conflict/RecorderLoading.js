@@ -1,14 +1,11 @@
 import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 
 const RecorderLoading = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <CircularProgress />
-      <Typography variant="h6" sx={{ mt: 2 }}>
-        음성 파일 업로드 중...
-      </Typography>
-    </Box>
+    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', padding: 0, margin: 0 }}>
+      <img src="/images/moonchul_dance.gif" alt="loading" style={{ width: '60%', height: '60%', objectFit: 'cover' }} />
+    </Container>
   );
 };
 
