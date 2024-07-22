@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';// eslint-disable-next-line
 import { AppBar, Button, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, ThemeProvider, Box, Container, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import CloseIcon from '@mui/icons-material/Close';
 import axiosIns from '../components/axios';
 import theme from '../theme';
@@ -57,8 +56,8 @@ const Header = () => {
   const menuItems = [
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
-    { text: '로그인', path: '/user-login' },
     { text: '게시판', path: '/board'},
+    { text: '로그인', path: '/user-login' },
   ];
 
   const list = () => (
@@ -90,7 +89,7 @@ const Header = () => {
         <AppBar position="fixed" style={{ background: 'white', zIndex: 9999, boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }} elevation={1}>
           <Container maxWidth={isSmallScreen ? 'md' : 'lg'}>
             <Toolbar sx={{ minHeight: isSmallScreen ? '48px' : '64px', padding: isSmallScreen ? '0 8px' : '0 16px' }}>
-              <Typography style={{ color: 'black' }} variant="h2_bold" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', fontSize: isSmallScreen ? '1.2rem' : '2rem' }}>
+              <Typography style={{ color: 'black' }} variant="h2_bold" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none' }}>
                 몇대몇
               </Typography>
               {!isSmallScreen && (
@@ -98,19 +97,16 @@ const Header = () => {
                   {menuItems.map((item) => (
                     <Typography
                       key={item.text}
-                      variant="h6"
+                      variant="h3_bold"
                       component={Link}
                       to={item.path}
-                      sx={{ marginLeft: 3, textDecoration: 'none', color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}
+                      sx={{ marginLeft: 3, textDecoration: 'none'}}
                     >
                       {item.text}
                     </Typography>
                   ))}
                 </Box>
               )}
-              <IconButton edge="end" color="inherit">
-                <NotificationsIcon style={{ color: 'black' }} />
-              </IconButton>
               <Box sx={{ width: '10px' }} /> {/* 간격 추가 */}
               {isSmallScreen && (
                 <IconButton edge="end" color="inherit" onClick={toggleDrawer(true)}>

@@ -18,7 +18,8 @@ let theme = createTheme({
       gray400: '#919191',
       gray300: '#C8C8C8',
     //line
-      gray200: '#E1E1E1'
+      gray200: '#E1E1E1',
+      gray100: '#f1f1f1'
   },
   typography: {
     fontFamily: [
@@ -88,7 +89,7 @@ let theme = createTheme({
         fontSize: '41px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '32px',
+        fontSize: '18px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -110,7 +111,7 @@ let theme = createTheme({
         fontSize: '20px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '20px',
+        fontSize: '15px',
       },
       fontWeight: 700,
       color: '#1B1F23'
