@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Box, Container, Grid, Typography, Card, CardContent, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import axiosIns from '../components/axios';
+import { Box, Container, Grid, Typography, Card, CardContent, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Pagination } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme1 from '../theme';
 
@@ -10,22 +10,29 @@ const strings = {
   dialogTitle: '게시글 추가',
   dialogCancel: '취소',
   dialogAdd: '추가',
-  postTitle: '제목',
   postAuthor: '작성자',
   postDate: '날짜',
   postDescription: '후기',
-  viewDetails: '자세히 보기'
+};
+
+const flowerNames = ["Rose", "Tulip", "Lily", "Sunflower", "Daisy", "Orchid", "Violet", "Marigold", "Lavender", "Iris"];
+
+const getRandomAuthor = () => {
+  const randomFlower = flowerNames[Math.floor(Math.random() * flowerNames.length)];
+  const randomNumber = Math.floor(Math.random() * 1000) + 1;
+  return `${randomFlower}${randomNumber}`;
 };
 
 const Board = () => {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [newPost, setNewPost] = useState({
-    title: '',
-    author: '',
-    date: '',
+    author: getRandomAuthor(),
+    date: new Date().toISOString().split('T')[0],
     description: ''
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
 
   useEffect(() => {
     fetchPosts();
@@ -33,7 +40,7 @@ const Board = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/posts');
+      const response = await axiosIns.get('http://localhost:8080/api/posts');
       setPosts(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -42,6 +49,10 @@ const Board = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setNewPost((prevPost) => ({
+      ...prevPost,
+      author: getRandomAuthor()
+    }));
   };
 
   const handleClose = () => {
@@ -57,13 +68,17 @@ const Board = () => {
   };
 
   const handleAddPost = async () => {
+    if (!newPost.author || !newPost.description) {
+      alert('모든 필드를 입력해주세요.');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:8080/api/posts', newPost);
+      const response = await axiosIns.post('http://localhost:8080/api/posts', newPost);
       setPosts((prevPosts) => [...prevPosts, response.data]);
       setNewPost({
-        title: '',
-        author: '',
-        date: '',
+        author: getRandomAuthor(),
+        date: new Date().toISOString().split('T')[0],
         description: ''
       });
       handleClose();
@@ -72,19 +87,37 @@ const Board = () => {
     }
   };
 
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
   return (
     <ThemeProvider theme={theme1}>
       <div style={{ fontFamily: theme1.typography.fontFamily }}>
         <Box p={5} sx={{ backgroundColor: 'white' }}>
           <Container maxWidth="lg">
-            <Typography variant="h2_bold" gutterBottom>
-              {strings.boardTitle}
-            </Typography>
-            <Button variant="contained" onClick={handleClickOpen} sx={{ ml: 2, mb: 2, backgroundColor:theme1.palette.darkgreen }}>
-              {strings.addPostButton}
-            </Button>
+            <Box sx={{display:"flex", alignItems:"center"}}>
+              <Typography variant="h2_bold" gutterBottom>
+                {strings.boardTitle}
+              </Typography>
+              <Button variant="contained" onClick={handleClickOpen}               
+              sx={{ 
+                ml: 2, 
+                mb: 2, 
+                backgroundColor: theme1.palette.darkgreen,
+                '&:hover': {
+                  backgroundColor: theme1.palette.lightgreen,
+                }
+              }}>
+                {strings.addPostButton}
+              </Button>
+            </Box>
             <Grid container spacing={4}>
-              {posts.map((post) => (
+              {currentPosts.map((post) => (
                 <Grid item key={post.id} xs={12} sm={6} md={4}>
                   <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flexGrow: 1 }}>
@@ -101,30 +134,34 @@ const Board = () => {
                         {post.description}
                       </Typography>
                     </CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                      <Button size="small" color="primary">
-                        {strings.viewDetails}
-                      </Button>
-                    </Box>
                   </Card>
                 </Grid>
               ))}
             </Grid>
+            <Box mt={4} display="flex" justifyContent="center">
+            <Pagination
+                count={Math.ceil(posts.length / postsPerPage)}
+                page={currentPage}
+                onChange={handlePageChange}
+                sx={{
+                  '& .MuiPaginationItem-root': {
+                    color: theme1.palette.darkgreen,
+                  },
+                  '& .Mui-selected': {
+                    backgroundColor: theme1.palette.darkgreen,
+                    color: 'white',
+                  },
+                  '& .MuiPaginationItem-ellipsis': {
+                    color: theme1.palette.lightgreen,
+                  },
+                }}
+              />
+            </Box>
           </Container>
 
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>{strings.dialogTitle}</DialogTitle>
             <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                name="title"
-                label={strings.postTitle}
-                type="text"
-                fullWidth
-                value={newPost.title}
-                onChange={handleChange}
-              />
               <TextField
                 margin="dense"
                 name="author"
@@ -132,7 +169,7 @@ const Board = () => {
                 type="text"
                 fullWidth
                 value={newPost.author}
-                onChange={handleChange}
+                disabled
               />
               <TextField
                 margin="dense"
@@ -141,7 +178,7 @@ const Board = () => {
                 type="date"
                 fullWidth
                 value={newPost.date}
-                onChange={handleChange}
+                disabled
                 InputLabelProps={{
                   shrink: true,
                 }}

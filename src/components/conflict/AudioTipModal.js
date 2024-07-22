@@ -4,6 +4,20 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // 캐러셀 스타일
 import CloseIcon from '@mui/icons-material/Close';
 
+const slides = [
+  {
+    content: "서운하고 억울했던 일들을 말해주세요.👂",
+    image: "/images/6음성녹음.png",
+    alt: "음성"
+  },
+  {
+    content: `이야기가 끝났으면 "누가 잘못했어?"라고 말하고
+    종료버튼을 눌러주세요👆`,
+    image: "/images/7음성업로드.png",
+    alt: "음성2"
+  }
+];
+
 const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -12,7 +26,7 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
   };
 
   const getTitle = () => {
-      return "사용 설명";
+    return "사용 설명";
   };
 
   return (
@@ -86,24 +100,16 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
             )
           }
         >
-          <div>
-            <Typography sx={{ p: { xs: 1, md: 3 } }}>
-              서운하고 억울했던 일들을 말해주세요.👂
-            </Typography>
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '200px', md: '350px' } }}>
-              <img src="/images/음성.png" alt="음성" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-            </Box>
-
-          </div>
-          <div>
-            <Typography sx={{ p: { xs: 1, md: 3 } }}>
-              이야기가 끝났으면 "누가 잘못했어?"라고 말하고 <br/>종료버튼을 눌러주세요👆
-            </Typography>
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '200px', md: '350px' } }}>
-              <img src="/images/음성2.png" alt="음성2" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-            </Box>
-          </div>
-        
+          {slides.map((slide, index) => (
+            <div key={index}>
+              <Typography sx={{ p: { xs: 1, md: 3 } }}>
+                {slide.content}
+              </Typography>
+              <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: { xs: '200px', md: '350px' } }}>
+                <img src={slide.image} alt={slide.alt} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+              </Box>
+            </div>
+          ))}
         </Carousel>
       </Box>
     </Modal>
