@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import React, { useState, useRef, useCallback, useEffect } from 'react';// eslint-disable-next-line
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Container, TextField, Typography, Box, Grid, ThemeProvider, Divider, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
@@ -8,13 +7,12 @@ import SendModal from '../SendModal';
 import OnboardingCarousel from "../Onboarding";
 
 // 변수 정의
-// eslint-disable-next-line
-const cardMaxWidth = 400;// eslint-disable-next-line
-const cardMaxHeight = 300;// eslint-disable-next-line
-const imageHeight = 300;// eslint-disable-next-line
-const imageSrc = "/images/H.png";// eslint-disable-next-line
-const imageAlt = "Paella dish";// eslint-disable-next-line
-const lovemainText = "카톡 판결\n몇대몇";// eslint-disable-next-line
+const cardMaxWidth = 400;
+const cardMaxHeight = 300;
+const imageHeight = 300;
+const imageSrc = "/images/H.png";
+const imageAlt = "Paella dish";
+const lovemainText = "카톡 판결\n몇대몇";
 const cardContentText = "";
 const inputPromptText = "무슨 일이 있었는지 적어주세요:";
 const btnUploadLabel = "카카오톡 파일 업로드";
@@ -28,8 +26,8 @@ const FileUpload = () => {
   const [fileName, setFileName] = useState('');
   const [fileSize, setFileSize] = useState(0);
   const [fileType, setFileType] = useState('');
-  const [fileCount, setFileCount] = useState(0);// eslint-disable-next-line
-  const [jsonContent, setJsonContent] = useState(null);// eslint-disable-next-line
+  const [fileCount, setFileCount] = useState(0);
+  const [jsonContent, setJsonContent] = useState(null);
   const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [showCarousel, setShowCarousel] = useState(true);
@@ -143,6 +141,27 @@ const FileUpload = () => {
           <Box>
             <img src="/images/H.png" alt="intro" style={{ maxWidth: '100%', height: 'auto', margin: '0 auto' }} />
           </Box>
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <input
+              accept=".txt,image/*"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              type="file"
+              onChange={handleFileChange}
+              multiple
+            />
+            <UploadButton
+              label={btnUploadLabel}
+              onClick={handleButtonClick}
+              disabled={false}
+              className="conflict-btn-upload"
+              title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
+              defaultColor='#F7E600'
+              hoverColor='#F7E60090'
+              disabledColor='#B0B0B0'
+              fontColor='#000'
+            />
+          </Box>
           <Divider sx={{ width: '90%', mb: 2, backgroundColor: '#ccc' }} />
           <Box sx={{ display: "flex", overflowX: "auto", whiteSpace: "nowrap", width: '90%', mb: 2 }}>
             <Paper sx={{ p: 15, minWidth: '200px', marginRight: 2 }}>
@@ -154,27 +173,6 @@ const FileUpload = () => {
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', position: 'fixed', bottom: 0, width: '100%', left: 0 }}>
-                <input
-                  accept=".txt,image/*"
-                  style={{ display: 'none' }}
-                  ref={fileInputRef}
-                  type="file"
-                  onChange={handleFileChange}
-                  multiple
-                />
-                <UploadButton
-                  label={btnUploadLabel}
-                  onClick={handleButtonClick}
-                  disabled={false}
-                  className="conflict-btn-upload"
-                  title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
-                  defaultColor='#F7E600'
-                  hoverColor='#F7E60090'
-                  disabledColor='#B0B0B0'
-                  fontColor='#000'
-                />
-              </Box>
               <SendModal
                 open={openModal}
                 handleClose={handleCloseModal}

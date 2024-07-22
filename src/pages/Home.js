@@ -1,25 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Box, ThemeProvider, Typography, Card, CardMedia, CardContent } from '@mui/material';
+import { Box, ThemeProvider, Grid, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import theme1 from '../theme';
 import '../css/Home.css';
 import axiosIns from '../components/axios';
 import AgreeModal from '../components/AgreeModal';
-import Footer from '../components/Footer';
+import { Carousel } from 'react-responsive-carousel';
+
+const cardData = [
+    { title: "데이터 추출방법", image: "/images/톡설명1.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
+    { title: "텍스트파일 업로드방법", image: "/images/톡설명2.png", alt: "talk2", description: "70KB이하의 카톡txt 파일을 업로드 할 수 있습니다." },
+    { title: "캡쳐파일 업로드방법", image: "/images/톡설명3.png", alt: "talk3", description: "5장 이하의 카톡캡쳐 파일을 업로드할 수 있습니다." }
+  ];
 
 const Home = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
-    const today = new Date().toLocaleDateString();
 
-    const cardMaxWidth = 360;
-    const imageHeight = 300;
-    const cardContentText = "상황 설명에 따른 과실 여부를 따져보겠습니다.";
-    const cardContentText2 = "얼쑤! 네 말이 다 맞다. 무조건 얼쑤다!";
+    const largeImageSrc = "/images/main.png";
+    const largeImageAlt = "Large Content";
+    const largeImageText = "대화 판결의 모든 것";
+    const largeImageTextSub = "몇대몇";
+    const servicetitle1 = '몇대몇 서비스 사용 방법';
+    const servicetitle2 = '갈등 상황에서 판결을 내려주는 몇대몇 서비스';
+    
+    const smallBoxes = [
+        { bgColor: 'darkgreen', text: '몇대몇', textColor: 'white' },
+        { bgColor: 'gray200', text: '음성, 사진, 텍스트\n\n 모든 형태의 대화 데이터 판결', textColor: 'gray800' },
+        { bgColor: 'gray200', text: '무조건 내편 맞장구 챗봇', textColor: 'gray800' }
+    ];
 
-    const cards = [
-        { imageSrc: "/images/han.jpg", imageAlt: "Conflict between couple" },
-        { imageSrc: "/images/zangu.jpg", imageAlt: "Another conflict" }
+    const finalBoxes = [
+        { bgColor: 'gray200', text: '카톡 분석', textColor: 'black' },
+        { bgColor: 'gray200', text: '맞장구 채팅', textColor: 'black' },
     ];
 
     const handleLogout = async () => {
@@ -56,46 +70,100 @@ const Home = () => {
 
     return (
         <ThemeProvider theme={theme1}>
-            <div style={{ fontFamily: theme1.typography.fontFamily, position: 'relative', minHeight: '100vh' }}>
-                <Box
-                    sx={{
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        padding: '0',
-                        boxSizing: 'border-box',
-                        marginTop: 5,
-                        paddingBottom: '100px', // 푸터 높이만큼 패딩 추가
-                    }}
-                >
-                    <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'flex-start', ml: 3.3, mt: 3.5, mb:3}}>
-                        <Typography variant="h2_bold" gutterBottom>
-                            투데이
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary" sx={{ ml: 2 }}>
-                            {today}
-                        </Typography>
-                    </Box>
-                    {cards.map((card, index) => (
-                        <Card key={index} sx={{ maxWidth: cardMaxWidth, mt: index > 0 ? 3 : 0 }}>
-                            <CardMedia
-                                component="img"
-                                height={imageHeight}
-                                image={card.imageSrc}
-                                alt={card.imageAlt}
-                                sx={{ borderTopLeftRadius: '4px', borderTopRightRadius: '4px' }}
-                            />
-                            <CardContent sx={{ paddingTop: '16px' }}>
-                                <Typography variant="h6" color="text.secondary">
-                                    {cardContentText}
+            <div style={{ fontFamily: theme1.typography.fontFamily }}>
+            <Box p={5} sx={{ backgroundColor: 'white' }}>
+                <Container maxWidth="lg">
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={9}>
+                            <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+                                <img src={largeImageSrc} alt={largeImageAlt} style={{ width: '100%', height: '420px', borderRadius: '10px' }} />
+                                <Typography variant="h1_bold" sx={{ position: 'absolute', top: 100, left: 450, color: 'white' }}>
+                                    {largeImageText}
+                                    {largeImageTextSub}
                                 </Typography>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </Box>
-                <Footer />
+                            </Box>
+                        </Grid>
+                        <Grid item container xs={12} md={3} spacing={2}>
+                            {smallBoxes.map((box, index) => (
+                                <Grid item xs={12} sm={4} md={12} key={index}>
+                                    <Box sx={{ position: 'relative', width: '100%', height: '96%', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
+                                        <Typography
+                                        p={3} variant="title_bold" sx={{ color: box.textColor }}>
+                                            {box.text}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Grid>
+                    <Box mt={7}>
+                        <Typography variant='h2_bold'>
+                            {servicetitle1}
+                        </Typography>
+                        <Box sx={{ display: 'flex', overflowX: 'auto', mt: 2 }}>
+                        <Carousel
+                        infiniteLoop={false}
+                        useKeyboardArrows
+                        showThumbs={false}
+                        showStatus={false}
+                        showArrows={true}
+                        selectedItem={currentSlide}
+                        onChange={(index) => setCurrentSlide(index)}
+                        renderIndicator={false}
+                        >
+                        {cardData.map((card, index) => (
+                            <Box key={index} sx={{ textAlign: 'center', p: 2 }}>
+                            <Box sx={{ mb: 5 }}>
+                                <Typography 
+                                variant="h2_bold" 
+                                sx={{ 
+                                    display: 'inline-block',
+                                    position: 'relative',
+                                    '&:before': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    width: '100%',
+                                    height: '35%',
+                                    bottom: 0,
+                                    left: 0,
+                                    backgroundColor: 'vlightgreen',
+                                    zIndex: -1,
+                                    }
+                                }}
+                                >
+                                {card.title}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ mt: 1, mb: 5}}>
+                                <Typography variant="title_bold">
+                                {card.description}
+                                </Typography>
+                            </Box>
+                            <img src={card.image} alt={card.alt} style={{ maxWidth: '60%', height: 'auto', margin: '0 auto' }} />
+                            </Box>
+                        ))}
+                        </Carousel>
+                        </Box>
+                    </Box>
+                    <Box mt={7}>
+                        <Typography variant='h2_bold'>
+                            {servicetitle2}
+                        </Typography>
+                        <Grid container spacing={2} mt={2}>
+                            {finalBoxes.map((box, index) => (
+                                <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                                    <Box sx={{ position: 'relative', width: '100%', height: '90px', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
+                                        <Typography variant="title_bold" sx={{ color: box.textColor }}>
+                                            {box.text}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Box>
+                </Container>
                 <AgreeModal />
+            </Box>
             </div>
         </ThemeProvider>
     );

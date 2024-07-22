@@ -29,13 +29,13 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
-import Footer from './components/Footer';
 
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
 import SttLoadingPage from './components/conflict/SttLoadingPage';
 import SttUploadConflict from './components/conflict/SttUploadConflict';
 import SttUpload from './pages/conflict/SttUpload';
+import Board from './pages/Board';
 
 
 const MainApp = () => {
@@ -44,13 +44,12 @@ const MainApp = () => {
   return (
     <>
       <Header />
-      {location.pathname !== "/upload-conflict" && <Footer />}
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/chatbot" element={<ChatBot />} />
-
+          <Route path="/board" element={<Board />} />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />
