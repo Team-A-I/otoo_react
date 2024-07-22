@@ -1,4 +1,4 @@
-import { Grid, Button, Typography, Box, Tooltip, ThemeProvider } from '@mui/material';
+import { Grid,  Typography, Box,  ThemeProvider } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/chatbot/ChatbotPage.css';
@@ -18,10 +18,10 @@ const QnaChatbot = () => {
   // 채팅창에 표시할 HTML 문자열
   const [htmlString, setHtmlString] = useState('<div class="jangguDiv"><Box class="janggu">얼쑤! 몇대몇 사이트에 대해 궁금한게 있다면 나에게 물어보시오!</Box></div>');
   const inputRef = useRef(null);
-  // 리포트 생성 버튼 활성화 여부
+  // 리포트 생성 버튼 활성화 여부// eslint-disable-next-line
   const [disabled, setDisabled] = useState(true);
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);// eslint-disable-next-line
   const navigate = useNavigate();
 
   // Localized text values
