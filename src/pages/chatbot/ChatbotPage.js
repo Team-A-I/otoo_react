@@ -127,12 +127,14 @@ const ChatBot = () => {
 
  
   return (
-    <Box className='grid'>
       <ThemeProvider theme={theme}>
+        <div style={{ fontFamily: theme.typography.fontFamily}}>
+    <Box className='grid'>
         <Box className='content'>
           <Box className="chat_subtitle">
-            <Typography variant="title_bold" color="gray600">{chatbotTitle}</Typography>
+            <Typography variant="h5" color="gray600">{chatbotTitle}</Typography>
           </Box>
+
           <Box className="chat_subtitle">
             <Typography variant="sub_mid" color="gray500">{chatbotSubtitle1}</Typography>
           </Box>
@@ -218,9 +220,11 @@ const ChatBot = () => {
             
             </Grid> 
           </Grid>
+
         </Box>
-      </ThemeProvider>
     </Box>
+        </div>
+      </ThemeProvider>
   );
 };
 
