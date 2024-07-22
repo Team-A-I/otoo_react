@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';// eslint-disable-next-line
 import { Box, ThemeProvider, Grid, Container, Typography, IconButton, keyframes } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import theme1 from '../theme';
 import '../css/Home.css';
 import axiosIns from '../components/axios';
-import AgreeModal from '../components/AgreeModal';
+import AgreeModal from '../components/modal/AgreeModal';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
