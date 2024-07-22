@@ -1,11 +1,11 @@
 import { Container, Box, ThemeProvider, IconButton, Modal, TextField, Alert, AlertTitle, useMediaQuery } from '@mui/material';
-import '../css/chatbot/EmotionReportPage.css';
+import '../../css/chatbot/EmotionReportPage.css';
 import React, { useState, useEffect, useRef } from 'react';
-import theme from "../theme";
+import theme from "../../theme";
 import Button from '@mui/material/Button';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-import axiosIns from '../components/axios';
+import axiosIns from '../axios';
 
 const TEXTS = {
   modalTitle: '결과가 만족스러우신가요?',

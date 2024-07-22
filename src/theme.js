@@ -1,5 +1,4 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
-
 // 테마 생성
 let theme = createTheme({
   palette: {
@@ -241,7 +240,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body1: {
-      fontSize: '14px', 
+      fontSize: '14px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '13px',
       },
@@ -252,7 +251,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body2: {
-      fontSize: '13px', 
+      fontSize: '13px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '12px',
       },
@@ -263,7 +262,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body3: {
-      fontSize: '12px', 
+      fontSize: '12px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '11px',
       },
@@ -274,7 +273,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body4: {
-      fontSize: '11px', 
+      fontSize: '11px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '10px',
       },
@@ -286,8 +285,6 @@ let theme = createTheme({
     },
   },
 });
-
 // 반응형 폰트 크기 적용
 theme = responsiveFontSizes(theme);
-
 export default theme;

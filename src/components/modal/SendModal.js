@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Button, Typography, Modal, ThemeProvider, Paper, Container } from '@mui/material';
-import theme from '../theme';
+import theme from '../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 
 const modal = {

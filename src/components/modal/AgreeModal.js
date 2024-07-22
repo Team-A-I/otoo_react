@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Button, Typography, Modal, Accordion, AccordionSummary , AccordionDetails, ThemeProvider, Paper, Container } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import theme from '../theme';
+import theme from '../../theme';
 import Cookies from 'js-cookie'; 
 
 const TermsOfService = () => {

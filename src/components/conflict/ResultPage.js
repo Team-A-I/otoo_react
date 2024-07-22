@@ -8,8 +8,8 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import theme from "../../theme";
 import { motion } from 'framer-motion';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
-
 Chart.register(...registerables);
+
 
 const ResultPage = () => {
   const location = useLocation();

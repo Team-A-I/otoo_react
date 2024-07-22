@@ -9,7 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import FriendshipButton from './FriendshipButton';
 import theme from "../../theme";
-import SendModal from '../SendModal';
+import SendModal from '../modal/SendModal';
 
 // 변수 정의
 const cardMaxWidth = 700;
