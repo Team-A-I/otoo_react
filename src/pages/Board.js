@@ -40,7 +40,7 @@ const Board = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosIns.get('https://gnat-suited-weekly.ngrok-free.app/api/posts');
+      const response = await axios.get('https://gnat-suited-weekly.ngrok-free.app/api/posts');
       setPosts(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -74,7 +74,7 @@ const Board = () => {
     }
 
     try {
-      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/posts', newPost);
+      const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/api/posts', newPost);
       setPosts((prevPosts) => [...prevPosts, response.data]);
       setNewPost({
         author: getRandomAuthor(),
