@@ -8,7 +8,7 @@ import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import '../../css/love/uploadlove.css';
 import theme from '../../theme';
 import UploadButton from '../UploadButton';
-import SendModal from '../SendModal';
+import SendModal from '../modal/SendModal';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);

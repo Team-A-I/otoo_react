@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Box, ThemeProvider, Grid, Container, Typography } from '@mui/material';
+import { Box, ThemeProvider, Grid, Container, Typography, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import theme1 from '../theme';
 import '../css/Home.css';
 import axiosIns from '../components/axios';
-import AgreeModal from '../components/AgreeModal';
+import AgreeModal from '../components/modal/AgreeModal';
 import { Carousel } from 'react-responsive-carousel';
+import QnaChatbot from '../components/modal/QnaChatbot';
 
 const cardData = [
     { title: "데이터 추출방법", image: "/images/톡설명1.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
@@ -13,7 +14,19 @@ const cardData = [
     { title: "캡쳐파일 업로드방법", image: "/images/톡설명3.png", alt: "talk3", description: "5장 이하의 카톡캡쳐 파일을 업로드할 수 있습니다." }
 ];
 
-const Home = () => {// eslint-disable-next-line
+const smallBoxes = [
+    { bgColor: 'darkgreen', text: '몇대몇', textColor: 'white' },
+    { bgColor: 'gray200', text: '음성, 사진, 텍스트\n\n 모든 형태의 대화 데이터 판결', textColor: 'gray800' },
+    { bgColor: 'gray200', text: '무조건 내편 맞장구 챗봇', textColor: 'gray800' }
+];
+
+const finalBoxes = [
+    { bgColor: 'gray200', text: '카톡 분석', textColor: 'black' },
+    { bgColor: 'gray200', text: '맞장구 채팅', textColor: 'black' },
+];
+
+const Home = () => {
+    const [openChat, setOpenChat] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
@@ -24,18 +37,10 @@ const Home = () => {// eslint-disable-next-line
     const largeImageTextSub = "몇대몇";
     const servicetitle1 = '몇대몇 서비스 사용 방법';
     const servicetitle2 = '갈등 상황에서 판결을 내려주는 몇대몇 서비스';
-    
-    const smallBoxes = [
-        { bgColor: 'darkgreen', text: '몇대몇', textColor: 'white' },
-        { bgColor: 'gray200', text: '음성, 사진, 텍스트\n\n 모든 형태의 대화 데이터 판결', textColor: 'gray800' },
-        { bgColor: 'gray200', text: '무조건 내편 맞장구 챗봇', textColor: 'gray800' }
-    ];
 
-    const finalBoxes = [
-        { bgColor: 'gray200', text: '카톡 분석', textColor: 'black' },
-        { bgColor: 'gray200', text: '맞장구 채팅', textColor: 'black' },
-    ];
-// eslint-disable-next-line
+    const handleOpenChat = () => setOpenChat(true);
+    const handleCloseChat = () => setOpenChat(false);
+
     const handleLogout = async () => {
         try {
             const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
@@ -46,11 +51,7 @@ const Home = () => {// eslint-disable-next-line
             });
 
             if (response.status === 200) {
-                sessionStorage.removeItem('accessToken');
-                sessionStorage.removeItem('refreshToken');
-                sessionStorage.removeItem('userName');
-                sessionStorage.removeItem('userEmail');
-                sessionStorage.removeItem('userRole');
+                sessionStorage.clear();
                 setIsLoggedIn(false);
                 navigate('/');
                 alert('로그아웃 성공');
@@ -62,7 +63,7 @@ const Home = () => {// eslint-disable-next-line
 
     useEffect(() => {
         const usersCode = sessionStorage.getItem('accessToken');
-        if (usersCode !== null) {
+        if (usersCode) {
             setIsLoggedIn(true);
             console.log(sessionStorage.getItem('refreshToken'));
         }
@@ -75,10 +76,10 @@ const Home = () => {// eslint-disable-next-line
                     <Container maxWidth="lg">
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={9}>
-                                <Box sx={{ position: 'relative', width: '100%', height: '100%' , textAlign:'right'}}>
+                                <Box sx={{ position: 'relative', width: '100%', height: '100%', textAlign: 'right' }}>
                                     <img src={largeImageSrc} alt={largeImageAlt} style={{ width: '100%', height: 'auto', borderRadius: '10px' }} />
                                     <Typography variant="h1_bold" sx={{ position: 'absolute', top: { xs: 50, md: 150 }, left: { xs: 20, md: 450 }, color: 'white', fontSize: { xs: '1.5rem', md: '3rem' } }}>
-                                        {largeImageText}<br/>
+                                        {largeImageText}<br />
                                         {largeImageTextSub}
                                     </Typography>
                                 </Box>
@@ -162,6 +163,15 @@ const Home = () => {// eslint-disable-next-line
                         </Box>
                     </Container>
                     <AgreeModal />
+                    <IconButton 
+                        color="#04613E"
+                        fontSize='Large'
+                        onClick={handleOpenChat} 
+                        style={{ position: 'fixed', bottom: '20px', right: '20px' }}
+                    >
+                        <img src='/images/qnaIcon.png' style={{height:'80px'}} alt="Q&A Icon" />
+                    </IconButton>
+                    <QnaChatbot open={openChat} onClose={handleCloseChat} />
                 </Box>
             </div>
         </ThemeProvider>
