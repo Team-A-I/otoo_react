@@ -30,7 +30,6 @@ import GoogleLogin from './pages/users/GoogleLogin';
 import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
-
 import PrivateRoute from './components/PrivateRoute';
 import QnaChatbot from './pages/chatbot/QnaChatbot';
 
@@ -40,8 +39,12 @@ import Recorder from './components/conflict/Recorder';
 import SttLoadingPage from './components/conflict/SttLoadingPage';
 import SttUploadConflict from './components/conflict/SttUploadConflict';
 import SttUpload from './pages/conflict/SttUpload';
+
 import Streaming from './components/streaming/Streaming';
 import RecorderLoading from './components/conflict/RecorderLoading';
+
+import Board from './pages/Board';
+
 
 
 const MainApp = () => {
@@ -63,7 +66,11 @@ const MainApp = () => {
             }
           /> */}
           <Route path="/chatbot" element={<ChatBot />} />
+
           <Route path="/qna-chatbot" element={<QnaChatbot />} />
+
+          <Route path="/board" element={<Board />} />
+
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />

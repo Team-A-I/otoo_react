@@ -110,7 +110,7 @@ const OnboardingCarousel = ({ onSkip }) => {
           <Box
             sx={{
               position: 'absolute',
-              bottom: '150px',
+              bottom: '10vh',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',

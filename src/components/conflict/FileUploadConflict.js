@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useCallback } from 'react';
 import {
   Container,
@@ -9,6 +10,7 @@ import {
   Button,
   Grid
 } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
 import theme1 from "../../theme";
@@ -18,6 +20,7 @@ import AudioTipModal from './AudioTipModal'; // 음성 Tip 모달 컴포넌트 �
 import Recorder from '../../components/conflict/Recorder';
 
 // 변수 정의
+
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnVoiceUploadLabel = "음성파일 업로드";
 
