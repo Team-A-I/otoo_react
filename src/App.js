@@ -32,7 +32,7 @@ import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
 // eslint-disable-next-line
 import PrivateRoute from './components/PrivateRoute';
-import QnaChatbot from './pages/chatbot/QnaChatbot';
+import QnaChatbot from './components/modal/QnaChatbot';
 
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';

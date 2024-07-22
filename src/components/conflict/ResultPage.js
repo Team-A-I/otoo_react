@@ -6,7 +6,7 @@ import theme from "../../theme";
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; 
 import { CustomPaper, AttributeCard, TitleSection } from './CommonComponentsConflict';
-import FeedbackModal from '../FeedbackModal';
+import FeedbackModal from '../modal/FeedbackModal';
 
 const ResultPage = () => {
   const location = useLocation();

@@ -13,7 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
 import theme1 from "../../theme";
-import SendModal from '../SendModal';
+import SendModal from '../modal/SendModal';
 import TextTipModal from './TextTipModal'; // 텍스트 Tip 모달 컴포넌트 임포트
 import AudioTipModal from './AudioTipModal'; // 음성 Tip 모달 컴포넌트 임포트
 import Recorder from '../../components/conflict/Recorder';

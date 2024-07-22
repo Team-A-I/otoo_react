@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Paper, Container, Card, CardContent, Tooltip, Button, Table, TableBody, TableCell, TableHead, TableRow, useMediaQuery, useTheme, ThemeProvider } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import theme from '../../theme';
-import FeedbackModal from '../../components/FeedbackModal';
+import FeedbackModal from '../../components/modal/FeedbackModal';
 
 const getLoveMessage = (total_score) => {
     const keys = Object.keys(total_score);
