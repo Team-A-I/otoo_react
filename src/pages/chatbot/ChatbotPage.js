@@ -31,7 +31,7 @@ const ChatBot = () => {
   const navigate = useNavigate();
 
   // Localized text values
-  const chatbotTitle = '맞장구 챗봇';
+  const chatbotTitle = '맞장구봇';
   const chatbotSubtitle1 = '연인에게 받은 상처를 쏟아내세요.';
   const chatbotSubtitle2 = '장구가 당신의 이야기에 맞장구를 쳐줄게요.';
   const chatbotPlaceholder = '서운했던 이야기를 들려주세요.';
@@ -162,14 +162,16 @@ const ChatBot = () => {
                   </Box>
                 </Box>
               ) : (
-                <Box sx={{marginBottom:'10px'}}>
-                  <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
-                    <Box sx={{position:'relative'}}>
+                
+                <Box sx={{marginBottom:'10px',height:'100%'}}>
+                
+                <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
+                  <Box sx={{position:'relative'}}>
                     <Tooltip title={chatbotTooltipText} arrow placement="top">
                     <Button
                       variant="contained"
                       className='emotionButton bounce'
-                      style={{ display: disabled ? 'none' : 'inline-block', position: 'absolute', right: 10, bottom: 10 }} // 조건부 스타일 적용
+                      style={{ display: disabled ? 'none' : 'inline-block' }} // 조건부 스타일 적용
                       onClick={() => emotionReportHandler()}
                     >
                       {chatbotEmotionReportButtonText}
