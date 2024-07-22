@@ -44,12 +44,24 @@ import RecorderLoading from './components/conflict/RecorderLoading';
 
 import Board from './pages/Board';
 
+import AdminUser from './pages/admin/AdminUser';
+import AdminHeader from './pages/admin/AdminHeader';
+
 
 const MainApp = () => {
+  const location = useLocation();
 
+    // 경로에 따라 헤더를 결정
+    const HeaderComponent = () => {
+      if (location.pathname === '/admin-user' || location.pathname === '/admin-analyze') {
+        return <AdminHeader />;
+      }
+      return <Header />;
+    };
+    
   return (
     <>
-      <Header />
+      <HeaderComponent />
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -96,6 +108,8 @@ const MainApp = () => {
           <Route path='/streaming' element={<Streaming />} />
           <Route path='/recorder-loading' element={<RecorderLoading />} />
           <Route path='/board' element={<Board />} />
+
+          <Route path="/admin-user" element={<AdminUser />} />
 
         </Routes>
       </Box>
