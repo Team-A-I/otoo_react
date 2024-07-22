@@ -51,15 +51,6 @@ const finalBoxes = [
     { bgColor: 'gray100', text: '맞장구 채팅', textColor: 'black', path: '/chatbot' },
 ];
 
-const shimmer = keyframes`
-    0% {
-        background-position: -1000px 0;
-    }
-    100% {
-        background-position: 1000px 0;
-    }
-`;
-
 const Home = () => {// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -72,6 +63,7 @@ const Home = () => {// eslint-disable-next-line
     const servicetitle1 = '몇대몇 서비스 사용 방법';
     const servicetitle2 = '판결과 공감의 몇대몇 서비스';
 
+    // eslint-disable-next-line
     const handleLogout = async () => {
         try {
             const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
