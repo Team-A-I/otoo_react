@@ -158,7 +158,7 @@ const FileUpload = () => {
               <Typography variant="h2_bold">
                 누가 맞는지 판결 해드리겠습니다.<br/>
               </Typography>
-              <Typography variant="body4" mt={1} sx={{color:'#04613E'}}>
+              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
                 ※ 카카오톡에서 내보내기 한 대화내용이나<br/>　캡쳐한 이미지만 업로드 가능합니다.
               </Typography>
             </Box>
@@ -172,10 +172,10 @@ const FileUpload = () => {
               <Typography variant="h2_bold">
                 누가 맞는지 판결 해드리겠습니다.<br/>
               </Typography>
-              <Typography variant="body4" mt={1} sx={{color:'#04613E'}}>
+              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
                 ※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.<br/>
               </Typography>
-              <Typography variant="body4" mt={1} sx={{color:'#04613E'}}>
+              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
                 ※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.
               </Typography>
             </Box>
