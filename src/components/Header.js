@@ -20,6 +20,8 @@ const Header = () => {
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
     { text: '로그인', path: '/user-login' },
+    { text: 'QnA', path: '/qna-chatbot' },
+
   ];
 
   const list = () => (

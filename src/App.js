@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Routes, Route, useLocation, BrowserRouter as Router , Routes, Route } from 'react-router-dom';
+
 import Header from './components/Header';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -30,6 +31,10 @@ import NaverLogin from './pages/users/NaverLogin';
 import ForgetPassword from './pages/users/ForgetPassword';
 import ResetPassword from './pages/users/ResetPassword';
 
+import PrivateRoute from './components/PrivateRoute';
+import QnaChatbot from './pages/chatbot/QnaChatbot';
+
+
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
 import SttLoadingPage from './components/conflict/SttLoadingPage';
@@ -48,8 +53,17 @@ const MainApp = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
+          {/* 페이지 권한 처리 예시 */}
+          {/* <Route 
+            path="/chatbot" 
+            element={
+              <PrivateRoute roles={['ROLE_USER', 'ROLE_ADMIN']}>
+                <ChatBot />
+              </PrivateRoute>
+            }
+          /> */}
           <Route path="/chatbot" element={<ChatBot />} />
-
+          <Route path="/qna-chatbot" element={<QnaChatbot />} />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
           <Route path="/loading-conflict" element={<LoadingPage />} />
           <Route path="/result-conflict" element={<ResultPage />} />

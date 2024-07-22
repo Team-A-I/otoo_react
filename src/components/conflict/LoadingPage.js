@@ -24,6 +24,7 @@ const LoadingPage = () => {
           console.log('Sending text data for analysis:', requestData);
           const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/analysis', requestData);
           console.log('Server response:', response.data);
+
           navigate('/result-conflict', { state: { jsonData: response.data } });
         } catch (error) {
           alert('지원하지 않는 데이터 형식입니다.\n아래의 형식인지 확인부탁드려요:)\n\n 1. 카톡 형식 텍스트 파일\n 2. 카톡 기본 테마 캡쳐 이미지');
