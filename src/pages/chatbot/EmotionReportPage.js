@@ -10,7 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
-import FeedbackModal from '../../components/FeedbackModal';
+import FeedbackModal from '../../components/modal/FeedbackModal';
 
 const TEXTS = {
   clipboardSuccess: '클립보드에 복사되었습니다:',

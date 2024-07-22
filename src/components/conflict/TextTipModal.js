@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, IconButton } from '@mui/material';
+import { Modal, Box, Typography, IconButton,ThemeProvider } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // 캐러셀 스타일
 import CloseIcon from '@mui/icons-material/Close';
+import theme from '../../theme';
 
 const slides = [
   {
@@ -57,6 +58,8 @@ const TextTipModal = ({ open, handleClose }) => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
+      <div style={{ fontFamily: theme.typography.fontFamily }}>
     <Modal
       open={open}
       onClose={handleClose}
@@ -140,6 +143,8 @@ const TextTipModal = ({ open, handleClose }) => {
         </Carousel>
       </Box>
     </Modal>
+    </div>
+    </ThemeProvider>
   );
 }
 

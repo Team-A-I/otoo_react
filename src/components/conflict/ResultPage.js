@@ -1,363 +1,235 @@
-// eslint-disable-next-line
-import React, { useEffect,useState } from 'react';
-import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, Tabs, Tab, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
+import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import theme from "../../theme";
+import { Container, Typography, Box, ThemeProvider, Paper, Grid } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
-import 'chart.js/auto'; 
-import { CustomPaper, AttributeCard, TitleSection } from './CommonComponentsConflict';
-import FeedbackModal from '../FeedbackModal';
+import { Chart, registerables } from 'chart.js';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import theme from "../../theme";
+import { motion } from 'framer-motion';
+import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
+Chart.register(...registerables);
+
 
 const ResultPage = () => {
   const location = useLocation();
   const { jsonData } = location.state || {};
+
   const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
-  const theme1 = useTheme();
-  const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
- 
 
-  //성격별 캐릭터
-  const personalityMap = {
-    'positive_personality': '맑음이',
-    'straightforward_personality': '천둥이',
-    'timid_personality': '흐림이'
-  };
+  const faultsPaperRef = useRef(null);
+  const timelinePaperRef = useRef(null);
 
-  //비율별 날씨아이콘
-  const getImageByPercentage = (percentage) => {
-    if (percentage >= 0 && percentage <= 20) return '/images/무지개.png';
-    if (percentage >= 21 && percentage <= 40) return '/images/맑음.png';
-    if (percentage >= 41 && percentage <= 50) return '/images/약간흐림.png';
-    if (percentage >= 51 && percentage <= 60) return '/images/구름.png';
-    if (percentage >= 61 && percentage <= 80) return '/images/비.png';
-    if (percentage >= 81 && percentage <= 100) return '/images/낙뢰.png';
-    return '';
-  };
-
-  //비율별 배경이미지&텍스트
-  const getStyleByTotalscore = (percentage) => {
-    if (percentage >= 0 && percentage <= 10) {
-      return {
-        imageUrl: '/images/낙뢰하늘사진.jpg',
-        color: theme.palette.gray200
-      };
-    } else if (percentage >= 11 && percentage <= 20) {
-      return {
-        imageUrl: '/images/비하늘사진.jpg',
-        color: theme.palette.gray900
-      };
-    } else if (percentage >= 21 && percentage <= 45) {
-      return {
-        imageUrl: '/images/흐린하늘사진.png',
-        color: theme.palette.gray900
-      };
-    } else if (percentage >= 46 && percentage <= 100) {
-      return {
-        imageUrl: '/images/맑은하늘사진.jpg',
-        color: theme.palette.gray200
-      };
-    } else {
-      return {
-        imageUrl: '',
-        color: '#000000' // 기본 색상 (검정색)
-      };
+  useEffect(() => {
+    console.log("Received jsonData:", jsonData);
+    console.log("Parsed data:", data);
+    // Set equal height for both papers
+    if (faultsPaperRef.current && timelinePaperRef.current) {
+      const faultsPaperHeight = faultsPaperRef.current.offsetHeight;
+      const timelinePaperHeight = timelinePaperRef.current.offsetHeight;
+      const maxHeight = Math.max(faultsPaperHeight, timelinePaperHeight);
+      faultsPaperRef.current.style.height = `${maxHeight}px`;
+      timelinePaperRef.current.style.height = `${maxHeight}px`;
     }
-  };
+  }, [jsonData]);
 
-  // 결과페이지 타이틀
-  const titleText = () => {
-    const names = Object.keys(data.total_score || {});
-    return names.length === 2 
-      ? `${names[0]}님과<br />${names[1]}님의<br />판결 결과입니다` 
-      : '판결 결과입니다';
-  };
-  const type = 'conflict';
-  
- 
-
-  // 전체 통계 
-  const renderWrongPercentage = () => {
-    const names = Object.keys(data.total_score || {});
+  if (!jsonData) {
     return (
-      <Grid item xs={12}>
-        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} sm={4}>
-              <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
-                <Typography variant="hc_bold" color="dyellow" gutterBottom >
-                  오늘의 <br /> 갈등 일기예보 입니다. <br />누가 더 잘 못했는지 <br /> 알아 보겠습니다.
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <Grid container spacing={2} justifyContent={isSmallScreen ? 'center' : 'flex-end'}>
-                {names.map(name => (
-                  <Grid item xs={12} sm={5} key={name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
-                      <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography variant="title_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
-                        <img src={getImageByPercentage(data.total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h1_bold" color="gray600" style={{ fontSize: '2vw' }}>{data.total_score[name]}%</Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          </Grid>
-          <img src="/images/weathercaster.png" alt="기상캐스터" style={{ position: 'absolute', bottom: '-17px', left: '-115px', width: '250px', height: 'auto' }} />
-        </Paper>
-      </Grid>
-    );
-  };
-
-
-  // 세부분석
-  const renderPersonData = (name) => {
-    const mbtiPercentage = data.mbti_tendency_percentage[name];
-    const offendedPercentage = data.offended_percentage[name];
-    const tactlessPercentage = data.tactless_percentage[name];
-    const wrongPercentage = data.total_score[name];
-    const style = getStyleByTotalscore(wrongPercentage);
-  
-    const attributes = [
-      {
-        title: 'T라 미숙해',
-        percentage: mbtiPercentage,
-        tooltip: 'T 성향에 대한 상대방과 비교한 비율입니다.',
-      },
-      {
-        title: '서운함',
-        percentage: offendedPercentage,
-        tooltip: '누가 더 서운한지 상대방과 비교한 비율입니다.',
-      },
-      {
-        title: '눈치없음',
-        percentage: tactlessPercentage,
-        tooltip: '누가 더 눈치없는지 상대방과 비교한 비율입니다.',
-      },
-    ];
-  
-    return (
-      <Grid item xs={12} key={name}>
-        <CustomPaper>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} sm={4} textAlign="center">
-              <Paper
-                elevation={3}
-                style={{
-                  padding: '16px',
-                  backgroundImage: `url(${style.imageUrl})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  height: '100%',
-                  minHeight: '260px',
-                  borderRadius: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {name}님의 <br /> 잘못한 비율
-                </Typography>
-                <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {wrongPercentage}%
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <Grid container spacing={3} alignItems="stretch">
-                {attributes.map((attr, index) => (
-                  <Grid item xs={4} key={index}>
-                    <AttributeCard
-                      title={attr.title}
-                      percentage={attr.percentage}
-                      tooltip={attr.tooltip}
-                      imageSrc={getImageByPercentage(attr.percentage)}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          </Grid>
-        </CustomPaper>
-      </Grid>
-    );
-  };
-
-  
-  // Top5 키워드
-  const renderPriorityKeywords = () => {
-    const names = Object.keys(data.priority_keywords || {});
-    const renderTable = (name, keywords, color) => (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" colSpan={2}>{name}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell align="center">순위</TableCell>
-            <TableCell align="center">키워드</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {keywords.map((keyword, index) => (
-            <TableRow key={index}>
-              <TableCell align="center">{index + 1}위</TableCell>
-              <TableCell align="center" style={{ backgroundColor: color }}>{keyword}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    );
-  
-    const images = [
-      { src: "/images/yumi2.png", width: '110px', height: 'auto' }, // 첫 번째 이미지 크기
-      { src: "/images/yumi.png", width: '90px', height: 'auto' }  // 두 번째 이미지 크기
-    ];
-  
-    return (
-      <Grid item xs={12}>
-        <CustomPaper style={{ position: 'relative' }}>
-          <Typography variant="title_bold" gutterBottom>우선 순위 키워드</Typography>
-          <Grid container spacing={3}>
-            {names.map((name, index) => (
-              <Grid item xs={12} sm={6} key={name} style={{ position: 'relative' }}>
-                {renderTable(name, data.priority_keywords[name], index === 0 ? '#ECD3D8' : '#0495D2')}
-                <img
-                  src={images[index].src}
-                  alt="일러스트"
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: index === 1 ? '10px' : 'auto',
-                    right: index === 0 ? '10px' : 'auto',
-                    width: images[index].width,
-                    height: images[index].height,
-                    zIndex: 1
-                  }}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </CustomPaper>
-      </Grid>
-    );
-  };
- 
-
-  //갈등 원인
-  const renderConflictCausePercentage = () => {
-    if (!data || !data.conflict_cause_percentage) {
-      return null;
-    }
-  
-    const labels = Object.keys(data.conflict_cause_percentage);
-    const values = Object.values(data.conflict_cause_percentage);
-  
-    const getColor = (index) => {
-      const colors = [
-        'rgba(236, 211, 216, 1)',
-        'rgba(255, 207, 170, 1)',
-        'rgba(238, 202, 66, 1)',
-        'rgba(4, 149, 210, 1)',
-        'rgba(3, 80, 183, 1)',
-        'rgba(250, 227, 0, 1)',
-      ];
-      return colors[index % colors.length];
-    };
-  
-    const chartData = {
-      labels: ['갈등 원인'],
-      datasets: labels.map((label, index) => ({
-        label,
-        data: [values[index]],
-        backgroundColor: getColor(index),
-      })),
-    };
-  
-    const chartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      indexAxis: 'y',
-      scales: {
-        x: {
-          stacked: true,
-          beginAtZero: true,
-          max: 100,
-        },
-        y: {
-          stacked: true,
-        },
-      },
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-      },
-    };
-  
-    return (
-      <Grid item xs={12}>
-        <CustomPaper>
-          <Typography variant="title_bold" gutterBottom>갈등 원인 비율</Typography>
-          <div style={{ height: '100px' }}> 
-            <Bar data={chartData} options={chartOptions} />
+      <Container maxWidth="xl">
+        <ThemeProvider theme={theme}>
+          <div style={{ fontFamily: theme.typography.fontFamily }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
+              <Typography variant="h4" gutterBottom>
+                분석 결과를 불러오는 중 오류가 발생했습니다.
+              </Typography>
+            </Box>
           </div>
-        </CustomPaper>
-      </Grid>
+        </ThemeProvider>
+      </Container>
     );
+  }
+
+  const result = data;
+
+  // 데이터 처리
+  const faultsData = {
+    labels: ['A', 'B'],
+    datasets: [
+      {
+        data: [result.faults.speaker_a.percentage, result.faults.speaker_b.percentage],
+        backgroundColor: ['#F2BBC1', '#36A2EB'],
+      },
+    ],
   };
 
-
-  
-  //갈등 해결조언
-
-  
-  const [selectedTab, setSelectedTab] = React.useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
+  const faultsOptions = {
+    responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   };
 
-  const renderConflictResolutionAdvice = () => (
-    <Grid item xs={12} mb={5}>
-      <CustomPaper>
-        <Typography variant="title_bold" gutterBottom>갈등 해결 조언</Typography>
-        <Tabs value={selectedTab} onChange={handleTabChange} indicatorColor="primary" textColor="primary" centered>
-          {Object.keys(data.conflict_resolution_advice || {}).map((personality, index) => (
-            <Tab key={personality} label={personalityMap[personality]} />
-          ))}
-        </Tabs>
-        {Object.entries(data.conflict_resolution_advice || {}).map(([personality, advice], index) => (
-          <Box key={personality} mb={1} mt={3} hidden={selectedTab !== index}>
-            <Typography variant="sub_bold">{personalityMap[personality]}가 알려드립니다! <br /><br /></Typography>
-            <Typography sx={{ marginBottom: '16px' }}>{advice}</Typography>
-          </Box>
-        ))}
-      </CustomPaper>
-    </Grid>
+  const incidentData = result.Incident || {
+    development: { a_behavior: "", a_emotion: "", b_behavior: "", b_emotion: "" },
+    deployment: { a_behavior: "", a_emotion: "", b_behavior: "", b_emotion: "" },
+    crisis: { a_behavior: "", a_emotion: "", b_behavior: "", b_emotion: "" },
+    climax: { a_behavior: "", a_emotion: "", b_behavior: "", b_emotion: "" },
+    ending: { a_behavior: "", a_emotion: "", b_behavior: "", b_emotion: "" },
+  };
+
+  const colors = ["#FFCDD2", "#EF9A9A", "#E57373", "#EF5350", "#F44336"];
+
+  const createTimelineElement = (stage, aBehavior, aEmotion, bBehavior, bEmotion, color) => (
+    <TimelineItem>
+      <TimelineOppositeContent>
+        <Typography variant="body1" color="textSecondary"><strong>A 행동:</strong> {aBehavior}</Typography>
+        <Typography variant="body2" color="textSecondary"><strong>A 감정:</strong> {aEmotion}</Typography>
+      </TimelineOppositeContent>
+      <TimelineSeparator>
+        <TimelineDot style={{ backgroundColor: color }} />
+        <TimelineConnector />
+      </TimelineSeparator>
+      <TimelineContent>
+        <Typography variant="body1" color="textSecondary"><strong>B 행동:</strong> {bBehavior}</Typography>
+        <Typography variant="body2" color="textSecondary"><strong>B 감정:</strong> {bEmotion}</Typography>
+      </TimelineContent>
+    </TimelineItem>
   );
 
-
-  //전체 리턴
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <ThemeProvider theme={theme}>
         <div style={{ fontFamily: theme.typography.fontFamily }}>
-          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
-            <Grid container spacing={3} mt={5}>
-              {data.total_score && <TitleSection titleText={titleText()} imgSrc="/images/갈등AI.png" imgAlt="결과 이미지" />}
-              {data.total_score && renderWrongPercentage()}
-              {Object.keys(data.total_score || {}).map((name) => renderPersonData(name))}
-              {data.priority_keywords && renderPriorityKeywords()}
-              {data.conflict_cause_percentage && renderConflictCausePercentage()}
-              {data.conflict_resolution_advice && renderConflictResolutionAdvice()}
-            </Grid>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh', padding: '20px' }}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <Typography variant="h4" gutterBottom>
+                분석 결과
+              </Typography>
+            </motion.div>
+            <Box sx={{ width: '100%' }}>
+              <Grid container spacing={3}>
+                
+                <Grid item xs={12} md={6}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <Paper elevation={3} sx={{ padding: 2, flex: 1 }} ref={faultsPaperRef}>
+                      <Typography variant="h6" sx={{ mb: 6 }} gutterBottom>잘못 비율:</Typography>
+                      <Bar data={faultsData} options={faultsOptions} />
+                    </Paper>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <Paper elevation={3} sx={{ padding: 2, flex: 1 }} ref={timelinePaperRef}>
+                      <Typography variant="h6" gutterBottom>감정 타임라인:</Typography>
+                      <Timeline>
+                        {createTimelineElement("Development", incidentData.development.a_behavior, incidentData.development.a_emotion, incidentData.development.b_behavior, incidentData.development.b_emotion, colors[0])}
+                        {createTimelineElement("Deployment", incidentData.deployment.a_behavior, incidentData.deployment.a_emotion, incidentData.deployment.b_behavior, incidentData.deployment.b_emotion, colors[1])}
+                        {createTimelineElement("Crisis", incidentData.crisis.a_behavior, incidentData.crisis.a_emotion, incidentData.crisis.b_behavior, incidentData.crisis.b_emotion, colors[2])}
+                        {createTimelineElement("Climax", incidentData.climax.a_behavior, incidentData.climax.a_emotion, incidentData.climax.b_behavior, incidentData.climax.b_emotion, colors[3])}
+                        {createTimelineElement("Ending", incidentData.ending.a_behavior, incidentData.ending.a_emotion, incidentData.ending.b_behavior, incidentData.ending.b_emotion, colors[4])}
+                      </Timeline>
+                    </Paper>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Paper elevation={3} sx={{ padding: 2 }}>
+                    <Typography variant="h6" gutterBottom>상황 분석:</Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <EmojiEmotionsIcon />
+                        <Typography variant="body1"><strong>A:</strong> {result.situation_analysis.speaker_a}</Typography>
+                      </Paper>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <InsertEmoticonIcon />
+                        <Typography variant="body1"><strong>B:</strong> {result.situation_analysis.speaker_b}</Typography>
+                      </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Paper elevation={3} sx={{ padding: 2 }}>
+                    <Typography variant="h6" gutterBottom>감정 분석:</Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <EmojiEmotionsIcon />
+                        <Typography variant="body1"><strong>A:</strong> {result.emotion_analysis.speaker_a}</Typography>
+                      </Paper>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <InsertEmoticonIcon />
+                        <Typography variant="body1"><strong>B:</strong> {result.emotion_analysis.speaker_b}</Typography>
+                      </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Paper elevation={3} sx={{ padding: 2 }}>
+                  <Typography variant="h6" gutterBottom>결론:</Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <motion.div
+                      initial={{ x: -100 }}
+                      animate={{ x: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Typography variant="body1">{result.conclusion.text}</Typography>
+                    </motion.div>
+                    </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Paper elevation={3} sx={{ padding: 2 }}>
+                    <Typography variant="h6" gutterBottom>설명:</Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body1"><strong>A:</strong> {result.explanation.speaker_a}</Typography>
+                      </Paper>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body1"><strong>B:</strong> {result.explanation.speaker_b}</Typography>
+                      </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Paper elevation={3} sx={{ padding: 2 }}>
+                    <Typography variant="h6" gutterBottom>해결책:</Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body1"><strong>A:</strong> {result.solutions.solutionsA}</Typography>
+                      </Paper>
+                      <Paper elevation={1} sx={{ padding: 1, bgcolor: '#f5f5f5', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body1"><strong>B:</strong> {result.solutions.solutionsB}</Typography>
+                      </Paper>
+                    </Box>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-          <FeedbackModal feedbackType={type}/>  
         </div>
       </ThemeProvider>
     </Container>

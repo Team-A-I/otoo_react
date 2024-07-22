@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, IconButton } from '@mui/material';
+import { Modal, Box, Typography, IconButton , ThemeProvider } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // 캐러셀 스타일
 import CloseIcon from '@mui/icons-material/Close';
+import theme1 from "../../theme";
 
 const slides = [
   {
@@ -30,6 +31,8 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
   };
 
   return (
+    <ThemeProvider theme={theme1}>
+      <div style={{ fontFamily: theme1.typography.fontFamily }}>
     <Modal
       open={open}
       onClose={handleClose}
@@ -113,6 +116,8 @@ const AudioTipModal = ({ open, handleClose }) => {// eslint-disable-next-line
         </Carousel>
       </Box>
     </Modal>
+    </div>
+    </ThemeProvider>
   );
 }
 

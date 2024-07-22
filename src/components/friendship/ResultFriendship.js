@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import theme from "../../theme";
 import 'chart.js/auto'; 
 import { CustomPaper, AttributeCard, TitleSection } from '../conflict/CommonComponentsConflict';
-import FeedbackModal from '../FeedbackModal';
+import FeedbackModal from '../modal/FeedbackModal';
 
 const ResultFriendship = () => {
   const navigate = useNavigate();
