@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useCallback } from 'react';
 import {
   Container,
@@ -213,14 +212,14 @@ const FileUpload = () => {
                   <img 
                     src="/images/말풍선.png" 
                     alt="텍스트 업로드용 이미지 1" 
-                    style={{ maxWidth: '100%', maxHeight: '90%', margin: '0 auto' }}
+                    className="responsive-image"
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <img 
                     src="/images/누가.png" 
                     alt="텍스트 업로드용 이미지 2" 
-                    style={{ maxWidth: '100%', maxHeight: '90%', margin: '0 auto' }}
+                    className="responsive-image1"
                   />
                 </Grid>
               </Grid>
@@ -285,6 +284,31 @@ const FileUpload = () => {
           <AudioTipModal open={openAudioTipModal} handleClose={handleCloseAudioTipModal} />
         </Box>
       </Container>
+      <style>{`
+        .responsive-image {
+          max-width: 80%;
+          max-height: 90%;
+          margin: 0 auto;
+        }
+
+        @media (min-width: 960px) {
+          .responsive-image {
+          max-width: 50%;
+          }
+        }
+        
+        .responsive-image1 {
+          max-width: 100%;
+          max-height: 100%;
+          margin: 0 auto;
+        }
+
+        @media (min-width: 960px) {
+          .responsive-image1 {
+          max-width: 100%;
+          }
+        }
+      `}</style>
     </ThemeProvider>
   );
 };

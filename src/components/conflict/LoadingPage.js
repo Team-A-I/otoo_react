@@ -22,7 +22,7 @@ const LoadingPage = () => {
           }
 
           console.log('Sending text data for analysis:', requestData);
-          const response = await axiosIns.post('http://localhost:8080/api/conflict/analysis', requestData);
+          const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/analysis', requestData);
           console.log('Server response:', response.data);
 
           navigate('/result-conflict', { state: { jsonData: response.data } });
@@ -47,7 +47,7 @@ const LoadingPage = () => {
           }
 
           console.log('Sending image files for OCR');
-          const response = await axiosIns.post('http://localhost:8080/api/conflict/ocr', formData);
+          const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/conflict/ocr', formData);
 
           console.log('Server response:', response.data);
           navigate('/result-conflict', { state: { jsonData: response.data } });
