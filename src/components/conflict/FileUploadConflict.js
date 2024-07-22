@@ -9,19 +9,17 @@ import {
   Button,
   Grid
 } from '@mui/material';
-
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
 import theme1 from "../../theme";
-import SendModal from '../SendModal';
+import SendModal from '../modal/SendModal';
 import TextTipModal from './TextTipModal'; // 텍스트 Tip 모달 컴포넌트 임포트
 import AudioTipModal from './AudioTipModal'; // 음성 Tip 모달 컴포넌트 임포트
 import Recorder from '../../components/conflict/Recorder';
 
-// 변수 정의
-
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnVoiceUploadLabel = "음성파일 업로드";
+const MAX_FILE_SIZE = 1000 * 1024; // 1000KB
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -35,12 +33,13 @@ const FileUpload = () => {
   const [textInput, setTextInput] = useState("");// eslint-disable-next-line
   const [showCarousel, setShowCarousel] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [openTextTipModal, setOpenTextTipModal] = useState(false); // 텍스트 Tip 모달 상태
-  const [openAudioTipModal, setOpenAudioTipModal] = useState(false); // 음성 Tip 모달 상태
+  const [openTextTipModal, setOpenTextTipModal] = useState(false); 
+  const [openAudioTipModal, setOpenAudioTipModal] = useState(false); 
   const textFileInputRef = useRef(null);
   const audioFileInputRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
+  const [recording, setRecording] = useState(false);
 
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenTextTipModal = () => setOpenTextTipModal(true);
@@ -54,6 +53,11 @@ const FileUpload = () => {
     const isImage = selectedFile.type.startsWith('image/');
 
     if (selectedFiles.length > 0) {
+      if (selectedFile.size > MAX_FILE_SIZE) {
+        alert('파일 크기가 너무 큽니다. 1,000KB 이하의 파일만 업로드할 수 있습니다.');
+        return;
+      }
+
       if (isImage) {
         setFiles(selectedFiles);
         setFileName(selectedFiles.map(file => file.name).join(', '));
@@ -126,8 +130,13 @@ const FileUpload = () => {
     setSelectedTab(newValue);
   };
 
+  const handleRecordingStateChange = (state) => {
+    setRecording(state);
+  };
+
   return (
     <ThemeProvider theme={theme1}>
+      <div style={{ fontFamily: theme1.typography.fontFamily }}>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -140,48 +149,50 @@ const FileUpload = () => {
             paddingBottom: '100px',
           }}
         >
-          {/* Tip 버튼을 우측 상단에 배치 */}
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
-            <Button
-              variant="outlined"
-              onClick={selectedTab === 0 ? handleOpenTextTipModal : handleOpenAudioTipModal}
-              sx={{ color: '#04613E', borderColor: '#04613E' }}
-            >
-              Tip !
-            </Button>
-          </Box>
+
 
           {/* 탭에 따라 상단 내용 변경 */}
           {selectedTab === 0 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 1 }}>
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
               <Typography variant="h2_bold" gutterBottom>
                 갈등 판결 '몇대몇'<br/>
               </Typography>
-              <Typography variant="h2_bold">
-                누가 맞는지 판결 해드리겠습니다.<br/>
+              <Typography variant="h2_bold" gutterBottom>
+                누가 맞는지 판결 해드리겠습니다.<br/><br/>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1}} gutterBottom>
                 ※ 카카오톡에서 내보내기 한 대화내용이나<br/>　캡쳐한 이미지만 업로드 가능합니다.
               </Typography>
             </Box>
           )}
 
           {selectedTab === 1 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 1 }}>
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
               <Typography variant="h2_bold" gutterBottom>
                 갈등 판결 '몇대몇'<br/>
               </Typography>
-              <Typography variant="h2_bold">
-                누가 맞는지 판결 해드리겠습니다.<br/>
+              <Typography variant="h2_bold"  gutterBottom>
+                누가 맞는지 판결 해드리겠습니다.<br/><br/>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              <Typography variant="sub_bold" color="textSecondary"  sx={{mt:1}} gutterBottom>
                 ※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.<br/>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              <Typography variant="sub_bold" color="textSecondary" gutterBottom>
                 ※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.
               </Typography>
             </Box>
           )}
+
+          {/* Tip 버튼을 우측 상단에 배치 */}
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+            <Button
+            variant="text"
+            onClick={selectedTab === 0 ? handleOpenTextTipModal : handleOpenAudioTipModal}
+            sx={{ color: '#04613E' }}
+            >
+            Tip !
+            </Button>
+          </Box>
 
           {/* 탭 추가 */}
           <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -234,8 +245,8 @@ const FileUpload = () => {
           )}
 
           {selectedTab === 1 && (
-            <Box sx={{ width: '100%', mt: 2, textAlign: 'center' }}>
-              <Recorder />
+            <Box sx={{ width: '100%', mt: 5, textAlign: 'center' }}>
+              <Recorder onRecordingStateChange={handleRecordingStateChange} />
               <input
                 accept=".wav,.mp3"
                 style={{ display: 'none' }}
@@ -247,38 +258,40 @@ const FileUpload = () => {
             </Box>
           )}
 
-          <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            width: '100%', 
-            mt: 2, 
-            p: 2, 
-            backgroundColor: '#fff', 
-            position: 'sticky', 
-            bottom: 0, 
-            zIndex: 1000 
-          }}>
-            <UploadButton
-              label={selectedTab === 0 ? btnUploadLabel : btnVoiceUploadLabel}
-              onClick={handleButtonClick}
-              disabled={false}
-              className="conflict-btn-upload"
-              title_str={selectedTab === 0 ? "카톡 캡쳐이미지 또는 txt파일만 올려주세요" : "음성 파일을 업로드해주세요"}
-              defaultColor='#01A762'
-              hoverColor='#04613E'
-              disabledColor='#B0B0B0'
-              fontColor='#ffffff'
-            />
-            <SendModal
-              open={openModal}
-              handleClose={handleCloseModal}
-              handlefile={handleFileUpload}
-              filetitle={fileName}
-              filesize={fileSize}
-              filetype={fileType}
-              filecount={fileCount}
-            />
-          </Box>
+          {!recording && (
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              width: '100%', 
+              mt: 2, 
+              p: 2, 
+              backgroundColor: '#fff', 
+              position: 'sticky', 
+              bottom: 0, 
+              zIndex: 1000 
+            }}>
+              <UploadButton
+                label={selectedTab === 0 ? btnUploadLabel : btnVoiceUploadLabel}
+                onClick={handleButtonClick}
+                disabled={false}
+                className="conflict-btn-upload"
+                title_str={selectedTab === 0 ? "카톡 캡쳐이미지 또는 txt파일만 올려주세요" : "음성 파일을 업로드해주세요"}
+                defaultColor='#01A762'
+                hoverColor='#04613E'
+                disabledColor='#B0B0B0'
+                fontColor='#ffffff'
+              />
+              <SendModal
+                open={openModal}
+                handleClose={handleCloseModal}
+                handlefile={handleFileUpload}
+                filetitle={fileName}
+                filesize={fileSize}
+                filetype={fileType}
+                filecount={fileCount}
+              />
+            </Box>
+          )}
 
           <TextTipModal open={openTextTipModal} handleClose={handleCloseTextTipModal} />
           <AudioTipModal open={openAudioTipModal} handleClose={handleCloseAudioTipModal} />
@@ -309,6 +322,7 @@ const FileUpload = () => {
           }
         }
       `}</style>
+      </div>
     </ThemeProvider>
   );
 };

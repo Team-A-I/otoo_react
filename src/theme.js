@@ -1,5 +1,4 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
-
 // 테마 생성
 let theme = createTheme({
   palette: {
@@ -19,7 +18,8 @@ let theme = createTheme({
       gray400: '#919191',
       gray300: '#C8C8C8',
     //line
-      gray200: '#E1E1E1'
+      gray200: '#E1E1E1',
+      gray100: '#f1f1f1'
   },
   typography: {
     fontFamily: [
@@ -89,7 +89,7 @@ let theme = createTheme({
         fontSize: '41px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '32px',
+        fontSize: '18px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -111,7 +111,7 @@ let theme = createTheme({
         fontSize: '20px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '20px',
+        fontSize: '15px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -155,7 +155,7 @@ let theme = createTheme({
         fontSize: '19px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '22px',
+        fontSize: '19px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -224,7 +224,7 @@ let theme = createTheme({
         fontSize: '15px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '14px',
+        fontSize: '11px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -241,7 +241,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body1: {
-      fontSize: '14px', 
+      fontSize: '14px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '13px',
       },
@@ -252,7 +252,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body2: {
-      fontSize: '13px', 
+      fontSize: '13px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '12px',
       },
@@ -263,7 +263,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body3: {
-      fontSize: '12px', 
+      fontSize: '12px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '11px',
       },
@@ -274,7 +274,7 @@ let theme = createTheme({
       color: '#1B1F23'
     },
     body4: {
-      fontSize: '11px', 
+      fontSize: '11px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '10px',
       },
@@ -286,8 +286,6 @@ let theme = createTheme({
     },
   },
 });
-
 // 반응형 폰트 크기 적용
 theme = responsiveFontSizes(theme);
-
 export default theme;

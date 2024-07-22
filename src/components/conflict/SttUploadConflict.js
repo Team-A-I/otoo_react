@@ -4,7 +4,7 @@ import { Container, TextField, Typography, Box, Grid, ThemeProvider, Divider, Pa
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
 import theme1 from "../../theme";
-import SendModal from '../SendModal';
+import SendModal from '../modal/SendModal';
 import OnboardingCarousel from "../Onboarding";
 
 // 변수 정의

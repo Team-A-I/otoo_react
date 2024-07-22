@@ -37,7 +37,6 @@ const EmotionReportLoadingPage = () => {
   return (
     <Container sx={{ display: 'flex', marginTop:"35px", justifyContent:'center'}}>
       <img src="/images/janggu_dance.gif" alt="loading" />
-      
     </Container>
   );
 };

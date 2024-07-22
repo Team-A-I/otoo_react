@@ -53,7 +53,7 @@ axiosIns.interceptors.response.use(
     } else {
       return Promise.reject(error);
     }
-    window.location.replace('/'); 
+    // window.location.replace('/'); 
   }
 );
 

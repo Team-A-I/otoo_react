@@ -63,7 +63,7 @@ const ChatBot = () => {
 
     try {
 
-      const response = await axiosIns.post('http://localhost:8080/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/chatbot', { RecentMessages, mode }, {
 
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const ChatBot = () => {
         RecentMessages.shift();
       }
       RecentMessages.push("assistant : " + result);
-      setHtmlString(prevHtmlString => prevHtmlString + `<div class="jangguDiv"><Box class="janggu">${result}</Box></div>`);
+      setHtmlString(prevHtmlString => prevHtmlString + `<img class="jangguFace"src="/images/jangguChat.png"/><div class="jangguDiv"><Box class="janggu">${result}</Box></div>`);
       inputRef.current.focus();
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -127,12 +127,16 @@ const ChatBot = () => {
 
  
   return (
-    <Box className='grid'>
       <ThemeProvider theme={theme}>
+        <div style={{ fontFamily: theme.typography.fontFamily}}>
+    <Box className='grid'>
         <Box className='content'>
           <Box className="chat_subtitle">
-            <Typography variant="title_bold" color="gray600">{chatbotTitle}</Typography>
+
+            <Typography variant="title_bold">{chatbotTitle}</Typography>
+
           </Box>
+
           <Box className="chat_subtitle">
             <Typography variant="sub_mid" color="gray500">{chatbotSubtitle1}</Typography>
           </Box>
@@ -218,9 +222,11 @@ const ChatBot = () => {
             
             </Grid> 
           </Grid>
+
         </Box>
-      </ThemeProvider>
     </Box>
+        </div>
+      </ThemeProvider>
   );
 };
 
