@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Box, Container, Grid, Typography, Card, CardContent, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme1 from '../theme';
-
-const initialPosts = [
-  { id: 1, title: '게시글 제목 1', author: '작성자 1', date: '2023-07-01', description: '조타' },
-];
 
 const strings = {
   boardTitle: '게시판',
@@ -21,7 +18,7 @@ const strings = {
 };
 
 const Board = () => {
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [newPost, setNewPost] = useState({
     title: '',
@@ -29,6 +26,19 @@ const Board = () => {
     date: '',
     description: ''
   });
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/posts');
+      setPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,18 +56,20 @@ const Board = () => {
     }));
   };
 
-  const handleAddPost = () => {
-    setPosts((prevPosts) => [
-      ...prevPosts,
-      { ...newPost, id: prevPosts.length + 1 }
-    ]);
-    setNewPost({
-      title: '',
-      author: '',
-      date: '',
-      description: ''
-    });
-    handleClose();
+  const handleAddPost = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/posts', newPost);
+      setPosts((prevPosts) => [...prevPosts, response.data]);
+      setNewPost({
+        title: '',
+        author: '',
+        date: '',
+        description: ''
+      });
+      handleClose();
+    } catch (error) {
+      console.error('Error adding post:', error);
+    }
   };
 
   return (
