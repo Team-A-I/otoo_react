@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';// eslint-disable-next-line
-import { Box, ThemeProvider, Grid, Container, Typography, IconButton, keyframes } from '@mui/material';
+import { Box, ThemeProvider, Grid, Container, Typography, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import theme1 from '../theme';
@@ -8,6 +8,7 @@ import axiosIns from '../components/axios';
 import AgreeModal from '../components/modal/AgreeModal';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import QnaChatbot from '../components/modal/QnaChatbot';
 
 const cardData = [
     { title: "(PC)텍스트 파일 추출방법", image: "/images/1pc카톡추출.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
@@ -52,6 +53,7 @@ const finalBoxes = [
 ];
 
 const Home = () => {// eslint-disable-next-line
+    const [openChat, setOpenChat] = useState(false);// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
@@ -62,6 +64,9 @@ const Home = () => {// eslint-disable-next-line
     const largeImageTextSub = "몇대몇";
     const servicetitle1 = '몇대몇 서비스 사용 방법';
     const servicetitle2 = '판결과 공감의 몇대몇 서비스';
+
+    const handleOpenChat = () => setOpenChat(true);
+    const handleCloseChat = () => setOpenChat(false);
 
     // eslint-disable-next-line
     const handleLogout = async () => {
@@ -184,6 +189,15 @@ const Home = () => {// eslint-disable-next-line
                         </Box>
                     </Container>
                     <AgreeModal />
+                    <IconButton 
+                        color="#04613E"
+                        fontSize='Large'
+                        onClick={handleOpenChat} 
+                        style={{ position: 'fixed', bottom: '20px', right: '20px' }}
+                    >
+                        <img src='/images/qnaIcon.png' style={{height:'80px'}} alt="Q&A Icon" />
+                    </IconButton>
+                    <QnaChatbot open={openChat} onClose={handleCloseChat} />
                 </Box>
             </div>
         </ThemeProvider>
