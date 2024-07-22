@@ -1,7 +1,7 @@
 import { Container, Grid, Paper, Box, ThemeProvider, Typography, IconButton, useMediaQuery } from '@mui/material';
 import { useLocation, Link } from 'react-router-dom';
 import '../../css/chatbot/EmotionReportPage.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import theme from "../../theme";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Card from '@mui/material/Card';
@@ -33,7 +33,7 @@ const EmotionReportPage = () => {
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
   const [hover3, setHover3] = useState(false);
-
+  
   const copyToClipboard = () => {
     navigator.clipboard.writeText(result).then(() => {
     }).catch(err => {
@@ -43,7 +43,11 @@ const EmotionReportPage = () => {
 
   const isSmallScreen = useMediaQuery('(max-width:600px)');
   const type = 'report';
-
+useEffect(() => {
+  if (!result) {
+    window.location.href = '/';
+    alert('잘못된 접근입니다.');
+  }});
   return (
     <Container sx={{ display: 'flex' }}>
       <ThemeProvider theme={theme}>

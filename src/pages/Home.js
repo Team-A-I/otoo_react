@@ -1,109 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, useTheme, useMediaQuery, ThemeProvider } from '@mui/material';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { Box, ThemeProvider, Grid, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import theme1 from "../theme";
-import '../css/Home.css'; // CSS 파일 추가
+import theme1 from '../theme';
+import '../css/Home.css';
 import axiosIns from '../components/axios';
 import AgreeModal from '../components/AgreeModal';
+import { Carousel } from 'react-responsive-carousel';
 
+const cardData = [
+    { title: "데이터 추출방법", image: "/images/톡설명1.png", alt: "talk1", description: "카톡에서 1:1 대화를 txt파일로 추출해주세요." },
+    { title: "텍스트파일 업로드방법", image: "/images/톡설명2.png", alt: "talk2", description: "70KB이하의 카톡txt 파일을 업로드 할 수 있습니다." },
+    { title: "캡쳐파일 업로드방법", image: "/images/톡설명3.png", alt: "talk3", description: "5장 이하의 카톡캡쳐 파일을 업로드할 수 있습니다." }
+];
 
-const Home = () => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [scale, setScale] = useState(1);
-    const [backgroundIndex, setBackgroundIndex] = useState(0);
-    const [animateOutClass, setAnimateOutClass] = useState('');
-    const [animateInClass, setAnimateInClass] = useState('');
-    // eslint-disable-next-line
-    const [scrollAmount, setScrollAmount] = useState(0);
-    const [isAnimating, setIsAnimating] = useState(false);
-    const scrollThreshold = 100; // 더 느리게 변경되도록 임계치 증가
+const Home = () => {// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const navigate = useNavigate();
 
-    const backgroundImages = [
-        '/images/main.png',
-        '/images/main-conflict.png',
-        '/images/friendship.png',
-        '/images/love-main.png',
-        '/images/main-janggu2.png'
+    const largeImageSrc = "/images/main.png";
+    const largeImageAlt = "Large Content";
+    const largeImageText = "대화 판결의 모든 것";
+    const largeImageTextSub = "몇대몇";
+    const servicetitle1 = '몇대몇 서비스 사용 방법';
+    const servicetitle2 = '갈등 상황에서 판결을 내려주는 몇대몇 서비스';
+    
+    const smallBoxes = [
+        { bgColor: 'darkgreen', text: '몇대몇', textColor: 'white' },
+        { bgColor: 'gray200', text: '음성, 사진, 텍스트\n\n 모든 형태의 대화 데이터 판결', textColor: 'gray800' },
+        { bgColor: 'gray200', text: '무조건 내편 맞장구 챗봇', textColor: 'gray800' }
     ];
 
-    const navigate = useNavigate(); // useNavigate 훅 사용
-
-    const handleWheel = (event) => {
-        event.preventDefault();
-        if (isAnimating) return; // 애니메이션 중일 때는 새로운 스크롤 이벤트 무시
-    
-        setScrollAmount(prevScrollAmount => {
-            const newScrollAmount = prevScrollAmount + event.deltaY;
-            if (Math.abs(newScrollAmount) >= scrollThreshold) {
-                setScrollAmount(0); // 임계치를 초과한 후 스크롤 양을 초기화합니다.
-                setScale(prevScale => {
-                    let newScale = prevScale;
-                    // eslint-disable-next-line
-                    let newBackgroundIndex = backgroundIndex;
-    
-                    if (newScrollAmount > 0) { // 스크롤 In
-                        if (prevScale < 1.5) {
-                            newScale = Math.min(prevScale + 0.1, 1.5);
-                            if (newScale === 1.5 && backgroundIndex === 0) {
-                                setAnimateOutClass('slide-up-fade-out');
-                                setIsAnimating(true); // 애니메이션 시작
-                                setTimeout(() => {
-                                    setBackgroundIndex(1);
-                                    setAnimateOutClass('');
-                                    setAnimateInClass('slide-up-fade-in');
-                                    setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
-                                }, 500);
-                                setTimeout(() => setAnimateInClass(''), 1600);
-                            }
-                        } else if (backgroundIndex < backgroundImages.length - 1) {
-                            setAnimateOutClass('slide-up-fade-out');
-                            setIsAnimating(true); // 애니메이션 시작
-                            setTimeout(() => {
-                                setBackgroundIndex(backgroundIndex + 1);
-                                setAnimateOutClass('');
-                                setAnimateInClass('slide-up-fade-in');
-                                setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
-                            }, 500);
-                            setTimeout(() => setAnimateInClass(''), 1600);
-                        }
-                    } else { // 스크롤 Out
-                        if (backgroundIndex > 0) {
-                            setAnimateOutClass('slide-down-fade-out');
-                            setIsAnimating(true); // 애니메이션 시작
-                            setTimeout(() => {
-                                setBackgroundIndex(backgroundIndex - 1);
-                                setAnimateOutClass('');
-                                setAnimateInClass('slide-down-fade-in');
-                                setTimeout(() => setIsAnimating(false), 1600); // 애니메이션 완료
-                            }, 500);
-                            setTimeout(() => setAnimateInClass(''), 1600);
-                        } else {
-                            newScale = Math.max(prevScale - 0.1, 1);
-                            setIsAnimating(false); // 애니메이션 완료
-                        }
-                    }
-    
-                    return newScale;
-                });
-            }
-            return newScrollAmount;
-        });
-    };
-   
+    const finalBoxes = [
+        { bgColor: 'gray200', text: '카톡 분석', textColor: 'black' },
+        { bgColor: 'gray200', text: '맞장구 채팅', textColor: 'black' },
+    ];
+// eslint-disable-next-line
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
                 },
             });
-            
-            if ((response).status === 200) {
+
+            if (response.status === 200) {
                 sessionStorage.removeItem('accessToken');
                 sessionStorage.removeItem('refreshToken');
                 sessionStorage.removeItem('userName');
@@ -115,167 +57,112 @@ const Home = () => {
             }
         } catch (error) {
             console.error('Logout failed', error);
-        }            
+        }
     };
-        
-    
-    
-        
 
     useEffect(() => {
-        window.addEventListener('wheel', handleWheel, { passive: false });
-        return () => window.removeEventListener('wheel', handleWheel);// eslint-disable-next-line
-    }, [backgroundIndex, isAnimating]);
-
-    const handleNavigation = (path) => {
-        navigate(path);
-    };
-    
-    useEffect(() => {
-    const usersCode = sessionStorage.getItem('accessToken');
-    if (usersCode !== null) {
-        setIsLoggedIn(true);
-        console.log(sessionStorage.getItem('refreshToken'));
-    }// eslint-disable-next-line
-    }, [sessionStorage.getItem('accessToken')]);
-
-    // useEffect(() => {
-    //     const checkLoginStatus = () => {
-    //       const usersCode = sessionStorage.getItem('usersCode');
-    //       setIsLoggedIn(usersCode !== null);
-    //     };
-      
-    //     checkLoginStatus();
-      
-    //     window.addEventListener('storage', checkLoginStatus);
-      
-    //     return () => {
-    //       window.removeEventListener('storage', checkLoginStatus);
-    //     };
-    //   }, []);
+        const usersCode = sessionStorage.getItem('accessToken');
+        if (usersCode !== null) {
+            setIsLoggedIn(true);
+            console.log(sessionStorage.getItem('refreshToken'));
+        }
+    }, []);
 
     return (
         <ThemeProvider theme={theme1}>
-            <div style={{ fontFamily: theme.typography.fontFamily, overflow: 'hidden', position: 'relative' }}>
-                <Box
-                    sx={{
-                        backgroundImage: 'url(/images/main-back.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        width: '100%',
-                        height: '100vh',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        transition: 'transform 0.5s ease',
-                        transform: `scale(${scale})`,
-                        transformOrigin: 'center',
-                        marginTop: 0
-                    }}
-                > 
-                    <Box
-                        sx={{
-                            position: 'relative',
-                            width: isMobile ? '90%' : '70%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: { xs: '5px', md: '20px' },
-                                left: { xs: '10px', md: '35px' },
-                                display: 'flex',
-                                flexDirection: 'row',
-                                gap: '10px',
-                            }}
-                        >
-                            <Button
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    borderRadius: 15,
-                                    color:"#FFFFFF",
-                                    border: "1px solid #FFFFFF",
-                                    borderColor:"#FFFFFF",
-                                }}
-                                onClick={() => handleNavigation('/analysis')}
-                            >
-                                카톡 판결
-                            </Button>
-                            <Button
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    borderRadius: 15,
-                                    color:"#FFFFFF",
-                                    border: "1px solid #FFFFFF",
-                                    borderColor:"#FFFFFF"
-                                }}
-                                onClick={() => handleNavigation('/chatbot')}
-                            >
-                                맞장구 봇
-                            </Button>
-                        </Box>
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: { xs: '5px', md: '20px' },
-                                right: { xs: '10px', md: '35px' },
-                                display: 'flex',
-                                flexDirection: 'row',
-                                gap: '10px',
-                            }}
-                        >
-                            <Button
-                                variant="text"
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    color:"#FFFFFF",
-                                    borderColor:"#FFFFFF"
-                                }}
-                                onClick={() => isLoggedIn ? handleLogout() : handleNavigation('/user-login')}
-                            >
-                                 {isLoggedIn ? '로그아웃' : '로그인'}
-                            </Button>
-                            <Button
-                                variant="text"
-                                sx={{
-                                    fontSize: { xs: '8px', sm: '10px', md: '12px' },
-                                    padding: { xs: '2px 4px', sm: '3px 6px', md: '4px 8px' },
-                                    color:"#FFFFFF",
-                                    borderColor:"#FFFFFF"
-                                }}
-                            >
-                                Q&A
-                            </Button>
-                        </Box>
-                        <Box
-                            component="img"
-                            src={backgroundImages[backgroundIndex]}
-                            alt="Your Image Description"
-                            className={`${animateInClass} ${animateOutClass}`}
-                            sx={{
-                                width: '100%',
-                                height: 'auto',
-                            }}
-                        />
-                
-                        {/* 스크롤 힌트 추가 */}
-                        {backgroundIndex !== backgroundImages.length - 1 && (
-                            <Typography className="scroll-hint" sx={{ fontSize: { xs: 8, sm: 12, md: 15 }}}>
-                                Scroll Down <br/> 
-                                <KeyboardDoubleArrowDownIcon sx={{ fontSize: { xs: 10, sm: 15, md: 20 }, color: '1B1F23' }} />
+            <div style={{ fontFamily: theme1.typography.fontFamily }}>
+                <Box p={5} sx={{ backgroundColor: 'white' }}>
+                    <Container maxWidth="lg">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={9}>
+                                <Box sx={{ position: 'relative', width: '100%', height: '100%' , textAlign:'right'}}>
+                                    <img src={largeImageSrc} alt={largeImageAlt} style={{ width: '100%', height: 'auto', borderRadius: '10px' }} />
+                                    <Typography variant="h1_bold" sx={{ position: 'absolute', top: { xs: 50, md: 150 }, left: { xs: 20, md: 450 }, color: 'white', fontSize: { xs: '1.5rem', md: '3rem' } }}>
+                                        {largeImageText}<br/>
+                                        {largeImageTextSub}
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item container xs={12} md={3} spacing={2}>
+                                {smallBoxes.map((box, index) => (
+                                    <Grid item xs={12} sm={4} md={12} key={index}>
+                                        <Box sx={{ position: 'relative', width: '100%', height: '125px', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
+                                            <Typography p={3} variant="title_bold" sx={{ color: box.textColor, fontSize: { xs: '0.8rem', md: '1rem' } }}>
+                                                {box.text}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Grid>
+                        <Box mt={7}>
+                            <Typography variant='h2_bold'>
+                                {servicetitle1}
                             </Typography>
-                        )}
-                    </Box>
+                            <Box sx={{ display: 'flex', overflowX: 'auto', mt: 2 }}>
+                                <Carousel
+                                    infiniteLoop={false}
+                                    useKeyboardArrows
+                                    showThumbs={false}
+                                    showStatus={false}
+                                    showArrows={true}
+                                    selectedItem={currentSlide}
+                                    onChange={(index) => setCurrentSlide(index)}
+                                    renderIndicator={false}
+                                >
+                                    {cardData.map((card, index) => (
+                                        <Box key={index} sx={{ textAlign: 'center', p: 2 }}>
+                                            <Box sx={{ mb: 5 }}>
+                                                <Typography 
+                                                    variant="h2_bold" 
+                                                    sx={{ 
+                                                        display: 'inline-block',
+                                                        position: 'relative',
+                                                        '&:before': {
+                                                            content: '""',
+                                                            position: 'absolute',
+                                                            width: '100%',
+                                                            height: '35%',
+                                                            bottom: 0,
+                                                            left: 0,
+                                                            backgroundColor: 'vlightgreen',
+                                                            zIndex: -1,
+                                                        }
+                                                    }}
+                                                >
+                                                    {card.title}
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ mt: 1, mb: 5 }}>
+                                                <Typography variant="title_bold">
+                                                    {card.description}
+                                                </Typography>
+                                            </Box>
+                                            <img src={card.image} alt={card.alt} style={{ maxWidth: '60%', height: 'auto', margin: '0 auto' }} />
+                                        </Box>
+                                    ))}
+                                </Carousel>
+                            </Box>
+                        </Box>
+                        <Box mt={7}>
+                            <Typography variant='h2_bold'>
+                                {servicetitle2}
+                            </Typography>
+                            <Grid container spacing={2} mt={2}>
+                                {finalBoxes.map((box, index) => (
+                                    <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                                        <Box sx={{ position: 'relative', width: '100%', height: '90px', backgroundColor: box.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px' }}>
+                                            <Typography variant="title_bold" sx={{ color: box.textColor }}>
+                                                {box.text}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                    </Container>
+                    <AgreeModal />
                 </Box>
-                <AgreeModal/>
             </div>
         </ThemeProvider>
     );

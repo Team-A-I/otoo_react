@@ -3,13 +3,11 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 // 테마 생성
 let theme = createTheme({
   palette: {
-    lightblue: '#0495D2',
-    creamgray: '#F1F0EB',
-    deepblue: '#0350B7',
-    lightpurple: '#ECD3D8',
-    peach: '#FFCFAA',
-    dyellow: '#EECA42',
-    green: '#346F79',
+    oblack: '#333333',
+    owhite: '#F8F7F3',
+    darkgreen: '#04613E',
+    lightgreen: '#01A762',
+    vlightgreen: '#01A76280',
     //text_title
       gray900: '#1B1F23',
       gray800: '#252525',
@@ -157,7 +155,7 @@ let theme = createTheme({
         fontSize: '19px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '18px',
+        fontSize: '22px',
       },
       fontWeight: 700,
       color: '#1B1F23'
@@ -190,7 +188,7 @@ let theme = createTheme({
         fontSize: '16px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '15px',
+        fontSize: '14px',
       },
       fontWeight: 500,
       color: '#1B1F23'
@@ -201,10 +199,10 @@ let theme = createTheme({
         fontSize: '16px',
       },
       [createTheme().breakpoints.down('md')]: {
-        fontSize: '12px',
+        fontSize: '14px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '13px',
+        fontSize: '14px',
       },
       fontWeight: 700,
       color: '#1B1F23'

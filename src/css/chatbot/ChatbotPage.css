@@ -1,7 +1,6 @@
 .chatList {
     display: contents;
     justify-content: center;
-
 }
 .chatList_Box{
     height: 100%;
@@ -82,8 +81,6 @@
     background-color: #F1F0EB !important;
     color:#404040 !important;
     border-radius: 12px !important;
-   
-    
 }
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
