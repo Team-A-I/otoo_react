@@ -128,6 +128,7 @@ const FileUpload = () => {
 
   return (
     <ThemeProvider theme={theme1}>
+      <div style={{ fontFamily: theme1.typography.fontFamily }}>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -157,10 +158,10 @@ const FileUpload = () => {
               <Typography variant="h2_bold" gutterBottom>
                 갈등 판결 '몇대몇'<br/>
               </Typography>
-              <Typography variant="h2_bold">
-                누가 맞는지 판결 해드리겠습니다.<br/>
+              <Typography variant="h2_bold" gutterBottom>
+                누가 맞는지 판결 해드리겠습니다.<br/><br/>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1}} gutterBottom>
                 ※ 카카오톡에서 내보내기 한 대화내용이나<br/>　캡쳐한 이미지만 업로드 가능합니다.
               </Typography>
             </Box>
@@ -171,13 +172,13 @@ const FileUpload = () => {
               <Typography variant="h2_bold" gutterBottom>
                 갈등 판결 '몇대몇'<br/>
               </Typography>
-              <Typography variant="h2_bold">
-                누가 맞는지 판결 해드리겠습니다.<br/>
+              <Typography variant="h2_bold"  gutterBottom>
+                누가 맞는지 판결 해드리겠습니다.<br/><br/>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              <Typography variant="sub_bold" color="textSecondary"  sx={{mt:1}} gutterBottom>
                 ※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.<br/>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              <Typography variant="sub_bold" color="textSecondary" gutterBottom>
                 ※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.
               </Typography>
             </Box>
@@ -234,7 +235,7 @@ const FileUpload = () => {
           )}
 
           {selectedTab === 1 && (
-            <Box sx={{ width: '100%', mt: 2, textAlign: 'center' }}>
+            <Box sx={{ width: '100%', mt: 4, textAlign: 'center' }}>
               <Recorder />
               <input
                 accept=".wav,.mp3"
@@ -309,6 +310,7 @@ const FileUpload = () => {
           }
         }
       `}</style>
+      </div>
     </ThemeProvider>
   );
 };

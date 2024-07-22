@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Typography, IconButton} from '@mui/material';
+import { Box, Typography, IconButton,ThemeProvider} from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
+import theme from '../../theme';
 
 const Recorder = () => {
   const [recording, setRecording] = useState(false);
@@ -114,12 +115,14 @@ const Recorder = () => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
+      <div style={{ fontFamily: theme.typography.fontFamily }}>
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh' }}>
       <>
         <Typography variant="h2_bold" gutterBottom>
           무슨 일이 있었나요?
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+        <Typography variant="sub_bold" color="textSecondary" gutterBottom>
           "··· 누가 잘못한거야?"라고 말해보세요.
         </Typography>
         <IconButton 
@@ -141,11 +144,13 @@ const Recorder = () => {
             녹음 시간: {formatTime(elapsedTime)} / 1:00
           </Typography>
         )}
-        <Box sx={{ width: '100%', maxWidth: '600px', aspectRatio: '3 / 1', marginTop: '20px', marginBottom: '20px', border: '1px solid #ddd', borderRadius: '10px' }}>
+        <Box sx={{ width: '100%', maxWidth: '600px', aspectRatio: '3 / 1', marginTop: '20px', marginBottom: '20px' }}>
           <canvas ref={canvasRef} width="600" height="200" style={{ width: '100%', height: '100%' }} />
         </Box>
       </>
     </Box>
+    </div>
+    </ThemeProvider>
   );
 };
 

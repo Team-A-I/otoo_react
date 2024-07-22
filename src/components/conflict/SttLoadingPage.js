@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axiosIns from '../axios';
 import '../../css/conflict/LoadingPage.css'; // 커스텀 CSS 파일을 임포트합니다.
 
+
 const SttLoadingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +23,7 @@ const SttLoadingPage = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axiosIns.post('http:localhost:8080/api/conflict/analysis', requestData);
+            response = await axiosIns.post('/api/conflict/analysis', requestData);
             console.log('Response data for txt:', response.data); // 추가
             navigate('/result-conflict', { state: { jsonData: response.data } });
           } else if (fileExtension === 'wav' || fileExtension === 'mp3') {
@@ -31,7 +32,7 @@ const SttLoadingPage = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('http:localhost:8080/api/transcribe/file', formData);
+            response = await axiosIns.post('/api/transcribe/file', formData);
             console.log('Response data for wav/mp3:', response.data); // 추가
             navigate('/stt-result', { state: { jsonData: response.data } });
           } else {
@@ -40,7 +41,7 @@ const SttLoadingPage = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('http:localhost:8080/api/conflict/ocr', formData);
+            response = await axiosIns.post('/api/conflict/ocr', formData);
             console.log('Response data for other file types:', response.data); // 추가
             navigate('/result-conflict', { state: { jsonData: response.data } });
           }
