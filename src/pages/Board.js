@@ -40,7 +40,12 @@ const Board = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosIns.get('https://gnat-suited-weekly.ngrok-free.app/api/posts');
+      const response = await axiosIns.get('https://gnat-suited-weekly.ngrok-free.app/api/posts'{
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+        }
+      });
       const fetchedPosts = response.data;
       
       if (Array.isArray(fetchedPosts)) {
