@@ -31,7 +31,7 @@ const ChatBot = () => {
   const navigate = useNavigate();
 
   // Localized text values
-  const chatbotTitle = '맞장구 챗봇';
+  const chatbotTitle = '맞장구봇';
   const chatbotSubtitle1 = '연인에게 받은 상처를 쏟아내세요.';
   const chatbotSubtitle2 = '장구가 당신의 이야기에 맞장구를 쳐줄게요.';
   const chatbotPlaceholder = '서운했던 이야기를 들려주세요.';
@@ -127,12 +127,14 @@ const ChatBot = () => {
 
  
   return (
-    <Box className='grid'>
       <ThemeProvider theme={theme}>
+        <div style={{ fontFamily: theme.typography.fontFamily}}>
+    <Box className='grid'>
         <Box className='content'>
           <Box className="chat_subtitle">
-            <Typography variant="title_bold" color="gray600">{chatbotTitle}</Typography>
+            <Typography variant="h5" color="gray600">{chatbotTitle}</Typography>
           </Box>
+
           <Box className="chat_subtitle">
             <Typography variant="sub_mid" color="gray500">{chatbotSubtitle1}</Typography>
           </Box>
@@ -218,9 +220,11 @@ const ChatBot = () => {
             
             </Grid> 
           </Grid>
+
         </Box>
-      </ThemeProvider>
     </Box>
+        </div>
+      </ThemeProvider>
   );
 };
 
