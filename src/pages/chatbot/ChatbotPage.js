@@ -132,7 +132,9 @@ const ChatBot = () => {
     <Box className='grid'>
         <Box className='content'>
           <Box className="chat_subtitle">
+
             <Typography variant="title_bold">{chatbotTitle}</Typography>
+
           </Box>
 
           <Box className="chat_subtitle">
