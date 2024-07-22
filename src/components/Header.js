@@ -1,14 +1,51 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, ThemeProvider, Box, Container, useMediaQuery } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppBar, Button, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, ThemeProvider, Box, Container, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import CloseIcon from '@mui/icons-material/Close';
+import axiosIns from '../components/axios';
 import theme from '../theme';
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
+  const handleLogout = async () => {
+    try {
+        const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
+            headers: {
+                'Authorization': sessionStorage.getItem('userEmail'),
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        if ((response).status === 200) {
+            sessionStorage.removeItem('accessToken');
+            sessionStorage.removeItem('refreshToken');
+            sessionStorage.removeItem('userName');
+            sessionStorage.removeItem('userEmail');
+            sessionStorage.removeItem('userRole');
+            setIsLoggedIn(false);
+            navigate('/');
+        }
+    } catch (error) {
+        console.error('Logout failed', error);
+    }            
+  };
+
+  useEffect(() => {
+    const usersCode = sessionStorage.getItem('accessToken');
+    if (usersCode !== null) {
+        setIsLoggedIn(true);
+        console.log(usersCode);
+    }// eslint-disable-next-line
+    }, [sessionStorage.getItem('accessToken')]);
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -23,6 +60,7 @@ const Header = () => {
     { text: '로그인', path: '/user-login' },
     { text: 'QnA', path: '/qna-chatbot' },
     { text: '게시판', path: '/board'},
+    { text: '관리자', path: '/admin-user'}
   ];
 
   const list = () => (
