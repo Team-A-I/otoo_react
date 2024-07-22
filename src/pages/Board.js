@@ -41,9 +41,17 @@ const Board = () => {
   const fetchPosts = async () => {
     try {
       const response = await axiosIns.get('https://gnat-suited-weekly.ngrok-free.app/api/posts');
-      setPosts(response.data);
+      const fetchedPosts = response.data;
+      
+      if (Array.isArray(fetchedPosts)) {
+        setPosts(fetchedPosts);
+      } else {
+        setPosts([]);
+        console.error('Fetched data is not an array');
+      }
     } catch (error) {
       console.error('Error fetching posts:', error);
+      setPosts([]); // 오류 발생 시 빈 배열로 설정
     }
   };
 
@@ -139,7 +147,7 @@ const Board = () => {
               ))}
             </Grid>
             <Box mt={4} display="flex" justifyContent="center">
-            <Pagination
+              <Pagination
                 count={Math.ceil(posts.length / postsPerPage)}
                 page={currentPage}
                 onChange={handlePageChange}
