@@ -22,6 +22,12 @@ const ForgetPassword = () => {
   const [checkEmail, setCheckEmail] = useState('');
   const navigate = useNavigate(); 
 
+  const forgetPasswordMessage = "비밀번호를 잊으셨나요?";
+  const emailInputMessage = "이메일을 입력하세요";
+  const emailAuthMessage = "이메일 인증";
+  const authenticationMessage = "인증 확인";
+  const comebackLogin = "로그인 페이지로 돌아가기";
+
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
@@ -64,10 +70,10 @@ const ForgetPassword = () => {
           <Grid item xs={12} md={6} style={{ padding: '20px' }}>
             <CardContent>
               <Typography variant="h5" component="div">
-                비밀번호를 잊으셨나요?
+                {forgetPasswordMessage}
               </Typography>
               <Typography variant="body2" color="text.secondary" gutterBottom>
-                이메일을 입력하세요
+                {emailInputMessage}
               </Typography>
               <form noValidate autoComplete="off">
                 <TextField
@@ -85,7 +91,7 @@ const ForgetPassword = () => {
                   onClick={sendEmailVerification}
                   style={{ marginTop: '16px' }}
                 >
-                  이메일 인증
+                  {emailAuthMessage}
                 </Button>
                 {isVerificationCodeSent && (
                   <>
@@ -104,7 +110,7 @@ const ForgetPassword = () => {
                       onClick={checkEmailCode}
                       style={{ marginTop: '16px' }}
                     >
-                      인증 확인
+                      {authenticationMessage}
                     </Button>
                   </>
                 )}
@@ -115,7 +121,7 @@ const ForgetPassword = () => {
                   onClick={()=>{navigate('/user-login')}}
                   style={{ marginTop: '16px' }}
                 >
-                  로그인 페이지로 돌아가기
+                  {comebackLogin}
                 </Button>
               </form>
             </CardContent>
