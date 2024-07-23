@@ -1,0 +1,250 @@
+.chatList {
+    display: contents;
+    justify-content: center;
+}
+.chatList_Box{
+    height: 70vh;
+    /* min-height: 70vh;
+    max-height: 70vh; */
+    overflow-y: scroll;
+}
+
+@media (max-width: 600px) {
+.content {
+    width: 100%!important; /* Remove padding on smaller screens to ensure no extra space */
+}
+.emotionButton{
+    width: 100%!important;    
+}
+.chatInputBase{
+    width: 100%!important;
+}
+.chatInput{
+    width: 100%!important;
+}
+.chat_subtitle{
+    display: none!important;
+}
+
+}
+.userDiv {
+    display: flex;
+    justify-content: right;
+}
+.user{
+    padding: 10px;
+    margin: 10px;
+    background-color: #F8F7F3;
+    border-radius: 15px;
+    max-width: 500px;
+    font-family: 'Pretendard'
+}
+
+.jangguDiv{
+    display: flex;
+    justify-content: left;
+}
+.janggu{
+    padding: 10px;
+    margin: 10px;
+    background-color: #04613E;
+    border-radius: 15px;
+    max-width: 500px;
+    color:#FFFFFF;
+    font-family: 'Pretendard';
+}
+.grid{
+    display: flex;
+    justify-content: center;   
+    height: 100%;
+    max-height: 650px; 
+}
+.content{
+    margin-top: 15px;
+    width: 60%;
+}
+.chatInput{
+    display: flex;
+}
+.chatList_Box::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chatList_Box::-webkit-scrollbar-thumb { 
+    background-color: rgb(240, 240, 240);
+}
+.chatList_Box::-webkit-scrollbar-button {
+    display: none;
+}
+.emotionButton{
+    margin-left: 10px !important;
+    background-color: #F1F0EB !important;
+    color:#404040 !important;
+    border-radius: 12px !important;
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    20% {
+      transform: translateY(-20px);
+    }
+    40% {
+      transform: translateY(-5px);
+    }
+  }
+  
+.bounce {
+animation: bounce 1s infinite;
+}
+.jangguIMG_Box{
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    margin-bottom: 20px;
+}
+.jangguIMG{
+    height: 100%;
+    opacity: 0.5;
+}
+.startBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.nomaltype{
+    margin-right: 35px!important;
+    background-color: white!important;
+    color: #6E6E6E!important;
+    font-weight: bold!important;
+    border-radius: 15px!important;
+}
+.janggutype{
+    margin-left: 35px!important;
+    background-color: white!important;
+    color: #6E6E6E!important;
+    font-weight: bold!important;
+    border-radius: 15px!important;
+}
+.modeExplain{
+   text-align: center;
+    justify-content: center;
+    opacity: 0.5;
+}
+.tooltipable{
+    margin: 0px;
+    padding: 0px;
+}
+
+.chat_subtitle{
+    margin-top:15px
+}
+.modeSelect{
+    margin-top: 15px;
+}
+
+/* 코너에 라운드 효과 */
+.chatList_Box::-webkit-scrollbar-track,
+.chatList_Box::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+.jangguFace{
+    width: 50px;
+    height: 50px;
+}
+/* .chatbot-modal {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 400px;
+    height: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1300;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 600px) {
+    .chatbot-modal {
+      position: fixed;
+      top: 48px;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+ 
+  } */
+  .chatbot-modal {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 400px;
+    height: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1300;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .QnAchat_subtitle {
+    padding: 10px;
+    background-color: #f5f5f5;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  @media (max-width: 600px) {
+    .chatbot-modal {
+      position: fixed;
+      top: 48px;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+  
+    .QnAchat_subtitle {
+      padding: 10px;
+      background-color: #f5f5f5;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    .chatList_Box {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 70px; /* ensure space for the input field */
+    }
+  
+    .chatInput {
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      z-index: 1000;
+    }
+  
+    .chatInputBase {
+      width: 100%;
+    }
+  }
