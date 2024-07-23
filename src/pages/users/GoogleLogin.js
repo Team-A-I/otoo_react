@@ -14,10 +14,14 @@ const GoogleLogin = () => {
     setCode(codeParam);
     console.log(codeParam);
     axios
-      .get("http://localhost:8080/googleLogin/callbacks", {
+      .get("https://gnat-suited-weekly.ngrok-free.app/googleLogin/callbacks", {
         params: {
           code: codeParam,
         },
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+        }
       })
       .then((response) => {
 

@@ -22,14 +22,14 @@ const LoadingFriendship = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axiosIns.post('http://localhost:8080/api/friendship/analysis', requestData);
+            response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/friendship/analysis', requestData);
           } else {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('http://localhost:8080/api/friendship/ocr', formData);
+            response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/friendship/ocr', formData);
           }
 
           navigate('/result-friendship', { state: { jsonData: response.data } });

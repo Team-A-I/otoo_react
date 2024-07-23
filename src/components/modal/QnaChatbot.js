@@ -1,6 +1,5 @@
-import { Grid, Typography, Box, ThemeProvider, Modal, Paper, InputBase, IconButton } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
-import '../../css/chatbot/ChatbotPage.css';
+import { Grid, Typography, Box, ThemeProvider, Modal, Paper, InputBase, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close'; // Add this import
 import theme from "../../theme"
@@ -21,7 +20,7 @@ const QnaChatbot = ({ open, onClose }) => {
     setHtmlString(prevHtmlString => prevHtmlString + `<div class=userDiv><Box class="user">${chat}</Box></div>`);
     setChat('');
     try {
-      const response = await axiosIns.post('http://localhost:8080/qna', { chat }, {
+      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/qna', { chat }, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -46,6 +45,27 @@ const QnaChatbot = ({ open, onClose }) => {
       chatListBox.scrollTop = chatListBox.scrollHeight;
     }
   }, [htmlString]);
+
+  // Add event listeners for mobile keyboard handling
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 600) {
+        const chatInput = document.querySelector('.chatInput');
+        const chatListBox = document.querySelector('.chatList_Box');
+        if (chatInput && chatListBox) {
+          chatListBox.style.paddingBottom = `${chatInput.offsetHeight}px`;
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('focus', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('focus', handleResize);
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

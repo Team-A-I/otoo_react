@@ -31,7 +31,7 @@ const ForgetPassword = () => {
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/forgotpassword/${usersEmail}`
+        `https://gnat-suited-weekly.ngrok-free.app/forgotpassword/${usersEmail}`
       );
       if (response.status === 200) {
         alert('이메일 인증 메일이 전송되었습니다.');
