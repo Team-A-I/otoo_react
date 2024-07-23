@@ -58,7 +58,7 @@ const Home = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
 
-    const largeImageSrc = "/images/main.png";
+    const largeImageSrc = "https://otoo-bucket.s3.ap-northeast-2.amazonaws.com/Home.png";
     const largeImageAlt = "Large Content";
     const largeImageText = ["대화 판결의", "모든 것"];
     const largeImageTextSub = "몇대몇";
