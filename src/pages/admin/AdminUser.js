@@ -40,7 +40,7 @@ const AdminUser = () => {
   const changeBanned = async (user) => {
     try {
       const endpoint = user.usersBan === 'N' ? "changeStatusBan" : "changeStatusNotBan";
-      const response = await axios.post(`https://gnat-suited-weekly.ngrok-free.app/admin/${endpoint}`, {
+      const response = await axios.post(`http://localhost:8080/admin/${endpoint}`, {
         usersCode: user.usersCode,
         usersId: user.usersId,
         usersPw: user.usersPw,

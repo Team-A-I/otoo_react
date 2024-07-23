@@ -40,7 +40,7 @@ const Board = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosIns.get('https://gnat-suited-weekly.ngrok-free.app/api/posts', {
+      const response = await axiosIns.get('http://localhost:8080/api/posts', {
         headers: {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': '69420',
@@ -80,7 +80,7 @@ const Board = () => {
     }
 
     try {
-      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/posts', newPost);
+      const response = await axiosIns.post('http://localhost:8080/api/posts', newPost);
       setPosts((prevPosts) => [...prevPosts, response.data]);
       setNewPost({
         author: getRandomAuthor(),

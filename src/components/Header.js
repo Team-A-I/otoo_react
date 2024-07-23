@@ -17,7 +17,7 @@ const Header = () => {
 // eslint-disable-next-line
   const handleLogout = async () => {
     try {
-        const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
+        const response = await axiosIns.post('http://localhost:8080/logoutUser',sessionStorage.getItem('userEmail'), {
             headers: {
                 'Authorization': sessionStorage.getItem('userEmail'),
                 'Content-Type': 'application/json',
