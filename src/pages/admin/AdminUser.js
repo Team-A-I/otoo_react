@@ -15,7 +15,12 @@ const AdminUser = () => {
 
   // 전체 회원 정보 조회
   const getAllUser = async () => {
-     await axios.get("http://localhost:8080/getAllUser")
+     await axios.get("https://gnat-suited-weekly.ngrok-free.app/getAllUser", {
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '69420',
+      }
+     })
      .then((resp) => {
        console.log("회원 전체정보 가져오기 성공");
        console.log(resp.data);
@@ -82,7 +87,7 @@ const AdminUser = () => {
   const handleChange = (event) => {
     setGender(event.target.value);
     console.log("성별 선택 시작");
-    if(event.target.value === '남' || event.target.value === '여') {
+    if(event.target.value === '남자' || event.target.value === '여자') {
       getGenderOne(event.target.value);
     } else if(event.target.value === '선택'){
       getAllUser();
@@ -90,8 +95,13 @@ const AdminUser = () => {
   };
 
   const getGenderOne = async(usersGender) => {
-    await axios.get(`http://localhost:8080/admin/getGenderOne/${usersGender}`,
-      {params : {usersGender : '남' ? '남' : '여'}})
+    await axios.get(`https://gnat-suited-weekly.ngrok-free.app/admin/getGenderOne/${usersGender}`,{
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '69420',
+      }
+    },
+      {params : {usersGender : '남자' ? '남자' : '여자'}})
       .then((resp) => {
         console.log("성별 1개 선택 시 조회 성공");
         console.log("도착"+resp.data);
@@ -120,7 +130,12 @@ const AdminUser = () => {
   };
 
   const getBanOne = async(usersBan) => {
-    await axios.get(`http://localhost:8080/admin/getBanOne/${usersBan}`,
+    await axios.get(`https://gnat-suited-weekly.ngrok-free.app/admin/getBanOne/${usersBan}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '69420',
+      }
+    },
       {params : {usersBan : 'Y' ? 'Y' : 'N'}})
       .then((resp) => {
         console.log("밴 1개 선택 시 조회 성공");
@@ -186,8 +201,8 @@ const AdminUser = () => {
               onChange={handleChange}
             >
             <MenuItem value={"선택"}>선택</MenuItem>
-            <MenuItem value={"남"}>남자</MenuItem>
-            <MenuItem value={"여"}>여자</MenuItem>
+            <MenuItem value={"남자"}>남자</MenuItem>
+            <MenuItem value={"여자"}>여자</MenuItem>
             </Select>
           </FormControl>
         </Box>
