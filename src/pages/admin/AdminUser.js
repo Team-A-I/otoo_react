@@ -15,7 +15,7 @@ const AdminUser = () => {
 
   // 전체 회원 정보 조회
   const getAllUser = async () => {
-     await axios.get("https://gnat-suited-weekly.ngrok-free.app/getAllUser")
+     await axios.get("http://localhost:8080/getAllUser")
      .then((resp) => {
        console.log("회원 전체정보 가져오기 성공");
        console.log(resp.data);
@@ -35,7 +35,7 @@ const AdminUser = () => {
   const changeBanned = async (user) => {
     try {
       const endpoint = user.usersBan === 'N' ? "changeStatusBan" : "changeStatusNotBan";
-      const response = await axios.post(`https://gnat-suited-weekly.ngrok-free.app/admin/${endpoint}`, {
+      const response = await axios.post(`http://localhost:8080/admin/${endpoint}`, {
         usersCode: user.usersCode,
         usersId: user.usersId,
         usersPw: user.usersPw,
@@ -90,7 +90,7 @@ const AdminUser = () => {
   };
 
   const getGenderOne = async(usersGender) => {
-    await axios.get(`https://gnat-suited-weekly.ngrok-free.app/admin/getGenderOne/${usersGender}`,
+    await axios.get(`http://localhost:8080/admin/getGenderOne/${usersGender}`,
       {params : {usersGender : '남' ? '남' : '여'}})
       .then((resp) => {
         console.log("성별 1개 선택 시 조회 성공");
@@ -120,7 +120,7 @@ const AdminUser = () => {
   };
 
   const getBanOne = async(usersBan) => {
-    await axios.get(`https://gnat-suited-weekly.ngrok-free.app/admin/getBanOne/${usersBan}`,
+    await axios.get(`http://localhost:8080/admin/getBanOne/${usersBan}`,
       {params : {usersBan : 'Y' ? 'Y' : 'N'}})
       .then((resp) => {
         console.log("밴 1개 선택 시 조회 성공");

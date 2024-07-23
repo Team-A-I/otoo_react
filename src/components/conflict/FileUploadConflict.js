@@ -19,7 +19,6 @@ import Recorder from '../../components/conflict/Recorder';
 
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnVoiceUploadLabel = "음성파일 업로드";
-const MAX_FILE_SIZE = 1000 * 1024; // 1000KB
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -53,10 +52,6 @@ const FileUpload = () => {
     const isImage = selectedFile.type.startsWith('image/');
 
     if (selectedFiles.length > 0) {
-      if (selectedFile.size > MAX_FILE_SIZE) {
-        alert('파일 크기가 너무 큽니다. 1,000KB 이하의 파일만 업로드할 수 있습니다.');
-        return;
-      }
 
       if (isImage) {
         setFiles(selectedFiles);
@@ -240,6 +235,7 @@ const FileUpload = () => {
                 ref={textFileInputRef}
                 type="file"
                 onChange={handleFileChange}
+                multiple
               />
             </Box>
           )}
@@ -253,7 +249,6 @@ const FileUpload = () => {
                 ref={audioFileInputRef}
                 type="file"
                 onChange={handleFileChange}
-                multiple
               />
             </Box>
           )}
@@ -289,6 +284,7 @@ const FileUpload = () => {
                 filesize={fileSize}
                 filetype={fileType}
                 filecount={fileCount}
+                
               />
             </Box>
           )}
