@@ -21,7 +21,7 @@ const LoadingLove = () => {
             if (usercode) {
               requestData.usercode = usercode;
             }
-            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/love/analysis', requestData, {
+            const response = await axiosIns.post('http://localhost:8080/api/love/analysis', requestData, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -35,7 +35,7 @@ const LoadingLove = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/love/ocr', formData, {
+            const response = await axiosIns.post('http://localhost:8080/api/love/ocr', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },

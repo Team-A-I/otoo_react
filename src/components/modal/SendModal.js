@@ -21,7 +21,8 @@ const modal = {
 const SendModal = ({ handlefile, filetitle, filesize, filetype, filecount, open, handleClose }) => {
   const isTxtFile = filetype === 'text/plain';
   const isImageFile = filetype.startsWith('image/');
-  const fileTooLarge = isTxtFile && filesize > 70 * 1024; // 70KB를 바이트로 변환
+  const isAudioFile = filetype === 'audio/wav' || filetype === 'audio/mp3';
+  const fileTooLarge = (isTxtFile && filesize > 30 * 1024) || (isAudioFile && filesize > 1000 * 1024);
   const tooManyImages = isImageFile && filecount > 5; // 이미지 파일 5개 제한
 
   return (
@@ -51,7 +52,7 @@ const SendModal = ({ handlefile, filetitle, filesize, filetype, filecount, open,
                     </Paper>
                       {fileTooLarge && (
                         <Typography color="error" sx={{ mt: 2 }}>
-                          70KB 이하의 파일로 조금만 줄여주세요:)
+                          {isTxtFile ? "30KB 이하의 파일로 조금만 줄여주세요:)" : "1,000KB 이하의 음성 파일만 업로드 가능합니다:)"}
                         </Typography>
                       )}
                       {tooManyImages && (
@@ -60,21 +61,37 @@ const SendModal = ({ handlefile, filetitle, filesize, filetype, filecount, open,
                         </Typography>
                       )}
                     <Box sx={{ mt: 6, display: 'flex', justifyContent: 'center', gap: 2 }}>
-                      <Button
-                        variant="outlined"
-                        fullWidth
-                        onClick={handleClose}
-                      >
-                        취소
-                      </Button>
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        onClick={handlefile}
-                        disabled={fileTooLarge || tooManyImages} // 파일이 너무 크거나 이미지 개수가 너무 많은 경우 버튼 비활성화
-                      >
-                        확인
-                      </Button>
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      onClick={handleClose}
+                      sx={{
+                        borderColor: '#04613E',
+                        color: '#04613E',
+                        '&:hover': {
+                          borderColor: '#03482A',
+                          backgroundColor: '#03482A',
+                          color: '#fff',
+                        }
+                      }}
+                    >
+                      취소
+                    </Button>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      onClick={handlefile}
+                      disabled={fileTooLarge || tooManyImages}
+                      sx={{
+                        backgroundColor: '#04613E',
+                        '&:hover': {
+                          backgroundColor: '#03482A',
+                        },
+                      }}
+                    >
+                      확인
+                    </Button>
+
                     </Box>
                   </Box>
                 </div>
