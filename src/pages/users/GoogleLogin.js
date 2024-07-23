@@ -12,7 +12,6 @@ const GoogleLogin = () => {
     const codeParam = queryParams.get("code");
     if (code && code === codeParam) return;
     setCode(codeParam);
-    console.log(codeParam);
     axios
       .get("https://gnat-suited-weekly.ngrok-free.app/googleLogin/callbacks", {
         params: {

@@ -15,14 +15,11 @@ const LoadingPage = () => {
   
     useEffect(() => {
       const fetchData = async () => {
-        console.log('jsonContent:', jsonContent);
   
         try {
           if (jsonContent?.text) {
             const requestData = { text: jsonContent.text || '', usercode };
-            console.log('Sending text data for analysis:', requestData);
             const response = await axiosIns.post(`${apiUrl}/analysis`, requestData);
-            console.log('Server response:', response.data);
             navigate('/result-conflict', { state: { jsonData: response.data } });
           } else if (jsonContent?.files?.length > 0) {
             const formData = new FormData();
@@ -37,9 +34,7 @@ const LoadingPage = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            console.log('Sending image files for OCR');
             const response = await axiosIns.post(`${apiUrl}/ocr`, formData);
-            console.log('Server response:', response.data);
             navigate('/result-conflict', { state: { jsonData: response.data } });
           } else {
             throw new Error(errorMessage);

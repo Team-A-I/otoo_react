@@ -22,8 +22,6 @@ const AdminUser = () => {
       }
      })
      .then((resp) => {
-       console.log("회원 전체정보 가져오기 성공");
-       console.log(resp.data);
        setUserData(resp.data);
      }).catch((err) => {
        console.log("회원 전체정보 가져오기 실패");
@@ -39,7 +37,7 @@ const AdminUser = () => {
 
   const changeBanned = async (user) => {
     try {
-      const endpoint = user.usersBan === 'N' ? "changeStatusBan" : "changeStatusNotBan";
+      const endpoint = user.usersBan === 'N' ? "changeStatusBan" : "changeStatusNotBan";// eslint-disable-next-line
       const response = await axios.post(`https://gnat-suited-weekly.ngrok-free.app/admin/${endpoint}`, {
         usersCode: user.usersCode,
         usersId: user.usersId,
@@ -51,8 +49,6 @@ const AdminUser = () => {
         usersGender: user.usersGender,
         oAuthProvider: user.oAuthProvider,
       });
-      console.log("회원 계정 상태 변경 성공");
-      console.log(response.data);
 
       // 서버에서 새로운 userData를 받아와서 업데이트
       getAllUser();
@@ -86,7 +82,6 @@ const AdminUser = () => {
 
   const handleChange = (event) => {
     setGender(event.target.value);
-    console.log("성별 선택 시작");
     if(event.target.value === '남자' || event.target.value === '여자') {
       getGenderOne(event.target.value);
     } else if(event.target.value === '선택'){
@@ -103,8 +98,6 @@ const AdminUser = () => {
     },
       {params : {usersGender : '남자' ? '남자' : '여자'}})
       .then((resp) => {
-        console.log("성별 1개 선택 시 조회 성공");
-        console.log("도착"+resp.data);
         setUserData(resp.data);
       })
       .catch((err) => {
@@ -117,11 +110,8 @@ const AdminUser = () => {
   const [ban, setBan] = useState('');
 
   const handleChangeBan = (event) => {
-    setBan(event.target.value);
-    console.log(event.target.value);
-    console.log("밴 선택 시작");
+    setBan(event.target.value);// eslint-disable-next-line
     const ban1 = event.target.value;
-    console.log(ban1);
     if(event.target.value === 'Y' || event.target.value === 'N') {
       getBanOne(event.target.value);
     } else if(event.target.value === '선택'){
@@ -138,8 +128,6 @@ const AdminUser = () => {
     },
       {params : {usersBan : 'Y' ? 'Y' : 'N'}})
       .then((resp) => {
-        console.log("밴 1개 선택 시 조회 성공");
-        console.log("도착"+resp.data);
         setUserData(resp.data);
       })
       .catch((err) => {
@@ -157,10 +145,7 @@ const AdminUser = () => {
   const handleChangeAuth = (event) => {
       setAuth(event.target.value);
       const auth1 = event.target.value;
-      console.log("계정 종류 필터링 시작");
-      console.log(auth1);
       const filtered = userData.filter(user => user.oauthProvider === auth1);
-      console.log(filtered);
       setFilteredAuth(filtered);
       setIsFiltered(true);
       if(auth1 === "선택"){

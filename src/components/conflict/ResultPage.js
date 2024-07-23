@@ -26,8 +26,6 @@ const ResultPage = () => {
   const errormesage = "분석 결과를 불러오는 중 오류가 발생했습니다.";
 
   useEffect(() => {
-    console.log("Received jsonData:", jsonData);
-    console.log("Parsed data:", data);
     // Set equal height for both papers
     if (faultsPaperRef.current && timelinePaperRef.current) {
       const faultsPaperHeight = faultsPaperRef.current.offsetHeight;

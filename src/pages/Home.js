@@ -96,7 +96,6 @@ const Home = () => {
         const usersCode = sessionStorage.getItem('accessToken');
         if (usersCode !== null) {
             setIsLoggedIn(true);
-            console.log(sessionStorage.getItem('refreshToken'));
         }
     }, []);
 

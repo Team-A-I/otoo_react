@@ -77,7 +77,7 @@ function UserLoginPage() {
             sessionStorage.setItem("userName", response.data.userName);
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
-            console.log(response.data);
+
             navigate("/");
             alert('로그인 성공');
           }
@@ -99,17 +99,17 @@ function UserLoginPage() {
       console.error("Error google login click", error);
     }
   } 
-  const naverClick = async() => {
-    axios.get("https://gnat-suited-weekly.ngrok-free.app/naverLogin")
-    .then((res) => {
-      const requrl = res.data;
-      window.location.href = requrl;
+//   const naverClick = async() => {
+//     axios.get("https://gnat-suited-weekly.ngrok-free.app/naverLogin")
+//     .then((res) => {
+//       const requrl = res.data;
+//       window.location.href = requrl;
 
-    })
-    .catch((err) =>  {
-      console.error(err)
-    });    
-}
+//     })
+//     .catch((err) =>  {
+//       console.error(err)
+//     });    
+// }
   
 
   return (
@@ -158,9 +158,9 @@ function UserLoginPage() {
                   <Button variant="text" onClick={() => handleNavigation("/forgetPassword")}>비밀번호 찾기</Button>
                 </Grid>
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <IconButton onClick={() => naverClick()}>
+                  {/* <IconButton onClick={() => naverClick()}>
                   <img src="/images/naver.png" alt="Naver Icon" style={{ width: '24px', height: '24px' }} />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton onClick={() => googleClick()}>
                   <GoogleIcon />
                   </IconButton>

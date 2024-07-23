@@ -22,7 +22,6 @@ const ResultPage = () => {
   const type = 'stt';
 
   useEffect(() => {
-    console.log("Received jsonData:", jsonData);
     // Set equal height for both papers
     if (faultsPaperRef.current && timelinePaperRef.current) {
       const faultsPaperHeight = faultsPaperRef.current.offsetHeight;
