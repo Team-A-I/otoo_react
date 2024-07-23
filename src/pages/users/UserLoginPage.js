@@ -60,7 +60,13 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken
+
+            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken,{
+              headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': '69420',
+              }
+            }
           );
 
           if (response.status === 200) {
@@ -71,6 +77,7 @@ function UserLoginPage() {
             sessionStorage.setItem("userName", response.data.userName);
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
+            console.log(response.data);
             navigate("/");
             alert('로그인 성공');
           }
