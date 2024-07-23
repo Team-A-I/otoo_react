@@ -21,7 +21,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/login', {
+      const response = await axios.post('http://localhost:8080/login', {
         userEmail,
         userPassword,
       });
@@ -98,7 +98,7 @@ function UserLoginPage() {
     }
   } 
   const naverClick = async() => {
-    axios.get("https://gnat-suited-weekly.ngrok-free.app/naverLogin")
+    axios.get("http://localhost:8080/naverLogin")
     .then((res) => {
       const requrl = res.data;
       window.location.href = requrl;

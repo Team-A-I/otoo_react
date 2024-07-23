@@ -66,15 +66,14 @@ const MainApp = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/analysis" element={<Analysis />} />
-          {/* 페이지 권한 처리 예시 */}
-          {/* <Route 
-            path="/chatbot" 
+          <Route 
+            path="/admin-user" 
             element={
-              <PrivateRoute roles={['ROLE_USER', 'ROLE_ADMIN']}>
-                <ChatBot />
+              <PrivateRoute roles={['ROLE_ADMIN']}>
+                <AdminUser />
               </PrivateRoute>
             }
-          /> */}
+          />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/qna-chatbot" element={<QnaChatbot />} />
           <Route path="/upload-conflict" element={<ConflictUpload />} />
@@ -108,8 +107,6 @@ const MainApp = () => {
           <Route path='/streaming' element={<Streaming />} />
           <Route path='/recorder-loading' element={<RecorderLoading />} />
           <Route path='/board' element={<Board />} />
-
-          <Route path="/admin-user" element={<AdminUser />} />
 
         </Routes>
       </Box>

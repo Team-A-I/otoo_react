@@ -5,10 +5,12 @@ import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import FeedbackModal from '../../components/modal/FeedbackModal';
 import theme from "../../theme";
 import { motion } from 'framer-motion';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
 Chart.register(...registerables);
+
 
 
 const ResultPage = () => {
@@ -19,6 +21,8 @@ const ResultPage = () => {
 
   const faultsPaperRef = useRef(null);
   const timelinePaperRef = useRef(null);
+  
+  const type = 'orctxt';
 
   useEffect(() => {
     console.log("Received jsonData:", jsonData);
@@ -230,6 +234,7 @@ const ResultPage = () => {
               </Grid>
             </Box>
           </Box>
+          <FeedbackModal feedbackType={type}/>
         </div>
       </ThemeProvider>
     </Container>
