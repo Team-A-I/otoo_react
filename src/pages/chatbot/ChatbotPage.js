@@ -1,7 +1,7 @@
 import { Grid, Button, Typography, Box, Tooltip, ThemeProvider } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/chatbot/ChatbotPage.css';
+// import '../../css/chatbot/ChatbotPage.css';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
