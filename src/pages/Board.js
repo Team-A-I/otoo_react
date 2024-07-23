@@ -8,7 +8,7 @@ import theme1 from '../theme';
 const convertTime = (date) => {
   date = new Date(date);
   let offset = date.getTimezoneOffset() * 60000; //ms 단위라 60000 곱해줌
-  let dateOffset = new Date(date.getTime() - offset + (9 * 60 * 60000)); // 한국 표준시에 맞추기 위해 9시간 더함
+  let dateOffset = new Date(date.getTime() - offset );
   return dateOffset.toISOString().split('T')[0];
 };
 
