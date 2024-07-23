@@ -90,6 +90,7 @@ const Recorder = ({ onRecordingStateChange }) => {
         setAlertOpen(true); // 경고 메시지 표시
         setRecording(false);
         onRecordingStateChange(false);
+        navigate('/upload-conflict'); // 짧은 녹음 예외 처리
         return;
       }
 
@@ -103,7 +104,8 @@ const Recorder = ({ onRecordingStateChange }) => {
         console.log('Response data:', response.data);
         navigate('/stt-result', { state: { jsonData: response.data } });
       } catch (error) {
-        console.error('Error uploading audio file:', error);
+        alert(error.response?.data?.message || "대화내용이 짧아서 분석할 수 없습니다.");
+        navigate('/upload-conflict'); // 서버 요청 중 오류 발생 시 예외 처리
       } finally {
         setLoading(false);
       }

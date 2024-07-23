@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axiosIns from '../axios';
 import '../../css/conflict/LoadingPage.css'; // 커스텀 CSS 파일을 임포트합니다.
 
-
 const SttLoadingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,7 +45,8 @@ const SttLoadingPage = () => {
             navigate('/result-conflict', { state: { jsonData: response.data } });
           }
         } catch (error) {
-          console.error("Error sending data to backend:", error);
+          alert(error.response?.data?.message || "대화내용이 짧아서 분석할 수 없습니다.");
+          navigate('/upload-conflict'); // 오류 발생 시 /upload-conflict로 이동
         }
       } else {
         console.error("jsonContent or jsonContent.file is undefined");
