@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';// eslint-disable-next-line
+import React, { useState, useEffect } from 'react';
 import { Box, ThemeProvider, Grid, Container, Typography, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
@@ -33,9 +33,9 @@ const smallBoxes = [
     {
         bgColor: 'gray200',
         slides: [
-            { text: '음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' },
-            { text: '이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800'},
-            { text: '텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800'},
+            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' },
+            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800'},
+            { text: '몇대몇 텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800'},
         ]
     },
     {
@@ -52,7 +52,7 @@ const finalBoxes = [
     { bgColor: 'gray100', text: '맞장구 채팅', textColor: 'black', path: '/chatbot' },
 ];
 
-const Home = () => {// eslint-disable-next-line
+const Home = () => {
     const [openChat, setOpenChat] = useState(false);// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -62,16 +62,15 @@ const Home = () => {// eslint-disable-next-line
     const largeImageAlt = "Large Content";
     const largeImageText = ["대화 판결의", "모든 것"];
     const largeImageTextSub = "몇대몇";
-    const servicetitle1 = '몇대몇 서비스 사용 방법';
-    const servicetitle2 = '판결과 공감의 몇대몇 서비스';
+    const servicetitle1 = '🙌몇대몇 서비스 사용 방법';
+    const servicetitle2 = '👏판결과 공감의 몇대몇 서비스';
 
     const handleOpenChat = () => setOpenChat(true);
     const handleCloseChat = () => setOpenChat(false);
-
     // eslint-disable-next-line
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('http://localhost:8080/logoutUser', sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
@@ -175,7 +174,7 @@ const Home = () => {// eslint-disable-next-line
                                 </IconButton>
                             </Box>
                         </Box>
-                        <Box mt={8}>
+                        <Box>
                             <Typography variant='h2_bold'>
                                 {servicetitle2}
                             </Typography>
@@ -260,7 +259,7 @@ const SmallBoxCarousel = ({ box }) => (
                 }}
             >
                 {slide.image && (
-                    <img src={slide.image} alt={`slide-${slideIndex}`} style={{ width: '50%', objectFit: "cover" }} />
+                    <img src={slide.image} alt={`slide-${slideIndex}`} style={{ width: '38%', objectFit: "cover" }} />
                 )}
                 {slide.text && (
                     <Typography
@@ -281,35 +280,48 @@ const SmallBoxCarousel = ({ box }) => (
 
 const CardBox = ({ card }) => (
     <Box sx={{ textAlign: 'center', p: 2 }}>
-        <Box sx={{ mb: 3 }}>
-            <Typography 
-                variant="title_bold" 
-                sx={{ 
-                    display: 'inline-block',
-                    position: 'relative',
-                    '&:before': {
-                        content: '""',
-                        position: 'absolute',
-                        width: '100%',
-                        height: '35%',
-                        bottom: 0,
-                        left: 0,
-                        backgroundColor: 'vlightgreen',
-                        zIndex: -1,
-                    }
-                }}
-            >
-                {card.title}
-            </Typography>
-        </Box>
-        <Box sx={{ mt: 1, mb: 2 }}>
-            <Typography variant="h3_bold">
-                {card.description}
-            </Typography>
-        </Box>
-        <img src={card.image} alt={card.alt} style={{ maxWidth: '60%', height: 'auto', margin: '0 auto' }} />
+      <Box sx={{ mb: 3 }}>
+        <Typography 
+          variant="title_bold" 
+          sx={{ 
+            display: 'inline-block',
+            position: 'relative',
+            '&:before': {
+              content: '""',
+              position: 'absolute',
+              width: '100%',
+              height: '35%',
+              bottom: 0,
+              left: 0,
+              backgroundColor: 'vlightgreen',
+              zIndex: -1,
+            }
+          }}
+        >
+          {card.title}
+        </Typography>
+      </Box>
+      <Box sx={{ mt: 1, mb: 2 }}>
+        <Typography variant="h3_bold">
+          {card.description}
+        </Typography>
+      </Box>
+      <img 
+        src={card.image} 
+        alt={card.alt} 
+        style={{ 
+          maxWidth: '30%', 
+          height: 'auto', 
+          margin: '0 auto',
+          width: '100%',
+          '@media (minWidth: 400px)': {
+            maxWidth: '50%',
+          }
+        }} 
+      />
     </Box>
-);
+  );
+  
 
 const FinalBox = ({ box, onClick }) => (
     <Box 

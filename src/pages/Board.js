@@ -4,8 +4,16 @@ import { Box, Container, Grid, Typography, Card, CardContent, Button, TextField,
 import { ThemeProvider } from '@mui/material/styles';
 import theme1 from '../theme';
 
-const strings = {
-  boardTitle: '게시판',
+// 날짜 한국 날짜로 변경
+const convertTime = (date) => {
+  date = new Date(date);
+  let offset = date.getTimezoneOffset() * 60000; //ms 단위라 60000 곱해줌
+  let dateOffset = new Date(date.getTime() - offset );
+  return dateOffset.toISOString().split('T')[0];
+};
+
+const STRINGS = {
+  boardTitle: '방명록',
   addPostButton: '게시글 추가',
   dialogTitle: '게시글 추가',
   dialogCancel: '취소',
@@ -13,26 +21,35 @@ const strings = {
   postAuthor: '작성자',
   postDate: '날짜',
   postDescription: '후기',
+  deleteButton: '삭제'
 };
 
-const flowerNames = ["Rose", "Tulip", "Lily", "Sunflower", "Daisy", "Orchid", "Violet", "Marigold", "Lavender", "Iris"];
+const FLOWER_NAMES = ["Rose", "Tulip", "Lily", "Sunflower", "Daisy", "Orchid", "Violet", "Marigold", "Lavender", "Iris"];
 
 const getRandomAuthor = () => {
-  const randomFlower = flowerNames[Math.floor(Math.random() * flowerNames.length)];
+  const randomFlower = FLOWER_NAMES[Math.floor(Math.random() * FLOWER_NAMES.length)];
   const randomNumber = Math.floor(Math.random() * 1000) + 1;
   return `${randomFlower}${randomNumber}`;
+};
+
+const INITIAL_NEW_POST = {
+  author: getRandomAuthor(),
+  date: convertTime(new Date()),
+  description: ''
+};
+
+const API_URL = 'https://gnat-suited-weekly.ngrok-free.app/api/posts';
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'ngrok-skip-browser-warning': '69420',
 };
 
 const Board = () => {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
-  const [newPost, setNewPost] = useState({
-    author: getRandomAuthor(),
-    date: new Date().toISOString().split('T')[0],
-    description: ''
-  });
+  const [newPost, setNewPost] = useState(INITIAL_NEW_POST);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6;
+  const postsPerPage = 9;
 
   useEffect(() => {
     fetchPosts();
@@ -40,14 +57,9 @@ const Board = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosIns.get('http://localhost:8080/api/posts', {
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
-        }
-      }
-      );
-      setPosts(response.data);
+      const response = await axiosIns.get(API_URL, { headers: HEADERS });
+      const sortedPosts = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setPosts(sortedPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
@@ -79,14 +91,15 @@ const Board = () => {
       return;
     }
 
+    const postToAdd = {
+      ...newPost,
+      date: convertTime(new Date())
+    };
+
     try {
-      const response = await axiosIns.post('http://localhost:8080/api/posts', newPost);
-      setPosts((prevPosts) => [...prevPosts, response.data]);
-      setNewPost({
-        author: getRandomAuthor(),
-        date: new Date().toISOString().split('T')[0],
-        description: ''
-      });
+      const response = await axiosIns.post(API_URL, postToAdd);
+      setPosts((prevPosts) => [response.data, ...prevPosts]);
+      setNewPost(INITIAL_NEW_POST);
       handleClose();
     } catch (error) {
       console.error('Error adding post:', error);
@@ -106,20 +119,20 @@ const Board = () => {
       <div style={{ fontFamily: theme1.typography.fontFamily }}>
         <Box p={5} sx={{ backgroundColor: 'white' }}>
           <Container maxWidth="lg">
-            <Box sx={{display:"flex", alignItems:"center"}}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h2_bold" gutterBottom>
-                {strings.boardTitle}
+                {STRINGS.boardTitle}
               </Typography>
-              <Button variant="contained" onClick={handleClickOpen}               
-              sx={{ 
-                ml: 2, 
-                mb: 2, 
-                backgroundColor: theme1.palette.darkgreen,
-                '&:hover': {
-                  backgroundColor: theme1.palette.lightgreen,
-                }
-              }}>
-                {strings.addPostButton}
+              <Button variant="contained" onClick={handleClickOpen}
+                sx={{
+                  ml: 2,
+                  mb: 2,
+                  backgroundColor: theme1.palette.darkgreen,
+                  '&:hover': {
+                    backgroundColor: theme1.palette.lightgreen,
+                  }
+                }}>
+                {STRINGS.addPostButton}
               </Button>
             </Box>
             <Grid container spacing={4}>
@@ -131,10 +144,10 @@ const Board = () => {
                         {post.title}
                       </Typography>
                       <Typography variant="body1" color="text.secondary">
-                        {`${strings.postAuthor}: ${post.author}`}
+                        {`${STRINGS.postAuthor}: ${post.author}`}
                       </Typography>
                       <Typography variant="body1" color="text.secondary">
-                        {`${strings.postDate}: ${post.date}`}
+                        {`${STRINGS.postDate}: ${post.date}`}
                       </Typography>
                       <Typography variant='body1' mt={2}>
                         {post.description}
@@ -145,7 +158,7 @@ const Board = () => {
               ))}
             </Grid>
             <Box mt={4} display="flex" justifyContent="center">
-            <Pagination
+              <Pagination
                 count={Math.ceil(posts.length / postsPerPage)}
                 page={currentPage}
                 onChange={handlePageChange}
@@ -166,12 +179,12 @@ const Board = () => {
           </Container>
 
           <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>{strings.dialogTitle}</DialogTitle>
+            <DialogTitle>{STRINGS.dialogTitle}</DialogTitle>
             <DialogContent>
               <TextField
                 margin="dense"
                 name="author"
-                label={strings.postAuthor}
+                label={STRINGS.postAuthor}
                 type="text"
                 fullWidth
                 value={newPost.author}
@@ -180,7 +193,7 @@ const Board = () => {
               <TextField
                 margin="dense"
                 name="date"
-                label={strings.postDate}
+                label={STRINGS.postDate}
                 type="date"
                 fullWidth
                 value={newPost.date}
@@ -192,7 +205,7 @@ const Board = () => {
               <TextField
                 margin="dense"
                 name="description"
-                label={strings.postDescription}
+                label={STRINGS.postDescription}
                 type="text"
                 fullWidth
                 multiline
@@ -203,10 +216,10 @@ const Board = () => {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
-                {strings.dialogCancel}
+                {STRINGS.dialogCancel}
               </Button>
               <Button onClick={handleAddPost} color="primary">
-                {strings.dialogAdd}
+                {STRINGS.dialogAdd}
               </Button>
             </DialogActions>
           </Dialog>

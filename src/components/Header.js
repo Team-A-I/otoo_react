@@ -15,6 +15,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
+
         const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
             headers: {
                 'Authorization': sessionStorage.getItem('userEmail'),
