@@ -53,11 +53,19 @@ const Header = () => {
     setDrawerOpen(open);
   };
 
-  const menuItems = [
+  const menuItems1 = [
+    { text: '카톡분석', path: '/upload-conflict' },
+    { text: '맞장구봇', path: '/chatbot' },
+    { text: '게시판', path: '/board'},
+    { text: '로그인', path: '/user-login' }
+  ];
+
+  const menuItems2 = [
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
     { text: '게시판', path: '/board'},
     { text: '로그인', path: '/user-login' },
+    { text: '관리자 페이지', path: '/admin-user'}
   ];
 
   const list = () => (
@@ -74,7 +82,13 @@ const Header = () => {
         </IconButton>
       </Box>
       <List>
-        {menuItems.map((item) => (
+        { sessionStorage.getItem('userRole') === 'ROLE_ADMIN' ?
+          menuItems2.map((item) => (
+            <ListItem button component={Link} to={item.path} key={item.text} onClick={toggleDrawer(false)}>
+              <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '2rem', fontWeight: 'bold' }} />
+            </ListItem>
+          ))
+        : menuItems1.map((item) => (
           <ListItem button component={Link} to={item.path} key={item.text} onClick={toggleDrawer(false)}>
             <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '2rem', fontWeight: 'bold' }} />
           </ListItem>
@@ -94,16 +108,28 @@ const Header = () => {
               </Typography>
               {!isSmallScreen && (
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  {menuItems.map((item) => (
-                    <Typography
-                      key={item.text}
-                      variant="h3_bold"
-                      component={Link}
-                      to={item.path}
-                      sx={{ marginLeft: 3, textDecoration: 'none'}}
-                    >
-                      {item.text}
-                    </Typography>
+                  { sessionStorage.getItem('userRole') === 'ROLE_ADMIN' ?
+                    menuItems2.map((item) => (
+                      <Typography
+                        key={item.text}
+                        variant="h3_bold"
+                        component={Link}
+                        to={item.path}
+                        sx={{ marginLeft: 3, textDecoration: 'none'}}
+                      >
+                        {item.text}
+                      </Typography>
+                    ))
+                    : menuItems1.map((item) => (
+                      <Typography
+                        key={item.text}
+                        variant="h3_bold"
+                        component={Link}
+                       to={item.path}
+                        sx={{ marginLeft: 3, textDecoration: 'none'}}
+                      >
+                        {item.text}
+                      </Typography>
                   ))}
                 </Box>
               )}
