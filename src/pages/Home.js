@@ -53,7 +53,7 @@ const finalBoxes = [
 ];
 
 const Home = () => {
-    const [openChat, setOpenChat] = useState(false);
+    const [openChat, setOpenChat] = useState(false);// eslint-disable-next-line
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
@@ -67,10 +67,10 @@ const Home = () => {
 
     const handleOpenChat = () => setOpenChat(true);
     const handleCloseChat = () => setOpenChat(false);
-
+    // eslint-disable-next-line
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('http://localhost:8080/logoutUser', sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
