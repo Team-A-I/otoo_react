@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router
 
 import Header from './components/Header';
 import Home from './pages/Home';
-import Analysis from './pages/Analysis';
 import './css/App.css';
 import { Box } from '@mui/material';
 
@@ -37,7 +36,6 @@ import QnaChatbot from './components/modal/QnaChatbot';
 import SttResult from './pages/conflict/SttResult';
 import Recorder from './components/conflict/Recorder';
 import SttLoadingPage from './components/conflict/SttLoadingPage';
-import SttUploadConflict from './components/conflict/SttUploadConflict';
 import SttUpload from './pages/conflict/SttUpload';
 import Streaming from './components/streaming/Streaming';
 import RecorderLoading from './components/conflict/RecorderLoading';
@@ -65,7 +63,6 @@ const MainApp = () => {
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/analysis" element={<Analysis />} />
           <Route 
             path="/admin-user" 
             element={
@@ -102,7 +99,6 @@ const MainApp = () => {
           <Route path='/stt-result' element={<SttResult />} />
           <Route path='/recorder' element={<Recorder />} />
           <Route path='/stt-loading' element={<SttLoadingPage />} />
-          <Route path='/stt-upload' element={<SttUploadConflict />} />
           <Route path='/stt' element={<SttUpload />} />
           <Route path='/streaming' element={<Streaming />} />
           <Route path='/recorder-loading' element={<RecorderLoading />} />
