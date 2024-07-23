@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';// eslint-disable-next-line
-import { AppBar, Button, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, ThemeProvider, Box, Container, useMediaQuery } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, ThemeProvider, Box, Container, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import axiosIns from '../components/axios';
@@ -9,22 +9,21 @@ import theme from '../theme';
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const navigate = useNavigate();// eslint-disable-next-line
-  const [isLoggedIn, setIsLoggedIn] = useState(false);// eslint-disable-next-line
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-// eslint-disable-next-line
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRoleAdmin, setUserRoleAdmin] = useState(false);
+
   const handleLogout = async () => {
     try {
-        const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser',sessionStorage.getItem('userEmail'), {
+
+        const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
             headers: {
                 'Authorization': sessionStorage.getItem('userEmail'),
                 'Content-Type': 'application/json',
             },
         });
-        
-        if ((response).status === 200) {
+
+        if (response.status === 200) {
             sessionStorage.removeItem('accessToken');
             sessionStorage.removeItem('refreshToken');
             sessionStorage.removeItem('userName');
@@ -35,7 +34,7 @@ const Header = () => {
         }
     } catch (error) {
         console.error('Logout failed', error);
-    }            
+    }
   };
 
   useEffect(() => {
@@ -43,8 +42,11 @@ const Header = () => {
     if (usersCode !== null) {
         setIsLoggedIn(true);
         console.log(usersCode);
-    }// eslint-disable-next-line
-    }, [sessionStorage.getItem('accessToken')]);
+    }
+    if(sessionStorage.getItem('userRole') === 'ROLE_ADMIN'){
+      setUserRoleAdmin(true);
+    }
+  }, []);
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -53,19 +55,13 @@ const Header = () => {
     setDrawerOpen(open);
   };
 
-  const menuItems1 = [
+  const menuItems = [
+    ...(!isLoggedIn ? [] : [{ text: sessionStorage.getItem('userName') + " 님" }]),
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
-    { text: '게시판', path: '/board'},
-    { text: '로그인', path: '/user-login' }
-  ];
-
-  const menuItems2 = [
-    { text: '카톡분석', path: '/upload-conflict' },
-    { text: '맞장구봇', path: '/chatbot' },
-    { text: '게시판', path: '/board'},
-    { text: '로그인', path: '/user-login' },
-    { text: '관리자 페이지', path: '/admin-user'}
+    { text: '게시판', path: '/board' },
+    ...(!isLoggedIn ? [{ text: '로그인', path: '/user-login' }] : [{ text: '로그아웃', action: handleLogout }]),
+    ...(!userRoleAdmin ? [] : [{ text: '관리자 페이지', path: '/admin-user' }])
   ];
 
   const list = () => (
@@ -82,15 +78,23 @@ const Header = () => {
         </IconButton>
       </Box>
       <List>
-        { sessionStorage.getItem('userRole') === 'ROLE_ADMIN' ?
-          menuItems2.map((item) => (
-            <ListItem button component={Link} to={item.path} key={item.text} onClick={toggleDrawer(false)}>
-              <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '2rem', fontWeight: 'bold' }} />
-            </ListItem>
-          ))
-        : menuItems1.map((item) => (
-          <ListItem button component={Link} to={item.path} key={item.text} onClick={toggleDrawer(false)}>
-            <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '2rem', fontWeight: 'bold' }} />
+        {menuItems.map((item, index) => (
+          <ListItem 
+            button 
+            key={item.text} 
+            component={item.path ? Link : 'div'} // path가 있으면 Link 컴포넌트 사용
+            to={item.path || ''} // Link 컴포넌트의 to 프로퍼티에 path 할당
+            onClick={item.action ? item.action : toggleDrawer(false)}
+            sx={isLoggedIn && index === 0 ? { borderBottom:'solid 2px #01A76280' } : {}}
+          >
+            <ListItemText 
+              primary={item.text} 
+              primaryTypographyProps={{ 
+                fontSize: '2rem', 
+                fontWeight: 'bold',
+                ...(isLoggedIn && index === 0 ? {} : {}) // 첫 번째 아이템에 대한 추가 스타일
+              }} 
+            />
           </ListItem>
         ))}
       </List>
@@ -108,28 +112,27 @@ const Header = () => {
               </Typography>
               {!isSmallScreen && (
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  { sessionStorage.getItem('userRole') === 'ROLE_ADMIN' ?
-                    menuItems2.map((item) => (
+                  {menuItems.map((item) => (
+                    item.action ? (
+                      <Typography
+                        key={item.text}
+                        variant="h3_bold"
+                        onClick={item.action}
+                        sx={{ marginLeft: 3, textDecoration: 'none', cursor: 'pointer' }}
+                      >
+                        {item.text}
+                      </Typography>
+                    ) : (
                       <Typography
                         key={item.text}
                         variant="h3_bold"
                         component={Link}
                         to={item.path}
-                        sx={{ marginLeft: 3, textDecoration: 'none'}}
+                        sx={{ marginLeft: 3, textDecoration: 'none' }}
                       >
                         {item.text}
                       </Typography>
-                    ))
-                    : menuItems1.map((item) => (
-                      <Typography
-                        key={item.text}
-                        variant="h3_bold"
-                        component={Link}
-                       to={item.path}
-                        sx={{ marginLeft: 3, textDecoration: 'none'}}
-                      >
-                        {item.text}
-                      </Typography>
+                    )
                   ))}
                 </Box>
               )}
