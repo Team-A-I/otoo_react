@@ -22,6 +22,9 @@ const Recorder = ({ onRecordingStateChange }) => {
   const dataArrayRef = useRef(null);
   const animationIdRef = useRef(null);
 
+  const happen = "무슨 일이 있었나요?";
+  const say = '··· "누가 잘못한거야?"라고 말해보세요.';
+
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
@@ -138,10 +141,10 @@ const Recorder = ({ onRecordingStateChange }) => {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh' }}>
           <>
             <Typography variant="h2_bold" gutterBottom>
-              무슨 일이 있었나요?
+              {happen}
             </Typography>
             <Typography variant="sub_bold" color="textSecondary" sx={{mb:2}} gutterBottom>
-              "··· 누가 잘못한거야?"라고 말해보세요.
+              {say}
             </Typography>
             <IconButton 
               onClick={recording ? stopRecording : startRecording}

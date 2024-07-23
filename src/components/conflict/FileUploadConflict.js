@@ -19,6 +19,11 @@ import Recorder from '../../components/conflict/Recorder';
 
 const btnUploadLabel = "카카오톡 파일 업로드";
 const btnVoiceUploadLabel = "음성파일 업로드";
+const headerText = "갈등 판결 '몇대몇'";
+const headerText2 = "누가 맞는지 판결 해드리겠습니다.";
+const subtxt = "※ 카카오톡에서 내보내기 한 대화내용이나 \n 　캡쳐한 이미지만 업로드 가능합니다.";
+const subaudio = "※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.";
+const subaudio2 = "※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -45,6 +50,7 @@ const FileUpload = () => {
   const handleCloseTextTipModal = () => setOpenTextTipModal(false);
   const handleOpenAudioTipModal = () => setOpenAudioTipModal(true);
   const handleCloseAudioTipModal = () => setOpenAudioTipModal(false);
+
 
   const handleFileChange = useCallback((event) => {
     const selectedFiles = Array.from(event.target.files);
@@ -150,13 +156,13 @@ const FileUpload = () => {
           {selectedTab === 0 && (
             <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
               <Typography variant="h2_bold" gutterBottom>
-                갈등 판결 '몇대몇'<br/>
+              {headerText}<br/>
               </Typography>
               <Typography variant="h2_bold" gutterBottom>
-                누가 맞는지 판결 해드리겠습니다.<br/><br/>
+              {headerText2}<br/><br/>
               </Typography>
-              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1}} gutterBottom>
-                ※ 카카오톡에서 내보내기 한 대화내용이나<br/>　캡쳐한 이미지만 업로드 가능합니다.
+              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1 , whiteSpace: 'pre-line' }} gutterBottom>
+                {subtxt}
               </Typography>
             </Box>
           )}
@@ -164,16 +170,16 @@ const FileUpload = () => {
           {selectedTab === 1 && (
             <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
               <Typography variant="h2_bold" gutterBottom>
-                갈등 판결 '몇대몇'<br/>
+              {headerText}<br/>
               </Typography>
               <Typography variant="h2_bold"  gutterBottom>
-                누가 맞는지 판결 해드리겠습니다.<br/><br/>
+              {headerText2}<br/><br/>
               </Typography>
               <Typography variant="sub_bold" color="textSecondary"  sx={{mt:1}} gutterBottom>
-                ※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.<br/>
+                {subaudio}<br/>
               </Typography>
               <Typography variant="sub_bold" color="textSecondary" gutterBottom>
-                ※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.
+                {subaudio2}
               </Typography>
             </Box>
           )}

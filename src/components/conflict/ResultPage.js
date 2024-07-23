@@ -23,6 +23,7 @@ const ResultPage = () => {
   const timelinePaperRef = useRef(null);
   
   const type = 'orctxt';
+  const errormesage = "분석 결과를 불러오는 중 오류가 발생했습니다.";
 
   useEffect(() => {
     console.log("Received jsonData:", jsonData);
@@ -44,7 +45,7 @@ const ResultPage = () => {
           <div style={{ fontFamily: theme.typography.fontFamily }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh' }}>
               <Typography variant="h4" gutterBottom>
-                분석 결과를 불러오는 중 오류가 발생했습니다.
+                {errormesage}
               </Typography>
             </Box>
           </div>
