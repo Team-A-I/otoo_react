@@ -45,12 +45,23 @@ const FileUpload = () => {
   const [openModal, setOpenModal] = useState(false);
   const [recording, setRecording] = useState(false);
 
-  const handleCloseModal = () => setOpenModal(false);
+  const resetFileInput = () => {
+    if (selectedTab === 0) {
+      textFileInputRef.current.value = null;
+    } else {
+      audioFileInputRef.current.value = null;
+    }
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    resetFileInput();
+  };
+
   const handleOpenTextTipModal = () => setOpenTextTipModal(true);
   const handleCloseTextTipModal = () => setOpenTextTipModal(false);
   const handleOpenAudioTipModal = () => setOpenAudioTipModal(true);
   const handleCloseAudioTipModal = () => setOpenAudioTipModal(false);
-
 
   const handleFileChange = useCallback((event) => {
     const selectedFiles = Array.from(event.target.files);
@@ -58,7 +69,6 @@ const FileUpload = () => {
     const isImage = selectedFile.type.startsWith('image/');
 
     if (selectedFiles.length > 0) {
-
       if (isImage) {
         setFiles(selectedFiles);
         setFileName(selectedFiles.map(file => file.name).join(', '));
@@ -151,8 +161,6 @@ const FileUpload = () => {
           }}
         >
 
-
-          {/* 탭에 따라 상단 내용 변경 */}
           {selectedTab === 0 && (
             <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
               <Typography variant="h2_bold" gutterBottom>
@@ -184,7 +192,6 @@ const FileUpload = () => {
             </Box>
           )}
 
-          {/* Tip 버튼을 우측 상단에 배치 */}
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
             <Button
             variant="text"
@@ -195,7 +202,6 @@ const FileUpload = () => {
             </Button>
           </Box>
 
-          {/* 탭 추가 */}
           <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <Tabs
               value={selectedTab}
@@ -216,7 +222,6 @@ const FileUpload = () => {
             </Tabs>
           </Box>
 
-          {/* 탭에 따라 내용 변경 */}
           {selectedTab === 0 && (
             <Box sx={{ width: '100%', mt: 10, textAlign: 'center', p: 2 }}>
               <Grid container spacing={2}>

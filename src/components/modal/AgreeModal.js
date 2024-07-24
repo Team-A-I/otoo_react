@@ -78,7 +78,7 @@ const TermsOfService = () => {
             <Typography variant="subtitle1" gutterBottom>
               제4장 개인정보보호
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            {/* <Typography variant="body1" gutterBottom>
               제7조 (개인정보의 수집 및 이용)
             </Typography>
             <Typography variant="body2" paragraph>
@@ -101,7 +101,7 @@ const TermsOfService = () => {
               1. 회사는 이용자의 개인정보를 보유하는 기간은 개인정보의 수집 및 이용 목적이 달성되는 시점부터 시작하여, 해당 목적이 달성된 후에는 지체 없이 파기합니다. 단, 다음의 경우에는 예외로 합니다:
               <br />가. 관계 법령에서 보유 기간을 정하고 있는 경우에는 해당 기간 동안 보존합니다.
               <br />나. 이용자가 별도의 개인정보 보유 기간(보유 기간 5년)에 동의한 경우에는 동의한 기간 동안 보존합니다.
-            </Typography>
+            </Typography> */}
           </Box>
     
           <Box mb={2}>
@@ -174,7 +174,7 @@ const TermsOfService = () => {
   const sections = [
     {
       title: "와주셔서 감사해요:)",
-      content: "몇대몇은 입력하신 데이터는 저장하지 않습니다. AI기능 강화를 위해 분석 결과와 평가만 저장합니다."
+      content: "몇대몇은 모든 데이터를 저장하지 않습니다. 안심하고 이용하셔도 됩니다."
     },
     {
       title: "몇대몇은 아직 성장중이에요",
