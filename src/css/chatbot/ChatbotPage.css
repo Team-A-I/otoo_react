@@ -3,7 +3,7 @@
     justify-content: center;
 }
 .chatList_Box{
-    height: 70vh;
+    height: 70vh!important;
     /* min-height: 70vh;
     max-height: 70vh; */
     overflow-y: scroll;
@@ -231,7 +231,7 @@ animation: bounce 1s infinite;
     .chatList_Box {
       flex: 1;
       overflow-y: auto;
-      padding-bottom: 70px; /* ensure space for the input field */
+      padding-bottom: 0px!important; /* ensure space for the input field */
     }
   
     .chatInput {
