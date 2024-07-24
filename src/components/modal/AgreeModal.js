@@ -78,30 +78,30 @@ const TermsOfService = () => {
             <Typography variant="subtitle1" gutterBottom>
               제4장 개인정보보호
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              제7조 (개인정보의 수집 및 이용)
-            </Typography>
-            <Typography variant="body2" paragraph>
-              1. 회사는 이용자의 개인정보를 수집할 때 반드시 이용자의 동의를 받으며, 수집된 개인정보는 회사의 개인정보처리방침에 따라 보호됩니다.
-              <br />2. 회사는 이용자의 개인정보를 제3자에게 제공하거나 이용하지 않습니다. 단, 법령의 규정에 따라 제공이 요구되는 경우에는 예외로 합니다.
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              제8조 (데이터 수집 및 활용)
-            </Typography>
-            <Typography variant="body2" paragraph>
-              1. 회사는 서비스 제공과 관련하여 필요한 범위 내에서 이용자의 개인정보를 수집할 수 있습니다. 이 경우, 회사는 다음의 사항을 준수합니다:
-              <br />가. 수집된 개인정보는 명확한 목적을 위해 사용되며, 이용자의 동의 없이는 해당 목적을 벗어난 다른 용도로 사용하지 않습니다.
-              <br />나. 회사는 개인정보의 수집과 관련된 법령 및 규제를 준수하며, 이를 위한 필요한 기술적, 관리적 조치를 취합니다.
-              <br />다. 이용자는 개인정보 수집에 대해 동의를 거부할 권리가 있으며, 동의를 거부하는 경우 서비스 이용에 제한이 있을 수 있습니다.
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              제9조 (정보 보유기간 및 파기)
-            </Typography>
-            <Typography variant="body2" paragraph>
-              1. 회사는 이용자의 개인정보를 보유하는 기간은 개인정보의 수집 및 이용 목적이 달성되는 시점부터 시작하여, 해당 목적이 달성된 후에는 지체 없이 파기합니다. 단, 다음의 경우에는 예외로 합니다:
-              <br />가. 관계 법령에서 보유 기간을 정하고 있는 경우에는 해당 기간 동안 보존합니다.
-              <br />나. 이용자가 별도의 개인정보 보유 기간(보유 기간 5년)에 동의한 경우에는 동의한 기간 동안 보존합니다.
-            </Typography>
+            // <Typography variant="body1" gutterBottom>
+            //   제7조 (개인정보의 수집 및 이용)
+            // </Typography>
+            // <Typography variant="body2" paragraph>
+            //   1. 회사는 이용자의 개인정보를 수집할 때 반드시 이용자의 동의를 받으며, 수집된 개인정보는 회사의 개인정보처리방침에 따라 보호됩니다.
+            //   <br />2. 회사는 이용자의 개인정보를 제3자에게 제공하거나 이용하지 않습니다. 단, 법령의 규정에 따라 제공이 요구되는 경우에는 예외로 합니다.
+            // </Typography>
+            // <Typography variant="body1" gutterBottom>
+            //   제8조 (데이터 수집 및 활용)
+            // </Typography>
+            // <Typography variant="body2" paragraph>
+            //   1. 회사는 서비스 제공과 관련하여 필요한 범위 내에서 이용자의 개인정보를 수집할 수 있습니다. 이 경우, 회사는 다음의 사항을 준수합니다:
+            //   <br />가. 수집된 개인정보는 명확한 목적을 위해 사용되며, 이용자의 동의 없이는 해당 목적을 벗어난 다른 용도로 사용하지 않습니다.
+            //   <br />나. 회사는 개인정보의 수집과 관련된 법령 및 규제를 준수하며, 이를 위한 필요한 기술적, 관리적 조치를 취합니다.
+            //   <br />다. 이용자는 개인정보 수집에 대해 동의를 거부할 권리가 있으며, 동의를 거부하는 경우 서비스 이용에 제한이 있을 수 있습니다.
+            // </Typography>
+            // <Typography variant="body1" gutterBottom>
+            //   제9조 (정보 보유기간 및 파기)
+            // </Typography>
+            // <Typography variant="body2" paragraph>
+            //   1. 회사는 이용자의 개인정보를 보유하는 기간은 개인정보의 수집 및 이용 목적이 달성되는 시점부터 시작하여, 해당 목적이 달성된 후에는 지체 없이 파기합니다. 단, 다음의 경우에는 예외로 합니다:
+            //   <br />가. 관계 법령에서 보유 기간을 정하고 있는 경우에는 해당 기간 동안 보존합니다.
+            //   <br />나. 이용자가 별도의 개인정보 보유 기간(보유 기간 5년)에 동의한 경우에는 동의한 기간 동안 보존합니다.
+            // </Typography>
           </Box>
     
           <Box mb={2}>
@@ -174,7 +174,7 @@ const TermsOfService = () => {
   const sections = [
     {
       title: "와주셔서 감사해요:)",
-      content: "몇대몇은 입력하신 데이터는 저장하지 않습니다. AI기능 강화를 위해 분석 결과와 평가만 저장합니다."
+      content: "몇대몇은 모든 데이터를 저장하지 않습니다. 안심하고 이용하셔도 됩니다."
     },
     {
       title: "몇대몇은 아직 성장중이에요",
