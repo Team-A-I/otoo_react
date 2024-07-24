@@ -36,6 +36,20 @@ let theme = createTheme({
       fontWeight: 500,
       color: '#1B1F23'
     },
+    verybig_bold:{
+      fontSize: '130px',
+      [createTheme().breakpoints.down('lg')]: {
+        fontSize: '90px',
+      },
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '60px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '50px',
+      },
+      fontWeight: 700,
+      color: '#1B1F23'
+    },
     hbig_bold:{
       fontSize: '95px',
       [createTheme().breakpoints.down('lg')]: {
@@ -111,7 +125,7 @@ let theme = createTheme({
         fontSize: '20px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '15px',
+        fontSize: '10px',
       },
       fontWeight: 700,
       color: '#1B1F23'
