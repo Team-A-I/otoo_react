@@ -58,7 +58,7 @@ const Header = () => {
     ...(!isLoggedIn ? [] : [{ text: sessionStorage.getItem('userName') + " 님" }]),
     { text: '카톡분석', path: '/upload-conflict' },
     { text: '맞장구봇', path: '/chatbot' },
-    { text: '게시판', path: '/board' },
+    { text: '방명록', path: '/board' },
     ...(!isLoggedIn ? [{ text: '로그인', path: '/user-login' }] : [{ text: '로그아웃', action: handleLogout }]),
     ...(!userRoleAdmin ? [] : [{ text: '관리자 페이지', path: '/admin-user' }])
   ];
