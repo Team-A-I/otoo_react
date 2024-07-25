@@ -111,6 +111,33 @@ const Home = () => {
         setCurrentSlide(currentSlide === cardData.length - 1 ? 0 : currentSlide + 1);
     };
 
+    const renderIndicator = (onClickHandler, isSelected, index, label) => {
+        const style = {
+            background: isSelected ? '#FFFFFF' : '#ccc', // 선택된 상태는 검은색, 선택되지 않은 상태는 회색
+            width: 7,
+            height: 7,
+            display: 'inline-block',
+            margin: '0 8px',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            boxShadow: '0 0 5px rgba(0, 0, 0, 0.5)' // 그림자 추가
+        };
+        return (
+            <li
+                style={style}
+                onClick={onClickHandler}
+                onKeyDown={onClickHandler}
+                value={index}
+                key={index}
+                role="button"
+                tabIndex={0}
+                aria-label={`${label} ${index + 1}`}
+            />
+        );
+    };
+    
+    
+
     return (
         <ThemeProvider theme={theme1}>
             <div style={{ fontFamily: theme1.typography.fontFamily }}>
@@ -155,7 +182,7 @@ const Home = () => {
                                         showArrows={false}
                                         selectedItem={currentSlide}
                                         onChange={(index) => setCurrentSlide(index)}
-                                        renderIndicator={false}
+                                        renderIndicator={renderIndicator}
                                         autoPlay={false}
                                     >
                                         {cardData.map((card, index) => (
