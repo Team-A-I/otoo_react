@@ -51,7 +51,7 @@ const FileUpload = () => {
   const [recording, setRecording] = useState(false);
 
   const resetFileInput = () => {
-    if (selectedTab === 0) {
+    if (selectedTab === 2) {
       textFileInputRef.current.value = null;
     } else if (selectedTab === 1) {
       imageFileInputRef.current.value = null;
@@ -141,12 +141,12 @@ const FileUpload = () => {
   };
 
   const handleButtonClick = () => {
-    if (selectedTab === 0) {
-      textFileInputRef.current.click();
+    if (selectedTab === 2) {
+      textFileInputRef.current?.click();
     } else if (selectedTab === 1) {
-      imageFileInputRef.current.click();
+      imageFileInputRef.current?.click();
     } else {
-      audioFileInputRef.current.click();
+      audioFileInputRef.current?.click();
     }
   };
 
@@ -179,34 +179,6 @@ const FileUpload = () => {
               <Typography variant="h2_bold" gutterBottom>
               {headerText}<br/>
               </Typography>
-              <Typography variant="h2_bold" gutterBottom>
-              {headerText2}<br/><br/>
-              </Typography>
-              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1 , whiteSpace: 'pre-line' }} gutterBottom>
-                {subtxt}
-              </Typography>
-            </Box>
-          )}
-
-          {selectedTab === 1 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
-              <Typography variant="h2_bold" gutterBottom>
-              {headerText}<br/>
-              </Typography>
-              <Typography variant="h2_bold"  gutterBottom>
-              {headerText2}<br/><br/>
-              </Typography>
-              <Typography variant="sub_bold" color="textSecondary"  sx={{mt:1 , whiteSpace: 'pre-line' }} gutterBottom>
-                {subimage}<br/>
-              </Typography>
-            </Box>
-          )}
-
-          {selectedTab === 2 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
-              <Typography variant="h2_bold" gutterBottom>
-              {headerText}<br/>
-              </Typography>
               <Typography variant="h2_bold"  gutterBottom>
               {headerText2}<br/><br/>
               </Typography>
@@ -219,15 +191,43 @@ const FileUpload = () => {
             </Box>
           )}
 
+          {selectedTab === 1 && (
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
+              <Typography variant="h2_bold" gutterBottom>
+              {headerText}<br/>
+              </Typography>
+              <Typography variant="h2_bold" gutterBottom>
+              {headerText2}<br/><br/>
+              </Typography>
+              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1 , whiteSpace: 'pre-line' }} gutterBottom>
+                {subimage}<br/>
+              </Typography>
+            </Box>
+          )}
+
+          {selectedTab === 2 && (
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
+              <Typography variant="h2_bold" gutterBottom>
+              {headerText}<br/>
+              </Typography>
+              <Typography variant="h2_bold" gutterBottom>
+              {headerText2}<br/><br/>
+              </Typography>
+              <Typography variant="sub_bold" color="textSecondary" sx={{mt:1 , whiteSpace: 'pre-line' }} gutterBottom>
+                {subtxt}
+              </Typography>
+            </Box>
+          )}
+
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
             <Button
               variant="text"
               onClick={
                 selectedTab === 0 
-                  ? handleOpenTextTipModal 
+                  ? handleOpenAudioTipModal 
                   : selectedTab === 1 
                   ? handleOpenImageTipModal // 수정
-                  : handleOpenAudioTipModal
+                  : handleOpenTextTipModal 
               }
               sx={{ color: '#04613E' }}
             >
@@ -251,34 +251,19 @@ const FileUpload = () => {
                 },
               }}
             >
-              <Tab label="텍스트 업로드" />
-              <Tab label="이미지 업로드" />
               <Tab label="음성 업로드" />
+              <Tab label="이미지 업로드" />
+              <Tab label="텍스트 업로드" />
             </Tabs>
           </Box>
 
           {selectedTab === 0 && (
-            <Box sx={{ width: '100%', mt: 10, textAlign: 'center', p: 2 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <img 
-                    src="/images/말풍선.png" 
-                    alt="텍스트 업로드용 이미지 1" 
-                    className="responsive-image"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <img 
-                    src="/images/누가.png" 
-                    alt="텍스트 업로드용 이미지 2" 
-                    className="responsive-image1"
-                  />
-                </Grid>
-              </Grid>
+            <Box sx={{ width: '100%', mt: 5, textAlign: 'center' }}>
+              <Recorder onRecordingStateChange={handleRecordingStateChange} />
               <input
-                accept=".txt"
+                accept=".wav,.mp3"
                 style={{ display: 'none' }}
-                ref={textFileInputRef}
+                ref={audioFileInputRef}
                 type="file"
                 onChange={handleFileChange}
               />
@@ -315,12 +300,27 @@ const FileUpload = () => {
           )}
 
           {selectedTab === 2 && (
-            <Box sx={{ width: '100%', mt: 5, textAlign: 'center' }}>
-              <Recorder onRecordingStateChange={handleRecordingStateChange} />
+            <Box sx={{ width: '100%', mt: 10, textAlign: 'center', p: 2 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img 
+                    src="/images/말풍선.png" 
+                    alt="텍스트 업로드용 이미지 1" 
+                    className="responsive-image"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <img 
+                    src="/images/누가.png" 
+                    alt="텍스트 업로드용 이미지 2" 
+                    className="responsive-image1"
+                  />
+                </Grid>
+              </Grid>
               <input
-                accept=".wav,.mp3"
+                accept=".txt"
                 style={{ display: 'none' }}
-                ref={audioFileInputRef}
+                ref={textFileInputRef}
                 type="file"
                 onChange={handleFileChange}
               />
@@ -342,20 +342,20 @@ const FileUpload = () => {
               <UploadButton
                 label={
                   selectedTab === 0 
-                    ? btnUploadLabelText 
+                    ? btnUploadLabelVoice 
                     : selectedTab === 1 
                     ? btnUploadLabelImage 
-                    : btnUploadLabelVoice
+                    : btnUploadLabelText
                 }
                 onClick={handleButtonClick}
                 disabled={false}
                 className="conflict-btn-upload"
                 title_str={
                   selectedTab === 0 
-                    ? "txt 파일만 올려주세요" 
+                    ? "음성 파일을 업로드해주세요" 
                     : selectedTab === 1 
                     ? "이미지 파일만 올려주세요" 
-                    : "음성 파일을 업로드해주세요"
+                    : "txt 파일만 올려주세요" 
                 }
                 defaultColor='#01A762'
                 hoverColor='#04613E'
