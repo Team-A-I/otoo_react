@@ -128,11 +128,11 @@ const ResultPage = () => {
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                         <Box sx={{ textAlign: 'center', flex: 1 }}>
-                          <Typography variant="hc_bold">A<br />({result.nicknames.nickname_a})</Typography>
+                          <Typography variant="hc_bold">A<br />({result.nickname.nickname_a})</Typography>
                         </Box>
                         <Box sx={{ flex: 1 }} /> {/* 이 빈 Box를 추가하여 두 요소 사이를 떨어뜨립니다 */}
                         <Box sx={{ textAlign: 'center', flex: 1 }}>
-                          <Typography variant="hc_bold">B<br />({result.nicknames.nickname_b})</Typography>
+                          <Typography variant="hc_bold">B<br />({result.nickname.nickname_b})</Typography>
                         </Box>
                       </Box>
                     </Paper>

@@ -108,7 +108,7 @@ const FeedbackModal = ({ feedbackType }) => {
 
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
-      await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/feedback', feedback, {
+      await axiosIns.post('http://localhost:8080/feedback', feedback, {
         headers: {
           'Content-Type': 'application/json',
         },

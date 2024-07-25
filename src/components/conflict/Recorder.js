@@ -103,7 +103,7 @@ const Recorder = ({ onRecordingStateChange }) => {
       setLoading(true);
       navigate('/recorder-loading');
       try {
-        const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/api/transcribe/file', formData);
+        const response = await axios.post('http://localhost:8080/api/transcribe/file', formData);
         navigate('/stt-result', { state: { jsonData: response.data } });
       } catch (error) {
         alert(error.response?.data?.message || "대화내용이 짧아서 분석할 수 없습니다.");

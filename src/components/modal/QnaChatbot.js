@@ -21,7 +21,7 @@ const QnaChatbot = ({ open, onClose }) => {
     setHtmlString(prevHtmlString => prevHtmlString + `<div class=userDiv><Box class="user">${chat}</Box></div>`);
     setChat('');
     try {
-      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/qna', { chat }, {
+      const response = await axiosIns.post('http://localhost:8080/qna', { chat }, {
         headers: {
           'Content-Type': 'application/json',
         },

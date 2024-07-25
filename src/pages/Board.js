@@ -39,7 +39,7 @@ const INITIAL_NEW_POST = {
   description: ''
 };
 
-const API_URL = 'https://gnat-suited-weekly.ngrok-free.app/api/posts';
+const API_URL = 'http://localhost:8080/api/posts';
 const HEADERS = {
   'Content-Type': 'application/json',
   'ngrok-skip-browser-warning': '69420',
