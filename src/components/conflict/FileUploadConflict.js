@@ -23,7 +23,7 @@ const btnUploadLabelText = "텍스트 파일 업로드";
 const btnUploadLabelImage = "이미지 파일 업로드";
 const btnUploadLabelVoice = "음성 파일 업로드";
 const headerText = "갈등 판결 '몇대몇'";
-const headerText2 = "누가 맞는지 판결 해드리겠습니다.";
+const headerText2 = "누가 맞는지 \n 판결 해드리겠습니다.";
 const subtxt = "※ 카카오톡에서 내보내기 한 대화내용만 가능합니다. \n 　※일대일 대화만 분석 가능합니다.";
 const subimage = "※ 카카오톡 캡쳐기능을 사용한 이미지만 업로드 가능합니다. \n 　※일대일 대화만 분석 가능합니다.";
 const subaudio = "※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.";
@@ -187,124 +187,124 @@ const FileUpload = () => {
           
           
           {selectedTab === 0 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
-              <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
-                <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
-                  <Typography variant="h2_bold" gutterBottom>
-                    {headerText}<br />
+              <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
+                  <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
+                    <Typography variant="h2_bold" gutterBottom>
+                      {headerText}<br />
+                    </Typography>
+                    <Typography variant="h2_bold"  gutterBottom>
+                      {headerText2}<br /><br />
+                    </Typography>
+                  </Box>
+                  <Box sx={{ position: 'absolute', right: 0 }}>
+                    <img
+                      src="/images/Tips.png"
+                      alt="Tip!"
+                      onClick={
+                        selectedTab === 0
+                          ? handleOpenAudioTipModal
+                          : selectedTab === 1
+                          ? handleOpenImageTipModal
+                          : handleOpenTextTipModal
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        width: '4rem',
+                        height: '4rem',
+                      }}
+                      className="tip-icon"
+                    />
+                  </Box>
+                </Box>
+                <Box sx={{ mt: 10 }}>
+                  <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1 }} gutterBottom>
+                    {subaudio}<br />
                   </Typography>
-                  <Typography variant="h2_bold" gutterBottom>
-                    {headerText2}<br /><br />
+                  <Typography variant="sub_bold" color="textSecondary" gutterBottom>
+                    {subaudio2}
                   </Typography>
                 </Box>
-                <Box sx={{ position: 'absolute', right: 0 }}>
-                  <img
-                    src="/images/Tips.png"
-                    alt="Tip!"
-                    onClick={
-                      selectedTab === 0
-                        ? handleOpenAudioTipModal
-                        : selectedTab === 1
-                        ? handleOpenImageTipModal
-                        : handleOpenTextTipModal
-                    }
-                    style={{
-                      cursor: 'pointer',
-                      width: '80px',
-                      height: '80px',
-                    }}
-                    className="tip-icon"
-                  />
-                </Box>
               </Box>
-              <Box sx={{ mt: 10 }}>
-                <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1 }} gutterBottom>
-                  {subaudio}<br />
-                </Typography>
-                <Typography variant="sub_bold" color="textSecondary" gutterBottom>
-                  {subaudio2}
-                </Typography>
-              </Box>
-            </Box>
-          )}
+            )}
 
-          {selectedTab === 1 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
-              <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
-                <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
-                  <Typography variant="h2_bold" gutterBottom>
-                    {headerText}<br />
-                  </Typography>
-                  <Typography variant="h2_bold" gutterBottom>
-                    {headerText2}<br /><br />
+            {selectedTab === 1 && (
+              <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
+                  <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
+                    <Typography variant="h2_bold" gutterBottom>
+                      {headerText}<br />
+                    </Typography>
+                    <Typography variant="h2_bold" gutterBottom>
+                      {headerText2}<br /><br />
+                    </Typography>
+                  </Box>
+                  <Box sx={{ position: 'absolute', right: 0 }}>
+                    <img
+                      src="/images/Tips.png"
+                      alt="Tip!"
+                      onClick={
+                        selectedTab === 0
+                          ? handleOpenAudioTipModal
+                          : selectedTab === 1
+                          ? handleOpenImageTipModal
+                          : handleOpenTextTipModal
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        width: '4rem',
+                        height: '4rem',
+                      }}
+                      className="tip-icon"
+                    />
+                  </Box>
+                </Box>
+                <Box sx={{ mt: 10 }}>
+                  <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1, whiteSpace: 'pre-line' }} gutterBottom>
+                    {subimage}<br />
                   </Typography>
                 </Box>
-                <Box sx={{ position: 'absolute', right: 0 }}>
-                  <img
-                    src="/images/Tips.png"
-                    alt="Tip!"
-                    onClick={
-                      selectedTab === 0
-                        ? handleOpenAudioTipModal
-                        : selectedTab === 1
-                        ? handleOpenImageTipModal
-                        : handleOpenTextTipModal
-                    }
-                    style={{
-                      cursor: 'pointer',
-                      width: '80px',
-                      height: '80px',
-                    }}
-                    className="tip-icon"
-                  />
-                </Box>
               </Box>
-              <Box sx={{ mt: 10 }}>
-                <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1, whiteSpace: 'pre-line' }} gutterBottom>
-                  {subimage}<br />
-                </Typography>
-              </Box>
-            </Box>
-          )}
+            )}
 
-          {selectedTab === 2 && (
-            <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
-              <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
-                <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
-                  <Typography variant="h2_bold" gutterBottom>
-                    {headerText}<br />
-                  </Typography>
-                  <Typography variant="h2_bold" gutterBottom>
-                    {headerText2}<br /><br />
+            {selectedTab === 2 && (
+              <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
+                  <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
+                    <Typography variant="h2_bold" gutterBottom>
+                      {headerText}<br />
+                    </Typography>
+                    <Typography variant="h2_bold" gutterBottom>
+                      {headerText2}<br /><br />
+                    </Typography>
+                  </Box>
+                  <Box sx={{ position: 'absolute', right: 0 }}>
+                    <img
+                      src="/images/Tips.png"
+                      alt="Tip!"
+                      onClick={
+                        selectedTab === 0
+                          ? handleOpenAudioTipModal
+                          : selectedTab === 1
+                          ? handleOpenImageTipModal
+                          : handleOpenTextTipModal
+                      }
+                      style={{
+                        cursor: 'pointer',
+                        width: '4rem',
+                        height: '4rem',
+                      }}
+                      className="tip-icon"
+                    />
+                  </Box>
+                </Box>
+                <Box sx={{ mt: 10 }}>
+                  <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1, whiteSpace: 'pre-line' }} gutterBottom>
+                    {subtxt}
                   </Typography>
                 </Box>
-                <Box sx={{ position: 'absolute', right: 0 }}>
-                  <img
-                    src="/images/Tips.png"
-                    alt="Tip!"
-                    onClick={
-                      selectedTab === 0
-                        ? handleOpenAudioTipModal
-                        : selectedTab === 1
-                        ? handleOpenImageTipModal
-                        : handleOpenTextTipModal
-                    }
-                    style={{
-                      cursor: 'pointer',
-                      width: '80px',
-                      height: '80px',
-                    }}
-                    className="tip-icon"
-                  />
-                </Box>
               </Box>
-              <Box sx={{ mt: 10 }}>
-                <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1, whiteSpace: 'pre-line' }} gutterBottom>
-                  {subtxt}
-                </Typography>
-              </Box>
-            </Box>
-          )}
+            )}
 
 
 
