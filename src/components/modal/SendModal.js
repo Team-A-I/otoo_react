@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, Button, Typography, Modal, ThemeProvider, Paper, Container } from '@mui/material';
 import theme from '../../theme';
 import CloseIcon from '@mui/icons-material/Close';
+import ReactGA from 'react-ga4';
 
 const modal = {
   position: 'absolute',
@@ -24,6 +25,14 @@ const SendModal = ({ handlefile, filetitle, filesize, filetype, filecount, open,
   const isAudioFile = filetype === 'audio/wav' || filetype === 'audio/mp3';
   const fileTooLarge = (isTxtFile && filesize > 30 * 1024) || (isAudioFile && filesize > 1000 * 1024);
   const tooManyImages = isImageFile && filecount > 5; // 이미지 파일 5개 제한
+
+  const handleConfirm = () => {
+    ReactGA.event('file_upload_confirm', {
+      event_category: 'User Actions',
+      event_label: 'File Upload Confirm'
+    });
+    handlefile();
+  };
 
   return (
     <Container>
@@ -50,48 +59,47 @@ const SendModal = ({ handlefile, filetitle, filesize, filetype, filecount, open,
                         {filetitle}
                       </Typography>
                     </Paper>
-                      {fileTooLarge && (
-                        <Typography color="error" sx={{ mt: 2 }}>
-                          {isTxtFile ? "30KB 이하의 파일로 조금만 줄여주세요:)" : "1,000KB 이하의 음성 파일만 업로드 가능합니다:)"}
-                        </Typography>
-                      )}
-                      {tooManyImages && (
-                        <Typography color="error" sx={{ mt: 2 }}>
-                          최대 5개까지 업로드 가능합니다:)
-                        </Typography>
-                      )}
+                    {fileTooLarge && (
+                      <Typography color="error" sx={{ mt: 2 }}>
+                        {isTxtFile ? "30KB 이하의 파일로 조금만 줄여주세요:)" : "1,000KB 이하의 음성 파일만 업로드 가능합니다:)"}
+                      </Typography>
+                    )}
+                    {tooManyImages && (
+                      <Typography color="error" sx={{ mt: 2 }}>
+                        최대 5개까지 업로드 가능합니다:)
+                      </Typography>
+                    )}
                     <Box sx={{ mt: 6, display: 'flex', justifyContent: 'center', gap: 2 }}>
-                    <Button
-                      variant="outlined"
-                      fullWidth
-                      onClick={handleClose}
-                      sx={{
-                        borderColor: '#04613E',
-                        color: '#04613E',
-                        '&:hover': {
-                          borderColor: '#03482A',
-                          backgroundColor: '#03482A',
-                          color: '#fff',
-                        }
-                      }}
-                    >
-                      취소
-                    </Button>
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      onClick={handlefile}
-                      disabled={fileTooLarge || tooManyImages}
-                      sx={{
-                        backgroundColor: '#04613E',
-                        '&:hover': {
-                          backgroundColor: '#03482A',
-                        },
-                      }}
-                    >
-                      확인
-                    </Button>
-
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        onClick={handleClose}
+                        sx={{
+                          borderColor: '#04613E',
+                          color: '#04613E',
+                          '&:hover': {
+                            borderColor: '#03482A',
+                            backgroundColor: '#03482A',
+                            color: '#fff',
+                          }
+                        }}
+                      >
+                        취소
+                      </Button>
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        onClick={handleConfirm}
+                        disabled={fileTooLarge || tooManyImages}
+                        sx={{
+                          backgroundColor: '#04613E',
+                          '&:hover': {
+                            backgroundColor: '#03482A',
+                          },
+                        }}
+                      >
+                        확인
+                      </Button>
                     </Box>
                   </Box>
                 </div>
