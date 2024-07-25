@@ -7,6 +7,8 @@ import {
   Tabs,
   Tab,
   Button,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
@@ -50,6 +52,9 @@ const FileUpload = () => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [recording, setRecording] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const resetFileInput = () => {
     if (selectedTab === 2) {
@@ -167,76 +172,127 @@ const FileUpload = () => {
   }, [selectedTab]);
 
   return (
-      <ThemeProvider theme={theme1}>
+    <ThemeProvider theme={theme1}>
       <div style={{ fontFamily: theme1.typography.fontFamily }}>
-      <Container maxWidth="lg">
-        
-
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '0',
-            boxSizing: 'border-box',
-            marginTop: 5,
-            paddingBottom: '100px',
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: '0',
+              boxSizing: 'border-box',
+              marginTop: 5,
+              paddingBottom: '100px',
+            }}
+          >
+{selectedTab === 0 && (
+  <Box
+    sx={{
+      textAlign: isMobile ? 'left' : 'center',
+      mb: 3,
+      mt: 3,
+      width: '100%',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }}
+  >
+    <Box
+      sx={{
+        maxWidth: '700px',
+        mx: 'auto',
+        position: 'relative',
+        display: 'flex',
+        justifyContent: isMobile ? 'space-between' : 'center',
+        alignItems: 'center',
+        width: '100%',
+        flexDirection: isMobile ? 'row' : 'column',
+      }}
+    >
+      <Box
+        sx={{
+          textAlign: isMobile ? 'left' : 'center',
+          order: isMobile ? 1 : 0,
+          width: '100%',
+        }}
+      >
+        <Typography variant="h2_bold" gutterBottom>
+          {headerText}
+          <br />
+        </Typography>
+        <Typography variant="h2_bold" gutterBottom>
+          {headerText2}
+          <br />
+          <br />
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          order: isMobile ? 2 : 1,
+          marginLeft: isMobile ? 'auto' : '0',
+        }}
+      >
+        <img
+          src="/images/Tips.png"
+          alt="Tip!"
+          onClick={
+            selectedTab === 0
+              ? handleOpenAudioTipModal
+              : selectedTab === 1
+              ? handleOpenImageTipModal
+              : handleOpenTextTipModal
+          }
+          style={{
+            cursor: 'pointer',
+            width: '4rem',
+            height: '4rem',
           }}
-        >
-          
-          
-          
-          {selectedTab === 0 && (
-              <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
-                  <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
-                    <Typography variant="h2_bold" gutterBottom>
-                      {headerText}<br />
-                    </Typography>
-                    <Typography variant="h2_bold"  gutterBottom>
-                      {headerText2}<br /><br />
-                    </Typography>
-                  </Box>
-                  <Box sx={{ position: 'absolute', right: 0 }}>
-                    <img
-                      src="/images/Tips.png"
-                      alt="Tip!"
-                      onClick={
-                        selectedTab === 0
-                          ? handleOpenAudioTipModal
-                          : selectedTab === 1
-                          ? handleOpenImageTipModal
-                          : handleOpenTextTipModal
-                      }
-                      style={{
-                        cursor: 'pointer',
-                        width: '4rem',
-                        height: '4rem',
-                      }}
-                      className="tip-icon"
-                    />
-                  </Box>
-                </Box>
-                <Box sx={{ mt: 10 }}>
-                  <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1 }} gutterBottom>
-                    {subaudio}<br />
-                  </Typography>
-                  <Typography variant="sub_bold" color="textSecondary" gutterBottom>
-                    {subaudio2}
-                  </Typography>
-                </Box>
-              </Box>
-            )}
+          className="tip-icon"
+        />
+      </Box>
+    </Box>
+    <Box sx={{ mt: 10 }}>
+      <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1 }} gutterBottom>
+        {subaudio}
+        <br />
+      </Typography>
+      <Typography variant="sub_bold" color="textSecondary" gutterBottom>
+        {subaudio2}
+      </Typography>
+    </Box>
+  </Box>
+)}
 
             {selectedTab === 1 && (
-              <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  mb: 3,
+                  mt: 3,
+                  width: '100%',
+                  position: 'relative',
+                  textAlign: isMobile ? 'left' : 'center',
+                }}
+              >
                 <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
-                  <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      textAlign: isMobile ? 'left' : 'center',
+                    }}
+                  >
                     <Typography variant="h2_bold" gutterBottom>
-                      {headerText}<br />
+                      {headerText}
+                      <br />
                     </Typography>
                     <Typography variant="h2_bold" gutterBottom>
-                      {headerText2}<br /><br />
+                      {headerText2}
+                      <br />
+                      <br />
                     </Typography>
                   </Box>
                   <Box sx={{ position: 'absolute', right: 0 }}>
@@ -260,22 +316,47 @@ const FileUpload = () => {
                   </Box>
                 </Box>
                 <Box sx={{ mt: 10 }}>
-                  <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1, whiteSpace: 'pre-line' }} gutterBottom>
-                    {subimage}<br />
+                  <Typography
+                    variant="sub_bold"
+                    color="textSecondary"
+                    sx={{ mt: 1, whiteSpace: 'pre-line' }}
+                    gutterBottom
+                  >
+                    {subimage}
+                    <br />
                   </Typography>
                 </Box>
               </Box>
             )}
 
             {selectedTab === 2 && (
-              <Box sx={{ textAlign: 'center', mb: 3, mt: 3, width: '100%', position: 'relative' }}>
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  mb: 3,
+                  mt: 3,
+                  width: '100%',
+                  position: 'relative',
+                  textAlign: isMobile ? 'left' : 'center',
+                }}
+              >
                 <Box sx={{ maxWidth: '700px', mx: 'auto', position: 'relative' }}>
-                  <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      textAlign: isMobile ? 'left' : 'center',
+                    }}
+                  >
                     <Typography variant="h2_bold" gutterBottom>
-                      {headerText}<br />
+                      {headerText}
+                      <br />
                     </Typography>
                     <Typography variant="h2_bold" gutterBottom>
-                      {headerText2}<br /><br />
+                      {headerText2}
+                      <br />
+                      <br />
                     </Typography>
                   </Box>
                   <Box sx={{ position: 'absolute', right: 0 }}>
@@ -299,330 +380,331 @@ const FileUpload = () => {
                   </Box>
                 </Box>
                 <Box sx={{ mt: 10 }}>
-                  <Typography variant="sub_bold" color="textSecondary" sx={{ mt: 1, whiteSpace: 'pre-line' }} gutterBottom>
+                  <Typography
+                    variant="sub_bold"
+                    color="textSecondary"
+                    sx={{ mt: 1, whiteSpace: 'pre-line' }}
+                    gutterBottom
+                  >
                     {subtxt}
                   </Typography>
                 </Box>
               </Box>
             )}
 
-
-
-          <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-            <Tabs
-              value={selectedTab}
-              onChange={handleTabChange}
-              centered
-              TabIndicatorProps={{ style: { backgroundColor: '#04613E' } }}
-              sx={{
-                '& .MuiTab-root': {
-                  color: '#04613E',
-                  '&.Mui-selected': {
+            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+              <Tabs
+                value={selectedTab}
+                onChange={handleTabChange}
+                centered
+                TabIndicatorProps={{ style: { backgroundColor: '#04613E' } }}
+                sx={{
+                  '& .MuiTab-root': {
                     color: '#04613E',
+                    '&.Mui-selected': {
+                      color: '#04613E',
+                    },
                   },
-                },
-              }}
-            >
-              <Tab label="음성 업로드" />
-              <Tab label="이미지 업로드" />
-              <Tab label="텍스트 업로드" />
-            </Tabs>
+                }}
+              >
+                <Tab label="음성 업로드" />
+                <Tab label="이미지 업로드" />
+                <Tab label="텍스트 업로드" />
+              </Tabs>
+            </Box>
+
+            {selectedTab === 0 && (
+              <Box sx={{ width: '100%', mt: 5, textAlign: 'center' }}>
+                <Recorder onRecordingStateChange={handleRecordingStateChange} />
+                <input
+                  accept=".wav,.mp3"
+                  style={{ display: 'none' }}
+                  ref={audioFileInputRef}
+                  type="file"
+                  onChange={handleFileChange}
+                />
+              </Box>
+            )}
+
+            {selectedTab === 1 && showCarousel && (
+              <Box sx={{ width: '100%', mt: 1, textAlign: 'center', p: 2 }}>
+                <Carousel
+                  showArrows={true}
+                  showThumbs={false}
+                  showStatus={false} // 페이지 인디케이터를 숨깁니다.
+                  showIndicators={true} // dot 인디케이터를 표시합니다.
+                  infiniteLoop={true}
+                  emulateTouch={true}
+                  useKeyboardArrows={true}
+                  renderArrowPrev={(onClickHandler, hasPrev, label) =>
+                    hasPrev && (
+                      <Button
+                        onClick={onClickHandler}
+                        title={label}
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: 15,
+                          zIndex: 2,
+                          color: 'white',
+                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                          borderRadius: '50%',
+                          width: 40,
+                          height: 40,
+                          minWidth: 40,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                          },
+                        }}
+                      >
+                        {'<'}
+                      </Button>
+                    )
+                  }
+                  renderArrowNext={(onClickHandler, hasNext, label) =>
+                    hasNext && (
+                      <Button
+                        onClick={onClickHandler}
+                        title={label}
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          right: 15,
+                          zIndex: 2,
+                          color: 'white',
+                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                          borderRadius: '50%',
+                          width: 40,
+                          height: 40,
+                          minWidth: 40,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                          },
+                        }}
+                      >
+                        {'>'}
+                      </Button>
+                    )
+                  }
+                >
+                  <div>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      '채팅방 메뉴 〉 캡처 ' 를 눌러주세요👆
+                    </Typography>
+                    <img
+                      src="/images/5모바일캡쳐.png"
+                      alt="5모바일캡쳐"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '400px',
+                        objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
+                        margin: '0 auto',
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      '내려받기' 버튼을 눌러주세요👆
+                    </Typography>
+                    <img
+                      src="/images/4모바일선택.png"
+                      alt="4모바일선택"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '400px',
+                        objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
+                        margin: '0 auto',
+                      }}
+                    />
+                  </div>
+                </Carousel>
+
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  ref={imageFileInputRef}
+                  type="file"
+                  onChange={handleFileChange}
+                  multiple
+                />
+              </Box>
+            )}
+
+            {selectedTab === 2 && (
+              <Box sx={{ width: '100%', mt: 1, textAlign: 'center', p: 2 }}>
+                <Carousel
+                  showArrows={true}
+                  showThumbs={false}
+                  showStatus={false} // 페이지 인디케이터를 숨깁니다.
+                  showIndicators={true} // dot 인디케이터를 표시합니다.
+                  infiniteLoop={true}
+                  emulateTouch={true}
+                  useKeyboardArrows={true}
+                  renderArrowPrev={(onClickHandler, hasPrev, label) =>
+                    hasPrev && (
+                      <Button
+                        onClick={onClickHandler}
+                        title={label}
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: 15,
+                          zIndex: 2,
+                          color: 'white',
+                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                          borderRadius: '50%',
+                          width: 40,
+                          height: 40,
+                          minWidth: 40,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                          },
+                        }}
+                      >
+                        {'<'}
+                      </Button>
+                    )
+                  }
+                  renderArrowNext={(onClickHandler, hasNext, label) =>
+                    hasNext && (
+                      <Button
+                        onClick={onClickHandler}
+                        title={label}
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          right: 15,
+                          zIndex: 2,
+                          color: 'white',
+                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                          borderRadius: '50%',
+                          width: 40,
+                          height: 40,
+                          minWidth: 40,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                          },
+                        }}
+                      >
+                        {'>'}
+                      </Button>
+                    )
+                  }
+                >
+                  <div>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      원하는 상대방의 채팅방에서 '메뉴' 버튼을 누르고 대화 내보내기를 클릭해주세요👆
+                    </Typography>
+                    <img
+                      src="/images/1pc카톡추출.png"
+                      alt="텍스트 설명 이미지 1"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '400px',
+                        objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
+                        margin: '0 auto',
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      텍스트 파일을 선택해주세요👆
+                    </Typography>
+                    <img
+                      src="/images/2pc카톡업로드.png"
+                      alt="텍스트 설명 이미지 2"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '400px',
+                        objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
+                        margin: '0 auto',
+                      }}
+                    />
+                  </div>
+                </Carousel>
+
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  ref={imageFileInputRef}
+                  type="file"
+                  onChange={handleFileChange}
+                  multiple
+                />
+              </Box>
+            )}
+
+            {!recording && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%',
+                  mt: 2,
+                  p: 2,
+                  backgroundColor: '#fff',
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1000,
+                }}
+              >
+                <UploadButton
+                  label={
+                    selectedTab === 0
+                      ? btnUploadLabelVoice
+                      : selectedTab === 1
+                      ? btnUploadLabelImage
+                      : btnUploadLabelText
+                  }
+                  onClick={handleButtonClick}
+                  disabled={false}
+                  className="conflict-btn-upload"
+                  title_str={
+                    selectedTab === 0
+                      ? '음성 파일을 업로드해주세요'
+                      : selectedTab === 1
+                      ? '이미지 파일만 올려주세요'
+                      : 'txt 파일만 올려주세요'
+                  }
+                  defaultColor='#01A762'
+                  hoverColor='#04613E'
+                  disabledColor='#B0B0B0'
+                  fontColor='#ffffff'
+                />
+                <SendModal
+                  open={openModal}
+                  handleClose={handleCloseModal}
+                  handlefile={handleFileUpload}
+                  filetitle={fileName}
+                  filesize={fileSize}
+                  filetype={fileType}
+                  filecount={fileCount}
+                />
+              </Box>
+            )}
+
+            <TextTipModal open={openTextTipModal} handleClose={handleCloseTextTipModal} />
+            <AudioTipModal open={openAudioTipModal} handleClose={handleCloseAudioTipModal} />
+            <ImageTipModal open={openImageTipModal} handleClose={handleCloseImageTipModal} />
           </Box>
-
-
-
-
-          {selectedTab === 0 && (
-            <Box sx={{ width: '100%', mt: 5, textAlign: 'center' }}>
-              <Recorder onRecordingStateChange={handleRecordingStateChange} />
-              <input
-                accept=".wav,.mp3"
-                style={{ display: 'none' }}
-                ref={audioFileInputRef}
-                type="file"
-                onChange={handleFileChange}
-              />
-            </Box>
-          )}
-
-          {selectedTab === 1 && showCarousel && (
-            <Box sx={{ width: '100%', mt: 1, textAlign: 'center', p: 2 }}>
-              <Carousel
-                showArrows={true}
-                showThumbs={false}
-                showStatus={false} // 페이지 인디케이터를 숨깁니다.
-                showIndicators={true} // dot 인디케이터를 표시합니다.
-                infiniteLoop={true}
-                emulateTouch={true}
-                useKeyboardArrows={true}
-                renderArrowPrev={(onClickHandler, hasPrev, label) =>
-                  hasPrev && (
-                    <Button 
-                      onClick={onClickHandler} 
-                      title={label} 
-                      sx={{ 
-                        position: 'absolute', 
-                        top: '50%', 
-                        left: 15, 
-                        zIndex: 2, 
-                        color: 'white', 
-                        backgroundColor: 'rgba(0, 0, 0, 0.3)', 
-                        borderRadius: '50%', 
-                        width: 40, 
-                        height: 40, 
-                        minWidth: 40, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        }
-                      }}
-                    >
-                      {"<"}
-                    </Button>
-                  )
-                }
-                renderArrowNext={(onClickHandler, hasNext, label) =>
-                  hasNext && (
-                    <Button 
-                      onClick={onClickHandler} 
-                      title={label} 
-                      sx={{ 
-                        position: 'absolute', 
-                        top: '50%', 
-                        right: 15, 
-                        zIndex: 2, 
-                        color: 'white', 
-                        backgroundColor: 'rgba(0, 0, 0, 0.3)', 
-                        borderRadius: '50%', 
-                        width: 40, 
-                        height: 40, 
-                        minWidth: 40, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        }
-                      }}
-                    >
-                      {">"}
-                    </Button>
-                  )
-                }
-              >
-                <div>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                  '채팅방 메뉴 〉 캡처 ' 를 눌러주세요👆
-                  </Typography>
-                  <img
-                    src="/images/5모바일캡쳐.png"
-                    alt="5모바일캡쳐"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      maxHeight: '400px',
-                      objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
-                      margin: '0 auto',
-                    }}
-                  />
-                </div>
-                <div>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                    '내려받기' 버튼을 눌러주세요👆
-                  </Typography>
-                  <img
-                    src="/images/4모바일선택.png"
-                    alt="4모바일선택"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      maxHeight: '400px',
-                      objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
-                      margin: '0 auto',
-                    }}
-                  />
-                </div>
-              </Carousel>
-
-              <input
-                accept="image/*"
-                style={{ display: 'none' }}
-                ref={imageFileInputRef}
-                type="file"
-                onChange={handleFileChange}
-                multiple
-              />
-            </Box>
-          )}
-
-          {selectedTab === 2 && (
-            <Box sx={{ width: '100%', mt: 1, textAlign: 'center', p: 2 }}>
-              <Carousel
-                showArrows={true}
-                showThumbs={false}
-                showStatus={false} // 페이지 인디케이터를 숨깁니다.
-                showIndicators={true} // dot 인디케이터를 표시합니다.
-                infiniteLoop={true}
-                emulateTouch={true}
-                useKeyboardArrows={true}
-                renderArrowPrev={(onClickHandler, hasPrev, label) =>
-                  hasPrev && (
-                    <Button 
-                      onClick={onClickHandler} 
-                      title={label} 
-                      sx={{ 
-                        position: 'absolute', 
-                        top: '50%', 
-                        left: 15, 
-                        zIndex: 2, 
-                        color: 'white', 
-                        backgroundColor: 'rgba(0, 0, 0, 0.3)', 
-                        borderRadius: '50%', 
-                        width: 40, 
-                        height: 40, 
-                        minWidth: 40, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        }
-                      }}
-                    >
-                      {"<"}
-                    </Button>
-                  )
-                }
-                renderArrowNext={(onClickHandler, hasNext, label) =>
-                  hasNext && (
-                    <Button 
-                      onClick={onClickHandler} 
-                      title={label} 
-                      sx={{ 
-                        position: 'absolute', 
-                        top: '50%', 
-                        right: 15, 
-                        zIndex: 2, 
-                        color: 'white', 
-                        backgroundColor: 'rgba(0, 0, 0, 0.3)', 
-                        borderRadius: '50%', 
-                        width: 40, 
-                        height: 40, 
-                        minWidth: 40, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        }
-                      }}
-                    >
-                      {">"}
-                    </Button>
-                  )
-                }
-              >
-                <div>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                    원하는 상대방의 채팅방에서 '메뉴' 버튼을 누르고 대화 내보내기를 클릭해주세요👆
-                  </Typography>
-                  <img
-                    src="/images/1pc카톡추출.png"
-                    alt="텍스트 설명 이미지 1"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      maxHeight: '400px',
-                      objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
-                      margin: '0 auto',
-                    }}
-                  />
-                </div>
-                <div>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                    텍스트 파일을 선택해주세요👆
-                  </Typography>
-                  <img
-                    src="/images/2pc카톡업로드.png"
-                    alt="텍스트 설명 이미지 2"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      maxHeight: '400px',
-                      objectFit: 'contain', // 비율을 유지하며 이미지를 맞춤
-                      margin: '0 auto',
-                    }}
-                  />
-                </div>
-              </Carousel>
-
-              <input
-                accept="image/*"
-                style={{ display: 'none' }}
-                ref={imageFileInputRef}
-                type="file"
-                onChange={handleFileChange}
-                multiple
-              />
-            </Box>
-          )}
-
-
-          {!recording && (
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              width: '100%', 
-              mt: 2, 
-              p: 2, 
-              backgroundColor: '#fff', 
-              position: 'sticky', 
-              bottom: 0, 
-              zIndex: 1000 
-            }}>
-              <UploadButton
-                label={
-                  selectedTab === 0 
-                    ? btnUploadLabelVoice 
-                    : selectedTab === 1 
-                    ? btnUploadLabelImage 
-                    : btnUploadLabelText
-                }
-                onClick={handleButtonClick}
-                disabled={false}
-                className="conflict-btn-upload"
-                title_str={
-                  selectedTab === 0 
-                    ? "음성 파일을 업로드해주세요" 
-                    : selectedTab === 1 
-                    ? "이미지 파일만 올려주세요" 
-                    : "txt 파일만 올려주세요" 
-                }
-                defaultColor='#01A762'
-                hoverColor='#04613E'
-                disabledColor='#B0B0B0'
-                fontColor='#ffffff'
-              />
-              <SendModal
-                open={openModal}
-                handleClose={handleCloseModal}
-                handlefile={handleFileUpload}
-                filetitle={fileName}
-                filesize={fileSize}
-                filetype={fileType}
-                filecount={fileCount}
-              />
-            </Box>
-          )}
-
-          <TextTipModal open={openTextTipModal} handleClose={handleCloseTextTipModal} />
-          <AudioTipModal open={openAudioTipModal} handleClose={handleCloseAudioTipModal} />
-          <ImageTipModal open={openImageTipModal} handleClose={handleCloseImageTipModal} />
-        </Box>
-      </Container>
-      <style>{`
+        </Container>
+        <style>{`
       
         .responsive-image {
           max-width: 80%;
