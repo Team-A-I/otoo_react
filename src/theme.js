@@ -180,7 +180,7 @@ let theme = createTheme({
         fontSize: '19px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '18px',
+        fontSize: '1px',
       },
       fontWeight: 500,
       color: '#1B1F23'
