@@ -1,15 +1,11 @@
-import { Grid, Button, Typography, Box, Tooltip, ThemeProvider } from '@mui/material';
+import { Grid, Button, Typography, Box, Tooltip, ThemeProvider, Paper, InputBase, IconButton } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/chatbot/ChatbotPage.css';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
-import theme from "../../theme"
+import theme from "../../theme";
 import axiosIns from '../../components/axios';
-
-
+import ReactGA from 'react-ga4';
 
 const ChatBot = () => {
   // 채팅창에 입력한 문자열
@@ -42,10 +38,9 @@ const ChatBot = () => {
   const chatbotNomalModeButtonText = '일반 모드';
   const chatbotJangguModeButtonText = '장구 모드';
 
-  // 챗봇 대화 로직
   const chatbotHandler = async (chat) => {
-    if(chat === '') return;
-    setIsButtonDisabled(true); 
+    if (chat === '') return;
+    setIsButtonDisabled(true);
     if (mode === '0') {
       setMode('1');
     }
@@ -62,16 +57,14 @@ const ChatBot = () => {
     setChat('');
 
     try {
-
       const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/chatbot', { RecentMessages, mode }, {
-
         headers: {
           'Content-Type': 'application/json',
         },
       });
       const result = response.data;
       setIsButtonDisabled(false);
-    
+
       messages.push("assistant : " + result);
 
       if (messages.length > 6) {
@@ -90,25 +83,38 @@ const ChatBot = () => {
   };
 
   const emotionReportHandler = () => {
-     navigate('/emotionReportLoadingPage', { state: { messages } });
+    ReactGA.event('generate_emotion_report', {
+      event_category: 'User Actions',
+      event_label: 'Generate Emotion Report'
+    });
+    navigate('/emotionReportLoadingPage', { state: { messages } });
   };
 
-  // 장구 모드 선택
   const jangguModeHandler = () => {
+    ReactGA.event('janggu_mode_selected', {
+      event_category: 'User Actions',
+      event_label: 'Janggu Mode Selected'
+    });
     setMode('2');
     inputRef.current.focus();
   };
+
   const nomalModeHandler = () => {
+    ReactGA.event('normal_mode_selected', {
+      event_category: 'User Actions',
+      event_label: 'Normal Mode Selected'
+    });
     setMode('1');
     inputRef.current.focus();
   };
+
   useEffect(() => {
-    // 2. isButtonDisabled 상태 변화 감지
+     // 2. isButtonDisabled 상태 변화 감지
     if (!isButtonDisabled) {
       // 3. isButtonDisabled가 false가 되면 입력 필드에 포커스 설정
       inputRef.current.focus();
     }
-  }, [isButtonDisabled]); 
+  }, [isButtonDisabled]);
 
   // 컴포넌트가 마운트되면 input에 포커스 설정
   useEffect(() => {
@@ -117,7 +123,6 @@ const ChatBot = () => {
     }
   }, []);
 
-  // 채팅창 스크롤 자동으로 내리기
   useEffect(() => {
     const chatListBox = document.querySelector('.chatList_Box');
     if (chatListBox) {
@@ -125,27 +130,22 @@ const ChatBot = () => {
     }
   }, [htmlString]);
 
- 
   return (
-      <ThemeProvider theme={theme}>
-        <div style={{ fontFamily: theme.typography.fontFamily}}>
-    <Box className='grid'>
-        <Box className='content'>
-          <Box className="chat_subtitle">
-
-            <Typography variant="title_bold">{chatbotTitle}</Typography>
-
-          </Box>
-
-          <Box className="chat_subtitle">
-            <Typography variant="sub_mid" color="gray500">{chatbotSubtitle1}</Typography>
-          </Box>
-          <Box className="chat_subtitle">
-            <Typography variant="sub_mid" color="gray500">{chatbotSubtitle2}</Typography>
-          </Box>
-          <Box className="chatList_Box">
-            {
-              RecentMessages.length === 0 && mode === '0' ? (
+    <ThemeProvider theme={theme}>
+      <div style={{ fontFamily: theme.typography.fontFamily }}>
+        <Box className='grid'>
+          <Box className='content'>
+            <Box className="chat_subtitle">
+              <Typography variant="title_bold">{chatbotTitle}</Typography>
+            </Box>
+            <Box className="chat_subtitle">
+              <Typography variant="sub_mid" color="gray500">{chatbotSubtitle1}</Typography>
+            </Box>
+            <Box className="chat_subtitle">
+              <Typography variant="sub_mid" color="gray500">{chatbotSubtitle2}</Typography>
+            </Box>
+            <Box className="chatList_Box">
+              {RecentMessages.length === 0 && mode === '0' ? (
                 <Box className="startBox">
                   <Box className="startBoxItem">
                     <Box className="jangguIMG_Box">
@@ -166,67 +166,62 @@ const ChatBot = () => {
                   </Box>
                 </Box>
               ) : (
-                
-                <Box sx={{marginBottom:'10px',height:'100%'}}>
-                
-                <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
-                  <Box sx={{position:'relative'}}>
+                <Box sx={{ marginBottom: '10px', height: '100%' }}>
+                  <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
+                  <Box sx={{ position: 'relative' }}>
                     <Tooltip title={chatbotTooltipText} arrow placement="top">
-                    <Button
-                      variant="contained"
-                      className='emotionButton bounce'
-                      style={{ display: disabled ? 'none' : 'inline-block' }} // 조건부 스타일 적용
-                      onClick={() => emotionReportHandler()}
-                    >
-                      {chatbotEmotionReportButtonText}
-                    </Button>
+                      <Button
+                        variant="contained"
+                        className='emotionButton bounce'
+                        style={{ display: disabled ? 'none' : 'inline-block' }}
+                        onClick={() => emotionReportHandler()}
+                      >
+                        {chatbotEmotionReportButtonText}
+                      </Button>
                     </Tooltip>
                   </Box>
                 </Box>
-              )
-            }
-                 
-          </Box>
-          <Grid container className="chatInput" direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <Grid item xs={12} >
-              <Paper
-                component="form"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', minWidth: '100%', borderRadius: 2 }}
-              >
-                <InputBase
-                  sx={{ ml: 1, flex: 1, color: "gray500" }}
-                  id="chat"
-                  placeholder={chatbotPlaceholder}
-                  value={chat}
-                  className='chatInputBase'
-                  disabled={isButtonDisabled}
-                  inputRef={inputRef}
-                  onChange={(e) => setChat(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') { chatbotHandler(chat); e.preventDefault(); } }}
-                />
-                <IconButton
-                  type="button"
-                  sx={{ p: '10px' }}
-                  aria-label="send"
-                  disabled={isButtonDisabled} 
-                  onClick={async () => {
-                    chatbotHandler(chat); 
-                  }}
+              )}
+            </Box>
+            <Grid container className="chatInput" direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Grid item xs={12}>
+                <Paper
+                  component="form"
+                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', minWidth: '100%', borderRadius: 2 }}
                 >
-                  <SendIcon />
-                </IconButton>
-              </Paper>
+                  <InputBase
+                    sx={{ ml: 1, flex: 1, color: "gray500" }}
+                    id="chat"
+                    placeholder={chatbotPlaceholder}
+                    value={chat}
+                    className='chatInputBase'
+                    disabled={isButtonDisabled}
+                    inputRef={inputRef}
+                    onChange={(e) => setChat(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { chatbotHandler(chat); e.preventDefault(); } }}
+                  />
+                  <IconButton
+                    type="button"
+                    sx={{ p: '10px' }}
+                    aria-label="send"
+                    disabled={isButtonDisabled}
+                    onClick={async () => {
+                      ReactGA.event('send_chat_message', {
+                        event_category: 'User Actions',
+                        event_label: 'Send Chat Message'
+                      });
+                      chatbotHandler(chat);
+                    }}
+                  >
+                    <SendIcon />
+                  </IconButton>
+                </Paper>
+              </Grid>
             </Grid>
-         
-            <Grid item xs={2} className="tooltipable">
-            
-            </Grid> 
-          </Grid>
-
+          </Box>
         </Box>
-    </Box>
-        </div>
-      </ThemeProvider>
+      </div>
+    </ThemeProvider>
   );
 };
 
