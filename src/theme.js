@@ -174,6 +174,18 @@ let theme = createTheme({
       fontWeight: 700,
       color: '#1B1F23'
     },
+    h2_bold2: {
+      fontSize: '22px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '19px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '16px',
+
+      },
+      fontWeight: 700,
+      color: '#1B1F23'
+    },
     h2_mid: {
       fontSize: '22px',
       [createTheme().breakpoints.down('md')]: {
