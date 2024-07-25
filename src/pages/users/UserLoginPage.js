@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, ThemeProvider, Grid, Typography, Paper, Button, TextField, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import theme from '../../theme';
 import GoogleIcon from '@mui/icons-material/Google';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import ReactGA from 'react-ga4';
 
 function UserLoginPage() {
   const navigate = useNavigate(); 
@@ -16,6 +16,10 @@ function UserLoginPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);// eslint-disable-next-line
   const [userName, setUserName] = useState('');
   const handleNavigation = (path) => {
+    ReactGA.event('navigation_click', {
+      event_category: 'Navigation',
+      event_label: path,
+    });
     navigate(path);
   };
 
@@ -27,6 +31,10 @@ function UserLoginPage() {
       });
 
       if (response.status === 200) {
+        ReactGA.event('login_success', {
+          event_category: 'User Actions',
+          event_label: 'Login Success',
+        });
         sessionStorage.setItem('accessToken', response.headers.access);
         sessionStorage.setItem('refreshToken', response.headers.refresh);
         sessionStorage.setItem('usersCode', response.data.usersCode);
@@ -44,24 +52,35 @@ function UserLoginPage() {
       } else {
         console.error('로그인 버튼 오류:', error);
       }
+      ReactGA.event('login_failed', {
+        event_category: 'User Actions',
+        event_label: 'Login Failed',
+      });
     }
   };
-// eslint-disable-next-line
-  const handleSocialLogin = (url) => {
+
+  const handleSocialLogin = (url, provider) => {
+    ReactGA.event('social_login_click', {
+      event_category: 'Social Login',
+      event_label: provider,
+    });
     window.location.href = url;
   };
-  if (!window.Kakao.isInitialized()) {
-    window.Kakao.init('5a7a8b2fc3e9f6c8e7fabdd16d3dda48'); // 여기에 본인의 Kakao 앱 키를 입력합니다.
-  }
-  const kakaoClick = async () =>{
+
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init('5a7a8b2fc3e9f6c8e7fabdd16d3dda48'); // 여기에 본인의 Kakao 앱 키를 입력합니다.
+    }
+  }, []);
+
+  const kakaoClick = async () => {
     try {
       window.Kakao.Auth.login({
         success: async (authObj) => {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-
-            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken,{
+            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken, {
               headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': '69420',
@@ -70,6 +89,10 @@ function UserLoginPage() {
           );
 
           if (response.status === 200) {
+            ReactGA.event('kakao_login_success', {
+              event_category: 'User Actions',
+              event_label: 'Kakao Login Success',
+            });
 
             sessionStorage.setItem("accessToken", response.headers.access);
             sessionStorage.setItem("refreshToken", response.headers.refresh);
@@ -83,34 +106,25 @@ function UserLoginPage() {
           }
         },
         fail: (err) => {
-            alert(err.response.data.message);
+          alert(err.response.data.message);
+          ReactGA.event('kakao_login_failed', {
+            event_category: 'User Actions',
+            event_label: 'Kakao Login Failed',
+          });
         },
       });
     } catch (error) {
       console.error("Error kakao login click", error);
     }
-  }
-  const googleClick = async() => {
-    try {
+  };
 
-      window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://ai.otoo.kr/googlelogin&response_type=code&scope=email profile";
-      
+  const googleClick = async () => {
+    try {
+      handleSocialLogin("https://accounts.google.com/o/oauth2/v2/auth?client_id=750077853896-rc6oo0md5bae842jv00ddj1agk0vvqlt.apps.googleusercontent.com&redirect_uri=https://ai.otoo.kr/googlelogin&response_type=code&scope=email profile", "Google");
     } catch (error) {
       console.error("Error google login click", error);
     }
-  } 
-//   const naverClick = async() => {
-//     axios.get("https://gnat-suited-weekly.ngrok-free.app/naverLogin")
-//     .then((res) => {
-//       const requrl = res.data;
-//       window.location.href = requrl;
-
-//     })
-//     .catch((err) =>  {
-//       console.error(err)
-//     });    
-// }
-  
+  };
 
   return (
     <Container>
@@ -144,7 +158,7 @@ function UserLoginPage() {
                     InputProps={{
                       endAdornment: (
                         <Button onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
-                          {isPasswordVisible ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+                          {isPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                         </Button>
                       ),
                     }}
@@ -162,10 +176,10 @@ function UserLoginPage() {
                   <img src="/images/naver.png" alt="Naver Icon" style={{ width: '24px', height: '24px' }} />
                   </IconButton> */}
                   <IconButton onClick={() => googleClick()}>
-                  <GoogleIcon />
+                    <GoogleIcon />
                   </IconButton>
                   <IconButton onClick={() => kakaoClick()}>
-                  <img src="/images/kakao.png" alt="Kakao Icon" style={{ width: '24px', height: '24px' }} />
+                    <img src="/images/kakao.png" alt="Kakao Icon" style={{ width: '24px', height: '24px' }} />
                   </IconButton>
                 </Grid>
               </Grid>

@@ -3,12 +3,13 @@ import axiosIns from '../components/axios';
 import { Box, Container, Grid, Typography, Card, CardContent, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Pagination } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme1 from '../theme';
+import ReactGA from 'react-ga4';
 
 // 날짜 한국 날짜로 변경
 const convertTime = (date) => {
   date = new Date(date);
   let offset = date.getTimezoneOffset() * 60000; //ms 단위라 60000 곱해줌
-  let dateOffset = new Date(date.getTime() - offset );
+  let dateOffset = new Date(date.getTime() - offset);
   return dateOffset.toISOString().split('T')[0];
 };
 
@@ -66,6 +67,10 @@ const Board = () => {
   };
 
   const handleClickOpen = () => {
+    ReactGA.event('add_post_click', {
+      event_category: 'User Actions',
+      event_label: 'Add Post Click',
+    });
     setOpen(true);
     setNewPost((prevPost) => ({
       ...prevPost,
@@ -86,6 +91,11 @@ const Board = () => {
   };
 
   const handleAddPost = async () => {
+    ReactGA.event('confirm_add_post', {
+      event_category: 'User Actions',
+      event_label: 'Confirm Add Post',
+    });
+
     if (!newPost.author || !newPost.description) {
       alert('모든 필드를 입력해주세요.');
       return;
