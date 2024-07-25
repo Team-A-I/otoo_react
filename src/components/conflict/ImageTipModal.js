@@ -20,21 +20,15 @@ const slides = [
     alt: "연인갈등"
   },
   {
-    title: "PC에서는 이렇게 사용해요",
-    content: "원하는 상대방의 채팅방에서 '메뉴' 버튼을 누르고 대화 내보내기를 클릭해주세요👆",
-    image: "/images/1pc카톡추출.png",
-    alt: "설명 이미지 3"
+    title: "모바일에서는 이렇게 사용해요",
+    content: "'채팅방 메뉴 〉 캡처 ' 를 눌러주세요👆",
+    image: "/images/5모바일캡쳐.png",
+    alt: "설명 이미지 5"
   },
   {
-    title: "PC에서는 이렇게 사용해요",
-    content: "텍스트 파일을 선택해주세요👆",
-    image: "/images/2pc카톡업로드.png",
-    alt: "설명 이미지 4"
-  },
-  {
-    title: "PC에서는 이렇게 사용해요",
-    content: "PC캡쳐도 가능합니다👆",
-    image: "/images/3pc카톡캡쳐.png",
+    title: "모바일에서는 이렇게 사용해요",
+    content: "'내려받기' 버튼을 눌러주세요👆",
+    image: "/images/4모바일선택.png",
     alt: "설명 이미지 5"
   },
 ];

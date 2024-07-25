@@ -15,13 +15,16 @@ import theme1 from "../../theme";
 import SendModal from '../modal/SendModal';
 import TextTipModal from './TextTipModal';
 import AudioTipModal from './AudioTipModal';
+import ImageTipModal from './ImageTipModal';
 import Recorder from '../../components/conflict/Recorder';
 
-const btnUploadLabel = "카카오톡 파일 업로드";
-const btnVoiceUploadLabel = "음성파일 업로드";
+const btnUploadLabelText = "텍스트 파일 업로드";
+const btnUploadLabelImage = "이미지 파일 업로드";
+const btnUploadLabelVoice = "음성 파일 업로드";
 const headerText = "갈등 판결 '몇대몇'";
 const headerText2 = "누가 맞는지 판결 해드리겠습니다.";
-const subtxt = "※ 카카오톡에서 내보내기 한 대화내용이나 \n 　캡쳐한 이미지만 업로드 가능합니다.";
+const subtxt = "※ 카카오톡에서 내보내기 한 대화내용만 가능합니다. \n 　※일대일 대화만 분석 가능합니다.";
+const subimage = "※ 카카오톡 캡쳐기능을 사용한 이미지만 업로드 가능합니다. \n 　※일대일 대화만 분석 가능합니다.";
 const subaudio = "※ 마이크로 음성녹음 또는 녹음된 음성파일을 업로드해주세요.";
 const subaudio2 = "※ 음성 파일은 .wav, .mp3 형식만 업로드 가능합니다.";
 
@@ -39,7 +42,9 @@ const FileUpload = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [openTextTipModal, setOpenTextTipModal] = useState(false); 
   const [openAudioTipModal, setOpenAudioTipModal] = useState(false); 
+  const [openImageTipModal, setOpenImageTipModal] = useState(false);
   const textFileInputRef = useRef(null);
+  const imageFileInputRef = useRef(null);
   const audioFileInputRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
@@ -48,6 +53,8 @@ const FileUpload = () => {
   const resetFileInput = () => {
     if (selectedTab === 0) {
       textFileInputRef.current.value = null;
+    } else if (selectedTab === 1) {
+      imageFileInputRef.current.value = null;
     } else {
       audioFileInputRef.current.value = null;
     }
@@ -62,11 +69,15 @@ const FileUpload = () => {
   const handleCloseTextTipModal = () => setOpenTextTipModal(false);
   const handleOpenAudioTipModal = () => setOpenAudioTipModal(true);
   const handleCloseAudioTipModal = () => setOpenAudioTipModal(false);
+  const handleOpenImageTipModal = () => setOpenImageTipModal(true); 
+  const handleCloseImageTipModal = () => setOpenImageTipModal(false); 
 
   const handleFileChange = useCallback((event) => {
     const selectedFiles = Array.from(event.target.files);
     const selectedFile = selectedFiles[0];
     const isImage = selectedFile.type.startsWith('image/');
+    const isText = selectedFile.type === 'text/plain';
+    const isAudio = selectedFile.type.startsWith('audio/');
 
     if (selectedFiles.length > 0) {
       if (isImage) {
@@ -75,7 +86,7 @@ const FileUpload = () => {
         setFileSize(selectedFiles.reduce((acc, file) => acc + file.size, 0));
         setFileType(selectedFiles.map(file => file.type).join(', '));
         setFileCount(selectedFiles.length);
-      } else {
+      } else if (isText || isAudio) {
         setFile(selectedFile);
         setFileName(selectedFile.name);
         setFileSize(selectedFile.size);
@@ -132,6 +143,8 @@ const FileUpload = () => {
   const handleButtonClick = () => {
     if (selectedTab === 0) {
       textFileInputRef.current.click();
+    } else if (selectedTab === 1) {
+      imageFileInputRef.current.click();
     } else {
       audioFileInputRef.current.click();
     }
@@ -183,6 +196,20 @@ const FileUpload = () => {
               <Typography variant="h2_bold"  gutterBottom>
               {headerText2}<br/><br/>
               </Typography>
+              <Typography variant="sub_bold" color="textSecondary"  sx={{mt:1 , whiteSpace: 'pre-line' }} gutterBottom>
+                {subimage}<br/>
+              </Typography>
+            </Box>
+          )}
+
+          {selectedTab === 2 && (
+            <Box sx={{ textAlign: 'center', mb: 3, mt: 3 }}>
+              <Typography variant="h2_bold" gutterBottom>
+              {headerText}<br/>
+              </Typography>
+              <Typography variant="h2_bold"  gutterBottom>
+              {headerText2}<br/><br/>
+              </Typography>
               <Typography variant="sub_bold" color="textSecondary"  sx={{mt:1}} gutterBottom>
                 {subaudio}<br/>
               </Typography>
@@ -194,13 +221,20 @@ const FileUpload = () => {
 
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
             <Button
-            variant="text"
-            onClick={selectedTab === 0 ? handleOpenTextTipModal : handleOpenAudioTipModal}
-            sx={{ color: '#04613E' }}
+              variant="text"
+              onClick={
+                selectedTab === 0 
+                  ? handleOpenTextTipModal 
+                  : selectedTab === 1 
+                  ? handleOpenImageTipModal // 수정
+                  : handleOpenAudioTipModal
+              }
+              sx={{ color: '#04613E' }}
             >
-            Tip !
+              Tip !
             </Button>
           </Box>
+
 
           <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <Tabs
@@ -218,6 +252,7 @@ const FileUpload = () => {
               }}
             >
               <Tab label="텍스트 업로드" />
+              <Tab label="이미지 업로드" />
               <Tab label="음성 업로드" />
             </Tabs>
           </Box>
@@ -241,9 +276,37 @@ const FileUpload = () => {
                 </Grid>
               </Grid>
               <input
-                accept=".txt,image/*"
+                accept=".txt"
                 style={{ display: 'none' }}
                 ref={textFileInputRef}
+                type="file"
+                onChange={handleFileChange}
+              />
+            </Box>
+          )}
+
+          {selectedTab === 1 && (
+            <Box sx={{ width: '100%', mt: 10, textAlign: 'center', p: 2 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <img 
+                    src="/images/말풍선.png" 
+                    alt="이미지 업로드용 이미지 1" 
+                    className="responsive-image"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <img 
+                    src="/images/누가.png" 
+                    alt="이미지 업로드용 이미지 2" 
+                    className="responsive-image1"
+                  />
+                </Grid>
+              </Grid>
+              <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                ref={imageFileInputRef}
                 type="file"
                 onChange={handleFileChange}
                 multiple
@@ -251,7 +314,7 @@ const FileUpload = () => {
             </Box>
           )}
 
-          {selectedTab === 1 && (
+          {selectedTab === 2 && (
             <Box sx={{ width: '100%', mt: 5, textAlign: 'center' }}>
               <Recorder onRecordingStateChange={handleRecordingStateChange} />
               <input
@@ -277,11 +340,23 @@ const FileUpload = () => {
               zIndex: 1000 
             }}>
               <UploadButton
-                label={selectedTab === 0 ? btnUploadLabel : btnVoiceUploadLabel}
+                label={
+                  selectedTab === 0 
+                    ? btnUploadLabelText 
+                    : selectedTab === 1 
+                    ? btnUploadLabelImage 
+                    : btnUploadLabelVoice
+                }
                 onClick={handleButtonClick}
                 disabled={false}
                 className="conflict-btn-upload"
-                title_str={selectedTab === 0 ? "카톡 캡쳐이미지 또는 txt파일만 올려주세요" : "음성 파일을 업로드해주세요"}
+                title_str={
+                  selectedTab === 0 
+                    ? "txt 파일만 올려주세요" 
+                    : selectedTab === 1 
+                    ? "이미지 파일만 올려주세요" 
+                    : "음성 파일을 업로드해주세요"
+                }
                 defaultColor='#01A762'
                 hoverColor='#04613E'
                 disabledColor='#B0B0B0'
@@ -301,6 +376,7 @@ const FileUpload = () => {
 
           <TextTipModal open={openTextTipModal} handleClose={handleCloseTextTipModal} />
           <AudioTipModal open={openAudioTipModal} handleClose={handleCloseAudioTipModal} />
+          <ImageTipModal open={openImageTipModal} handleClose={handleCloseImageTipModal} />
         </Box>
       </Container>
       <style>{`
