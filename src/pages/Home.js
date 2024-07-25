@@ -33,16 +33,16 @@ const smallBoxes = [
     {
         bgColor: 'gray200',
         slides: [
-            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' },
-            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800'},
-            { text: '몇대몇 텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800'},
+            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' , link: '/upload-conflict'},
+            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800', link: '/upload-conflict'},
+            { text: '몇대몇 텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800', link: '/upload-conflict'},
         ]
     },
     {
         bgColor: 'darkgreen',
         slides: [
-            { text: '무조건 내편 맞장구 챗봇', textColor: 'white'},
-            { text: '맞장구를 넘어 얼쑤 장구 챗봇', textColor: 'white'},
+            { text: '무조건 내편 맞장구 챗봇', textColor: 'white', link: '/chatbot'},
+            { text: '맞장구를 넘어 얼쑤 장구 챗봇', textColor: 'white', link: '/chatbot'},
         ]
     }
 ];    
@@ -256,53 +256,65 @@ const LargeImageBox = ({ src, alt, text, subText }) => (
     </Box>
 );
 
-const SmallBoxCarousel = ({ box }) => (
-    <Carousel
-        showArrows={false}
-        showThumbs={false}
-        infiniteLoop={false}
-        showStatus={false}
-        autoPlay={false}
-        stopOnHover={true}
-        swipeable={true}
-        emulateTouch={true}
-    >
-        {box.slides.map((slide, slideIndex) => (
-            <Box
-                key={slideIndex}
-                sx={{
-                    position: 'relative',
-                    width: '100%',
-                    height: { xs: '80px', md: '125px' },
-                    backgroundColor: box.bgColor,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '10px',
-                    flexDirection: 'column',
-                    padding: 2,
-                    textAlign: 'center'
-                }}
-            >
-                {slide.image && (
-                    <img src={slide.image} alt={`slide-${slideIndex}`} style={{ width: '38%', objectFit: "cover" }} />
-                )}
-                {slide.text && (
-                    <Typography
-                        variant="title_bold"
-                        sx={{
-                            color: slide.textColor,
-                            fontSize: { xs: '0.8rem', md: '1rem' },
-                            whiteSpace: 'pre-line' // This allows for line breaks in the text
-                        }}
-                    >
-                        {slide.text}
-                    </Typography>
-                )}
-            </Box>
-        ))}
-    </Carousel>
-);
+const SmallBoxCarousel = ({ box }) => {
+    const navigate = useNavigate();
+
+    const handleTextClick = (link) => {
+        navigate(link);
+    };
+
+    return (
+        <Carousel
+            showArrows={false}
+            showThumbs={false}
+            infiniteLoop={false}
+            showStatus={false}
+            autoPlay={false}
+            stopOnHover={true}
+            swipeable={true}
+            emulateTouch={true}
+        >
+            {box.slides.map((slide, slideIndex) => (
+                <Box
+                    key={slideIndex}
+                    sx={{
+                        position: 'relative',
+                        width: '100%',
+                        height: { xs: '80px', md: '125px' },
+                        backgroundColor: box.bgColor,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '10px',
+                        flexDirection: 'column',
+                        padding: 2,
+                        textAlign: 'center',
+                        whiteSpace: 'pre-line' // This allows for line breaks in the text
+                    }}
+                >
+                    {slide.image && (
+                        <img src={slide.image} alt={`slide-${slideIndex}`} style={{ width: '38%', objectFit: "cover" }} />
+                    )}
+                    {slide.text && (
+                        <Typography
+                            variant="title_bold"
+                            sx={{
+                                color: slide.textColor,
+                                fontSize: { xs: '0.8rem', md: '1rem' },
+                                cursor: slide.link ? 'pointer' : 'default'
+                            }}
+                            onClick={() => slide.link && handleTextClick(slide.link)}
+                        >
+                            {slide.text}
+                        </Typography>
+                    )}
+                </Box>
+            ))}
+        </Carousel>
+    );
+};
+
+
 
 const CardBox = ({ card }) => (
     <Box sx={{ textAlign: 'center', p: 2 }}>
