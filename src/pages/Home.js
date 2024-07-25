@@ -120,7 +120,7 @@ const Home = () => {
             margin: '0 8px',
             borderRadius: '50%',
             cursor: 'pointer',
-            boxShadow: '0 0 5px rgba(0, 0, 0, 0.5)' // 그림자 추가
+            boxShadow: '0 0 5px rgba(0, 0, 0, 0.8)' // 그림자 추가
         };
         return (
             <li
