@@ -13,8 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import UploadButton from '../UploadButton';
 import theme1 from "../../theme";
 import SendModal from '../modal/SendModal';
-import TextTipModal from './TextTipModal'; // 텍스트 Tip 모달 컴포넌트 임포트
-import AudioTipModal from './AudioTipModal'; // 음성 Tip 모달 컴포넌트 임포트
+import TextTipModal from './TextTipModal';
+import AudioTipModal from './AudioTipModal';
 import Recorder from '../../components/conflict/Recorder';
 
 const btnUploadLabel = "카카오톡 파일 업로드";
@@ -295,7 +295,6 @@ const FileUpload = () => {
                 filesize={fileSize}
                 filetype={fileType}
                 filecount={fileCount}
-                
               />
             </Box>
           )}

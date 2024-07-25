@@ -44,6 +44,9 @@ import Board from './pages/Board';
 import AdminUser from './pages/admin/AdminUser';
 import AdminHeader from './pages/admin/AdminHeader';
 import AdminBoard from './pages/admin/AdminBoard';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('G-YR4ZVKD6TS');
 
 const adminRoutes = [
   { path: '/admin-user', element: <AdminUser />, roles: ['ROLE_ADMIN'] },
@@ -82,6 +85,7 @@ const generalRoutes = [
 ];
 
 const MainApp = () => {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   const location = useLocation();
 
   const HeaderComponent = () => {
