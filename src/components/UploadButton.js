@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Tooltip } from '@mui/material';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 const UploadButton = ({
   onClick,
@@ -32,10 +32,9 @@ const UploadButton = ({
     if (onClick) {
       onClick(event);
     }
-    ReactGA.event({
-      category: 'User',
-      action: 'Clicked Upload Button',
-      label: 'File Upload'
+    ReactGA.event('click_upload_button', {
+      event_category: 'User Actions',
+      event_label: 'File Upload'
     });
   };
 
