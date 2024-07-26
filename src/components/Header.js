@@ -12,37 +12,37 @@ const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRoleAdmin, setUserRoleAdmin] = useState(false);
+  const [hoveredButton, setHoveredButton] = useState(null);
 
   const handleLogout = async () => {
     try {
+      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
+        headers: {
+          'Authorization': sessionStorage.getItem('userEmail'),
+          'Content-Type': 'application/json',
+        },
+      });
 
-        const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
-            headers: {
-                'Authorization': sessionStorage.getItem('userEmail'),
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.status === 200) {
-            sessionStorage.removeItem('accessToken');
-            sessionStorage.removeItem('refreshToken');
-            sessionStorage.removeItem('userName');
-            sessionStorage.removeItem('userEmail');
-            sessionStorage.removeItem('userRole');
-            setIsLoggedIn(false);
-            navigate('/');
-        }
+      if (response.status === 200) {
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('refreshToken');
+        sessionStorage.removeItem('userName');
+        sessionStorage.removeItem('userEmail');
+        sessionStorage.removeItem('userRole');
+        setIsLoggedIn(false);
+        navigate('/');
+      }
     } catch (error) {
-        console.error('Logout failed', error);
+      console.error('Logout failed', error);
     }
   };
 
   useEffect(() => {
     const usersCode = sessionStorage.getItem('accessToken');
     if (usersCode !== null) {
-        setIsLoggedIn(true);
+      setIsLoggedIn(true);
     }
-    if(sessionStorage.getItem('userRole') === 'ROLE_ADMIN'){
+    if (sessionStorage.getItem('userRole') === 'ROLE_ADMIN') {
       setUserRoleAdmin(true);
     }
   }, []);
@@ -78,21 +78,24 @@ const Header = () => {
       </Box>
       <List>
         {menuItems.map((item, index) => (
-          <ListItem 
-            button 
-            key={item.text} 
-            component={item.path ? Link : 'div'} // path가 있으면 Link 컴포넌트 사용
-            to={item.path || ''} // Link 컴포넌트의 to 프로퍼티에 path 할당
+          <ListItem
+            button
+            key={item.text}
+            component={item.path ? Link : 'div'}
+            to={item.path || ''}
             onClick={item.action ? item.action : toggleDrawer(false)}
-            sx={isLoggedIn && index === 0 ? { borderBottom:'solid 2px #01A76280' } : {}}
+            onMouseEnter={() => setHoveredButton(item.text)}
+            onMouseLeave={() => setHoveredButton(null)}
+            sx={isLoggedIn && index === 0 ? { borderBottom: 'solid 2px #01A76280' } : {}}
           >
-            <ListItemText 
-              primary={item.text} 
-              primaryTypographyProps={{ 
-                fontSize: '2rem', 
+            <ListItemText
+              primary={item.text}
+              primaryTypographyProps={{
+                fontSize: '2rem',
                 fontWeight: 'bold',
-                ...(isLoggedIn && index === 0 ? {} : {}) // 첫 번째 아이템에 대한 추가 스타일
-              }} 
+                color: hoveredButton && hoveredButton !== item.text ? 'gray' : 'black',
+                ...(isLoggedIn && index === 0 ? {} : {})
+              }}
             />
           </ListItem>
         ))}
@@ -117,7 +120,9 @@ const Header = () => {
                         key={item.text}
                         variant="h3_bold"
                         onClick={item.action}
-                        sx={{ marginLeft: 3, textDecoration: 'none', cursor: 'pointer' }}
+                        onMouseEnter={() => setHoveredButton(item.text)}
+                        onMouseLeave={() => setHoveredButton(null)}
+                        sx={{ marginLeft: 3, textDecoration: 'none', cursor: 'pointer', color: hoveredButton && hoveredButton !== item.text ? 'gray' : 'black' }}
                       >
                         {item.text}
                       </Typography>
@@ -127,7 +132,9 @@ const Header = () => {
                         variant="h3_bold"
                         component={Link}
                         to={item.path}
-                        sx={{ marginLeft: 3, textDecoration: 'none' }}
+                        onMouseEnter={() => setHoveredButton(item.text)}
+                        onMouseLeave={() => setHoveredButton(null)}
+                        sx={{ marginLeft: 3, textDecoration: 'none', color: hoveredButton && hoveredButton !== item.text ? 'gray' : 'black' }}
                       >
                         {item.text}
                       </Typography>
@@ -135,7 +142,7 @@ const Header = () => {
                   ))}
                 </Box>
               )}
-              <Box sx={{ width: '10px' }} /> {/* 간격 추가 */}
+              <Box sx={{ width: '10px' }} />
               {isSmallScreen && (
                 <IconButton edge="end" color="inherit" onClick={toggleDrawer(true)}>
                   <MenuIcon style={{ color: 'black' }} />
@@ -152,7 +159,6 @@ const Header = () => {
             </Toolbar>
           </Container>
         </AppBar>
-        {/* Add a spacer div to push content down below the fixed header */}
         <div style={{ marginTop: isSmallScreen ? '48px' : '64px' }}></div>
       </div>
     </ThemeProvider>

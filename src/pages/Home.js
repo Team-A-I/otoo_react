@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, ThemeProvider, Grid, Container, Typography, IconButton } from '@mui/material';
+import { Box, ThemeProvider, Grid, Container, Typography, IconButton} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import theme1 from '../theme';
@@ -33,16 +33,19 @@ const smallBoxes = [
     {
         bgColor: 'gray200',
         slides: [
-            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' , link: '/upload-conflict'},
-            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800', link: '/upload-conflict'},
-            { text: '몇대몇 텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800', link: '/upload-conflict'},
+            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석',
+            textColor: 'gray800' , moveinfo: '알아보러가기', link: '/upload-conflict'},
+            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출',
+            textColor: 'gray800', moveinfo: '알아보러가기', link: '/upload-conflict'},
+            { text: '몇대몇 텍스트\n#카톡 텍스트 파일', moveinfo: '알아보러가기',textColor: 'gray800', link: '/upload-conflict'},
         ]
     },
     {
         bgColor: 'darkgreen',
         slides: [
-            { text: '무조건 내편 맞장구 챗봇', textColor: 'white', link: '/chatbot'},
-            { text: '맞장구를 넘어 얼쑤 장구 챗봇', textColor: 'white', link: '/chatbot'},
+            { text: '무조건 내편 맞장구 챗봇', textColor: 'white', 
+            moveinfo2:"알아보러가기", link: '/chatbot'},
+            { text: '맞장구를 넘어 얼쑤 장구 챗봇', textColor: 'white',moveinfo2:"알아보러가기", link: '/chatbot'},
         ]
     }
 ];    
@@ -280,7 +283,7 @@ const SmallBoxCarousel = ({ box }) => {
                     sx={{
                         position: 'relative',
                         width: '100%',
-                        height: { xs: '80px', md: '125px' },
+                        height: { xs: '95px', md: '120px' },
                         backgroundColor: box.bgColor,
                         display: 'flex',
                         alignItems: 'center',
@@ -289,7 +292,7 @@ const SmallBoxCarousel = ({ box }) => {
                         flexDirection: 'column',
                         padding: 2,
                         textAlign: 'center',
-                        whiteSpace: 'pre-line' // This allows for line breaks in the text
+                        whiteSpace: 'pre-line'
                     }}
                 >
                     {slide.image && (
@@ -300,12 +303,45 @@ const SmallBoxCarousel = ({ box }) => {
                             variant="title_bold"
                             sx={{
                                 color: slide.textColor,
-                                fontSize: { xs: '0.8rem', md: '1rem' },
-                                cursor: slide.link ? 'pointer' : 'default'
+                                mb: 0.3
+                            }}
+                        >
+                            {slide.text}
+                        </Typography>
+                        
+                    )}
+                    {slide.moveinfo && (
+                        <Typography
+                            variant="body1"
+                            color="darkgreen"
+                            sx={{
+                                cursor: slide.link ? 'pointer' : 'default',
+                                mt: 0.2,
+                                textDecoration: 'underline',
+                                '&:hover': {
+                                    color: 'lightgreen'
+                                }
                             }}
                             onClick={() => slide.link && handleTextClick(slide.link)}
                         >
-                            {slide.text}
+                            {slide.moveinfo}
+                        </Typography>
+                    )}
+                    {slide.moveinfo2 && (
+                        <Typography
+                            variant="body1"
+                            color="white"
+                            sx={{
+                                cursor: slide.link ? 'pointer' : 'default',
+                                mt: 0.2,
+                                textDecoration: 'underline',
+                                '&:hover': {
+                                    color: 'lightgray'
+                                }
+                            }}
+                            onClick={() => slide.link && handleTextClick(slide.link)}
+                        >
+                            {slide.moveinfo2}
                         </Typography>
                     )}
                 </Box>
@@ -313,6 +349,7 @@ const SmallBoxCarousel = ({ box }) => {
         </Carousel>
     );
 };
+
 
 
 

@@ -31,7 +31,7 @@ const AdminBoard = () => {
   const handleDeletePost = async (postId) => {
     try {
       await axios.delete(`${API_URL}/${postId}`, { headers: HEADERS });
-      setPosts(posts.filter(post => post.id !== postId));
+      setPosts(posts.filter(post => post.postId !== postId));
     } catch (error) {
     }
   };
@@ -67,13 +67,13 @@ const AdminBoard = () => {
             </TableHead>
             <TableBody>
               {currentPosts.map((post) => (
-                <TableRow key={post.id}>
-                  <TableCell>{post.id}</TableCell>
-                  <TableCell>{post.author}</TableCell>
-                  <TableCell>{post.date}</TableCell>
-                  <TableCell>{post.description}</TableCell>
+                <TableRow key={post.postId}>
+                  <TableCell>{post.postId}</TableCell>
+                  <TableCell>{post.postAuthor}</TableCell>
+                  <TableCell>{post.postDate}</TableCell>
+                  <TableCell>{post.postDescription}</TableCell>
                   <TableCell>
-                    <Button variant="contained" color="error" onClick={() => handleDeletePost(post.id)}>
+                    <Button variant="contained" color="error" onClick={() => handleDeletePost(post.postId)}>
                       삭제
                     </Button>
                   </TableCell>
