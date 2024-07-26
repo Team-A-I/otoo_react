@@ -52,6 +52,7 @@ ReactGA.initialize('G-YR4ZVKD6TS');
 const adminRoutes = [
   { path: '/admin-user', element: <AdminUser />, roles: ['ROLE_ADMIN'] },
   { path: '/admin-board', element: <AdminBoard />, roles: ['ROLE_ADMIN'] },
+  { path: '/admin-qna', element: <AdminQnA />, roles: ['ROLE_ADMIN'] },
 ];
 
 const generalRoutes = [
@@ -101,58 +102,6 @@ const MainApp = () => {
       <HeaderComponent />
       <Box>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/analysis" element={<Analysis />} />
-          <Route 
-            path="/admin-user" 
-            element={
-              <PrivateRoute roles={['ROLE_ADMIN']}>
-                <AdminUser />
-              </PrivateRoute>
-            }
-          />
-          <Route 
-            path="/admin-qna" 
-            element={
-              <PrivateRoute roles={['ROLE_ADMIN']}>
-                <AdminQnA />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/chatbot" element={<ChatBot />} />
-          <Route path="/qna-chatbot" element={<QnaChatbot />} />
-          <Route path="/upload-conflict" element={<ConflictUpload />} />
-          <Route path="/loading-conflict" element={<LoadingPage />} />
-          <Route path="/result-conflict" element={<ResultPage />} />
-
-          <Route path="/loading-love" element={<LoadingLove />} />
-          <Route path="/result-love" element={<ResultLove />} />
-          <Route path="/upload-love" element={<UploadLove />} />
-
-          <Route path="/loading-friendship" element={<LoadingFriendship />} />
-          <Route path="/result-friendship" element={<ResultFriendship />} />
-          <Route path="/result-friendship-to-love" element={<ResultFriendshipToLove />} />
-          <Route path="/upload-friendship" element={<UploadFriendship />} />
-
-          <Route path="/emotionReportPage" element={<EmotionReportPage />} />
-          <Route path="/emotionReportLoadingPage" element={<EmotionReportLoadingPage />} />
-
-          <Route path="/user-login" element={<UserLoginPage />} />
-          <Route path="/user-signup" element={<SignUpPage />} />
-          <Route path="/googlelogin" element={<GoogleLogin />} />
-          <Route path="/naverLogin" element={<NaverLogin />} />
-          <Route path="/forgetPassword" element={<ForgetPassword />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-
-          <Route path='/stt-result' element={<SttResult />} />
-          <Route path='/recorder' element={<Recorder />} />
-          <Route path='/stt-loading' element={<SttLoadingPage />} />
-          <Route path='/stt-upload' element={<SttUploadConflict />} />
-          <Route path='/stt' element={<SttUpload />} />
-          <Route path='/streaming' element={<Streaming />} />
-          <Route path='/recorder-loading' element={<RecorderLoading />} />
-          <Route path='/board' element={<Board />} />
-
           {adminRoutes.map((route) => (
             <Route
               key={route.path}
