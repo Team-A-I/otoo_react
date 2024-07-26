@@ -48,6 +48,9 @@ const AdminHeader = () => {
                     <Button color="inherit" onClick={() => handleMenuClick('/admin-analyze')} startIcon={<AssignmentIcon />}>
                         테스트 결과 확인
                     </Button>
+                    <Button color="inherit" onClick={() => handleMenuClick('/admin-qna')} startIcon={<AssignmentIcon />}>
+                        QnA
+                    </Button>
                 </Box>
                 <Box sx={{ display: 'flex' }}>
                     <Button color="inherit" onClick={() => handleMenuClick('/')} startIcon={<HomeIcon />} sx={{ mr: 2 }}>

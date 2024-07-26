@@ -46,6 +46,7 @@ import Board from './pages/Board';
 
 import AdminUser from './pages/admin/AdminUser';
 import AdminHeader from './pages/admin/AdminHeader';
+import AdminQnA from './pages/admin/AdminQnA';
 
 
 const MainApp = () => {
@@ -53,7 +54,7 @@ const MainApp = () => {
 
     // 경로에 따라 헤더를 결정
     const HeaderComponent = () => {
-      if (location.pathname === '/admin-user' || location.pathname === '/admin-analyze') {
+      if (location.pathname === '/admin-user' || location.pathname === '/admin-analyze' || location.pathname === '/admin-qna') {
         return <AdminHeader />;
       }
       return <Header />;
@@ -71,6 +72,14 @@ const MainApp = () => {
             element={
               <PrivateRoute roles={['ROLE_ADMIN']}>
                 <AdminUser />
+              </PrivateRoute>
+            }
+          />
+          <Route 
+            path="/admin-qna" 
+            element={
+              <PrivateRoute roles={['ROLE_ADMIN']}>
+                <AdminQnA />
               </PrivateRoute>
             }
           />
