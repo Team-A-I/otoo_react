@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Container, Typography, Box, ThemeProvider, Paper, Grid } from '@mui/material';
-import { Bar } from 'react-chartjs-2';
+import { Container, Typography, Box, ThemeProvider, Paper, Grid, Button } from '@mui/material';
 import { Chart, registerables } from 'chart.js';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
@@ -9,6 +8,7 @@ import FeedbackModal from '../../components/modal/FeedbackModal';
 import theme from "../../theme";
 import { motion } from 'framer-motion';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
+import html2canvas from 'html2canvas';
 
 Chart.register(...registerables);
 
@@ -16,13 +16,13 @@ const ResultPage = () => {
   const location = useLocation();
   const { jsonData } = location.state || {};
 
+  const resultRef = useRef(null);
   const faultsPaperRef = useRef(null);
   const timelinePaperRef = useRef(null);
 
   const type = 'stt';
 
   useEffect(() => {
-    console.log("Received jsonData:", jsonData);
     // Set equal height for both papers
     if (faultsPaperRef.current && timelinePaperRef.current) {
       const faultsPaperHeight = faultsPaperRef.current.offsetHeight;
@@ -32,6 +32,17 @@ const ResultPage = () => {
       timelinePaperRef.current.style.height = `${maxHeight}px`;
     }
   }, [jsonData]);
+
+  const handleCaptureClick = async () => {
+    if (resultRef.current) {
+      const canvas = await html2canvas(resultRef.current);
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'result.png';
+      link.click();
+    }
+  };
 
   if (!jsonData) {
     return (
@@ -51,37 +62,6 @@ const ResultPage = () => {
 
   const result = jsonData;
 
-  // 데이터 처리
-  const faultsData = {
-    labels: ['A', 'B'],
-    datasets: [
-      {
-        data: [result.faults.speaker_a.percentage, result.faults.speaker_b.percentage],
-        backgroundColor: ['#F2BBC1', '#36A2EB'],
-      },
-    ],
-  };
-
-  const faultsOptions = {
-    responsive: true,
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
 
   const incidentData = result.Incident || {
     development: { a_behavior: "", a_emotion: "", b_behavior: "", b_emotion: "" },
@@ -113,7 +93,7 @@ const ResultPage = () => {
   return (
     <Container maxWidth="xl">
       <ThemeProvider theme={theme}>
-        <div style={{ fontFamily: theme.typography.fontFamily }}>
+        <div style={{ fontFamily: theme.typography.fontFamily }} ref={resultRef}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '12vh', padding: '20px' }}>
             <motion.div
               initial={{ opacity: 0 }}
@@ -131,10 +111,28 @@ const ResultPage = () => {
                   <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <Paper elevation={3} sx={{ padding: 2, flex: 1 }} ref={faultsPaperRef}>
                       <Typography variant="h6" sx={{ mb: 6 }} gutterBottom>잘못 비율:</Typography>
-                      <Bar data={faultsData} options={faultsOptions} />
+                      <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%' }}>
+                        <Box sx={{ textAlign: 'center', flex: 1 }}>
+                          <Typography variant="verybig_bold" sx={{ color: '#0D413A' }}>{result.faults.speaker_a.percentage}<br /></Typography>
+                        </Box>
+                        <Typography variant="hbig_bold" sx={{ mx: 2, flex: 1, textAlign: 'center' }}>대</Typography>
+                        <Box sx={{ textAlign: 'center', flex: 1 }}>
+                          <Typography variant="verybig_bold" sx={{ color: '#F2BEC5' }}>{result.faults.speaker_b.percentage}<br /></Typography>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <Box sx={{ textAlign: 'center', flex: 1 }}>
+                          <Typography variant="hc_bold">A<br />({result.nicknames.nickname_a})</Typography>
+                        </Box>
+                        <Box sx={{ flex: 1 }} /> {/* 이 빈 Box를 추가하여 두 요소 사이를 떨어뜨립니다 */}
+                        <Box sx={{ textAlign: 'center', flex: 1 }}>
+                          <Typography variant="hc_bold">B<br />({result.nicknames.nickname_b})</Typography>
+                        </Box>
+                      </Box>
                     </Paper>
                   </Box>
                 </Grid>
+
 
                 <Grid item xs={12} md={6}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -227,6 +225,23 @@ const ResultPage = () => {
                     </Box>
                   </Paper>
                 </Grid>
+
+                <Grid item xs={12} md={12} sx={{ textAlign: 'center' }}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: '#04613E',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: '#03472D',
+                      },
+                    }}
+                    onClick={handleCaptureClick}
+                  >
+                    결과 이미지로 저장
+                  </Button>
+                </Grid>
+
               </Grid>
             </Box>
           </Box>

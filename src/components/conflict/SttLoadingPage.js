@@ -23,7 +23,6 @@ const SttLoadingPage = () => {
           let response;
           if (fileExtension === 'txt') {
             response = await axiosIns.post('/api/conflict/analysis', requestData);
-            console.log('Response data for txt:', response.data); // 추가
             navigate('/result-conflict', { state: { jsonData: response.data } });
           } else if (fileExtension === 'wav' || fileExtension === 'mp3') {
             const formData = new FormData();
@@ -32,7 +31,6 @@ const SttLoadingPage = () => {
               formData.append('usercode', usercode);
             }
             response = await axiosIns.post('/api/transcribe/file', formData);
-            console.log('Response data for wav/mp3:', response.data); // 추가
             navigate('/stt-result', { state: { jsonData: response.data } });
           } else {
             const formData = new FormData();
@@ -41,7 +39,6 @@ const SttLoadingPage = () => {
               formData.append('usercode', usercode);
             }
             response = await axiosIns.post('/api/conflict/ocr', formData);
-            console.log('Response data for other file types:', response.data); // 추가
             navigate('/result-conflict', { state: { jsonData: response.data } });
           }
         } catch (error) {
@@ -56,8 +53,8 @@ const SttLoadingPage = () => {
   }, [jsonContent, navigate, usercode]);
 
   return (
-    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', padding: 0, margin: 0 }}>
-      <img src="/images/moonchul_dance.gif" alt="loading" style={{ width: '60%', height: '60%', objectFit: 'cover' }} />
+    <Container sx={{ display: 'flex', marginTop:"35px", justifyContent:'center'}}>
+      <img src="/images/moonchul_dance.gif" alt="loading" />
     </Container>
   );
 };

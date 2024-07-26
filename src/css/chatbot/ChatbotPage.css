@@ -231,7 +231,7 @@ animation: bounce 1s infinite;
     .chatList_Box {
       flex: 1;
       overflow-y: auto;
-      padding-bottom: 70px; /* ensure space for the input field */
+      padding-bottom: -10px!important; /* ensure space for the input field */
     }
   
     .chatInput {

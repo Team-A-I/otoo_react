@@ -7,6 +7,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import axiosIns from '../axios';
+import ReactGA from 'react-ga4';
 
 const theme = createTheme({
   palette: {
@@ -100,6 +101,11 @@ const FeedbackModal = ({ feedbackType }) => {
   };
 
   const handleFeedback = async () => {
+    ReactGA.event('submit_feedback', {
+      event_category: 'User Actions',
+      event_label: 'Submit Feedback'
+    });
+
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
       await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/feedback', feedback, {

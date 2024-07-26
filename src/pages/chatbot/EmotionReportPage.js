@@ -11,7 +11,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
 import FeedbackModal from '../../components/modal/FeedbackModal';
-
 const TEXTS = {
   clipboardSuccess: '클립보드에 복사되었습니다:',
   clipboardFailure: '클립보드 복사에 실패했습니다:',
@@ -26,21 +25,18 @@ const TEXTS = {
   card3Description2: '만드는중',
   buttonLabel: '알아보러가기'
 };
-
 const EmotionReportPage = () => {
   const location = useLocation();
   const result = location.state?.result;
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
   const [hover3, setHover3] = useState(false);
-  
   const copyToClipboard = () => {
     navigator.clipboard.writeText(result).then(() => {
     }).catch(err => {
       console.error(TEXTS.clipboardFailure, err);
     });
   };
-
   const isSmallScreen = useMediaQuery('(max-width:600px)');
   const type = 'report';
 useEffect(() => {
@@ -52,7 +48,6 @@ useEffect(() => {
     <Container sx={{ display: 'flex' }}>
       <ThemeProvider theme={theme}>
       <div style={{ fontFamily: theme.typography.fontFamily}}>
-       
           <Box className="emotionPaper" sx={{padding:"0px", marginTop:"50px"}}>
             <Paper className="letterPaper" elevation={3} sx={{maxHeight:'35vh', marginBottom:'50px',position:'relative'}}>
             <Grid className='emotionGrid' container spacing={2} >
@@ -67,7 +62,7 @@ useEffect(() => {
                 </Box>
                 <IconButton type="button" aria-label="ContentCopy" onClick={copyToClipboard} sx={{ position: 'absolute', right: 0, bottom: 0 }}>
                     <ContentCopyIcon sx={{ fontSize: '2vh' }}/>
-                </IconButton>  
+                </IconButton>
               </Grid>
             </Grid>
             </Paper>
@@ -155,5 +150,4 @@ useEffect(() => {
     </Container>
   );
 };
-
 export default EmotionReportPage;

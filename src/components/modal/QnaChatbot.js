@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Grid, Typography, Box, ThemeProvider, Modal, Paper, InputBase, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import CloseIcon from '@mui/icons-material/Close'; // Add this import
-import theme from "../../theme"
+import CloseIcon from '@mui/icons-material/Close';
+import theme from "../../theme";
 import axiosIns from '../axios';
+import ReactGA from 'react-ga4';
 
 const QnaChatbot = ({ open, onClose }) => {
   const [chat, setChat] = useState('');
@@ -46,7 +47,6 @@ const QnaChatbot = ({ open, onClose }) => {
     }
   }, [htmlString]);
 
-  // Add event listeners for mobile keyboard handling
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 600) {
@@ -67,6 +67,14 @@ const QnaChatbot = ({ open, onClose }) => {
     };
   }, []);
 
+  const handleChatSubmit = async () => {
+    ReactGA.event('submit_qna', {
+      event_category: 'User Actions',
+      event_label: 'Submit QnA'
+    });
+    chatbotHandler(chat);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Modal
@@ -76,8 +84,8 @@ const QnaChatbot = ({ open, onClose }) => {
         aria-describedby="qna-chatbot-modal-description"
       >
         <Box className="chatbot-modal">
-          <Box className='grid' sx={{width:'100%'}}>
-            <Box className='content' sx={{width:'100%',margin:0, position: 'relative'}}>
+          <Box className='grid' sx={{ width: '100%' }}>
+            <Box className='content' sx={{ width: '100%', margin: 0, position: 'relative' }}>
               <IconButton 
                 sx={{ position: 'absolute', top: 2, right: 10 }} 
                 onClick={onClose}
@@ -87,7 +95,7 @@ const QnaChatbot = ({ open, onClose }) => {
               <Box className="QnAchat_subtitle">
                 <Typography variant="title_bold">{chatbotTitle}</Typography>
               </Box>
-              <Box className="chatList_Box" sx={{height:'500px', marginTop:'10px'}}>
+              <Box className="chatList_Box" sx={{ height: '500px', marginTop: '10px' }}>
                 <Box sx={{ marginBottom: '10px', height: '100%' }}>
                   <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
                 </Box>
@@ -107,16 +115,14 @@ const QnaChatbot = ({ open, onClose }) => {
                       disabled={isButtonDisabled}
                       inputRef={inputRef}
                       onChange={(e) => setChat(e.target.value)}
-                      onKeyDown={(e) => { if (e.key === 'Enter') { chatbotHandler(chat); e.preventDefault(); } }}
+                      onKeyDown={(e) => { if (e.key === 'Enter') { handleChatSubmit(); e.preventDefault(); } }}
                     />
                     <IconButton
                       type="button"
                       sx={{ p: '10px' }}
                       aria-label="send"
                       disabled={isButtonDisabled}
-                      onClick={async () => {
-                        chatbotHandler(chat);
-                      }}
+                      onClick={handleChatSubmit}
                     >
                       <SendIcon />
                     </IconButton>

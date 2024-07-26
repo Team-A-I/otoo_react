@@ -33,16 +33,16 @@ const smallBoxes = [
     {
         bgColor: 'gray200',
         slides: [
-            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' },
-            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800'},
-            { text: '몇대몇 텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800'},
+            { text: '몇대몇 음성\n#실시간 녹음 #음성 파일 분석', textColor: 'gray800' , link: '/upload-conflict'},
+            { text: '몇대몇 이미지\n#카톡 캡쳐본 #텍스트 추출', textColor: 'gray800', link: '/upload-conflict'},
+            { text: '몇대몇 텍스트\n#카톡 텍스트 파일 분석', textColor: 'gray800', link: '/upload-conflict'},
         ]
     },
     {
         bgColor: 'darkgreen',
         slides: [
-            { text: '무조건 내편 맞장구 챗봇', textColor: 'white'},
-            { text: '맞장구를 넘어 얼쑤 장구 챗봇', textColor: 'white'},
+            { text: '무조건 내편 맞장구 챗봇', textColor: 'white', link: '/chatbot'},
+            { text: '맞장구를 넘어 얼쑤 장구 챗봇', textColor: 'white', link: '/chatbot'},
         ]
     }
 ];    
@@ -58,7 +58,7 @@ const Home = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
 
-    const largeImageSrc = "/images/main.png";
+    const largeImageSrc = "/images/main.jpg";
     const largeImageAlt = "Large Content";
     const largeImageText = ["대화 판결의", "모든 것"];
     const largeImageTextSub = "몇대몇";
@@ -112,6 +112,33 @@ const Home = () => {
         setCurrentSlide(currentSlide === cardData.length - 1 ? 0 : currentSlide + 1);
     };
 
+    const renderIndicator = (onClickHandler, isSelected, index, label) => {
+        const style = {
+            background: isSelected ? '#FFFFFF' : '#ccc', // 선택된 상태는 검은색, 선택되지 않은 상태는 회색
+            width: 7,
+            height: 7,
+            display: 'inline-block',
+            margin: '0 8px',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            boxShadow: '0 0 5px rgba(0, 0, 0, 0.8)' // 그림자 추가
+        };
+        return (
+            <li
+                style={style}
+                onClick={onClickHandler}
+                onKeyDown={onClickHandler}
+                value={index}
+                key={index}
+                role="button"
+                tabIndex={0}
+                aria-label={`${label} ${index + 1}`}
+            />
+        );
+    };
+    
+    
+
     return (
         <ThemeProvider theme={theme1}>
             <div style={{ fontFamily: theme1.typography.fontFamily }}>
@@ -156,7 +183,7 @@ const Home = () => {
                                         showArrows={false}
                                         selectedItem={currentSlide}
                                         onChange={(index) => setCurrentSlide(index)}
-                                        renderIndicator={false}
+                                        renderIndicator={renderIndicator}
                                         autoPlay={false}
                                     >
                                         {cardData.map((card, index) => (
@@ -230,53 +257,65 @@ const LargeImageBox = ({ src, alt, text, subText }) => (
     </Box>
 );
 
-const SmallBoxCarousel = ({ box }) => (
-    <Carousel
-        showArrows={false}
-        showThumbs={false}
-        infiniteLoop={false}
-        showStatus={false}
-        autoPlay={false}
-        stopOnHover={true}
-        swipeable={true}
-        emulateTouch={true}
-    >
-        {box.slides.map((slide, slideIndex) => (
-            <Box
-                key={slideIndex}
-                sx={{
-                    position: 'relative',
-                    width: '100%',
-                    height: { xs: '80px', md: '125px' },
-                    backgroundColor: box.bgColor,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '10px',
-                    flexDirection: 'column',
-                    padding: 2,
-                    textAlign: 'center'
-                }}
-            >
-                {slide.image && (
-                    <img src={slide.image} alt={`slide-${slideIndex}`} style={{ width: '38%', objectFit: "cover" }} />
-                )}
-                {slide.text && (
-                    <Typography
-                        variant="title_bold"
-                        sx={{
-                            color: slide.textColor,
-                            fontSize: { xs: '0.8rem', md: '1rem' },
-                            whiteSpace: 'pre-line' // This allows for line breaks in the text
-                        }}
-                    >
-                        {slide.text}
-                    </Typography>
-                )}
-            </Box>
-        ))}
-    </Carousel>
-);
+const SmallBoxCarousel = ({ box }) => {
+    const navigate = useNavigate();
+
+    const handleTextClick = (link) => {
+        navigate(link);
+    };
+
+    return (
+        <Carousel
+            showArrows={false}
+            showThumbs={false}
+            infiniteLoop={false}
+            showStatus={false}
+            autoPlay={false}
+            stopOnHover={true}
+            swipeable={true}
+            emulateTouch={true}
+        >
+            {box.slides.map((slide, slideIndex) => (
+                <Box
+                    key={slideIndex}
+                    sx={{
+                        position: 'relative',
+                        width: '100%',
+                        height: { xs: '80px', md: '125px' },
+                        backgroundColor: box.bgColor,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '10px',
+                        flexDirection: 'column',
+                        padding: 2,
+                        textAlign: 'center',
+                        whiteSpace: 'pre-line' // This allows for line breaks in the text
+                    }}
+                >
+                    {slide.image && (
+                        <img src={slide.image} alt={`slide-${slideIndex}`} style={{ width: '38%', objectFit: "cover" }} />
+                    )}
+                    {slide.text && (
+                        <Typography
+                            variant="title_bold"
+                            sx={{
+                                color: slide.textColor,
+                                fontSize: { xs: '0.8rem', md: '1rem' },
+                                cursor: slide.link ? 'pointer' : 'default'
+                            }}
+                            onClick={() => slide.link && handleTextClick(slide.link)}
+                        >
+                            {slide.text}
+                        </Typography>
+                    )}
+                </Box>
+            ))}
+        </Carousel>
+    );
+};
+
+
 
 const CardBox = ({ card }) => (
     <Box sx={{ textAlign: 'center', p: 2 }}>

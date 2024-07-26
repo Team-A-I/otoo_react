@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Box, Button, Typography, Modal, Accordion, AccordionSummary , AccordionDetails, ThemeProvider, Paper, Container } from '@mui/material';
+import { Box, Button, Typography, Modal, Accordion, AccordionSummary, AccordionDetails, ThemeProvider, Paper, Container } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import theme from '../../theme';
-import Cookies from 'js-cookie'; 
+import Cookies from 'js-cookie';
+import ReactGA from 'react-ga4';
 
 const TermsOfService = () => {
     return (
@@ -78,7 +79,7 @@ const TermsOfService = () => {
             <Typography variant="subtitle1" gutterBottom>
               제4장 개인정보보호
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            {/* <Typography variant="body1" gutterBottom>
               제7조 (개인정보의 수집 및 이용)
             </Typography>
             <Typography variant="body2" paragraph>
@@ -101,7 +102,7 @@ const TermsOfService = () => {
               1. 회사는 이용자의 개인정보를 보유하는 기간은 개인정보의 수집 및 이용 목적이 달성되는 시점부터 시작하여, 해당 목적이 달성된 후에는 지체 없이 파기합니다. 단, 다음의 경우에는 예외로 합니다:
               <br />가. 관계 법령에서 보유 기간을 정하고 있는 경우에는 해당 기간 동안 보존합니다.
               <br />나. 이용자가 별도의 개인정보 보유 기간(보유 기간 5년)에 동의한 경우에는 동의한 기간 동안 보존합니다.
-            </Typography>
+            </Typography> */}
           </Box>
     
           <Box mb={2}>
@@ -169,102 +170,103 @@ const TermsOfService = () => {
       );
   };
 
+const sections = [
+  {
+    title: "와주셔서 감사해요:)",
+    content: "몇대몇은 모든 데이터를 저장하지 않습니다. 안심하고 이용하셔도 됩니다."
+  },
+  {
+    title: "몇대몇은 아직 성장중이에요",
+    content: "서비스에서 규정한 데이터에 한해서만 작동합니다. 에러에 취약할 수 있으니, 설명서를 잘 보고 짧은 대화로 사용 부탁드립니다."
+  },
+];
 
+const agreeText = "몇대몇을 이용함으로써 개인정보 처리방침(쿠키 정책 포함)에 동의합니다.";
+const agreeButtonText = "동의하기";
 
-  const sections = [
-    {
-      title: "와주셔서 감사해요:)",
-      content: "몇대몇은 입력하신 데이터는 저장하지 않습니다. AI기능 강화를 위해 분석 결과와 평가만 저장합니다."
-    },
-    {
-      title: "몇대몇은 아직 성장중이에요",
-      content: "서비스에서 규정한 데이터에 한해서만 작동합니다. 에러에 취약할 수 있으니, 설명서를 잘 보고 짧은 대화로 사용 부탁드립니다."
-    },
-  ];
-  
-  const agreeText = "몇대몇을 이용함으로써 개인정보 처리방침(쿠키 정책 포함)에 동의합니다.";
-  const agreeButtonText = "동의하기";
-  
-  const modal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '75vw',
-    maxWidth: 480,
-    maxHeight: '80vh',  // 모달의 최대 높이를 제한합니다.
-    bgcolor: 'background.paper',
-    borderRadius: '15px',
-    boxShadow: 24,
-    p: 4,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+const modal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '75vw',
+  maxWidth: 480,
+  maxHeight: '80vh',
+  bgcolor: 'background.paper',
+  borderRadius: '15px',
+  boxShadow: 24,
+  p: 4,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+};
+
+const AgreeModal = () => {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const isAgreed = Cookies.get('userAgreed');
+    if (!isAgreed) {
+      setOpen(true);
+    }
+  }, []);
+
+  const handleClose = () => {
+    ReactGA.event('agree_button_click', {
+      event_category: 'User Actions',
+      event_label: 'Agree Button Clicked'
+    });
+    Cookies.set('userAgreed', 'true', { expires: 30 });
+    setOpen(false);
   };
-  
-  const AgreeModal = () => {
-    const [open, setOpen] = React.useState(false);
-  
-    React.useEffect(() => {
-        const isAgreed = Cookies.get('userAgreed');
-        if (!isAgreed) {
-            setOpen(true);
-        }
-    }, []);
-  
-    const handleClose = () => {
-        Cookies.set('userAgreed', 'true', { expires: 30 });
-        setOpen(false);
-    };
-  
-    return (
-        <Container>
-            <ThemeProvider theme={theme}>
+
+  return (
+    <Container>
+      <ThemeProvider theme={theme}>
+        <div style={{ fontFamily: theme.typography.fontFamily }}>
+          <Modal
+            open={open}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={modal}>
+              <ThemeProvider theme={theme}>
                 <div style={{ fontFamily: theme.typography.fontFamily }}>
-                    <Modal
-                        open={open}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={modal}>
-                            <ThemeProvider theme={theme}>
-                                <div style={{ fontFamily: theme.typography.fontFamily }}>
-                                    <Typography variant="h2_bold">
-                                        반가워요!<br /> 몇대몇 서비스 이용을 위해 아래의 내용에 동의해주세요.
-                                    </Typography>
-                                    {sections.map((section, index) => (
-                                        <Paper variant="outlined" sx={{ mt: index === 0 ? 4 : 1, p: 2 }} key={index}>
-                                            <Typography variant="sub_bold">{section.title}</Typography>
-                                            <Typography variant="body1" mt={2}>{section.content}</Typography>
-                                        </Paper>
-                                    ))}
-                                    <Box mt={5}>
-                                        <Typography variant="body1">{agreeText}</Typography>
-                                        <Accordion variant="outlined">
-                                            <AccordionSummary
-                                                expandIcon={<ExpandMoreIcon />}
-                                                aria-controls="panel1-content"
-                                                id="panel1-header"
-                                            >
-                                                <Typography color="deepblue">개인정보 처리방침 상세보기</Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails style={{ maxHeight: '200px', overflow: 'auto' }}>
-                                                {TermsOfService()}
-                                            </AccordionDetails>
-                                        </Accordion>
-                                    </Box>
-                                    <Button variant="contained" fullWidth sx={{ mt: 5 }}
-                                        onClick={handleClose}>
-                                        {agreeButtonText}
-                                    </Button>
-                                </div>
-                            </ThemeProvider>
-                        </Box>
-                    </Modal>
+                  <Typography variant="h2_bold">
+                    반가워요!<br /> 몇대몇 서비스 이용을 위해 아래의 내용에 동의해주세요.
+                  </Typography>
+                  {sections.map((section, index) => (
+                    <Paper variant="outlined" sx={{ mt: index === 0 ? 4 : 1, p: 2 }} key={index}>
+                      <Typography variant="sub_bold">{section.title}</Typography>
+                      <Typography variant="body1" mt={2}>{section.content}</Typography>
+                    </Paper>
+                  ))}
+                  <Box mt={5}>
+                    <Typography variant="body1">{agreeText}</Typography>
+                    <Accordion variant="outlined">
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                      >
+                        <Typography color="deepblue">개인정보 처리방침 상세보기</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails style={{ maxHeight: '200px', overflow: 'auto' }}>
+                        {TermsOfService()}
+                      </AccordionDetails>
+                    </Accordion>
+                  </Box>
+                  <Button variant="contained" fullWidth sx={{ mt: 5 }} onClick={handleClose}>
+                    {agreeButtonText}
+                  </Button>
                 </div>
-            </ThemeProvider>
-        </Container>
-    );
-  };
-  
-  export default AgreeModal;
+              </ThemeProvider>
+            </Box>
+          </Modal>
+        </div>
+      </ThemeProvider>
+    </Container>
+  );
+};
+
+export default AgreeModal;
