@@ -41,6 +41,7 @@ const Header = () => {
     const usersCode = sessionStorage.getItem('accessToken');
     if (usersCode !== null) {
         setIsLoggedIn(true);
+  
     }
     if(sessionStorage.getItem('userRole') === 'ROLE_ADMIN'){
       setUserRoleAdmin(true);
