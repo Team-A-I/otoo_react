@@ -8,7 +8,7 @@ import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import '../../css/love/uploadlove.css';
 import theme from '../../theme';
 import UploadButton from '../UploadButton';
-import SendModal from '../modal/SendModal';
+//import SendModal from '../modal/SendModal';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
@@ -97,14 +97,14 @@ const FileUploadLove = () => {
                   defaultColor = '#FFCFAA'
                   hoverColor = '#FFCFAA'
                   disabledColor = '#B0B0B0'
-                />
+                /> 
               </Box>
-              <SendModal
+              {/* <SendModal
                 open={openModal}
                 handleClose={handleCloseModal}
                 handlefile={handleSubmit}
                 filetitle={fileName}
-              />
+              /> */}
             </Grid>
           </Box>
         </div>

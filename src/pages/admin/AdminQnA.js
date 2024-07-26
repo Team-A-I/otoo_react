@@ -29,7 +29,7 @@ const AdminQnA = () => {
                 'Content-Type': 'application/json',
             },
         }).then((response) => {
-            console.log(response);
+            window.location.reload();
         }).catch((error) => {
             console.error('Error uploading file:', error);
         });
