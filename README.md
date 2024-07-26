@@ -5,6 +5,8 @@
 - 배포 URL : https://www.otoo.kr/
 - Test ID : otoo
 - Test PW : 1234
+- RestAPI REPO URL : https://github.com/Team-A-I/otoo_java
+- FastAPI REPO URL : https://github.com/Team-A-I/otoo_python_llm
 
 <br>
 
