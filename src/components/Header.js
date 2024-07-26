@@ -31,6 +31,7 @@ const Header = () => {
             sessionStorage.removeItem('userRole');
             setIsLoggedIn(false);
             navigate('/');
+            window.location.reload();
         }
     } catch (error) {
         console.error('Logout failed', error);

@@ -22,6 +22,7 @@ function UserLoginPage() {
     });
     navigate(path);
   };
+ 
 
   const handleLoginClick = async () => {
     try {
@@ -42,13 +43,16 @@ function UserLoginPage() {
         sessionStorage.setItem('userEmail', response.data.userEmail);
         sessionStorage.setItem('userRole', response.data.role);
         navigate('/');
-        alert('로그인 성공');
+        window.location.reload();
+        
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert('아이디를 찾을 수 없습니다');
+        window.location.reload();
+        alert('아이디나 비밀번호가 일치하지 않습니다.');
       } else if (error.response && error.response.status === 401) {
-        alert('비밀번호가 일치하지 않습니다');
+        window.location.reload();
+        alert('아이디나 비밀번호가 일치하지 않습니다.');
       } else {
         console.error('로그인 버튼 오류:', error);
       }
@@ -102,7 +106,7 @@ function UserLoginPage() {
             sessionStorage.setItem("userRole", response.data.role);
           
             navigate("/");
-            alert('로그인 성공');
+            window.location.reload();
           }
         },
         fail: (err) => {
@@ -155,6 +159,7 @@ function UserLoginPage() {
                     sx={{ width: '100%' }} 
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { handleLoginClick(); e.preventDefault(); } }}
                     InputProps={{
                       endAdornment: (
                         <Button onClick={() => setIsPasswordVisible(!isPasswordVisible)}>

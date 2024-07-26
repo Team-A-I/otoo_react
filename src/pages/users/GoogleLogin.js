@@ -34,7 +34,7 @@ const GoogleLogin = () => {
           sessionStorage.setItem("userRole", response.data.role);
         }
         navigate("/");
-        alert('로그인 성공');
+        window.location.reload();
       })
       .catch((err) => {
         console.error(err);

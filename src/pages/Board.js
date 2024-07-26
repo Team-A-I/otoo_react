@@ -111,6 +111,7 @@ const Board = () => {
       setPosts((prevPosts) => [response.data, ...prevPosts]);
       setNewPost(INITIAL_NEW_POST);
       handleClose();
+      window.location.reload();
     } catch (error) {
       console.error('Error adding post:', error);
     }
