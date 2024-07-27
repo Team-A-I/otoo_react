@@ -7,7 +7,7 @@ import theme1 from '../../theme';
 const API_URL = 'https://gnat-suited-weekly.ngrok-free.app/api/posts';
 const HEADERS = {
   'Content-Type': 'application/json',
-  'ngrok-skip-browser-warning': '69420',
+  // 'ngrok-skip-browser-warning': '69420',
 };
 
 const AdminBoard = () => {

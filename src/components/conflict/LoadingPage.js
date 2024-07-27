@@ -21,6 +21,7 @@ const LoadingPage = () => {
             const requestData = { text: jsonContent.text || '', usercode };
             const response = await axiosIns.post(`${apiUrl}/analysis`, requestData);
             navigate('/result-conflict', { state: { jsonData: response.data } });
+            window.location.reload();
           } else if (jsonContent?.files?.length > 0) {
             const formData = new FormData();
             jsonContent.files.forEach((file) => {
@@ -36,6 +37,7 @@ const LoadingPage = () => {
             }
             const response = await axiosIns.post(`${apiUrl}/ocr`, formData);
             navigate('/result-conflict', { state: { jsonData: response.data } });
+            window.location.reload();
           } else {
             throw new Error(errorMessage);
           }
@@ -43,6 +45,7 @@ const LoadingPage = () => {
           alert(error.message === errorMessage ? errorMessage : alertMessage);
           console.error("Error sending data to backend:", error);
           navigate('/');
+          window.location.reload();
         }
       };
   

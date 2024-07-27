@@ -18,11 +18,11 @@ const TEXTS = {
   card1Description1: '갈등이 해소되지 않았나요?',
   card1Description2:'누가 더 잘못했는지 알아보세요!',
   card2Title: '우정',
-  card2Description1: '만드는중',
-  card2Description2: '만드는중',
+  card2Description1: '친구와의 관계가 궁금하신가요?',
+  card2Description2: '우정의 깊이를 알아보세요!',
   card3Title: '사랑',
-  card3Description1: '만드는중',
-  card3Description2: '만드는중',
+  card3Description1: '연인이 아직도 날 사랑하는지 궁금하신가요?',
+  card3Description2: '누가 더 사랑하는지 알아보세요!',
   buttonLabel: '알아보러가기'
 };
 const EmotionReportPage = () => {
@@ -113,7 +113,7 @@ useEffect(() => {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-                    {/* <Button size="small" component={Link} to="/UploadFriendship">{TEXTS.buttonLabel}</Button> */}
+                    <Button size="small" component={Link} to="/upload-friendship">{TEXTS.buttonLabel}</Button> 
                   </CardActions>
                 </Card>
               </Grid>
@@ -138,7 +138,7 @@ useEffect(() => {
                     </Typography>
                   </CardContent>
                   <CardActions  sx={{ display: 'flex', justifyContent: 'right' }}>
-                    {/* <Button size="small" component={Link} to="/upload-love">{TEXTS.buttonLabel}</Button> */}
+                    <Button size="small" component={Link} to="/upload-love">{TEXTS.buttonLabel}</Button> 
                   </CardActions>
                 </Card>
               </Grid>

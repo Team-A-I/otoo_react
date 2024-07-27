@@ -49,10 +49,12 @@ const ResetPassword = () => {
         });
 
         if (response.status === 200) {
+          window.location.reload();
           alert('비밀번호 재설정 완료');
           navigate('/user-login');
         }
       } else {
+        window.location.reload();
         alert('비밀번호가 일치하지 않습니다.');
       }
     } catch (error) {

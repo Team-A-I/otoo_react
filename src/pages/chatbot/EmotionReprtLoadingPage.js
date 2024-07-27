@@ -26,6 +26,7 @@ const EmotionReportLoadingPage = () => {
             });
             const result = response.data
             navigate('/emotionReportPage', { state: { result: result }});
+            window.location.reload();
             } catch (error) {
             console.error('Error uploading file:', error);
 

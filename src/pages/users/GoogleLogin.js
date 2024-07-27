@@ -12,6 +12,7 @@ const GoogleLogin = () => {
     const codeParam = queryParams.get("code");
     if (code && code === codeParam) return;
     setCode(codeParam);
+    
     axios
       .get("https://gnat-suited-weekly.ngrok-free.app/googleLogin/callbacks", {
         params: {
@@ -33,7 +34,7 @@ const GoogleLogin = () => {
           sessionStorage.setItem("userRole", response.data.role);
         }
         navigate("/");
-        alert('로그인 성공');
+        window.location.reload();
       })
       .catch((err) => {
         console.error(err);
