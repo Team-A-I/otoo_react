@@ -26,7 +26,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/login', {
+      const response = await axios.post('https://ra.otoo.kr/login', {
         userEmail,
         userPassword,
       });
@@ -84,7 +84,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken, {
+            "https://ra.otoo.kr/kakaoLogin/" + accessToken, {
               headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': '69420',

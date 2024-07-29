@@ -56,7 +56,7 @@ const ChatBot = () => {
     setChat('');
 
     try {
-      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('https://ra.otoo.kr/chatbot', { RecentMessages, mode }, {
         headers: {
           'Content-Type': 'application/json',
         },

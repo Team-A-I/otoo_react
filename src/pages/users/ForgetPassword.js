@@ -31,7 +31,7 @@ const ForgetPassword = () => {
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
-        `https://gnat-suited-weekly.ngrok-free.app/forgotpassword/${usersEmail}`
+        `https://ra.otoo.kr/forgotpassword/${usersEmail}`
       );
       if (response.status === 200) {
         window.location.reload();
