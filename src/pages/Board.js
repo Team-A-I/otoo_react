@@ -14,7 +14,6 @@ const convertTime = (date) => {
 };
 
 const STRINGS = {
-  boardTitle: '방명록',
   addPostButton: '게시글 추가',
   dialogTitle: '게시글 추가',
   dialogCancel: '취소',
@@ -130,18 +129,11 @@ const Board = () => {
       <div style={{ fontFamily: theme1.typography.fontFamily }}>
         <Box p={5} sx={{ backgroundColor: 'white' }}>
           <Container maxWidth="lg">
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h2_bold" gutterBottom>
-                {STRINGS.boardTitle}
-              </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent:"right" }}>
               <Button variant="contained" onClick={handleClickOpen}
                 sx={{
                   ml: 2,
                   mb: 2,
-                  backgroundColor: theme1.palette.darkgreen,
-                  '&:hover': {
-                    backgroundColor: theme1.palette.lightgreen,
-                  }
                 }}>
                 {STRINGS.addPostButton}
               </Button>

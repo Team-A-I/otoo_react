@@ -106,9 +106,6 @@ const ResultPage = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <Typography variant="h4" gutterBottom>
-                분석 결과
-              </Typography>
             </motion.div>
             <Box sx={{ width: '100%' }}>
               <Grid container spacing={3}>

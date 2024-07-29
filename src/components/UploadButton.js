@@ -19,9 +19,9 @@ const UploadButton = ({
       backgroundColor: disabled ? disabledColor : hoverColor
     },
     width: '100%',
-    height: '50px',
+    height: '60px',
     position: 'fixed',
-    bottom: 0,
+    bottom: 2,
     left: 0,
     zIndex: 1300,
     borderRadius: 20,

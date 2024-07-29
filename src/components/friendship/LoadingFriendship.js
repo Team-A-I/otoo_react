@@ -32,34 +32,39 @@ const LoadingFriendship = () => {
             response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/api/friendship/ocr', formData);
           }
 
-          navigate('/result-friendship', { state: { jsonData: response.data } });
+          if (response.status === 200) {
+            navigate('/result-friendship', { state: { jsonData: response.data } });
+          } else {
+            console.error("Error in response:", response);
+          }
         } catch (error) {
           console.error("Error sending data to backend:", error);
         }
+      } else {
+        console.error("No jsonContent found");
       }
     };
     fetchData();
   }, [jsonContent, navigate, usercode]);
-  
 
   return (
     <Container maxWidth="lg">
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="93vh">
         <Grid container spacing={2}>
           <Grid item xs={12} mb={1}>
-            <Paper elevation={4} sx={{ borderRadius: '35px' }}>
+            <Paper elevation={4} sx={{ borderRadius: '35px', padding: { xs: 2, sm: 4 } }}>
               <Box>
                 <Grid container alignItems="flex-start">
                   <Grid item xs={12} sm={4}>
-                    <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', marginLeft:'60px',minHeight: '220px' }}>
+                    <Grid container justifyContent="center" alignItems="start" direction="column" sx={{ height: '100%', minHeight: '220px' }}>
                       <Skeleton variant="text" width={100} height={50} animation="wave" />
                       <Skeleton variant="text" width={100} height={50} animation="wave" />
                       <Skeleton variant="text" width={200} height={50} animation="wave" />
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={8}>
-                    <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' ,minHeight: '220px'}}>
-                      <Skeleton variant="rectangular"  width={300} height={150} style={{ borderRadius: '15px' }} className="custom-wave-skeleton" />
+                    <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%', minHeight: '220px' }}>
+                      <Skeleton variant="rectangular" width={300} height={150} sx={{ borderRadius: '15px' }} className="custom-wave-skeleton" />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -67,10 +72,10 @@ const LoadingFriendship = () => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
+            <Paper elevation={3} sx={{ padding: { xs: 2, sm: 4 }, backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
               <Grid container spacing={3} alignItems="center">
                 <Grid item xs={12} sm={4}>
-                  <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', marginLeft:'40px' }}>
+                  <Grid container justifyContent="center" alignItems="start" direction="column" sx={{ height: '100%' }}>
                     <Skeleton variant="text" width="30%" height={50} animation="wave" />
                     <Skeleton variant="text" width="90%" height={50} animation="wave" />
                     <Skeleton variant="text" width="90%" height={50} animation="wave" />
@@ -78,12 +83,12 @@ const LoadingFriendship = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                  <Grid container spacing={2} justifyContent={'center'} style={{ marginLeft:'40px' }} >
-                    <Grid item xs={12} sm={5} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Skeleton variant="rectangular" width="100%" height={320} style={{ borderRadius: '15px' }} className="custom-wave-skeleton" />
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Skeleton variant="rectangular" width="100%" height={320} sx={{ borderRadius: '15px' }} className="custom-wave-skeleton" />
                     </Grid>
-                    <Grid item xs={12} sm={5} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Skeleton variant="rectangular" width="100%" height={320} style={{ borderRadius: '15px' }} className="custom-wave-skeleton" />
+                    <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Skeleton variant="rectangular" width="100%" height={320} sx={{ borderRadius: '15px' }} className="custom-wave-skeleton" />
                     </Grid>
                   </Grid>
                 </Grid>

@@ -228,7 +228,7 @@ const ResultLove = () => {
                                                 alignItems="center"
                                                 style={{ height: '100%', minHeight: '220px' }}>
                                                 {loveMessage && (
-                                                    <Typography variant="hc_bold">{loveMessage}
+                                                    <Typography variant="h1_bold">{loveMessage}
                                                     </Typography>
                                                 )}
                                             </Grid>
@@ -256,7 +256,7 @@ const ResultLove = () => {
                                         <Grid container
                                             alignItems="center"
                                             style={{ height: '100%', minHeight: '220px' }}>
-                                            <Typography variant="hc_bold" color="dyellow" gutterBottom >
+                                            <Typography variant="h1_bold" color="dyellow" gutterBottom >
                                                 우리들의 <br /> 애정 전선 입니다. <br />누가 더 좋아하는지 <br /> 알아 보겠습니다.
                                             </Typography>
                                         </Grid>
