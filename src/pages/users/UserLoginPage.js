@@ -138,7 +138,7 @@ function UserLoginPage() {
             <Paper sx={{ borderRadius: 5 }} elevation={4}>
               <Grid container spacing={2} justifyContent="center" padding={'30px'}>
                 <Grid item xs={12}>
-                  <Typography variant="hc_bold" color="gray600" align="center">OTOO</Typography>
+                  <Typography variant="hc_bold" color="gray600" align="center">몇대몇</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField 

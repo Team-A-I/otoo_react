@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -8,43 +8,105 @@ import { Container, Typography, Box, Grid, ThemeProvider } from '@mui/material';
 import '../../css/love/uploadlove.css';
 import theme from '../../theme';
 import UploadButton from '../UploadButton';
-//import SendModal from '../modal/SendModal';
+import SendModal from '../modal/SendModal';
 
 const FileUploadLove = () => {
   const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState('');
-  const fileInputRef = useRef(null);
+  const [fileSize, setFileSize] = useState(0);
+  const [fileType, setFileType] = useState('');
+  const [fileCount, setFileCount] = useState(0);
+  // eslint-disable-next-line
+  const [jsonContent, setJsonContent] = useState(null);
+  // eslint-disable-next-line
+  const [textInput, setTextInput] = useState("");
+  // eslint-disable-next-line
+  const [selectedTab, setSelectedTab] = useState(0);
+  const textFileInputRef = useRef(null);
+  const imageFileInputRef = useRef(null);
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = React.useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
-  const handleCloseModal = () => setOpenModal(false);
+  const resetFileInput = () => {
+    if (selectedTab === 1) {
+      textFileInputRef.current.value = null;
+    } else if (selectedTab === 0) {
+      imageFileInputRef.current.value = null;
+    }
+  };
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    setFileName(selectedFile.name);
-    setOpenModal(true);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    resetFileInput();
+  };
+
+  const handleFileChange = useCallback((event) => {
+    const selectedFiles = Array.from(event.target.files);
+    const selectedFile = selectedFiles[0];
+    const isImage = selectedFile.type.startsWith('image/');
+    const isText = selectedFile.type === 'text/plain';
+
+    if (selectedFiles.length > 0) {
+      if (isImage) {
+        setFiles(selectedFiles);
+        setFileName(selectedFiles.map(file => file.name).join(', '));
+        setFileSize(selectedFiles.reduce((acc, file) => acc + file.size, 0));
+        setFileType(selectedFiles.map(file => file.type).join(', '));
+        setFileCount(selectedFiles.length);
+      } else if (isText) {
+        setFile(selectedFile);
+        setFileName(selectedFile.name);
+        setFileSize(selectedFile.size);
+        setFileType(selectedFile.type);
+        setFileCount(1);
+      }
+      setOpenModal(true);
+    }
+  }, []);
+
+  const handleFileRead = useCallback((event) => {
+    const content = event.target.result;
+    try {
+      const json = { text: content, file };
+      setJsonContent(json);
+      navigate('/loading-love', { state: { jsonContent: json } });
+    } catch (error) {
+      console.error("Error parsing file:", error);
+    }
+  }, [file, navigate]);
+
+  const handleFileUpload = () => {
+    if (file) {
+      const fileExtension = file.name.split('.').pop().toLowerCase();
+      const reader = new FileReader();
+      reader.onload = handleFileRead;
+      if (fileExtension === 'txt') {
+        reader.readAsText(file);
+      } else {
+        const json = { text: textInput, file };
+        setJsonContent(json);
+        navigate('/loading-love', { state: { jsonContent: json } });
+      }
+    } else if (files.length > 0) {
+      const json = { text: textInput, files };
+      setJsonContent(json);
+      navigate('/loading-love', { state: { jsonContent: json } });
+    } else if (textInput.trim()) {
+      const json = { text: textInput };
+      setJsonContent(json);
+      navigate('/loading-love', { state: { jsonContent: json } });
+    }
   };
 
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    if (selectedTab === 1) textFileInputRef.current?.click();
+    else imageFileInputRef.current?.click();
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!file) {
-      return;
-    }
-
-    const fileExtension = file.name.split('.').pop().toLowerCase();
-    const isTextFile = fileExtension === 'txt';
-
-    navigate('/loading-love', { state: { file, isTextFile } });
-  };
-
-  const lovecopy = "네가 좋아\n너는?\n솔직하게\n말해줘.";
-  const loveintrocopy = "상대방과 나눈 간지러운 대화를 넣어주세요.\n누가 더 좋아하는지 저희가 판단해드릴게요.\n판단의 기준과 함께 서로의 관심사를 같이 보여드릴게요.\n지금 무슨 생각을 하고 있을까요?";
-  const btnUploadLabel = "카카오톡 파일 업로드"
+  const lovecopy = "애정 몇대몇";
+  const loveintrocopy = "#애정테스트\n#내가 더 좋아해";
+  const btnUploadLabel = "카카오톡 파일 업로드";
 
   return (
     <Container maxWidth="xl">
@@ -55,7 +117,7 @@ const FileUploadLove = () => {
               <Grid item xs={12} sm={6} container alignItems="center">
                 <Typography
                   variant="hbig_bold"
-                  color="peach"
+                  color="#FFCFAA"
                   sx={{
                     whiteSpace: 'pre-line',
                   }}>
@@ -82,29 +144,32 @@ const FileUploadLove = () => {
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '4vh' }}>
                 <input
-                  type="file"
-                  ref={fileInputRef}
+                  accept=".txt"
                   style={{ display: 'none' }}
+                  ref={imageFileInputRef}
+                  type="file"
                   onChange={handleFileChange}
-                  accept=".txt,image/*" // Accept both text and image files
                 />
                 <UploadButton
                   label={btnUploadLabel}
                   onClick={handleButtonClick}
                   disabled={false}
                   className="conflict-btn-upload"
-                  title_str="카톡 캡쳐이미지 또는 txt파일만 올려주세요"
+                  title_str="카톡 txt파일만 올려주세요"
                   defaultColor = '#FFCFAA'
                   hoverColor = '#FFCFAA'
                   disabledColor = '#B0B0B0'
                 /> 
               </Box>
-              {/* <SendModal
+              <SendModal
                 open={openModal}
                 handleClose={handleCloseModal}
-                handlefile={handleSubmit}
+                handlefile={handleFileUpload}
                 filetitle={fileName}
-              /> */}
+                filesize={fileSize}
+                filetype={fileType}
+                filecount={fileCount}
+              />
             </Grid>
           </Box>
         </div>
