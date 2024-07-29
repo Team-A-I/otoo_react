@@ -50,7 +50,7 @@ export const TitleSection = ({ titleText, imgSrc, imgAlt }) => (
           <Grid item xs={12} sm={4}>
             <Grid container justifyContent="center" alignItems="start" direction="column" style={{ height: '100%', minHeight: '220px'}}> 
               <Box ml={5}>
-              <Typography variant="hc_bold" color="gray900" gutterBottom dangerouslySetInnerHTML={{ __html: titleText }} />
+              <Typography variant="h1_bold" color="gray900" gutterBottom dangerouslySetInnerHTML={{ __html: titleText }} />
               </Box>
             </Grid>
           </Grid>

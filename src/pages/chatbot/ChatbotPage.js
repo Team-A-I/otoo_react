@@ -27,9 +27,8 @@ const ChatBot = () => {
   const navigate = useNavigate();
 
   // Localized text values
-  const chatbotTitle = '맞장구봇';
-  const chatbotSubtitle1 = '연인에게 받은 상처를 쏟아내세요.';
-  const chatbotSubtitle2 = '장구가 당신의 이야기에 맞장구를 쳐줄게요.';
+  const chatbotSubtitle1 = '※ 연인 또는 친구에게 받은 상처를 모두 쏟아내세요.';
+  const chatbotSubtitle2 = '※ 장구가 당신의 이야기에 무조건 맞장구를 쳐줄게요.';
   const chatbotPlaceholder = '서운했던 이야기를 들려주세요.';
   const chatbotTooltipText = '채팅을 바탕으로 장구가 조언을 해줍니다.';
   const chatbotEmotionReportButtonText = '감정 리포트 생성';
@@ -57,7 +56,7 @@ const ChatBot = () => {
     setChat('');
 
     try {
-      const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/chatbot', { RecentMessages, mode }, {
+      const response = await axiosIns.post('https://ra.otoo.kr/chatbot', { RecentMessages, mode }, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -135,13 +134,10 @@ const ChatBot = () => {
       <div style={{ fontFamily: theme.typography.fontFamily }}>
         <Box className='grid'>
           <Box className='content'>
-            <Box className="chat_subtitle">
-              <Typography variant="title_bold">{chatbotTitle}</Typography>
-            </Box>
-            <Box className="chat_subtitle">
+            <Box className="chat_subtitle" sx={{display:"flex", justifyContent:"center"}}>
               <Typography variant="sub_mid" color="gray500">{chatbotSubtitle1}</Typography>
             </Box>
-            <Box className="chat_subtitle">
+            <Box className="chat_subtitle" sx={{display:"flex", justifyContent:"center"}}>
               <Typography variant="sub_mid" color="gray500">{chatbotSubtitle2}</Typography>
             </Box>
             <Box className="chatList_Box">

@@ -9,7 +9,7 @@ const LoadingPage = () => {
   const location = useLocation();
   const { jsonContent } = location.state || {};
   const usercode = sessionStorage.getItem('usersCode');
-  const apiUrl = 'https://gnat-suited-weekly.ngrok-free.app/api/conflict';
+  const apiUrl = 'https://ra.otoo.kr/api/conflict';
   const alertMessage = '지원하지 않는 데이터 형식입니다.\n아래의 형식인지 확인부탁드려요:)\n\n 1. 카톡 형식 텍스트 파일\n 2. 카톡 기본 테마 캡쳐 이미지';
   const errorMessage = 'jsonContent 또는 jsonContent.files가 정의되지 않았거나 비어 있습니다.';
   
@@ -21,6 +21,7 @@ const LoadingPage = () => {
             const requestData = { text: jsonContent.text || '', usercode };
             const response = await axiosIns.post(`${apiUrl}/analysis`, requestData);
             navigate('/result-conflict', { state: { jsonData: response.data } });
+            window.location.reload();
           } else if (jsonContent?.files?.length > 0) {
             const formData = new FormData();
             jsonContent.files.forEach((file) => {
@@ -36,6 +37,7 @@ const LoadingPage = () => {
             }
             const response = await axiosIns.post(`${apiUrl}/ocr`, formData);
             navigate('/result-conflict', { state: { jsonData: response.data } });
+            window.location.reload();
           } else {
             throw new Error(errorMessage);
           }
@@ -43,6 +45,7 @@ const LoadingPage = () => {
           alert(error.message === errorMessage ? errorMessage : alertMessage);
           console.error("Error sending data to backend:", error);
           navigate('/');
+          window.location.reload();
         }
       };
   

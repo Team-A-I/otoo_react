@@ -103,11 +103,13 @@ const Recorder = ({ onRecordingStateChange }) => {
       setLoading(true);
       navigate('/recorder-loading');
       try {
-        const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/api/transcribe/file', formData);
+        const response = await axios.post('https://ra.otoo.kr/api/transcribe/file', formData);
         navigate('/stt-result', { state: { jsonData: response.data } });
+        window.location.reload();
       } catch (error) {
         alert(error.response?.data?.message || "대화내용이 짧아서 분석할 수 없습니다.");
         navigate('/upload-conflict'); // 서버 요청 중 오류 발생 시 예외 처리
+        window.location.reload();
       } finally {
         setLoading(false);
       }

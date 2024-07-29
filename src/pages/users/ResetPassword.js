@@ -42,17 +42,19 @@ const ResetPassword = () => {
       const usersEmail = location.state?.usersEmail;
 
       if (password === confirmPassword) {
-        const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/changePwd', {
+        const response = await axios.post('https://ra.otoo.kr/changePwd', {
           usersEmail: usersEmail,
           usersPw: password,
           pwd1: confirmPassword,
         });
 
         if (response.status === 200) {
+          window.location.reload();
           alert('비밀번호 재설정 완료');
           navigate('/user-login');
         }
       } else {
+        window.location.reload();
         alert('비밀번호가 일치하지 않습니다.');
       }
     } catch (error) {

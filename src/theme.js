@@ -2,6 +2,10 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 // 테마 생성
 let theme = createTheme({
   palette: {
+    primary: {
+      main: '#04613E',
+      contrastText: '#fff',
+    },
     oblack: '#333333',
     owhite: '#F8F7F3',
     darkgreen: '#04613E',

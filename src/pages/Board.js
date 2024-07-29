@@ -14,7 +14,6 @@ const convertTime = (date) => {
 };
 
 const STRINGS = {
-  boardTitle: '방명록',
   addPostButton: '게시글 추가',
   dialogTitle: '게시글 추가',
   dialogCancel: '취소',
@@ -39,7 +38,7 @@ const INITIAL_NEW_POST = {
   postDescription: ''
 };
 
-const API_URL = 'https://gnat-suited-weekly.ngrok-free.app/api/posts';
+const API_URL = 'https://ra.otoo.kr/api/posts';
 const HEADERS = {
   'Content-Type': 'application/json',
   'ngrok-skip-browser-warning': '69420',
@@ -111,6 +110,7 @@ const Board = () => {
       setPosts((prevPosts) => [response.data, ...prevPosts]);
       setNewPost(INITIAL_NEW_POST);
       handleClose();
+      window.location.reload();
     } catch (error) {
       console.error('Error adding post:', error);
     }
@@ -129,18 +129,11 @@ const Board = () => {
       <div style={{ fontFamily: theme1.typography.fontFamily }}>
         <Box p={5} sx={{ backgroundColor: 'white' }}>
           <Container maxWidth="lg">
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h2_bold" gutterBottom>
-                {STRINGS.boardTitle}
-              </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent:"right" }}>
               <Button variant="contained" onClick={handleClickOpen}
                 sx={{
                   ml: 2,
                   mb: 2,
-                  backgroundColor: theme1.palette.darkgreen,
-                  '&:hover': {
-                    backgroundColor: theme1.palette.lightgreen,
-                  }
                 }}>
                 {STRINGS.addPostButton}
               </Button>

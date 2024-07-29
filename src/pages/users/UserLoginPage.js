@@ -22,10 +22,11 @@ function UserLoginPage() {
     });
     navigate(path);
   };
+ 
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/login', {
+      const response = await axios.post('https://ra.otoo.kr/login', {
         userEmail,
         userPassword,
       });
@@ -42,13 +43,16 @@ function UserLoginPage() {
         sessionStorage.setItem('userEmail', response.data.userEmail);
         sessionStorage.setItem('userRole', response.data.role);
         navigate('/');
-        alert('로그인 성공');
+        window.location.reload();
+        
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert('아이디를 찾을 수 없습니다');
+        window.location.reload();
+        alert('아이디나 비밀번호가 일치하지 않습니다.');
       } else if (error.response && error.response.status === 401) {
-        alert('비밀번호가 일치하지 않습니다');
+        window.location.reload();
+        alert('아이디나 비밀번호가 일치하지 않습니다.');
       } else {
         console.error('로그인 버튼 오류:', error);
       }
@@ -80,7 +84,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "https://gnat-suited-weekly.ngrok-free.app/kakaoLogin/" + accessToken, {
+            "https://ra.otoo.kr/kakaoLogin/" + accessToken, {
               headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': '69420',
@@ -100,9 +104,9 @@ function UserLoginPage() {
             sessionStorage.setItem("userName", response.data.userName);
             sessionStorage.setItem("userEmail", response.data.userEmail);
             sessionStorage.setItem("userRole", response.data.role);
-
+          
             navigate("/");
-            alert('로그인 성공');
+            window.location.reload();
           }
         },
         fail: (err) => {
@@ -134,7 +138,7 @@ function UserLoginPage() {
             <Paper sx={{ borderRadius: 5 }} elevation={4}>
               <Grid container spacing={2} justifyContent="center" padding={'30px'}>
                 <Grid item xs={12}>
-                  <Typography variant="hc_bold" color="gray600" align="center">OTOO</Typography>
+                  <Typography variant="hc_bold" color="gray600" align="center">몇대몇</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField 
@@ -155,6 +159,7 @@ function UserLoginPage() {
                     sx={{ width: '100%' }} 
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { handleLoginClick(); e.preventDefault(); } }}
                     InputProps={{
                       endAdornment: (
                         <Button onClick={() => setIsPasswordVisible(!isPasswordVisible)}>

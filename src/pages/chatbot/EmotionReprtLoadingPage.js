@@ -19,13 +19,14 @@ const EmotionReportLoadingPage = () => {
                 return;
             }
             const requestBody = usersCode ? { messages, usersCode } : { messages };
-            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/emotionReport', requestBody, {
+            const response = await axiosIns.post('https://ra.otoo.kr/emotionReport', requestBody, {
                 headers: {
                 'Content-Type': 'application/json',
                 },
             });
             const result = response.data
             navigate('/emotionReportPage', { state: { result: result }});
+            window.location.reload();
             } catch (error) {
             console.error('Error uploading file:', error);
 

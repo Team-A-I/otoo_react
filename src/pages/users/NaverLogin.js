@@ -17,7 +17,7 @@ const NaverLogin = () => {// eslint-disable-next-line
 
 
     axios
-      .get("https://gnat-suited-weekly.ngrok-free.app/naverLogin/callbacks", {
+      .get("https://ra.otoo.kr/naverLogin/callbacks", {
         params: {
           code: codeParam,
           state: stateParam,

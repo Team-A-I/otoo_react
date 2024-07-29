@@ -24,6 +24,7 @@ const SttLoadingPage = () => {
           if (fileExtension === 'txt') {
             response = await axiosIns.post('/api/conflict/analysis', requestData);
             navigate('/result-conflict', { state: { jsonData: response.data } });
+            window.location.reload();
           } else if (fileExtension === 'wav' || fileExtension === 'mp3') {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
@@ -32,6 +33,7 @@ const SttLoadingPage = () => {
             }
             response = await axiosIns.post('/api/transcribe/file', formData);
             navigate('/stt-result', { state: { jsonData: response.data } });
+            window.location.reload();
           } else {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
@@ -40,6 +42,7 @@ const SttLoadingPage = () => {
             }
             response = await axiosIns.post('/api/conflict/ocr', formData);
             navigate('/result-conflict', { state: { jsonData: response.data } });
+            window.location.reload();
           }
         } catch (error) {
           alert(error.response?.data?.message || "대화내용이 짧아서 분석할 수 없습니다.");

@@ -21,7 +21,6 @@ import UploadLove from './pages/love/UploadLove';
 import UploadFriendship from './pages/friendship/UploadFriendship';
 import LoadingFriendship from './components/friendship/LoadingFriendship';
 import ResultFriendship from './components/friendship/ResultFriendship';
-import ResultFriendshipToLove from './components/friendship/ResultFriendshiptolove';
 
 import UserLoginPage from './pages/users/UserLoginPage';
 import SignUpPage from './pages/users/SignUpPage';
@@ -43,6 +42,7 @@ import Board from './pages/Board';
 
 import AdminUser from './pages/admin/AdminUser';
 import AdminHeader from './pages/admin/AdminHeader';
+import AdminQnA from './pages/admin/AdminQnA';
 import AdminBoard from './pages/admin/AdminBoard';
 import ReactGA from 'react-ga';
 
@@ -51,6 +51,7 @@ ReactGA.initialize('G-YR4ZVKD6TS');
 const adminRoutes = [
   { path: '/admin-user', element: <AdminUser />, roles: ['ROLE_ADMIN'] },
   { path: '/admin-board', element: <AdminBoard />, roles: ['ROLE_ADMIN'] },
+  { path: '/admin-qna', element: <AdminQnA />, roles: ['ROLE_ADMIN'] },
 ];
 
 const generalRoutes = [
@@ -65,7 +66,6 @@ const generalRoutes = [
   { path: '/upload-love', element: <UploadLove /> },
   { path: '/loading-friendship', element: <LoadingFriendship /> },
   { path: '/result-friendship', element: <ResultFriendship /> },
-  { path: '/result-friendship-to-love', element: <ResultFriendshipToLove /> },
   { path: '/upload-friendship', element: <UploadFriendship /> },
   { path: '/emotionReportPage', element: <EmotionReportPage /> },
   { path: '/emotionReportLoadingPage', element: <EmotionReportLoadingPage /> },

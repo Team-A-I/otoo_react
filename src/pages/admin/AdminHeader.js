@@ -18,7 +18,7 @@ const AdminHeader = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
+            const response = await axios.post('https://ra.otoo.kr/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
@@ -42,6 +42,7 @@ const AdminHeader = () => {
     const menuItems = [
         { path: '/admin-user', label: '회원관리', icon: <PersonIcon />, sx: { mr: 2 } },
         { path: '/admin-analyze', label: '테스트 결과 확인', icon: <AssignmentIcon />, sx: { mr: 2 } },
+        { path: '/admin-qna', label: 'QnA 관리', icon: <AssignmentIcon />, sx: { mr: 2 } },
         { path: '/admin-board', label: '방명록관리', icon: <AssignmentTurnedInIcon /> },
     ];
 
