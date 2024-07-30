@@ -44,11 +44,24 @@ import Board from './pages/Board';
 import AdminUser from './pages/admin/AdminUser';
 import AdminHeader from './pages/admin/AdminHeader';
 import AdminBoard from './pages/admin/AdminBoard';
+import AdminTest from './pages/admin/AdminTest';
+
+import MyPageHome from './pages/mypage/MyPageHome';
+import MyPageUserDetail from './pages/mypage/MyPageUSerDetail';
+import MyPageTestResult from './pages/mypage/MyPageTestResult';
+import MyPageSideBar from './pages/mypage/MyPageSideBar';
 
 const adminRoutes = [
   { path: '/admin-user', element: <AdminUser />, roles: ['ROLE_ADMIN'] },
   { path: '/admin-board', element: <AdminBoard />, roles: ['ROLE_ADMIN'] },
+  { path: '/admin-test', element: <AdminTest />, roles: ['ROLE_ADMIN'] },
 ];
+
+const userRoutes = [
+  { path: '/user-home', element: <MyPageHome />, roles: ['ROLE_USER'] },
+  { path: '/user-detail', element: <MyPageUserDetail />, roles: ['ROLE_USER'] },
+  { path: '/user-test', element: <MyPageTestResult />, roles: ['ROLE_USER'] },
+]
 
 const generalRoutes = [
   { path: '/', element: <Home /> },
@@ -88,6 +101,11 @@ const MainApp = () => {
     if (location.pathname.startsWith('/admin')) {
       return <AdminHeader />;
     }
+
+    if(location.pathname.startsWith('/user')) {
+      return <MyPageSideBar />
+    }
+
     return <Header />;
   };
 
@@ -107,6 +125,10 @@ const MainApp = () => {
               }
             />
           ))}
+          {userRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))}
+
           {generalRoutes.map((route) => (
             <Route key={route.path} path={route.path} element={route.element} />
           ))}

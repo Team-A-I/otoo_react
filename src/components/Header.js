@@ -12,6 +12,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRoleAdmin, setUserRoleAdmin] = useState(false);
+  const [userRoleUser, setUserRoleUser] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -45,6 +46,9 @@ const Header = () => {
     if(sessionStorage.getItem('userRole') === 'ROLE_ADMIN'){
       setUserRoleAdmin(true);
     }
+    if(sessionStorage.getItem('userRole') === 'ROLE_USER'){
+      setUserRoleUser(true);
+    }
   }, []);
 
   const toggleDrawer = (open) => (event) => {
@@ -60,7 +64,8 @@ const Header = () => {
     { text: '맞장구봇', path: '/chatbot' },
     { text: '방명록', path: '/board' },
     ...(!isLoggedIn ? [{ text: '로그인', path: '/user-login' }] : [{ text: '로그아웃', action: handleLogout }]),
-    ...(!userRoleAdmin ? [] : [{ text: '관리자 페이지', path: '/admin-user' }])
+    ...(!userRoleAdmin ? [] : [{ text: '관리자 페이지', path: '/admin-user' }]),
+    ...(!userRoleUser ? [] : [{ text: '마이 페이지', path: '/user-home' }])
   ];
 
   const list = () => (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, IconButton, Box } from '@mui/material';
 import { Person as PersonIcon, Assignment as AssignmentIcon, Home as HomeIcon, Logout as LogoutIcon, AssignmentTurnedIn as AssignmentTurnedInIcon  } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axiosIns from '../../components/axios';
 
 const AdminHeader = () => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const AdminHeader = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const AdminHeader = () => {
 
     const menuItems = [
         { path: '/admin-user', label: '회원관리', icon: <PersonIcon />, sx: { mr: 2 } },
-        { path: '/admin-analyze', label: '테스트 결과 확인', icon: <AssignmentIcon />, sx: { mr: 2 } },
+        { path: '/admin-test', label: '테스트 결과 확인', icon: <AssignmentIcon />, sx: { mr: 2 } },
         { path: '/admin-board', label: '방명록관리', icon: <AssignmentTurnedInIcon /> },
     ];
 
