@@ -1,31 +1,18 @@
-import React, { useEffect } from 'react';
-import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme , Card , CardContent} from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Box, Typography, Grid, Paper, Container, Table, TableHead, TableRow, TableCell, TableBody, ThemeProvider, useMediaQuery, useTheme, Card, CardContent, Tooltip, Button } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import theme from "../../theme";
 import 'chart.js/auto'; 
-import { CustomPaper, AttributeCard, TitleSection } from '../conflict/CommonComponentsConflict';
+import { TitleSection } from '../conflict/CommonComponentsConflict';
 import FeedbackModal from '../modal/FeedbackModal';
 
 const ResultFriendship = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { jsonData } = location.state || {};
   const data = jsonData ? JSON.parse(jsonData.response.replace(/```json\n|```/g, '')) : {};
   const theme1 = useTheme();
   const isSmallScreen = useMediaQuery(theme1.breakpoints.down('sm'));
   const type = 'friendship';
-
-  useEffect(() => {
-    const movePage = async () => {
-      navigate('/result-friendship-to-love', { state: { data } });
-    }
-
-    const test = Object.keys(data.friendship_likeability || {});
-    if(data.friendship_likeability[test[0]].score>=80 || data.friendship_likeability[test[1]].score>=80)
-    {
-         movePage();
-    }
-  });
 
   //비율별 날씨아이콘
   const getImageByPercentage = (percentage) => {
@@ -82,12 +69,12 @@ const ResultFriendship = () => {
     const names = Object.keys(data.total_score || {});
     return (
       <Grid item xs={12}>
-        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius:'35px' }}>
+        <Paper elevation={3} style={{ padding: '24px', backgroundImage: 'url(/images/맑은배경.png)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '320px', position: 'relative', borderRadius: '35px' }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} sm={4}>
               <Grid container justifyContent="center" alignItems="center" style={{ height: '100%' }}>
-                <Typography variant="hc_bold" color="dyellow" gutterBottom >
-                우리의 친밀도를<br />알려드립니다.<br />누가 더 친한지<br />알아 보겠습니다.
+                <Typography variant="h1_bold" color="dyellow" gutterBottom>
+                  우리의 친밀도를<br />알려드립니다.<br />누가 더 친한지<br />알아 보겠습니다.
                 </Typography>
               </Grid>
             </Grid>
@@ -97,9 +84,9 @@ const ResultFriendship = () => {
                   <Grid item xs={12} sm={5} key={name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Card style={{ height: '100%', width: '100%', borderRadius: '15px', minHeight: '320px' }}>
                       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography variant="h3_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
+                        <Typography variant="h1_bold" color="gray900" gutterBottom mt={3}>{name}</Typography>
                         <img src={getImageByPercentage(data.total_score[name])} alt={name} style={{ width: '100%', height: 'auto', maxHeight: '150px', objectFit: 'cover', marginBottom: '16px' }} />
-                        <Typography variant="h3_bold" color="gray600">{data.total_score[name]}%</Typography>
+                        <Typography variant="h1_bold" color="gray600">{data.total_score[name]}%</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -113,7 +100,6 @@ const ResultFriendship = () => {
     );
   };
 
-
   // 세부분석
   const renderPersonData = (name) => {
     const sacrificeScore = data.friendship_sacrifice[name].score;
@@ -125,7 +111,6 @@ const ResultFriendship = () => {
     const totalScore = data.total_score[name];
     const style = getStyleByTotalscore(totalScore);
 
-  
     const attributes = [
       {
         title: '배려심',
@@ -143,57 +128,100 @@ const ResultFriendship = () => {
         tooltip: betrayerReason,
       },
     ];
-  
+
     return (
       <Grid item xs={12} key={name}>
-        <CustomPaper>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} sm={4} textAlign="center">
-              <Paper
-                elevation={3}
-                style={{
-                  padding: '16px',
-                  backgroundImage: `url(${style.imageUrl})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  height: '100%',
-                  minHeight: '260px',
-                  borderRadius: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {name}님의 <br /> 우정도
-                </Typography>
-                <Typography variant="h1_bold" color={style.color} gutterBottom>
-                  {totalScore}%
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <Grid container spacing={3} alignItems="stretch">
-                {attributes.map((attr, index) => (
-                  <Grid item xs={4} key={index}>
-                    <AttributeCard
-                      title={attr.title}
-                      percentage={attr.percentage}
-                      tooltip={attr.tooltip}
-                      imageSrc={getImageByPercentage(attr.percentage)}
-                    />
-                  </Grid>
-                ))}
+        <Paper elevation={3} style={{ marginBottom: '24px', borderRadius: '35px', minHeight: '320px' }}>
+          <Box p={isSmallScreen ? 3 : 5}>
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={12} sm={4} textAlign="center">
+                <Paper
+                  elevation={3}
+                  style={{
+                    padding: '16px',
+                    backgroundImage: `url(${style.imageUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '100%',
+                    minHeight: '260px',
+                    borderRadius: '15px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant="h1_bold" style={{ color: style.color }} gutterBottom>
+                    {name}님의 <br /> 우정도
+                  </Typography>
+                  <Typography variant="h1_bold" style={{ color: style.color }} gutterBottom>
+                    {totalScore}%
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={8}>
+                <Grid container spacing={3} alignItems="stretch">
+                  {attributes.map((attr, index) => (
+                    <Grid item xs={12} sm={4} key={index}>
+                      <Paper
+                        elevation={3}
+                        style={{
+                          padding: '16px',
+                          textAlign: 'center',
+                          flex: 1,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Typography variant="h3_bold" gutterBottom>
+                          {attr.title}
+                        </Typography>
+                        <img
+                          src={getImageByPercentage(attr.percentage)}
+                          alt={`${attr.title} 이미지`}
+                          style={{
+                            width: '100%',
+                            height: 'auto',
+                            maxHeight: '150px',
+                            objectFit: 'cover',
+                            marginBottom: '16px',
+                            flexGrow: 1,
+                          }}
+                        />
+                        <Typography variant="h2_bold">{attr.percentage}%</Typography>
+                        <Tooltip title={attr.tooltip} arrow>
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                              marginTop: '8px',
+                              borderColor: '0495D2',
+                              color: '0495D2',
+                              '&:hover': {
+                                borderColor: '0350B7',
+                                color: '0350B7',
+                              },
+                              fontSize: isSmallScreen ? '8px' : '16px',
+                              padding: isSmallScreen ? '5px' : '10px',
+                            }}
+                          >
+                            설명보기
+                          </Button>
+                        </Tooltip>
+                      </Paper>
+                    </Grid>
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </CustomPaper>
+          </Box>
+        </Paper>
       </Grid>
     );
   };
 
-  
   // Top5 키워드
   const renderBiggestSentimental = () => {
     const names = Object.keys(data.friendship_Biggest_Sentimental || {});
@@ -201,11 +229,21 @@ const ResultFriendship = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={2}>{name}</TableCell>
+            <TableCell align="center" colSpan={2}>
+              <Typography variant="h3_mid">{name}</Typography>
+            </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">순위</TableCell>
-            <TableCell align="center">감정</TableCell>
+            <TableCell align="center">
+              <Typography variant="body1">
+                순위
+              </Typography>
+            </TableCell>
+            <TableCell align="center">
+              <Typography variant="body1">
+                감정
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -218,41 +256,42 @@ const ResultFriendship = () => {
         </TableBody>
       </Table>
     );
-  
+
     const images = [
       { src: "/images/yumi2.png", width: '70px', height: 'auto' }, // 첫 번째 이미지 크기
       { src: "/images/yumi.png", width: '70px', height: 'auto' }  // 두 번째 이미지 크기
     ];
-  
+
     return (
       <Grid item xs={12}>
-        <CustomPaper style={{ position: 'relative' }}>
-          <Typography variant="title_bold" gutterBottom>감정 순위 키워드</Typography>
-          <Grid container spacing={3}>
-            {names.map((name, index) => (
-              <Grid item xs={12} sm={6} key={name} style={{ position: 'relative' }}>
-                {renderTable(name, data.friendship_Biggest_Sentimental[name], index === 0 ? '#ECD3D8' : '#0495D2')}
-                <img
-                  src={images[index].src}
-                  alt="일러스트"
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: index === 1 ? '10px' : 'auto',
-                    right: index === 0 ? '10px' : 'auto',
-                    width: images[index].width,
-                    height: images[index].height,
-                    zIndex: 1
-                  }}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </CustomPaper>
+        <Paper elevation={4} style={{ position: 'relative', borderRadius: '35px' }}>
+          <Box p={isSmallScreen ? 3 : 5}>
+            <Typography variant="h1_bold" gutterBottom>감정 순위 키워드</Typography>
+            <Grid container spacing={3}>
+              {names.map((name, index) => (
+                <Grid item xs={12} sm={6} key={name} style={{ position: 'relative' }}>
+                  {renderTable(name, data.friendship_Biggest_Sentimental[name], index === 0 ? '#ECD3D8' : '#0495D2')}
+                  <img
+                    src={images[index].src}
+                    alt="일러스트"
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: index === 1 ? '10px' : 'auto',
+                      right: index === 0 ? '10px' : 'auto',
+                      width: images[index].width,
+                      height: images[index].height,
+                      zIndex: 1
+                    }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Paper>
       </Grid>
     );
   };
-
 
   //전체 리턴
   return (
@@ -267,7 +306,7 @@ const ResultFriendship = () => {
               {data.friendship_Biggest_Sentimental && renderBiggestSentimental()}
             </Grid>
           </Box>
-          <FeedbackModal feedbackType={type}/>
+          <FeedbackModal feedbackType={type} />
         </div>
       </ThemeProvider>
     </Container>

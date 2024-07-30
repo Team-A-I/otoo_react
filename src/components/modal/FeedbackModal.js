@@ -1,56 +1,14 @@
 import { Container, Box, ThemeProvider, IconButton, Modal, TextField, Alert, AlertTitle, useMediaQuery } from '@mui/material';
 import '../../css/chatbot/EmotionReportPage.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { createTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 import axiosIns from '../axios';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#04613E',
-      contrastText: '#fff',
-    },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          '&:hover': {
-            backgroundColor: '#03482A',
-          },
-        },
-      },
-    },
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          color: '#04613E',
-          '&:hover': {
-            color: '#03482A',
-          },
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: '#04613E',
-            },
-            '&:hover fieldset': {
-              borderColor: '#03482A',
-            },
-          },
-        },
-      },
-    },
-  },
-});
+import ReactGA from 'react-ga4';
+import theme from '../../theme';
 
 const TEXTS = {
   modalTitle: '결과가 만족스러우신가요?',
@@ -61,6 +19,7 @@ const TEXTS = {
 const FeedbackModal = ({ feedbackType }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false); // Add a handleClose function
   const isSmallScreen = useMediaQuery('(max-width:600px)');
   const [like, setLike] = useState(false);
   const [dislike, setDislike] = useState(false);
@@ -100,6 +59,11 @@ const FeedbackModal = ({ feedbackType }) => {
   };
 
   const handleFeedback = async () => {
+    ReactGA.event('submit_feedback', {
+      event_category: 'User Actions',
+      event_label: 'Submit Feedback'
+    });
+
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
       await axiosIns.post('https://gnat-suited-weekly.ngrok-free.app/feedback', feedback, {
@@ -131,14 +95,22 @@ const FeedbackModal = ({ feedbackType }) => {
             open={open}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            onClose={handleClose} // Add onClose prop
           >
             <Box sx={style}>
+              <IconButton
+                sx={{ position: 'absolute', top: 8, right: 8 }} 
+                onClick={handleClose}
+              >
+                <CloseIcon />
+              </IconButton>
+              <br/>
               <Alert 
                 severity="info" 
                 sx={{ backgroundColor: '#04613E', color: '#fff', fontWeight: 'bold' }}
                 icon={<InfoOutlinedIcon sx={{ color: '#fff' }} />}
               >
-                <AlertTitle>{TEXTS.modalTitle}</AlertTitle>
+                <AlertTitle sx={{ color: '#fff' }}>{TEXTS.modalTitle}</AlertTitle>
                 {TEXTS.modalDescription}
               </Alert>
 

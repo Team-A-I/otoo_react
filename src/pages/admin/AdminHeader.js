@@ -41,7 +41,11 @@ const AdminHeader = () => {
 
     const menuItems = [
         { path: '/admin-user', label: '회원관리', icon: <PersonIcon />, sx: { mr: 2 } },
+
         { path: '/admin-test', label: '테스트 결과 확인', icon: <AssignmentIcon />, sx: { mr: 2 } },
+
+        { path: '/admin-qna', label: 'QnA 관리', icon: <AssignmentIcon />, sx: { mr: 2 } },
+
         { path: '/admin-board', label: '방명록관리', icon: <AssignmentTurnedInIcon /> },
     ];
 

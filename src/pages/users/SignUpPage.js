@@ -85,11 +85,14 @@ const SignUpPage = () => {
       if (response.data.usersEmail) {
         alert("회원 가입 성공");
         navigate('/user-login');
+        window.location.reload();
       } else {
         alert("회원 가입 실패");
+        window.location.reload();
       }
     } catch (error) {
       alert(error.response?.status === 400 ? "이미 등록된 이메일 입니다" : "회원 가입 오류");
+      window.location.reload();
     }
   };
 

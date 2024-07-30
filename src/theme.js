@@ -2,6 +2,10 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 // 테마 생성
 let theme = createTheme({
   palette: {
+    primary: {
+      main: '#04613E',
+      contrastText: '#fff',
+    },
     oblack: '#333333',
     owhite: '#F8F7F3',
     darkgreen: '#04613E',
@@ -174,13 +178,25 @@ let theme = createTheme({
       fontWeight: 700,
       color: '#1B1F23'
     },
+    h2_bold2: {
+      fontSize: '22px',
+      [createTheme().breakpoints.down('md')]: {
+        fontSize: '19px',
+      },
+      [createTheme().breakpoints.down('sm')]: {
+        fontSize: '16px',
+
+      },
+      fontWeight: 700,
+      color: '#1B1F23'
+    },
     h2_mid: {
       fontSize: '22px',
       [createTheme().breakpoints.down('md')]: {
         fontSize: '19px',
       },
       [createTheme().breakpoints.down('sm')]: {
-        fontSize: '18px',
+        fontSize: '1px',
       },
       fontWeight: 500,
       color: '#1B1F23'
