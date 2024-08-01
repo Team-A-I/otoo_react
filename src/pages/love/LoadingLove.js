@@ -22,7 +22,7 @@ const LoadingLove = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axiosIns.post('https://ra.otoo.kr/api/love/analysis', requestData, {
+            response = await axiosIns.post('http://localhost:8080/api/love/analysis', requestData, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -34,7 +34,7 @@ const LoadingLove = () => {
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('https://ra.otoo.kr/api/love/ocr', formData, {
+            response = await axiosIns.post('http://localhost:8080/api/love/ocr', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },

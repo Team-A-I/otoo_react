@@ -16,7 +16,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axiosIns.post('https://ra.otoo.kr/logoutUser', sessionStorage.getItem('userEmail'), {
+      const response = await axiosIns.post('http://localhost:8080/logoutUser', sessionStorage.getItem('userEmail'), {
         headers: {
           'Authorization': sessionStorage.getItem('userEmail'),
           'Content-Type': 'application/json',

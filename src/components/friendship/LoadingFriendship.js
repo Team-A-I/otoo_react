@@ -22,14 +22,14 @@ const LoadingFriendship = () => {
 
           let response;
           if (fileExtension === 'txt') {
-            response = await axiosIns.post('https://ra.otoo.kr/api/friendship/analysis', requestData);
+            response = await axiosIns.post('http://localhost:8080/api/friendship/analysis', requestData);
           } else {
             const formData = new FormData();
             formData.append('file', jsonContent.file);
             if (usercode) {
               formData.append('usercode', usercode);
             }
-            response = await axiosIns.post('https://ra.otoo.kr/api/friendship/ocr', formData);
+            response = await axiosIns.post('http://localhost:8080/api/friendship/ocr', formData);
           }
 
           if (response.status === 200) {

@@ -7,7 +7,7 @@ const AdminQnA = () => {
     const [qna, setQnA] = React.useState("");
     const [isEditing, setIsEditing] = useState(false);
     const qnaSelectHandler = async() => {
-        await axiosIns.get('https://ra.otoo.kr/admin/qna-view', {
+        await axiosIns.get('http://localhost:8080/admin/qna-view', {
             headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': '69420',
@@ -22,7 +22,7 @@ const AdminQnA = () => {
     };
     
     const qnaUpdateHandler = async() => {
-        await axiosIns.post('https://ra.otoo.kr/admin/qna-edit', {
+        await axiosIns.post('http://localhost:8080/admin/qna-edit', {
             qna: qna,
         }, {
             headers: {

@@ -31,22 +31,20 @@ const ForgetPassword = () => {
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
-        `https://ra.otoo.kr/forgotpassword/${usersEmail}`
+        `http://localhost:8080/forgotpassword/${usersEmail}`
       );
       if (response.status === 200) {
-        window.location.reload();
+
         alert('이메일 인증 메일이 전송되었습니다.');
         setCheckEmail(response.data);
         setIsVerificationCodeSent(true);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        window.location.reload();
         alert('이미 등록한 이메일이 있습니다.');
         setEmail('');
       } else {
         console.error('Error sending email verification:', error);
-        window.location.reload();
         alert('이메일 전송 오류');
         setEmail('');
       }
@@ -56,11 +54,9 @@ const ForgetPassword = () => {
   
   const checkEmailCode = async () => {
     if (checkEmail.toString() === verificationCode) {
-      window.location.reload();
       alert("이메일 인증 성공");
       navigate('/resetPassword', {state: { usersEmail: usersEmail }} );
     } else {
-      window.location.reload();
       alert("이메일 인증 실패");
       setVerificationCode('');
     }

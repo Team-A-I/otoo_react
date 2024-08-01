@@ -4,7 +4,7 @@ import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, T
 import { ThemeProvider } from '@mui/material/styles';
 import theme1 from '../../theme';
 
-const API_URL = 'https://ra.otoo.kr/api/posts';
+const API_URL = 'http://localhost:8080/api/posts';
 const HEADERS = {
   'Content-Type': 'application/json',
   'ngrok-skip-browser-warning': '69420',

@@ -38,7 +38,7 @@ const INITIAL_NEW_POST = {
   postDescription: ''
 };
 
-const API_URL = 'https://ra.otoo.kr/api/posts';
+const API_URL = 'http://localhost:8080/api/posts';
 const HEADERS = {
   'Content-Type': 'application/json',
   'ngrok-skip-browser-warning': '69420',

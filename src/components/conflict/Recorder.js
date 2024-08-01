@@ -103,7 +103,7 @@ const Recorder = ({ onRecordingStateChange }) => {
       setLoading(true);
       navigate('/recorder-loading');
       try {
-        const response = await axios.post('https://ra.otoo.kr/api/transcribe/file', formData);
+        const response = await axios.post('http://localhost:8080/api/transcribe/file', formData);
         navigate('/stt-result', { state: { jsonData: response.data } });
         window.location.reload();
       } catch (error) {

@@ -15,7 +15,7 @@ const AdminUser = () => {
 
   // 전체 회원 정보 조회
   const getAllUser = async () => {
-     await axios.get("https://ra.otoo.kr/getAllUser", {
+     await axios.get("http://localhost:8080/getAllUser", {
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '69420',
@@ -38,7 +38,7 @@ const AdminUser = () => {
   const changeBanned = async (user) => {
     try {
       const endpoint = user.usersBan === 'N' ? "changeStatusBan" : "changeStatusNotBan";// eslint-disable-next-line
-      const response = await axios.post(`https://ra.otoo.kr/admin/${endpoint}`, {
+      const response = await axios.post(`http://localhost:8080/admin/${endpoint}`, {
         usersCode: user.usersCode,
         usersId: user.usersId,
         usersPw: user.usersPw,
@@ -90,7 +90,7 @@ const AdminUser = () => {
   };
 
   const getGenderOne = async(usersGender) => {
-    await axios.get(`https://ra.otoo.kr/admin/getGenderOne/${usersGender}`,{
+    await axios.get(`http://localhost:8080/admin/getGenderOne/${usersGender}`,{
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '69420',
@@ -120,7 +120,7 @@ const AdminUser = () => {
   };
 
   const getBanOne = async(usersBan) => {
-    await axios.get(`https://ra.otoo.kr/admin/getBanOne/${usersBan}`, {
+    await axios.get(`http://localhost:8080/admin/getBanOne/${usersBan}`, {
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '69420',
