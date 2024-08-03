@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosIns = axios.create({
-  baseURL: 'https://ra.otoo.kr',
+  baseURL: 'https://otoo-java-jc2u3c5ukq-an.a.run.app',
   timeout: 1000000,
 });
 

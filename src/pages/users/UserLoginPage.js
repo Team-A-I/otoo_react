@@ -26,7 +26,7 @@ function UserLoginPage() {
 
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://ra.otoo.kr/login', {
+      const response = await axios.post('https://otoo-java-jc2u3c5ukq-an.a.run.app/login', {
         userEmail,
         userPassword,
       });
@@ -84,7 +84,7 @@ function UserLoginPage() {
           const accessToken = authObj.access_token;
 
           const response = await axios.get(
-            "https://ra.otoo.kr/kakaoLogin/" + accessToken, {
+            "https://otoo-java-jc2u3c5ukq-an.a.run.app/kakaoLogin/" + accessToken, {
               headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': '69420',

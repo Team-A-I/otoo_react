@@ -73,7 +73,7 @@ const Home = () => {
     // eslint-disable-next-line
     const handleLogout = async () => {
         try {
-            const response = await axiosIns.post('https://ra.otoo.kr/logoutUser', sessionStorage.getItem('userEmail'), {
+            const response = await axiosIns.post('https://otoo-java-jc2u3c5ukq-an.a.run.app/logoutUser', sessionStorage.getItem('userEmail'), {
                 headers: {
                     'Authorization': sessionStorage.getItem('userEmail'),
                     'Content-Type': 'application/json',

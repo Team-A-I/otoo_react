@@ -21,7 +21,7 @@ const QnaChatbot = ({ open, onClose }) => {
     setHtmlString(prevHtmlString => prevHtmlString + `<div class=userDiv><Box class="user">${chat}</Box></div>`);
     setChat('');
     try {
-      const response = await axiosIns.post('https://ra.otoo.kr/qna', { chat }, {
+      const response = await axiosIns.post('https://otoo-java-jc2u3c5ukq-an.a.run.app/qna', { chat }, {
         headers: {
           'Content-Type': 'application/json',
         },

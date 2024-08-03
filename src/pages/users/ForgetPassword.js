@@ -31,7 +31,7 @@ const ForgetPassword = () => {
   const sendEmailVerification = async () => {
     try {
       const response = await axios.post(
-        `https://ra.otoo.kr/forgotpassword/${usersEmail}`
+        `https://otoo-java-jc2u3c5ukq-an.a.run.app/forgotpassword/${usersEmail}`
       );
       if (response.status === 200) {
         window.location.reload();

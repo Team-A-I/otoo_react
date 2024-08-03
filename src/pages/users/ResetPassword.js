@@ -42,7 +42,7 @@ const ResetPassword = () => {
       const usersEmail = location.state?.usersEmail;
 
       if (password === confirmPassword) {
-        const response = await axios.post('https://ra.otoo.kr/changePwd', {
+        const response = await axios.post('https://otoo-java-jc2u3c5ukq-an.a.run.app/changePwd', {
           usersEmail: usersEmail,
           usersPw: password,
           pwd1: confirmPassword,

@@ -66,7 +66,7 @@ const FeedbackModal = ({ feedbackType }) => {
 
     const feedback = { feedbackLike, feedbackDislike, feedbackType, feedbackNote };
     try {
-      await axiosIns.post('https://ra.otoo.kr/feedback', feedback, {
+      await axiosIns.post('https://otoo-java-jc2u3c5ukq-an.a.run.app/feedback', feedback, {
         headers: {
           'Content-Type': 'application/json',
         },
