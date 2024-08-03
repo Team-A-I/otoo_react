@@ -1,6 +1,6 @@
-import { Grid, Button, Typography, Box, Tooltip, ThemeProvider, Paper, InputBase, IconButton } from '@mui/material';
+import { Grid, Button, Typography, Box, ThemeProvider, Paper, InputBase, IconButton } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import '../../css/chatbot/ChatbotPage.css';
 import SendIcon from '@mui/icons-material/Send';
 import theme from "../../theme";
@@ -21,17 +21,17 @@ const ChatBot = () => {
   // 커서를 input에 포커스하기 위한 ref
   const inputRef = useRef(null);
   // 리포트 생성 버튼 활성화 여부
-  const [disabled, setDisabled] = useState(true);
+  // const [disabled, setDisabled] = useState(true);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Localized text values
   const chatbotSubtitle1 = '※ 연인 또는 친구에게 받은 상처를 모두 쏟아내세요.';
   const chatbotSubtitle2 = '※ 장구가 당신의 이야기에 무조건 맞장구를 쳐줄게요.';
   const chatbotPlaceholder = '서운했던 이야기를 들려주세요.';
-  const chatbotTooltipText = '채팅을 바탕으로 장구가 조언을 해줍니다.';
-  const chatbotEmotionReportButtonText = '감정 리포트 생성';
+  // const chatbotTooltipText = '채팅을 바탕으로 장구가 조언을 해줍니다.';
+  // const chatbotEmotionReportButtonText = '감정 리포트 생성';
   const chatbotStartText1 = '장구와 함께하는 감정 대화를 시작해보세요.';
   const chatbotStartText2 = '장구 모드를 클릭시 판소리로 대답합니다.';
   const chatbotNomalModeButtonText = '일반 모드';
@@ -66,9 +66,9 @@ const ChatBot = () => {
 
       messages.push("assistant : " + result);
 
-      if (messages.length > 6) {
-        setDisabled(false);
-      }
+      // if (messages.length > 6) {
+      //   setDisabled(false);
+      // }
 
       if (RecentMessages.length > 10) {
         RecentMessages.shift();
@@ -81,13 +81,13 @@ const ChatBot = () => {
     }
   };
 
-  const emotionReportHandler = () => {
-    ReactGA.event('generate_emotion_report', {
-      event_category: 'User Actions',
-      event_label: 'Generate Emotion Report'
-    });
-    navigate('/emotionReportLoadingPage', { state: { messages } });
-  };
+  // const emotionReportHandler = () => {
+  //   ReactGA.event('generate_emotion_report', {
+  //     event_category: 'User Actions',
+  //     event_label: 'Generate Emotion Report'
+  //   });
+  //   navigate('/emotionReportLoadingPage', { state: { messages } });
+  // };
 
   const jangguModeHandler = () => {
     ReactGA.event('janggu_mode_selected', {
@@ -164,7 +164,7 @@ const ChatBot = () => {
               ) : (
                 <Box sx={{ marginBottom: '10px', height: '100%' }}>
                   <Box className="chatList" dangerouslySetInnerHTML={{ __html: htmlString }}></Box>
-                  <Box sx={{ position: 'relative' }}>
+                  {/* <Box sx={{ position: 'relative' }}>
                     <Tooltip title={chatbotTooltipText} arrow placement="top">
                       <Button
                         variant="contained"
@@ -175,7 +175,7 @@ const ChatBot = () => {
                         {chatbotEmotionReportButtonText}
                       </Button>
                     </Tooltip>
-                  </Box>
+                  </Box> */}
                 </Box>
               )}
             </Box>
